@@ -40,7 +40,8 @@ slide.
    module; a mistake found once gets a test; two kinds of test; a test must
    be able to fail; what a test runner reports.
 5. **Environments**: Python 3.12 changed the last digit of 7.16 (the sum
-   of the 87 552 hours); pandas brings NumPy, 32 packages for two asked
+   of the 87 552 hours); a version number and a range read (pandas 3.1.1,
+   NumPy ≥ 2.0.2, < 3); pandas brings NumPy, 32 packages for two asked
    for; the environment of weeks 8 to 12, 4 asked for and 89 installed;
    one NumPy that fits every range; the pandas releases since 2023; ranges
    and pins; one pin moves another package; writing an install down; what
@@ -66,9 +67,9 @@ slide.
 
 ## The lecture, part by part
 
-The lecture is slides 1–68 and estimates about 118 min, so in the two-hour
+The lecture is slides 1–69 and estimates about 120 min, so in the two-hour
 slot **plan to skip the slides of the second table** (about 13 min). Slides
-69–76 are the optional section For the Curious, and slides 77–85 the
+70–77 are the optional section For the Curious, and slides 78–86 the
 self-check quizzes; neither takes lecture time. To jump, type the slide
 number and press Enter.
 
@@ -78,35 +79,37 @@ number and press Enter.
 | 5–10 | Modules: the steps behind 7.16, what goes where, the module and a script, a new column, a function that returns |
 | 12–15, 17 | Objects: since Lecture 5, the perceptron on 8 December 2025, the class run live, why library models are objects |
 | 19–32 | Tests: 25.275 by hand, `assert`, the failing test and its reading, the last digit, the tolerance, a test of an object and of the result file, the test file, a mistake found once, two kinds, a test that can fail, the runner |
-| 33–39, 41–44 | Environments: the last digit of 7.16, the dependency tree, 89 packages, one NumPy for every range, pandas releases, ranges and pins, writing an install down, what the file fixes, the fresh environment, the pinned file |
-| 45–49, 51 | One command: `rebuild.sh`, the tests as its last line, `set -e`, the wrong mean stopped, How to rebuild |
-| 52–54, 56–57 | Delete and rebuild, a fresh clone, a test file never committed, four tests of a reproducible result |
-| 58–63, 65–68 | FAIR, the four aims, the checklist, decide before you look, the weather project checked, 7.16 and 7.11, Ben's function, Lecture 1's question, the recap |
+| 33–40, 42–45 | Environments: the last digit of 7.16, a version number and a range, the dependency tree, 89 packages, one NumPy for every range, pandas releases, ranges and pins, writing an install down, what the file fixes, the fresh environment, the pinned file |
+| 46–50, 52 | One command: `rebuild.sh`, the tests as its last line, `set -e`, the wrong mean stopped, How to rebuild |
+| 53–55, 57–58 | Delete and rebuild, a fresh clone, a test file never committed, four tests of a reproducible result |
+| 59–64, 66–69 | FAIR, the four aims, the checklist, decide before you look, the weather project checked, 7.16 and 7.11, Ben's function, Lecture 1's question, the recap |
 
 | Skip | Slides |
 |--|--|
 | A docstring | 11 |
 | A model's numbers kept in a file; a class or functions | 16, 18 |
-| One pin moves another package | 40 |
-| Why the tests come last | 50 |
-| What goes into Git | 55 |
-| A review comment someone can act on | 64 |
+| One pin moves another package | 41 |
+| Why the tests come last | 51 |
+| What goes into Git | 56 |
+| A review comment someone can act on | 65 |
 
-- **Do not cut** slide 3, the question, or slides 65–67, its answer:
+- **Do not cut** slide 3, the question, or slides 66–68, its answer:
   Smiltė's 7.16 and Ben's 7.11 rebuilt, the difference written down as one
   function.
 - **Do not cut** slides 20–25: the test of `mean` that fails on the float,
   read and repaired; slide 34 comes back to it as a change of Python.
-- **Do not cut** slides 43, 49 and 53–54: the fresh environment, the wrong
+- **Do not cut** slides 44, 50 and 54–55: the fresh environment, the wrong
   mean stopped by the tests, the delete and the fresh clone. They are the
   proof the lecture is about, and the steps the seminar repeats.
-- **Slides 15, 21, 22, 25 and 66** run plain Python in the browser: the
+- **Slides 15, 21, 22, 25 and 67** run plain Python in the browser: the
   perceptron as a class; `assert`; the failing test of `mean`; the
   tolerance; Ben's midrange. Slides 21 and 22 end with `AssertionError` on
   purpose. The first run downloads the Python runtime, so run one before the
   lecture.
-- **Slides 6, 14 and 20** reveal a formula and its numbers on a click;
-  **slides 47, 53 and 54** build a terminal session one step per click.
+- **Slides 6, 14, 20 and 25** step a formula per click, the numbers put
+  in shown in the accent colour (the mean of four hours and of the log;
+  z of 8 December; 25.275 by hand; the tolerance); **slides 48, 54 and 55**
+  build a terminal session one step per click.
 - **Every number** on the slides is printed by
   `python figures/src/lasting.py` from `weather.csv`, from the two scripts
   of Lecture 4 run as `rebuild.sh` runs them, and from conda-forge's
@@ -114,7 +117,7 @@ number and press Enter.
   The Python 3.11 values were checked in Python 3.11.18, 3.12.12, 3.13.9 and
   3.14.10; every terminal output was run in a copy of `weather-s12.zip`
   with conda 26.9.4.
-- **Slides 69–76** (For the Curious) are for time left at the end or for
+- **Slides 70–77** (For the Curious) are for time left at the end or for
   students afterwards. The workflow file and the Dockerfile are shown as
   examples and were not run for the slides.
 
@@ -125,7 +128,7 @@ scripts/serve-local.mjs 8123`, then open
 ## Check yourself
 
 No quiz interrupts the lecture. The deck closes with a self-check section,
-slides 77–85: eight quiz slides for students to try afterwards. The same
+slides 78–86: eight quiz slides for students to try afterwards. The same
 questions, with their answers:
 
 1. `assert mean([27.3, 25.6, 24.6, 23.6]) == 25.275` fails: the mean is
@@ -168,15 +171,7 @@ questions, with their answers:
 
 ## Paired seminar
 
-[Seminar 12 · pytest](../seminars/seminar_12.md) does the same with the
-real tool. Every student starts from today's folder, a Git repository with
-one commit, adds pytest to the `analysis` environment and writes it down,
-writes the three tests of the lecture in `scripts/test_weather.py` (one
-line, the four hours with a tolerance, the result file), adds `python -m
-pytest -q` as the last line of `scripts/rebuild.sh`, sees Tomas's change
-stopped, pins the exact versions, deletes the results and makes them again
-with the same checksums, and rebuilds a fresh clone of the folder. The last
-part adds a test and the one command to the student's own project.
+[Seminar 12 · pytest](../seminars/seminar_12.md) closes the `analysis` environment of weeks 8–12: pytest added, exact versions pinned in `environment.yml`, a second environment made from that file alone, the same test results in it. In a new, empty folder the lecturer runs three test files: a test with an answer known by hand beside one that fails for the wrong reason (`== 25.275` against `pytest.approx`), one case on each side of every border (`parametrize` catches `<= 0`), and tests of the Vilnius station's GHCN-Daily file as received (56 days with the minimum above the maximum, none once NCEI's quality flags are read). Then pairs ask an LLM for a function that turns the station's days into yearly means, write the tests that decide whether to trust it, and find the coldest year since 1881: 1942, 4.35 °C, where a function that averages the days present says 1883 (−5.63 °C, two winter months). Optional: `git init`, a fresh clone, rebuilt with one command.
 
 ## Slides that left the deck
 
@@ -193,8 +188,8 @@ from it earlier are in `lectures/content/parked/13_Reproducible_Workflows.md`.
 |--|--|--|
 | Delete `results/`: Which Commands Rebuild It?; Learning Objectives | Replaced by slides 3–4 | The opening is a question with real numbers; no objectives slide |
 | A Script with a Command Line (argparse, options, exit codes, a config file, results as data) | Two slides in For the Curious, on the weather project | A tool, not an idea of the main path |
-| Environments (venv, `requirements.txt`, conda and uv) | Replaced by slides 33–44 | conda and `environment.yml`, as the room uses them; the dependency tree, ranges and pins as ideas |
-| One Command (`run_all.py`, the rule of out-of-date files, Make) | Replaced by slides 45–51; Make in For the Curious | The one command stays `rebuild.sh`; its last line runs the tests |
+| Environments (venv, `requirements.txt`, conda and uv) | Replaced by slides 33–45 | conda and `environment.yml`, as the room uses them; the dependency tree, ranges and pins as ideas |
+| One Command (`run_all.py`, the rule of out-of-date files, Make) | Replaced by slides 46–52; Make in For the Curious | The one command stays `rebuild.sh`; its last line runs the tests |
 | Tests (the decimal comma of the pendulum file, `pytest.approx`) | Replaced by slides 19–32 | Tests of the six hours and of the result file; plain `assert` with a tolerance |
 | Beyond One Laptop (Git, the README, CI, Docker, Git LFS, FAIR on two cases) | `.gitignore`, the README, FAIR and the four aims on the main path; CI and containers in For the Curious; Git LFS and the pipeline as a Mermaid diagram not carried over | The proof by delete, clone and fresh environment comes first |
 

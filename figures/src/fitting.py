@@ -1314,8 +1314,70 @@ def _outlier():
     style.save(fig, "viz_fitting_outlier")
 
 
+def _error_bars_fig():
+    """The ten yearly means, each with an error bar of +- sigma = 0.70; the
+    bars that do not reach the mean of all ten in another colour."""
+    x, y, _ = yearly_means()
+    m = y.mean()
+    fig, ax = plt.subplots(figsize=(6.2, 4.3))
+    ax.axhline(m, color=style.DIM, lw=1.2, ls="--")
+    ax.text(2024.5, m + 0.07, "7.16", color=style.DIM, ha="center", fontsize=11)
+    reach = np.abs(y - m) <= SIGMA
+    for ok, colour in ((True, C0), (False, C1)):
+        sel = reach == ok
+        ax.errorbar(YEARS[sel], y[sel], yerr=SIGMA, fmt="o", color=colour, ms=7,
+                    capsize=5, elinewidth=1.8, capthick=1.8, zorder=5)
+    for val, va in ((y[0] + SIGMA, "center"), (y[0], "center"), (y[0] - SIGMA, "center")):
+        ax.text(2015.62, val, f"{val:.2f}", color=C0, fontsize=11, ha="right", va=va)
+    ax.text(2023.15, y[7] + SIGMA + 0.12, "3 of 10 bars miss 7.16", color=C1, fontsize=11.5,
+            ha="right")
+    ax.set(xlabel="year", ylabel=YEAR_MEAN, ylim=(4.9, 9.3), xlim=(2014.6, 2025.9))
+    ax.set_xticks(YEARS)
+    ax.set_xticklabels([str(v) if v % 2 == 0 else "" for v in YEARS])
+    ax.xaxis.grid(False)
+    style.save(fig, "viz_fitting_error_bars")
+
+
+def _bell_fig():
+    """The Gaussian of the yearly means: mu = 7.16, sigma = 0.70, its 68 and
+    95 % areas, and the ten years as ticks under the curve."""
+    x, y, _ = yearly_means()
+    mu = GUESS_A[1]
+    t = np.linspace(mu - 3.6 * SIGMA, mu + 3.6 * SIGMA, 500)
+    pdf = np.exp(-(t - mu) ** 2 / (2 * SIGMA ** 2)) / (SIGMA * np.sqrt(2 * np.pi))
+    top = pdf.max()
+    fig, ax = plt.subplots(figsize=(6.2, 4.3))
+    two = np.abs(t - mu) <= 2 * SIGMA
+    one = np.abs(t - mu) <= SIGMA
+    ax.fill_between(t[two], pdf[two], color=C0, alpha=0.18, lw=0)
+    ax.fill_between(t[one], pdf[one], color=C0, alpha=0.40, lw=0)
+    ax.plot(t, pdf, color=C0, lw=2.2)
+    for k, h, label in ((1, 0.36, "68 %"), (2, 0.05, "95 %")):
+        ax.annotate("", xy=(mu - k * SIGMA, h * top), xytext=(mu + k * SIGMA, h * top),
+                    arrowprops=dict(arrowstyle="<->", color=style.FG, lw=1.2,
+                                    shrinkA=0, shrinkB=0))
+        ax.text(mu, (h + 0.03) * top, label, ha="center", va="bottom", fontsize=13,
+                color=style.FG)
+    ax.annotate(f"top: {top:.2f} per °C", xy=(mu, top), xytext=(mu + 1.0 * SIGMA, 1.04 * top),
+                fontsize=11.5, color=style.FG, va="center",
+                arrowprops=dict(arrowstyle="-", color=style.FG, lw=0.8))
+    ax.vlines(y, -0.075 * top, -0.015 * top, color=C1, lw=2.2, clip_on=False)
+    ax.text(mu + 3.5 * SIGMA, -0.045 * top, "the ten years", color=C1, fontsize=11,
+            ha="right", va="center")
+    ticks = [mu + k * SIGMA for k in (-2, -1, 0, 1, 2)]
+    ax.set_xticks(ticks)
+    ax.set_xticklabels([f"{v:.2f}" for v in ticks])
+    ax.set(xlabel=YEAR_MEAN, ylabel="density (per °C)", xlim=(t[0], t[-1]),
+           ylim=(-0.09 * top, 1.15 * top))
+    ax.axhline(0, color=style.FG, lw=1)
+    ax.xaxis.grid(False)
+    style.save(fig, "viz_fitting_bell")
+
+
 FIGURES = {
     "viz_fitting_year_means": _year_means_fig,
+    "viz_fitting_error_bars": _error_bars_fig,
+    "viz_fitting_bell": _bell_fig,
     "viz_fitting_three_models": _three_models,
     "viz_fitting_parts": _parts_fig,
     "viz_fitting_slope_gauss": _slope_gauss_fig,

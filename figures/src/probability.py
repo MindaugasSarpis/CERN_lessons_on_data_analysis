@@ -21,6 +21,7 @@ The Gaussian
   viz_probability_hours_gauss      the hours against a Gaussian of the same mean and s
   viz_probability_means_random     means of 100 random hours: a Gaussian
 The standard error
+  viz_probability_error_bar        one mean of 100 random hours, three error bars
   viz_probability_intervals        50 means of 100 random hours, each +- s/10
 Correlation
   viz_probability_temp_humidity    temperature and humidity of every hour
@@ -380,6 +381,41 @@ def _intervals():
     style.save(fig, "viz_probability_intervals")
 
 
+def _error_bar():
+    """One mean of 100 random hours (the first of the 50 intervals) with
+    three bars: one standard error, two, and the s of single hours."""
+    v = measured()
+    _, s = mean_sd(v)
+    se = s / 10
+    x = interval_means()[0]
+    rows = [  # y, half-length, colour, label
+        (2, se, style.ACCENT, f"± s/√100 = ± {se:.3f} °C: one standard error"),
+        (1, 2 * se, GREEN, f"± 2 s/√100 = ± {2 * se:.2f} °C: two standard errors"),
+        (0, s, WARM, f"± s = ± {s:.2f} °C: the spread of single hours"),
+    ]
+    fig, ax = plt.subplots(figsize=(9.4, 3.3))
+    for y, half, colour, label in rows:
+        ax.errorbar([x], [y], xerr=[half], fmt="o", color=colour, markersize=7,
+                    elinewidth=2.4, capsize=7, capthick=2.4)
+        for end in (x - half, x + half):
+            ax.text(end, y - 0.2, f"{end:.2f}".replace("-", "−"), ha="center", va="top",
+                    fontsize=10.5, color=colour)
+        if half < 5:
+            ax.text(x + half + 0.45, y, label, ha="left", va="center", fontsize=12,
+                    color=colour)
+        else:
+            ax.text(x, y + 0.22, label, ha="center", va="bottom", fontsize=12, color=colour)
+    ax.annotate(f"the mean of the 100 hours, {x:.2f} °C", xy=(x, 2.12), xytext=(x - 1.2, 2.62),
+                ha="right", va="center", fontsize=11.5, color=style.FG,
+                arrowprops=dict(arrowstyle="-", color=style.FG, lw=0.8))
+    ax.set(xlabel=TEMP_LABEL, xlim=(-4, 19), ylim=(-0.65, 2.85))
+    ax.set_xticks(range(-4, 20, 2))
+    ax.set_yticks([])
+    ax.grid(False)
+    ax.spines["left"].set_visible(False)
+    style.save(fig, "viz_probability_error_bar")
+
+
 # ---------------------------------------------------------------------------
 # Correlation
 # ---------------------------------------------------------------------------
@@ -600,6 +636,7 @@ FIGURES = {
     "viz_probability_hours_gauss": _hours_gauss,
     "viz_probability_means_random": _means_random,
     "viz_probability_intervals": _intervals,
+    "viz_probability_error_bar": _error_bar,
     "viz_probability_temp_humidity": _temp_humidity,
     "viz_probability_pairs": _pairs,
     "viz_probability_day_of_year": _day_of_year,

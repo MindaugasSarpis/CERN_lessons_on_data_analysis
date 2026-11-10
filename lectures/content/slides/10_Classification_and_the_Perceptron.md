@@ -340,6 +340,8 @@ $$
 z = w_1 x_1 + w_2 x_2 + b
 $$
 
+**Weights** $w_1$, $w_2$: how much each input counts. **Bias** $b$: $z$ when both inputs are 0.
+
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
@@ -357,7 +359,7 @@ $$
 <img class="fig fig-fill mt-sm" src="/figures/viz_perceptron_unit.svg">
 
 <!--
-**Say:** a weight $w_1$, $w_2$ for each input and a bias $b$: three numbers. With the step this unit is Rosenblatt's perceptron.
+**Say:** three numbers: a weight for each input and a bias. With the step this unit is Rosenblatt's perceptron.
 **If asked:** $w_1 x_1 + w_2 x_2$ is often written short as $w \cdot x$, the dot product. At exactly $z = 0$ the output here is 0; some books choose 1.
 (~2 min)
 -->
@@ -621,11 +623,13 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-Take the evenings in turn. For each, compute $\hat{y}$; then change the numbers by the error $y - \hat{y}$, with a **learning rate** $\eta$:
+Take the evenings in turn. For each, compute $\hat{y}$; then change the numbers by the error $y - \hat{y}$:
 
 $$
 w_1 \leftarrow w_1 + \eta\,(y - \hat{y})\,x_1 \qquad w_2 \leftarrow w_2 + \eta\,(y - \hat{y})\,x_2 \qquad b \leftarrow b + \eta\,(y - \hat{y})
 $$
+
+$\eta$, the **learning rate**: how far one update moves the numbers. One pass over all the evenings: an **epoch**.
 
 </div>
 
@@ -660,7 +664,7 @@ The bracket is positive: a frost evening called "no frost" gets a larger $z$.
 </div>
 
 <!--
-**Say:** only a wrong evening changes anything. One pass over all evenings is an **epoch**.
+**Say:** only a wrong evening changes anything; a right one leaves every number as it is.
 **If asked:** $\eta$ is the learning rate of Lecture 9's gradient descent. Started from zero weights, this rule draws the same lines for every $\eta$: each number is a multiple of $\eta$. With $\eta = 1$ it adds or subtracts $x$ itself.
 (~3 min)
 -->
@@ -930,14 +934,14 @@ class: fill
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-📉 With $w = (-1, 0)$ the bias $b$ is the threshold. Wrong evenings: flat between jumps, no slope to follow. The cross-entropy: a slope at every $b$, lowest at $b = 3.97$.
+📉 A **loss** scores the numbers $w$ and $b$: lower is better. Wrong evenings: flat between jumps, no slope. The cross-entropy, a loss from probabilities: a slope at every $b$, lowest at $b = 3.97$.
 
 </div>
 
 <img class="fig fig-fill mt-sm" src="/figures/viz_perceptron_step_loss.svg">
 
 <!--
-**Say:** Lecture 9 moved a parameter against the slope of its loss. A staircase has no slope: between two jumps a small change of $b$ changes nothing.
+**Say:** with $w = (-1, 0)$ the bias $b$ is the threshold: frost below $b$ °C. Lecture 9 moved a parameter against the slope of its loss. A staircase has no slope: between two jumps a small change of $b$ changes nothing.
 **If asked:** the inset zooms into 2.5 to 5 °C: the count jumps only where an evening's temperature lies, and is flat in between.
 (~2 min)
 -->
@@ -1008,12 +1012,15 @@ class: fill
 
 ## 〰️ **A smooth step**
 
-$$
-\text{sigmoid}(z) = \frac{1}{1 + e^{-z}}
-$$
+<FormulaSteps mode="morph" steps="
+  \text{sigmoid}(z) = \frac{1}{1 + e^{-z}}
+  \text{sigmoid}(1.2) = \frac{1}{1 + 2.718^{-1.2}}
+  \text{sigmoid}(1.2) = \frac{1}{1 + 0.301}
+  \text{sigmoid}(1.2) = 0.769
+" />
 
-- between 0 and 1 for every $z$
-- $\text{sigmoid}(0) = 0.5$
+- $e = 2.718\ldots$
+- between 0 and 1 for every $z$; $\text{sigmoid}(0) = 0.5$
 - far from 0, the step
 
 </div>
@@ -1037,7 +1044,7 @@ $$
 </div>
 
 <!--
-**Do:** compute sigmoid(1.2) on the board: $e^{-1.2} = 0.301$, and $1/1.301 = 0.769$.
+**Do:** click through sigmoid(1.2), the $z$ of 8 December: $e$ in place, $e^{-1.2} = 0.301$, then $1/1.301 = 0.769$.
 **Say:** σ is the standard deviation in this course, so the sigmoid keeps its name in the formulas.
 (~2 min)
 -->
@@ -1058,7 +1065,7 @@ $$
 \hat{y} = \text{sigmoid}(w_1 x_1 + w_2 x_2 + b)
 $$
 
-$\hat{y}$ is read as P(frost | $x$). Above 0.5 exactly when $z > 0$: the same line as the step.
+$\hat{y}$ is read as P(frost | $x$): the probability of frost, given the inputs $x$. Above 0.5 exactly when $z > 0$: the same line as the step.
 
 </div>
 
@@ -1143,11 +1150,60 @@ $P(y)$ is the probability the neuron gave to what really happened. A good neuron
 hideInToc: true
 ---
 
+# The Natural Logarithm, **ln**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact table-compact">
+
+## 📐 **$\ln a$: the power of $e = 2.718$ that gives $a$**
+
+| $a$ | 1 | 0.968 | 0.769 | 0.269 | 0.063 |
+| --- | --- | --- | --- | --- | --- |
+| $\ln a$ | 0 | −0.033 | −0.263 | −1.313 | −2.765 |
+
+Check: $e^{-0.263} = 0.769$. Below 1, $\ln a$ is negative.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ✖️ **A product becomes a sum**
+
+<FormulaSteps steps="
+  \ln (0.063 \cdot 0.269) = \ln\,0.0169
+  = \ln\,0.063 + \ln\,0.269
+  = -2.765 - 1.313
+  = -4.078
+" />
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+🔢 2551 probabilities of 0.5 multiply to $10^{-768}$, below the smallest float, about $10^{-308}$. Their logarithms add up to $2551 \cdot (-0.693) = -1768$.
+
+</div>
+
+<!--
+**Say:** ln undoes $e$ to a power: $e^{-0.263} = 0.769$, so $\ln 0.769 = -0.263$. The table holds the probabilities the neuron gave to what happened on 6 to 9 December.
+**Do:** click through: $\ln(ab) = \ln a + \ln b$, with the numbers of 6 and 7 December.
+**Say:** a product of thousands of probabilities is too small for a float; the sum of their logarithms is not, and a larger product still gives a larger sum.
+**If asked:** Python's `math.log` is ln; on a calculator the key ln, not log, which is the logarithm to base 10.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
 # From the Likelihood to the **Loss**
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
-**The likelihood.** Taken as independent, the evenings' probabilities multiply:
+**The likelihood.** The evenings' probabilities, taken as independent, multiply; $\prod$ is their product:
 
 $$
 L = \prod_{i=1}^{N} P(y_i)
@@ -1161,11 +1217,12 @@ Four evenings: $L = 0.063 \cdot 0.269 \cdot 0.769 \cdot 0.968 = 0.0126$.
 
 **The loss.** Minus the logarithm of $L$, per evening: the product becomes a sum, the **cross-entropy**:
 
-$$
-\text{loss} = -\frac{1}{N} \ln L = -\frac{1}{N} \sum_{i=1}^{N} \ln P(y_i)
-$$
-
-Four evenings: $(2.765 + 1.313 + 0.263 + 0.033)/4 = 1.094$.
+<FormulaSteps mode="morph" steps="
+  \text{loss} = -\frac{1}{N} \ln\,L = -\frac{1}{N} (\ln\,P(y_1) + \ldots + \ln\,P(y_N))
+  \text{loss} = -\frac{1}{4} (\ln\,0.063 + \ln\,0.269 + \ln\,0.769 + \ln\,0.968)
+  \text{loss} = -\frac{1}{4} (-2.765 - 1.313 - 0.263 - 0.033)
+  \text{loss} = \frac{4.374}{4} = 1.094
+" />
 
 </div>
 
@@ -1176,8 +1233,8 @@ The largest likelihood is the smallest loss: the numbers that make what happened
 </div>
 
 <!--
-**Say:** Lecture 9 took the same steps with the Gaussian and arrived at χ². ∏ is the product, as ∑ is the sum.
-**Say:** the logarithm turns the product into a sum, $\ln(ab) = \ln a + \ln b$. At the start of training, 2551 factors of 0.5 make $10^{-768}$, too small for a float, whose smallest is about $10^{-308}$; the sum of logarithms is −1768.
+**Say:** Lecture 9 took the same steps with the Gaussian and arrived at χ². Minus the logarithm turns the largest product into the smallest sum.
+**Do:** click through the loss of the four evenings: each ln from the table of the slide before, then the mean.
 **If asked:** neighbouring evenings are alike (Lecture 8), so "independent" is an assumption; it makes the numbers less certain, not the line wrong.
 (~3 min)
 -->
@@ -1294,7 +1351,7 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
-For one evening, the loss $-\ln P(y)$ changes with each number as
+$\partial\,\text{loss} / \partial w_1$, the **slope** of the loss in $w_1$: its change per unit of $w_1$, with $w_2$ and $b$ held fixed. For one evening's $-\ln P(y)$:
 
 $$
 \frac{\partial\,\text{loss}}{\partial w_1} = (\hat{y} - y)\,x_1 \qquad \frac{\partial\,\text{loss}}{\partial w_2} = (\hat{y} - y)\,x_2 \qquad \frac{\partial\,\text{loss}}{\partial b} = \hat{y} - y
@@ -1335,7 +1392,7 @@ An evening the neuron has right and sure, $\hat{y} \approx y$, hardly pulls; one
 </div>
 
 <!--
-**Say:** $\partial$ is the derivative of Lecture 9 with the other numbers held fixed. No logarithm and no exponential is left in the result.
+**Say:** the derivative of Lecture 9, one number at a time. No logarithm and no exponential is left in the result.
 **If asked:** the derivation, by the chain rule through $z$ and the sigmoid, is in the section for the curious.
 (~3 min)
 -->
@@ -1502,7 +1559,7 @@ class: fill
 
 <div class="card card-info card-glass pad-compact">
 
-⌣ The loss of the 2551 training evenings for every $w_1$ and $b$, with $w_2 = 0$: one bowl, no second valley. Its lowest point, $w_1 = -1.05$, $b = 4.17$, is the threshold $4.17 / 1.05 = 3.97$ °C.
+📉 The loss of the 2551 training evenings for every $w_1$ and $b$, with $w_2 = 0$. Each curve joins the points of one loss, as height lines on a map: one bowl, no second valley. Its lowest point, $w_1 = -1.05$, $b = 4.17$, is the threshold $4.17 / 1.05 = 3.97$ °C.
 
 Downhill from any start ends there.
 
@@ -1513,7 +1570,7 @@ Downhill from any start ends there.
 </div>
 
 <!--
-**Say:** contour lines, as on a map: each joins the numbers with the same loss. The threshold neuron, the square, sits near the bottom: loss 0.1086 against 0.1080 at the lowest point.
+**Say:** the numbers on the curves are their losses, falling towards the middle. The threshold neuron, the square, sits near the bottom: loss 0.1086 against 0.1080 at the lowest point.
 **If asked:** the loss curves upward in every direction, so a step downhill never ends in a false valley. Networks with hidden layers lose this.
 (~2 min)
 -->
@@ -1637,6 +1694,45 @@ hideInToc: true
 class: fill
 ---
 
+# An Error Bar on a **Share**
+
+<div class="fig-fill grid-side mt-sm">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📏 **2020: 16 of 23 evenings at 3 to 4 °C froze**
+
+$p = 16/23 = 0.696$
+
+<FormulaSteps mode="morph" steps="
+  \text{SE} = \sqrt{\frac{p (1 - p)}{N}}
+  \text{SE} = \sqrt{\frac{0.696 \cdot 0.304}{23}}
+  \text{SE} = 0.096
+" />
+
+The bar: $0.696 \pm 0.096$. SE, the **standard error**: how far a share of $N$ evenings typically lies from the true share.
+
+7 of the 10 bars reach the share of all ten years, 0.62: about 2 in 3.
+
+</div>
+
+<img class="fig" src="/figures/viz_perceptron_error_bars.svg">
+
+</div>
+
+<!--
+**Say:** a share counted on a few evenings is uncertain: each year's share at 3 to 4 °C scatters around the ten-year share, 0.62. The bar says how far to expect.
+**Do:** click through the bar of 2020; then point at 2019: 4 evenings, a bar of ± 0.25.
+**Ask:** which bars are longest, and why? The years with the fewest evenings: the bar shrinks as $1/\sqrt{N}$.
+**If asked:** a share is the mean of $N$ values that are 1 (frost) or 0. Their variance is $p\,(1 - p)$, and the standard error of a mean of $N$ values is the standard deviation over $\sqrt{N}$.
+(~3 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
 # P(frost) from the Trained **Neuron**
 
 <div class="fig-fill grid-side mt-sm">
@@ -1647,7 +1743,7 @@ class: fill
 
 8 December 2025, 2.6 °C: **0.80**.
 
-The dots count the test evenings: the share with frost per 1 °C, with its ±.
+The dots: the share of the test evenings with frost, per 1 °C, with its error bar.
 
 </div>
 
@@ -1697,11 +1793,13 @@ hideInToc: true
 
 ## 🧮 **A share of $N$ evenings**
 
-Each test evening is right or wrong. The standard error of a share $p$ of $N$:
+Each test evening is right or wrong: the accuracy is a share $p$ of $N$, with the error bar of a share.
 
-$$
-\sqrt{\frac{p\,(1 - p)}{N}} = \sqrt{\frac{0.961 \cdot 0.039}{1095}} = 0.006
-$$
+<FormulaSteps mode="morph" steps="
+  \text{SE} = \sqrt{\frac{p (1 - p)}{N}}
+  \text{SE} = \sqrt{\frac{0.961 \cdot 0.039}{1095}}
+  \text{SE} = 0.006
+" />
 
 </div>
 
@@ -1881,37 +1979,37 @@ class Perceptron:
         self.w = [0.0, 0.0]
         self.b = 0.0
 ```
-```py {6-10}
+```py {5-10}
 class Perceptron:
     def __init__(self):
         self.w = [0.0, 0.0]
         self.b = 0.0
-
     def predict(self, x):
-        z = self.w[0] * x[0] + self.w[1] * x[1] + self.b
+        w = self.w
+        z = w[0] * x[0] + w[1] * x[1] + self.b
         if z > 0:
             return 1
         return 0
 ```
-```py {12-18}
+```py {11-18}
 class Perceptron:
     def __init__(self):
         self.w = [0.0, 0.0]
         self.b = 0.0
-
     def predict(self, x):
-        z = self.w[0] * x[0] + self.w[1] * x[1] + self.b
+        w = self.w
+        z = w[0] * x[0] + w[1] * x[1] + self.b
         if z > 0:
             return 1
         return 0
-
     def fit(self, xs, ys, epochs):
         for epoch in range(epochs):
             for i in range(len(xs)):
-                error = ys[i] - self.predict(xs[i])
-                self.w[0] = self.w[0] + error * xs[i][0]
-                self.w[1] = self.w[1] + error * xs[i][1]
-                self.b = self.b + error
+                x = xs[i]
+                err = ys[i] - self.predict(x)
+                self.w[0] = self.w[0] + err * x[0]
+                self.w[1] = self.w[1] + err * x[1]
+                self.b = self.b + err
 ```
 ````
 
@@ -1930,7 +2028,7 @@ class Perceptron:
 </style>
 
 <!--
-**Do:** four steps: the function of the slide before; the class with its two numbers; `predict` moved in, `w` and `b` now `self.w` and `self.b`; `fit`, the loop of the AND runner.
+**Do:** four steps: the function of the slide before; the class with its two numbers; `predict` moved in, `w` read from `self.w` and `b` now `self.b`; `fit`, the loop of the AND runner, `err` for the error $y - \hat{y}$.
 **Say:** nothing new is computed: the same lines, with the numbers kept in the object instead of passed around.
 (~3 min)
 -->
@@ -1940,36 +2038,35 @@ hideInToc: true
 class: runner-side
 ---
 
-# Fit and Predict, **Live**
-
 ```py {monaco-run} {autorun:false}
 class Perceptron:
     def __init__(self):
         self.w = [0, 0]
         self.b = 0
     def predict(self, x):
-        z = self.w[0] * x[0] + self.w[1] * x[1] + self.b
-        if z > 0:
-            return 1
-        return 0
+        w = self.w
+        z = w[0] * x[0] + w[1] * x[1] + self.b
+        return 1 if z > 0 else 0
     def fit(self, xs, ys, epochs):
         for epoch in range(epochs):
             for i in range(len(xs)):
-                error = ys[i] - self.predict(xs[i])
-                self.w[0] = self.w[0] + error * xs[i][0]
-                self.w[1] = self.w[1] + error * xs[i][1]
-                self.b = self.b + error
-
+                x = xs[i]
+                err = ys[i] - self.predict(x)
+                self.w[0] = self.w[0] + err * x[0]
+                self.w[1] = self.w[1] + err * x[1]
+                self.b = self.b + err
 xs = [[0, 0], [0, 1], [1, 0], [1, 1]]
 model = Perceptron()
-model.fit(xs, [0, 0, 0, 1], 6)       # AND, six epochs
-print(model.w, model.b)              # [2, 1] -2
-print(model.predict([1, 1]))         # 1
+model.fit(xs, [0, 0, 0, 1], 6)   # AND, 6 epochs
+print(model.w, model.b)          # [2, 1] -2
+print(model.predict([1, 1]))     # 1
 ```
 
 <!--
+**Say:** the class of the slide before, run; fit and predict on AND.
 **Do:** run it: `[2, 1] -2`, the numbers of the table by hand, and 1 for (1, 1).
 **Do:** add `other = Perceptron()` and `print(other.w)`: `[0, 0]`. Each object keeps its own numbers.
+**If asked:** `return 1 if z > 0 else 0` is the `if` of the slide before on one line.
 **Say:** fit on the 2551 training evenings, five passes, the same class gives $w = (-1.2, 1.09)$, $b = 3$, and 95.5 % on the test years.
 (~2 min)
 -->
@@ -2615,8 +2712,6 @@ hideInToc: true
 $$
 w_1 \;\to\; z \;\to\; \hat{y} = \text{sigmoid}(z) \;\to\; \text{loss} = -\bigl[\,y \ln \hat{y} + (1 - y) \ln (1 - \hat{y})\bigr]
 $$
-
-so
 
 $$
 \frac{\partial\,\text{loss}}{\partial w_1} = \frac{\partial\,\text{loss}}{\partial \hat{y}} \cdot \frac{\partial \hat{y}}{\partial z} \cdot \frac{\partial z}{\partial w_1}

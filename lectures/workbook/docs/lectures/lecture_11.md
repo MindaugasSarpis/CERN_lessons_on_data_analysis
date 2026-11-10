@@ -27,7 +27,8 @@ used.
    network of step neurons with nine weights set by hand; the four inputs
    pushed through it, on the slide and in Python; the hidden layer as a
    change of coordinates.
-3. **Training a network**: gradient descent needs a slope, so the step
+3. **Training a network**: a loss, one number for how wrong one answer
+   is (−ln 0.3865 = 0.951); gradient descent needs a slope, so the step
    becomes a sigmoid; one evening of the log (12 April 2025, 2.0 °C at
    18:00, frost by 06:00) through two neurons; the chain rule, checked by a
    nudge; the backward pass one link at a time, with the whole chain as a
@@ -96,59 +97,62 @@ Every number on the slides is computed by `figures/src/language.py`; run
 
 ## The lecture, part by part
 
-The lecture is slides 1–67 and estimates about 123 min (the speaker notes add
-up to about 128), so in the two-hour slot **plan to skip the slides of the
-second table** (about 16 min). Slides 68–72 are the optional section For
-the Curious, and slides 73–81 the self-check quizzes; neither takes lecture
+The lecture is slides 1–68 and estimates about 126 min (the speaker notes add
+up to about 130), so in the two-hour slot **plan to skip the slides of the
+second table** (about 16 min). Slides 69–73 are the optional section For
+the Curious, and slides 74–82 the self-check quizzes; neither takes lecture
 time. To jump, type the slide number and press Enter.
 
 | Slides | Part |
 |--|--|
 | 1–3 | The question: twelve true sentences, five written by a program, three false |
 | 4–9 | Two layers solve XOR: OR but not AND, the 2-2-1 network with weights set by hand, the four inputs on the slide and in Python, the change of coordinates |
-| 10–19 | Training: a slope, one evening through two neurons, the chain rule, backward one link at a time, the nudge, one step, XOR learned from random weights |
-| 20–29 | Text as numbers: ids, the counts after each word, probabilities, the counting in Python, generating text, what the model wrote, the chance of the true word month by month, one word of context |
-| 30–35 | Words as vectors: the months by their weather words, the dot product and the cosine, the twelve months as a picture, vectors in a language model |
-| 36–40 | Softmax, the temperature live (drag the scores, *T* from 0.1 to 3, draw words), its effect on text |
-| 41–47 | Context and attention: the word that decides, the weighted average, where the scores come from, attention in a large model |
-| 48–54 | A large language model: the loop, tokens, pretraining, parameters, instruction tuning, what it is not |
-| 55–64 | Prompting: what a prompt gives, without and with context, a test with a known answer, a question only the data can answer, what to check, where a model helps, what never to paste, saying where it was used, reproducibility |
-| 65–67 | What an LLM does with a prompt; recap |
+| 10–20 | Training: the loss of one answer, a slope, one evening through two neurons, the chain rule, backward one link at a time, the nudge, one step, XOR learned from random weights |
+| 21–30 | Text as numbers: ids, the counts after each word, probabilities, the counting in Python, generating text, what the model wrote, the chance of the true word month by month, one word of context |
+| 31–36 | Words as vectors: the months by their weather words, the dot product and the cosine, the twelve months as a picture, vectors in a language model |
+| 37–41 | Softmax, the temperature live (drag the scores, *T* from 0.1 to 3, draw words), its effect on text |
+| 42–48 | Context and attention: the word that decides, the weighted average, where the scores come from, attention in a large model |
+| 49–55 | A large language model: the loop, tokens, pretraining, parameters, instruction tuning, what it is not |
+| 56–65 | Prompting: what a prompt gives, without and with context, a test with a known answer, a question only the data can answer, what to check, where a model helps, what never to paste, saying where it was used, reproducibility |
+| 66–68 | What an LLM does with a prompt; recap |
 
 | Skip | Slides |
 |--|--|
-| Check one derivative by a nudge; the step in Python | 15, 17 |
-| Not every start learns XOR | 19 |
-| The chance of the true word, month by month | 28 |
-| The dot product in Python | 34 |
-| Softmax in Python | 39 |
-| Where the scores come from | 44 |
-| The number of parameters | 52 |
-| Where an LLM helps in an analysis | 61 |
+| Check one derivative by a nudge; the step in Python | 16, 18 |
+| Not every start learns XOR | 20 |
+| The chance of the true word, month by month | 29 |
+| The dot product in Python | 35 |
+| Softmax in Python | 40 |
+| Where the scores come from | 45 |
+| The number of parameters | 53 |
+| Where an LLM helps in an analysis | 62 |
 
-- **Do not cut** slide 3 (the question), slides 22–27 and 29 (the counting
-  model, which answers it) or slide 43 (attention as a weighted average):
-  slide 66 answers the opening with their numbers.
-- **Do not cut** slides 54 and 56–58 (what a model is not, what a prompt
-  gives, a prompt with context, the test) or 62–63 (what never to paste,
+- **Do not cut** slide 3 (the question), slides 23–28 and 30 (the counting
+  model, which answers it) or slide 44 (attention as a weighted average):
+  slide 67 answers the opening with their numbers.
+- **Do not cut** slides 55 and 57–59 (what a model is not, what a prompt
+  gives, a prompt with context, the test) or 63–64 (what never to paste,
   saying where a model was used): the seminar applies them.
-- **Slides 8, 17, 24, 26, 34, 39, 46 and 58** run Python in the browser,
+- **Slides 8, 18, 25, 27, 35, 40, 47 and 59** run Python in the browser,
   plain Python without libraries. The first run downloads the Python
-  runtime, so run one block before the lecture. Slide 26 prints the five
-  sentences of slide 3 (`random.seed(38)`); slide 58 shows a test that
+  runtime, so run one block before the lecture. Slide 27 prints the five
+  sentences of slide 3 (`random.seed(38)`); slide 59 shows a test that
   fails on a correct function, because 25.275 comes out as
   25.275000000000002.
-- **Slide 38 is an interactive figure** that works offline: at *T* = 0.5
+- **Slide 39 is an interactive figure** that works offline: at *T* = 0.5
   read the row of warm (e⁴ = 54.60, Σ = 63.21, *p* = 0.864), press the
   chips 1, 2 and 3, drag the score of mild sideways, press "draw" or
   "×20". Use it on the projected window, not in the presenter view.
-- **Slide 14** builds the backward pass in five clicks, one factor of the
-  chain rule per click, and shows the whole chain on the sixth; **slide 43**
+- **Slide 15** builds the backward pass in five clicks, one factor of the
+  chain rule per click, and shows the whole chain on the sixth; **slide 44**
   the attention weights in three clicks, then the weighted average.
-- **Slides 18 and 19** are the training of slide 16 repeated: nine weights,
+- **Slides 11, 14 and 38** step a formula per click, the numbers put in
+  shown in the accent colour: the loss of 0.386, the chain rule at t = 1,
+  the softmax of warm.
+- **Slides 19 and 20** are the training of slide 17 repeated: nine weights,
   four points, 2000 steps; the hidden neurons it finds are an OR and an
   AND, the solution of slide 6.
-- **Slides 68–72** (For the Curious) are for time left at the end or for
+- **Slides 69–73** (For the Curious) are for time left at the end or for
   students afterwards.
 
 Before the session, start the local copy of the slides: `node
@@ -158,7 +162,7 @@ scripts/serve-local.mjs 8123`, then open
 ## Check yourself
 
 No quiz interrupts the lecture. The deck closes with a self-check section,
-slides 73–81: eight quiz slides for students to try afterwards. The same
+slides 74–82: eight quiz slides for students to try afterwards. The same
 questions, with their answers:
 
 1. A network computes *h*₁ = step(*x*₁ + *x*₂ − 0.5), *h*₂ = step(*x*₁ +
@@ -194,15 +198,7 @@ questions, with their answers:
 
 ## Paired seminar
 
-[Seminar 11 · A Language Model by Hand](../seminars/seminar_11.md) builds the
-counting model of slides 21–27 in plain Python from today's folder: a
-script writes the twelve sentences from `weather.csv`, the students count
-the word pairs in a dictionary as `weather.group` does, turn the counts into
-probabilities, write sentences with `random.choice`, and compute softmax at
-three temperatures. Then they ask a chat model on a free account to explain
-`weather.word_for` and to write a test for it, run the test, check that it
-fails on a changed function, and add a note on the use of the model to the
-README; in the last part the same on a function of their own project.
+[Seminar 11 · A Language Model by Hand](../seminars/seminar_11.md) builds the counting model of the lecture on real text, in plain Python, in a new, empty folder (the `analysis` environment, no new package). The lecturer runs four scripts on 32 033 first names (makemore, MIT; US Social Security names of 2018) and 40 000 lines of Shakespeare: which letter follows which (after `q`, `u` 0.757), names drawn from the counts and their loss (2.454 against 3.296 blind), the same counts at three temperatures (as T goes to 0 the model writes the name `a`), and text from 1, 3 and 6 characters of context; the room asks a chat LLM the same and sets its answers beside the counts. Then pairs, with any tools and an LLM, predict and measure whether a longer context always guesses the next letter of new names better: best at 4 letters, 0.362 ± 0.003, worse beyond, where more contexts were never seen.
 
 ## Further reading
 

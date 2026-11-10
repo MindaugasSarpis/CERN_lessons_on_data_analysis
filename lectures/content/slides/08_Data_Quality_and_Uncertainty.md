@@ -370,15 +370,16 @@ class: fill
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
-📊 Two peaks: 3848 hours at −1 to 0 °C, 3032 at 11 to 12 °C. The mean, 7.16 °C, lies in the dip between them: 2706 hours.
+📊 A histogram: each bar counts the hours in a bin 1 °C wide. Two peaks: 3848 hours at −1 to 0 °C, 3032 at 11 to 12 °C. The mean, 7.16 °C, lies in the dip: 2706 hours.
 
 </div>
 
 <img class="fig fig-fill mt-sm" src="/figures/viz_probability_hist_mean.svg">
 
 <!--
-**Say:** the histogram of Lecture 7: the cold months pile up near freezing, the warm months near 12 °C. Fewer hours lie near the mean than near either peak.
-(~1 min)
+**Say:** every hour falls into one bin, and the bar over a bin is how many fell there. The cold months pile up near freezing, the warm months near 12 °C. Fewer hours lie near the mean than near either peak.
+**Ask:** what do the 50 bars add up to? 87 552: every measured hour once.
+(~1.5 min)
 -->
 
 ---
@@ -470,25 +471,20 @@ hideInToc: true
 
 # The **Mean**
 
-$$
-\bar{x} = \frac{1}{N} \sum_{i=1}^{N} x_i
-$$
-
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-compact">
+<FormulaSteps steps="
+  \bar{x} = \frac{1}{N} \sum x_i
+  = \frac{27.3 + 25.6 + 24.6 + 23.6}{4}
+  = \frac{101.1}{4}
+  = 25.275 °C
+" />
 
-## 🧮 **The four hours**
-
-$$
-\bar{x} = \frac{101.1}{4} = 25.275\ ^\circ\mathrm{C}
-$$
-
-</div>
+<div class="stack-tight" style="margin-top:0;">
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 📄 **The log**
+## 📄 **The log: 87 552 measured hours**
 
 $$
 \bar{x} = \frac{626\,869.3}{87\,552} = 7.16\ ^\circ\mathrm{C}
@@ -496,17 +492,20 @@ $$
 
 </div>
 
-</div>
-
-<div class="note-text mt-md">
+<div class="card card-info card-glass pad-compact">
 
 $\bar{x}$, “x bar”: the mean of the values $x$.
 
 </div>
 
+</div>
+
+</div>
+
 <!--
+**Do:** three clicks: the four hours of 21 July in place of the symbols, their sum, the mean.
 **Say:** the same expression for four values and for 87 552: add, then divide by the count.
-(~1 min)
+(~1.5 min)
 -->
 
 ---
@@ -538,9 +537,12 @@ hideInToc: true
 
 # Variance and Standard **Deviation**
 
-$$
-s^2 = \frac{1}{N-1} \sum_{i=1}^{N} (x_i - \bar{x})^2 \qquad s = \sqrt{s^2}
-$$
+<FormulaSteps steps="
+  s^2 = \frac{\sum (x_i - \bar{x})^2}{N - 1}
+  = \frac{7.4675}{4 - 1}
+  = 2.489 °C^2
+  s = \sqrt{s^2} = \sqrt{2.489} = 1.58 °C
+" />
 
 <div class="card card-primary card-glass pad-compact table-compact mt-sm">
 
@@ -551,17 +553,10 @@ $$
 
 </div>
 
-<div v-click class="card card-success card-glass pad-compact mt-sm">
-
-$$
-s^2 = \frac{7.4675}{3} = 2.489\ ^\circ\mathrm{C}^2 \qquad s = \sqrt{2.489} = 1.58\ ^\circ\mathrm{C}
-$$
-
-</div>
-
 <div class="note-text mt-sm">A square is never negative, so nothing cancels; the root brings the unit back to °C.</div>
 
 <!--
+**Do:** three clicks: the sum of the squares, 7.4675, in place of the symbols; the variance; the standard deviation.
 **Say:** s², the variance, is the mean squared distance from the mean; s, the standard deviation, is how far a single value typically lies from it.
 **If asked:** why N − 1 = 3 and not 4: the deviations are measured from x̄, which was computed from the same four values and lies closer to them than the long-run mean does. Dividing by 4 would give s = 1.37 °C.
 (~3 min)
@@ -676,7 +671,7 @@ hideInToc: true
 
 ## 📦 **The middle half**
 
-From −0.2 to 14.2 °C: the box of a boxplot.
+From −0.2 to 14.2 °C: half of all hours.
 
 </div>
 
@@ -690,8 +685,10 @@ From −6.0 to 21.8 °C.
 
 </div>
 
+<div class="note-text mt-md">A percentile: the value below which that share of the hours lies. 25 % of 87 552 is 21 888, and the 21 888th hour from the coldest is −0.2 °C.</div>
+
 <!--
-**Say:** a percentile is the value below which that share of the hours lies. The median, 6.7 °C, lies 0.46 °C below the mean.
+**Say:** a percentile is read off the sorted hours: count the share from the coldest, read the value. The median, 6.7 °C, lies 0.46 °C below the mean.
 **If asked:** these are the numbers a boxplot draws: the box from the 25 % to the 75 % point, a line at the median.
 (~2 min)
 -->
@@ -764,14 +761,14 @@ class: fill
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
-🎲 Hours counted in random order: the share wanders, then settles at 0.255. Counted in time order from 1 January 2016, it stays at 1 for 205 hours, then swings with the seasons for years.
+🎲 In random order the share settles at 0.255. In time order from 1 January 2016 it stays at 1 for 205 hours, then swings with the seasons. A logarithmic axis: 1, 10, 100, … hours, each step ten times the one before.
 
 </div>
 
 <img class="fig fig-fill mt-sm" src="/figures/viz_probability_running_share.svg">
 
 <!--
-**Say:** a probability is the share in the long run, and it needs cases that are not linked to each other: in time order the first 205 hours were one cold spell.
+**Say:** a probability is the share in the long run, and it needs cases that are not linked to each other: in time order the first 205 hours were one cold spell. On the logarithmic axis equal steps are equal factors: the first 10 hours get as much room as the hours from 1000 to 10 000.
 **Ask:** why does the time-order line only settle after many years? Each winter pushes it up, each summer down.
 (~2 min)
 -->
@@ -1022,6 +1019,7 @@ $$
 
 - $\mu$: the centre, where the curve peaks
 - $\sigma$: its width
+- $f(x)$: a density, the share of values per °C near $x$
 - $e = 2.718$; $e^{-1/2} = 0.6065$, $e^{-2} = 0.1353$
 
 </div>
@@ -1089,9 +1087,9 @@ class: fill
 
 - within μ ± σ: **68.3 %**
 - within μ ± 2σ: **95.4 %**
-- within μ ± 3σ: **99.7 %**
+- within μ ± 3σ: **99.7 %**
 
-The same for every Gaussian, whatever μ and σ.
+An area is a share of the values; the same for every Gaussian, whatever μ and σ.
 
 </div>
 
@@ -1142,6 +1140,8 @@ hideInToc: true
 </div>
 
 <div v-click class="card card-info card-glass pad-compact mt-md">
+
+z: the distance from the mean, counted in s.
 
 $$
 z = \frac{x - \bar{x}}{s}: \qquad \frac{-16.3 - 7.16}{8.85} = -2.65 \qquad \frac{32.4 - 7.16}{8.85} = +2.85
@@ -1216,7 +1216,7 @@ class: fill
 
 - warm hours are drier
 - the cloud falls from left to right
-- the colour of a cell: how many hours it holds
+- the colour of a cell: how many hours it holds, on a scale of tens: 1, 10, 100
 
 </div>
 
@@ -1235,9 +1235,11 @@ hideInToc: true
 
 # Covariance: Do Two Columns Move **Together**?
 
-$$
-s_{xy} = \frac{1}{N-1} \sum_{i=1}^{N} (x_i - \bar{x})(y_i - \bar{y})
-$$
+<FormulaSteps steps="
+  s_{x y} = \frac{\sum (x_i - \bar{x})(y_i - \bar{y})}{N - 1}
+  = \frac{-21.15}{4 - 1}
+  = -7.05 °C \cdot \%
+" />
 
 <div class="card card-primary card-glass pad-compact table-compact mt-sm">
 
@@ -1250,19 +1252,12 @@ $$
 
 </div>
 
-<div v-click class="card card-success card-glass pad-compact mt-sm">
-
-$$
-s_{xy} = \frac{-21.15}{3} = -7.05\ ^\circ\mathrm{C} \cdot \%
-$$
-
-</div>
-
 <div class="note-text mt-sm">Every product is negative: when the temperature lies above its mean, the humidity lies below its own, ȳ = 67.5 %.</div>
 
 <!--
+**Do:** two clicks: the sum of the products, −21.15, in place of the symbols; then the covariance.
 **Say:** a product is positive when both lie on the same side of their means, negative when on opposite sides; the sum says which wins.
-**If asked:** ȳ = 270 / 4 = 67.5 %.
+**If asked:** ȳ = 270 / 4 = 67.5 %.
 (~3 min)
 -->
 
@@ -1272,9 +1267,11 @@ hideInToc: true
 
 # The Correlation Coefficient **r**
 
-$$
-r = \frac{s_{xy}}{s_x\, s_y}
-$$
+<FormulaSteps steps="
+  r = \frac{s_{x y}}{s_x \, s_y}
+  = \frac{-7.05}{1.578 \times 4.796}
+  = -0.93
+" />
 
 <div class="grid-2 mt-sm gap-md">
 
@@ -1282,8 +1279,8 @@ $$
 
 ## 🧮 **The four hours**
 
-- $s_x$ = 1.578 °C, $s_y$ = 4.796 %
-- $r = \dfrac{-7.05}{1.578 \times 4.796} = -0.93$
+- covariance $s_{xy}$ = −7.05 °C · %
+- standard deviations $s_x$ = 1.578 °C, $s_y$ = 4.796 %
 
 </div>
 
@@ -1302,6 +1299,7 @@ $$
 <div class="note-text mt-md">r = +1: the points lie on a rising straight line; −1: on a falling one; 0: no straight line at all.</div>
 
 <!--
+**Do:** two clicks: the three numbers of the left card in place of the symbols, then r.
 **Say:** dividing by both standard deviations takes away the units and the scale: °C or °F, % or a fraction, r stays the same.
 **Ask:** why is r closer to −1 for the four hours than for the whole log? One evening of cooling air: four points nearly on a line.
 (~2 min)
@@ -1514,11 +1512,9 @@ hideInToc: true
 
 # The Variance of a **Mean**
 
-<div class="card card-primary card-glass pad-compact mt-sm">
+<div class="note-text mt-sm">
 
-$$
-\bar{x} = \frac{x_1 + x_2 + \dots + x_N}{N}
-$$
+The mean of N values: $\bar{x} = (x_1 + x_2 + \dots + x_N) / N$
 
 </div>
 
@@ -1544,9 +1540,9 @@ $$
 \sigma_{\bar{x}} = \frac{\sigma}{\sqrt{N}} \approx \frac{s}{\sqrt{N}}
 $$
 
-</div>
+The standard error of the mean: how far a mean of N independent values typically lies from the long-run mean.
 
-<div v-click class="note-text mt-sm">The standard error of the mean: how far a mean of N independent values typically lies from the long-run mean.</div>
+</div>
 
 <!--
 **Say:** two rules, two lines. The factor 1/N comes out squared; N independent variances add up to N σ²; what is left is σ²/N.
@@ -1601,6 +1597,27 @@ hideInToc: true
 class: fill
 ---
 
+# What an Error Bar **Shows**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+📏 A dot at the value, a line from value − ± to value + ±. One mean of 100 random hours, 6.94 °C, with three bars: a figure has to say which ± it draws.
+
+</div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_probability_error_bar.svg">
+
+<!--
+**Say:** the dot is the mean of 100 hours drawn at random; the bar says how far it may lie from the long-run mean. Its length depends on what is drawn: one standard error, 0.885 °C either side; two, 1.77; or s, the spread of single hours, 8.85. The short ends, the caps, only mark where the bar stops.
+**Ask:** which bar says how well this mean is known? The standard error. Which one describes single hours? s.
+(~2 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
 # What ± One Standard Error **Means**
 
 <div class="card card-primary card-glass pad-compact mt-sm">
@@ -1612,7 +1629,7 @@ class: fill
 <img class="fig fig-fill mt-sm" src="/figures/viz_probability_intervals.svg">
 
 <!--
-**Say:** a value ± one standard error is an interval that holds the long-run mean in about two cases of three; ± two, in 19 of 20. Here the long-run mean is known: the hours were drawn from the log, whose mean is 7.16.
+**Say:** a value ± one standard error is an interval that holds the long-run mean in about two cases of three; ± two, in 19 of 20. Here the long-run mean is known: the hours were drawn from the log, whose mean is 7.16. The lowest bar is the 6.94 ± 0.885 of the slide before.
 **Ask:** 28 of 50 is 56 %, not 68 %: is the rule wrong? Fifty intervals are few; 2000 give 67 %.
 (~2 min)
 -->
@@ -1644,9 +1661,10 @@ hideInToc: true
 # The Standard Error of **7.16**
 
 <FormulaSteps steps="
-  \frac{s}{\sqrt{N}} = \frac{8.85}{\sqrt{87\,552}}
+  \sigma_{x̄} \approx \frac{s}{\sqrt{N}}
+  = \frac{8.85}{\sqrt{87\,552}}
   = \frac{8.85}{295.9}
-  = 0.030 \text{ °C}
+  = 0.030 °C
 " />
 
 <div v-click class="card card-warning card-glass pad-compact mt-md">
@@ -1656,7 +1674,7 @@ hideInToc: true
 </div>
 
 <!--
-**Do:** click through: √87 552 = 295.9, then 0.030, then the condition.
+**Do:** four clicks: s and N of the log in place of the symbols, √87 552 = 295.9, then 0.030, then the condition.
 **Say:** if the hours were independent, 7.16 would be known to 0.03 °C, three hundredths of a degree from ten years of one station.
 **Ask:** the hours are not independent: an hour nearly repeats the one before. Is 0.030 too small or too large?
 (~2 min)
@@ -1705,7 +1723,7 @@ class: fill
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
-🕰️ r of the temperatures of two hours, against the time between them: 0.996 an hour apart, 0.91 a week apart, 0.78 a month apart; −0.73 half a year apart, summer against winter; 0.88 a year apart.
+🕰️ r of two hours against the time between them: 0.996 an hour apart, 0.78 a month, −0.73 half a year, 0.88 a year. A logarithmic axis: equal steps multiply the time, 1 h × 24 = 1 day.
 
 </div>
 
@@ -1751,9 +1769,12 @@ hideInToc: true
 
 # The Standard Error from the Ten **Years**
 
-$$
-\frac{s_{\text{years}}}{\sqrt{10}} = \frac{0.70}{3.16} = 0.22\ ^\circ\mathrm{C}
-$$
+<FormulaSteps steps="
+  \sigma_{x̄} \approx \frac{s_{\text{years}}}{\sqrt{N}}
+  = \frac{0.70}{\sqrt{10}}
+  = \frac{0.70}{3.16}
+  = 0.22 °C
+" />
 
 <div class="grid-2 mt-md gap-md">
 
@@ -1776,6 +1797,7 @@ The 87 552 hours tell as much about the mean as about (8.85 / 0.22)² ≈ 1600 
 </div>
 
 <!--
+**Do:** three clicks: the s of the ten years and N = 10 in place of the symbols, √10, the result.
 **Say:** the same expression, s/√N, applied to values that are close to independent. 0.22 is the honest standard error of 7.16.
 **If asked:** r of each year with the next is −0.41 over nine pairs: no sign that a warm year is followed by another.
 (~3 min)
@@ -2261,7 +2283,7 @@ class: fill
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
-🎲 $P(k) = \binom{n}{k} p^k (1 - p)^{n-k}$ with n = 10, p = 0.255: P(0) = 0.745¹⁰ = 0.053, P(2) = 45 × 0.255² × 0.745⁸ = 0.278. Ten hours drawn at random follow it; ten hours in a row do not.
+🎲 $P(k) = \binom{n}{k} p^k (1 - p)^{n-k}$, n = 10 hours, p = 0.255; $\binom{10}{2}$ = 45, the ways to pick 2 of 10: P(2) = 45 × 0.255² × 0.745⁸ = 0.278, P(0) = 0.745¹⁰ = 0.053. Ten random hours follow it; ten in a row do not.
 
 </div>
 
@@ -2288,6 +2310,7 @@ class: fill
 - 86 of 87 552 hours
 - among 1000 random hours: λ = 1000 × 86 / 87 552 = 0.982
 - $P(k) = \dfrac{\lambda^k e^{-\lambda}}{k!}$
+- $k! = 1 \times 2 \times \dots \times k$: 3! = 6
 - P(0) = 0.374, P(1) = 0.368, P(2) = 0.181
 - mean = variance = λ: a count k spreads by √k
 

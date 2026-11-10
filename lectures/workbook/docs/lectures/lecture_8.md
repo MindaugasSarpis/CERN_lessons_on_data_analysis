@@ -24,19 +24,22 @@ The answer is written as the README writes it: 7.16 ± 0.22 °C.
    a published mean changed by left-out rows (Reinhart and Rogoff,
    corrected by Herndon, Ash and Pollin); five checks, each with a count;
    the unit of `temp_c`, checked with numbers.
-3. **Describing a distribution**: the hours in bins of 1 °C; the mean of
+3. **Describing a distribution**: the hours in bins of 1 °C, a histogram; the mean of
    the cold and the warm half of the year; the sum sign Σ; the mean, the
    deviations, the variance and the standard deviation, each with the four
    hours pushed through (25.275 °C, s = 1.58 °C) and run in Python; the log,
-   s = 8.85 °C; the median against the mean, and in Python; percentiles.
+   s = 8.85 °C; the median against the mean, and in Python; percentiles, read
+   off the sorted hours (the 21 888th of 87 552 is the 25 % point, −0.2 °C).
 4. **Probability by counting**: P(frost) = 22 352 / 87 552 = 0.255; the
-   share settles as hours are counted at random; P(frost) in each month and
+   share settles as hours are counted at random (on a logarithmic axis);
+   P(frost) in each month and
    at each hour of a March day; conditional probability; frost given the
    hour before, 0.956, and given no frost before, 0.015; neighbouring hours
    are not independent (0.244 counted against 0.065); the same count on one
    day, live.
 5. **The Gaussian**: the curve with μ = 7.16 and σ = 8.85 °C pushed through
-   it (3946 hours per 1 °C at the top), live; the 68 / 95 / 99.7 % areas; the
+   it (a density: 3946 hours per 1 °C at the top), live; the 68 / 95 / 99.7 %
+   areas; the
    hours against the curve: 62.6 % within ± s, not 68.3 %, and no long
    tails; means of 100 random hours are Gaussian.
 6. **Correlation**: temperature and humidity of every hour; the covariance
@@ -47,8 +50,9 @@ The answer is written as the README writes it: 7.16 ± 0.22 °C.
 7. **The standard error**: the variance of a sum, checked with two random
    hours (12.52 °C) and two neighbouring hours (17.68 °C); a factor comes out
    squared; the variance of a mean, σ²/N, derived; s/√N checked on random
-   hours, and live for N = 1 to 1000; what ± one standard error means, as 50
-   intervals; how it shrinks with N, live; the standard error of 7.16 if the
+   hours, and live for N = 1 to 1000; an error bar, one mean of 100 random
+   hours, 6.94 °C, drawn ± one standard error (0.885), ± two and ± s; what ±
+   one standard error means, as 50 intervals; how it shrinks with N, live; the standard error of 7.16 if the
    hours were independent, 0.030 °C.
 8. **When hours are not independent**: means of 1000 hours at random (0.28)
    and in a row (7.75 °C); r against the time between two hours; the ten
@@ -67,9 +71,9 @@ The answer is written as the README writes it: 7.16 ± 0.22 °C.
 
 ## The lecture, part by part
 
-The lecture is slides 1–69 and estimates about 116 min, so in the two-hour
+The lecture is slides 1–70 and estimates about 117 min, so in the two-hour
 slot **plan to skip the slides of the second table** (about 12 min).
-Slides 70–78 are the optional section For the Curious and slides 79–87 the
+Slides 71–79 are the optional section For the Curious and slides 80–88 the
 self-check quizzes; neither takes lecture time. To jump, type the slide
 number and press Enter.
 
@@ -77,13 +81,13 @@ number and press Enter.
 |--|--|
 | 1–3 | The question: how far can 7.16 °C be from the station's long-run mean? A show of hands for 0.03, 0.2, 1 or 9 °C |
 | 4–7, 9, 11 | Is every hour valid: the six hours, the whole log with and without the marks, the marks in a figure, four ways to treat 120 missing hours, five checks with counts |
-| 13–22, 24 | Describing a distribution: the histogram, the two halves of the year, Σ, the mean, the deviations, variance and standard deviation, the four hours in Python, s of the log, the median, percentiles |
+| 13–22, 24 | Describing a distribution: the histogram and its bins, the two halves of the year, Σ, the mean, the deviations, variance and standard deviation, the four hours in Python, s of the log, the median, percentiles |
 | 25–29, 31–33 | Probability by counting: P(frost), the share settling, frost in each month, conditional probability, frost given the hour before, independence, one day live |
 | 34–35, 37–40 | The Gaussian: the curve, its areas, the hours against it, the check in numbers, means of random hours |
 | 41–48 | Correlation: the scatter of temperature and humidity, covariance, r, r live, pairs of columns, random and neighbouring pairs, r and a curve |
-| 49–57 | The standard error: the variance of a sum, a factor squared, the variance of a mean, the check, the mean of N random hours live, what ± means, how it shrinks with N, 0.030 |
-| 58–63, 65 | Not independent: hours in a row, r against the time between hours, the ten yearly means, 0.22, one year's own ±, which ± belongs to 7.16 |
-| 66–69 | The answer in five steps, the README, a checklist, the recap |
+| 49–58 | The standard error: the variance of a sum, a factor squared, the variance of a mean, the check, the mean of N random hours live, an error bar, what ± means, how it shrinks with N, 0.030 |
+| 59–64, 66 | Not independent: hours in a row, r against the time between hours, the ten yearly means, 0.22, one year's own ±, which ± belongs to 7.16 |
+| 67–70 | The answer in five steps, the README, a checklist, the recap |
 
 | Skip | Slides |
 |--|--|
@@ -93,24 +97,28 @@ number and press Enter.
 | The median in Python | 23 |
 | Frost at 03:00 and at 14:00 in March | 30 |
 | The Gaussian in Python | 36 |
-| Writing a result with its ± | 64 |
+| Writing a result with its ± | 65 |
 
 - **Do not cut** slide 3 (the question, with the counts of the show of
-  hands on the board) or slide 65, which answers it with the four numbers
+  hands on the board) or slide 66, which answers it with the four numbers
   of the opening.
-- **Do not cut** slides 50–57 and 59–62: the one derivation of the lecture,
+- **Do not cut** slides 50–58 and 60–63: the one derivation of the lecture,
   s/√N, and the reason it fails for the hours. The seminar computes the
   same 0.030 and 0.22 with pandas.
-- **Slides 5, 6, 10, 15, 19, 31, 32, 39, 43 and 65** show the question or
-  the numbers first and the result on a click; ask the room before
-  clicking. **Slide 52** builds the variance of a mean in four clicks, one
-  line of the derivation each, and **slide 57** the standard error of 7.16
-  in three: √87 552, then 0.030, then the condition.
+- **Slides 5, 6, 10, 15, 31, 32, 39 and 66** show the question or the
+  numbers first and the result on a click; ask the room before clicking.
+  **Slides 17, 19, 43, 44, 58 and 63** step a formula one click at a time:
+  the symbols first, then the numbers of the log in their place (in the
+  accent colour), then the result: the mean and the standard deviation of
+  the four hours, their covariance and r, the standard error of 7.16 (s and
+  N, √87 552 = 295.9, 0.030, then the condition) and of the ten years.
+  **Slide 52** builds the variance of a mean in three clicks, one line of
+  the derivation each.
 - **Slide 54 is an interactive figure** that works offline: pick N = 1, 4,
   16, 100 or 1000 hours per mean and read the spread of the 1000 means
   beside s/√N; at 100 and 1000 press "zoom in". Use it on the projected
   window, not in the presenter view.
-- **Slides 20, 23, 33, 36, 45 and 56** run plain Python in the browser,
+- **Slides 20, 23, 33, 36, 45 and 57** run plain Python in the browser,
   each pushing a list of the log through the slide's expression. The first
   run downloads the Python runtime and needs internet in the room, so press
   one ▶ before the lecture. The notes of each say what to change and run
@@ -118,16 +126,23 @@ number and press Enter.
 - **Every figure fills its slide** and is drawn from `weather.csv` by
   `figures/src/probability.py`, which also prints every number the slides
   state: `python figures/src/probability.py`.
-- **Slide 55** shows 50 intervals of ± one standard error; 28 of them hold
-  the mean, against 67 % of 2000. The note says why 50 is not enough to
-  show 68 %.
-- **Slides 70–78** (For the Curious) are for time left at the end or for
+- **Slide 55** explains an error bar for a room that sees one for the first
+  time: one mean of 100 random hours, 6.94 °C, with three bars, ± one
+  standard error (6.06 to 7.83), ± two and ± s, and says that a figure has
+  to name its ±. **Slide 56** shows 50 intervals of ± one standard error;
+  28 of them hold the mean, against 67 % of 2000. The note says why 50 is
+  not enough to show 68 %.
+- **New notions get a line where they first appear**: what a histogram's
+  bar counts (14), a percentile read off the sorted hours (24), a
+  logarithmic axis (27 and 61), a density (35), an area as a share of the
+  values (37), z (39), the colour scale of tens (42).
+- **Slides 71–79** (For the Curious) are for time left at the end or for
   students afterwards.
 
 ## Check yourself
 
 No quiz interrupts the lecture. The deck closes with a self-check section,
-slides 79–87: eight quiz slides for students to try afterwards. The same
+slides 80–88: eight quiz slides for students to try afterwards. The same
 questions, with their answers:
 
 1. A file holds four temperatures, 10.0, 12.0, −999 and 14.0 °C, where
@@ -166,13 +181,7 @@ questions, with their answers:
 
 ## Paired seminar
 
-[Seminar 8 · pandas](../seminars/seminar_08.md) answers the same question
-with the library pandas. Every student makes the conda environment
-`analysis` from today's folder, adds pandas to it, reads `weather.csv` into
-a table, finds 5.78 with the `-999` marks and 7.16 without them, the
-standard deviation 8.85 and the standard error 0.030, the mean of each
-month and of each year, and writes 7.16 ± 0.22 °C into the README; then
-reads a file of their own project the same way.
+[Seminar 8 · pandas](../seminars/seminar_08.md) asks a question of the same kind with pandas, on real open data. The room makes the conda environment `analysis` (weeks 8–12) with pandas and Matplotlib. The lecturer runs four scripts: the daily record of the Vilnius weather station since 1881 (GHCN-Daily, NOAA NCEI), read from its address, with temperatures in tenths of °C, empty fields and a flagged 198 °C; NOAA's Mauna Loa CO₂ table, whose mark `-1` read as a number moves a mean from 25.5 to 19.1; a histogram of the days of 1991–2020 with the mean ± s; the ± of their mean from the days (0.09) and from the thirty years (0.14). Then pairs, with any tools and an LLM, answer whether July 2025 in Vilnius was warmer than the Julys of 1991–2020, and how sure that is (+0.47 ± 0.31 °C).
 
 ## Before Lecture 8
 

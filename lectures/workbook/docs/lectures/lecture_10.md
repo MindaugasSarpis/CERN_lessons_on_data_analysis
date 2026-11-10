@@ -39,31 +39,32 @@ the code is plain Python on lists.
    and the ten updates as lines; the rule in Python, live; linearly
    separable; on 2551 evenings the rule never stops (95.2 %, 33.3 %,
    92.3 %, … after each pass); what it does not give.
-5. **From the step to the sigmoid** (28–36): counting errors gives no
-   slope; frost by counting, per degree (62 % of the evenings at 3 to
+5. **From the step to the sigmoid** (28–37): counting errors gives no
+   slope, and what a loss is; frost by counting, per degree (62 % of the evenings at 3 to
    4 °C); the sigmoid; the output as a probability for four evenings of
-   December 2025; the Bernoulli probability of what happened; the
-   likelihood and the loss, the cross-entropy, of the four (1.094); what
+   December 2025; the Bernoulli probability of what happened; the natural
+   logarithm, which turns a product into a sum; the likelihood and the loss, the cross-entropy, of the four (1.094); what
    the loss charges; the loss computed live.
-6. **The gradient** (37–43): the slope of the loss, (ŷ − y)·x, with the
+6. **The gradient** (38–44): the slope of the loss, (ŷ − y)·x, with the
    numbers of 8 December 2025; checked with a nudge; one step downhill; the
    mean slope over four evenings; one update for three models (the line of
    Lecture 9, Rosenblatt's rule, the logistic neuron); the loss as one bowl.
-7. **Train and test** (44–53): seven years to learn from, three to score;
+7. **Train and test** (45–55): seven years to learn from, three to score;
    five passes over the training evenings (loss from 0.693 to 0.110);
-   Rosenblatt's loop with one change, in plain Python; tonight with a
-   probability, 0.80, and live with this evening's numbers; the ± of an
+   Rosenblatt's loop with one change, in plain Python; what an error bar on
+   a share is (16 of 23 evenings in 2020, ± 0.096; 7 of the 10 yearly bars
+   reach the share of all years); tonight with a probability, 0.80, and live with this evening's numbers; the ± of an
    accuracy; four rules on the test years; seen and unseen evenings (a rule
    that keeps every evening: 98.8 % seen, 93.1 % unseen); missed frosts and
    false alarms.
-8. **A model as an object** (54–58): what a model holds and does; the same
+8. **A model as an object** (56–60): what a model holds and does; the same
    code as a class `Perceptron`, built one method at a time; fit and
    predict, live, on AND; why the numbers live in the object.
-9. **The limit: XOR** (59–62): no line exists, by four inequalities; what
+9. **The limit: XOR** (61–64): no line exists, by four inequalities; what
    the two rules do on XOR.
-10. **Wrap-up** (63–65): the answers for 8 December 2025, every rule with
+10. **Wrap-up** (65–67): the answers for 8 December 2025, every rule with
     its test accuracy; the recap.
-11. **For the curious** (66–79), after the recap and outside the lecture
+11. **For the curious** (68–81), after the recap and outside the lecture
     time: the convergence theorem and its proof, checked on AND (at most 51
     updates, 10 needed); w at a right angle to the line, the distance of a
     point from it, what w and b do; the slope of the sigmoid and the
@@ -74,9 +75,9 @@ the code is plain Python on lists.
 
 ## The lecture, part by part
 
-The main path is slides 1–65. **Plan to skip the slides of the second
-table** to fit the two-hour slot; slides 66–79 (For the Curious) and
-80–88 (the self-check quizzes) take no lecture time. To jump, type the
+The main path is slides 1–67. **Plan to skip the slides of the second
+table** to fit the two-hour slot; slides 68–81 (For the Curious) and
+82–90 (the self-check quizzes) take no lecture time. To jump, type the
 slide number and press Enter.
 
 | Slides | Part |
@@ -85,43 +86,47 @@ slide number and press Enter.
 | 5–9 | Inputs, label and output; the list; the baseline never frost; the best threshold, 3.8 °C |
 | 11–17 | The neuron, one evening through it, in Python, its line (live), AND and OR |
 | 18, 20–22, 24–27 | Rosenblatt's rule, one update, AND by hand, the rule live, separable or not, the rule on the evenings and what it does not give |
-| 28–40 | No slope in a count, frost by counting, the sigmoid, the probability, the likelihood and the cross-entropy, the gradient checked and one step |
-| 42 | One update for three models |
-| 44–46, 48–52 | Train and test, five passes, tonight with a probability, the ± of an accuracy, four rules, seen and unseen evenings |
-| 54–58 | A model as an object: the class `Perceptron`, live |
-| 59–65 | XOR, the answers, the recap |
+| 28–41 | No slope in a count, frost by counting, the sigmoid, the probability, the natural logarithm, the likelihood and the cross-entropy, the gradient checked and one step |
+| 43 | One update for three models |
+| 45–47, 49–54 | Train and test, five passes, an error bar on a share, tonight with a probability, the ± of an accuracy, four rules, seen and unseen evenings |
+| 56–60 | A model as an object: the class `Perceptron`, live |
+| 61–67 | XOR, the answers, the recap |
 
 | Skip | Slides |
 |--|--|
 | Score a threshold on ten evenings, live | 10 |
 | Why not try every line | 19 |
 | The ten updates of AND as lines | 23 |
-| The mean slope over four evenings; the loss as a bowl | 41, 43 |
-| Rosenblatt's loop with one change | 47 |
-| Missed frosts and false alarms | 53 |
+| The mean slope over four evenings; the loss as a bowl | 42, 44 |
+| Rosenblatt's loop with one change | 48 |
+| Missed frosts and false alarms | 55 |
 
-- **Do not cut** slides 3 and 64: the question and its answer. Slide 3
+- **Do not cut** slides 3 and 66: the question and its answer. Slide 3
   asks for a show of hands before its click.
 - **Do not cut** slides 21–22 (one update and AND by hand: do the steps on
-  the board with the room), 33–34 (the likelihood and the loss), 38–40
-  (the slope, its check and one step) or 55–57 (the class): Seminar 10
-  builds the same class, `Perceptron`, with the same lines.
+  the board with the room), 33–35 (the probability of what happened, the
+  logarithm, the likelihood and the loss), 39–41 (the slope, its check and
+  one step) or 57–59 (the class): Seminar 10
+  runs a class `Perceptron` with the same methods, `__init__`, `predict`
+  and `fit`.
 - **Slide 16 is an interactive figure** that works offline: the neuron on
   all 3646 evenings. It opens on "below 3.8 °C" (3490 right) with 8 December
   2025 pushed through z; press never frost (66.3 %) and reset, tilt the
   line with the keys (w₂ PageUp ×4, b PageDown ×3 and ↓ ×2: 3494 right),
   tap an evening to push it through z. Use it on the projected window, not
   in the presenter view.
-- **Seven slides run Python in the browser**: 10, 14, 24, 36, 39, 49 and
-  57. The first ▶ downloads the Python runtime, so run one block before
-  the lecture. Slides 24 and 57 show the output beside the code. On slide
-  49 type this evening's 18:00 temperature and humidity, from any weather
+- **Seven slides run Python in the browser**: 10, 14, 24, 37, 40, 51 and
+  59. The first ▶ downloads the Python runtime, so run one block before
+  the lecture. Slides 24 and 59 show the output beside the code. On slide
+  51 type this evening's 18:00 temperature and humidity, from any weather
   service, and run: the neuron's probability of frost for tonight.
-- **Clicks:** slide 3 holds the answer back for one click; slide 13 builds
-  the sum one step per click; slides 15, 19, 21, 32, 38 and 40 add one line
-  of numbers per click; slide 47
-  highlights the code in steps; slide 56 builds the class one method per
-  click.
+- **Clicks:** slide 3 holds the answer back for one click; slides 13, 31,
+  34, 35, 49 and 52 step a formula per click, the numbers put in shown in
+  the accent colour (13: z of 8 December; 31: sigmoid(1.2); 34: a product
+  of logarithms; 35: the loss of four evenings; 49: the error bar of 2020;
+  52: the ± of the accuracy); slides 15, 19, 21, 32, 39 and 41 add one line
+  of numbers per click; slide 48 highlights the code in steps; slide 58
+  builds the class one method per click.
 - **Every figure fills its slide** and is drawn from the weather log by
   `figures/src/perceptron.py`, which also prints every number the slides
   state (`python figures/src/perceptron.py`); the evenings of slide 16 come
@@ -138,7 +143,7 @@ scripts/serve-local.mjs 8123`, then open
 ## Check yourself
 
 No quiz interrupts the lecture. The deck closes with a self-check section,
-slides 80–88: eight quiz slides for students to try afterwards. The same
+slides 82–90: eight quiz slides for students to try afterwards. The same
 questions, with their answers:
 
 1. A neuron with a step has w₁ = 2, w₂ = −3 and b = 1. What are z and the
@@ -175,17 +180,7 @@ questions, with their answers:
 
 ## Paired seminar
 
-[Seminar 10 · A Class of Your Own](../seminars/seminar_10.md) works on the
-same evenings in plain Python, for students who write code for the first
-time: one evening through a function `predict`, every evening and the
-accuracy (95.7 % for "below 3.8 °C"), one step of Rosenblatt's rule, the
-loop over five epochs, and then the same lines as a class `Perceptron`,
-one method at a time (`__init__`, `predict`, `fit`, `score`), which is
-right on 95.5 ± 0.6 % of the evenings of 2023 to 2025. Optional: the
-sigmoid in `fit` (the lecture's 96.1 %), and scikit-learn's `Perceptron`
-and `LogisticRegression`, which take the same calls. The last part puts a
-baseline and a threshold to a yes-or-no question about the student's own
-data.
+[Seminar 10 · A Class of Your Own](../seminars/seminar_10.md) installs scikit-learn. The lecturer runs a class `Perceptron` (`__init__`, `predict`, `fit` by Rosenblatt's rule, `score`) on the bills of 274 Adelie and Gentoo penguins (Palmer penguins, CC0): one line separates them after 12 epochs. On Adelie and Chinstrap, which overlap, the class never stops (76.3 % after 1000 epochs), while scikit-learn's `LogisticRegression`, with the same calls, settles at 97.3 %. A nearest-neighbour rule is right on every penguin it has seen and on 95.5 % of the others. In pairs, LLMs allowed: will tomorrow's lowest at the Vilnius station fall below 0 °C, from today's lowest and highest (NOAA GHCN-Daily, learned on 1945–1999, scored on 2000–2009)? "Never frost" 67.8 ± 0.8 %, a threshold class of their own 89.7 ± 0.5 %, `LogisticRegression` 90.3 ± 0.5 %; 8 December 2009 by hand. Optional: XOR.
 
 ## Slides that left the deck
 
@@ -200,11 +195,11 @@ the deck before the rebuild can be read with
 |--|--|--|
 | The goal quote; Learning Objectives | Parked | Preambles leave every lecture (9 Nov 2026); the deck opens on its question |
 | A Classification Problem; Classify by a Threshold or by a Line | Replaced by slides 3–4 and 8–9 | The question is the room's own: the evenings of the weather log |
-| The fit and the classification side by side | Parked; its last row is slide 42 | The likelihood steps are on slides 33–34 |
+| The fit and the classification side by side | Parked; its last row is slide 43 | The likelihood steps are on slides 33–35 |
 | AND, epochs 3 to 6 | Parked | One pass by hand and the ten updates as lines carry the run |
 | The convergence theorem and its proof; the normal vector and the distance; what w and b do; the derivative of the sigmoid; the gradient in three parts; where the sigmoid comes from | Moved to For the Curious | A derivation on the main path ends in a number; proofs and long derivations wait until after the recap |
-| Training in NumPy, Reading the Loop, The Training Loop | Parked; replaced by slide 47 | No library calls on a lecture slide: the same loop in plain Python |
-| The learning rate; inputs on different scales; standardising | Parked; the scale of the inputs is slide 78 | The humidity as a fraction keeps the inputs on similar scales without standardising |
+| Training in NumPy, Reading the Loop, The Training Loop | Parked; replaced by slide 48 | No library calls on a lecture slide: the same loop in plain Python |
+| The learning rate; inputs on different scales; standardising | Parked; the scale of the inputs is slide 80 | The humidity as a fraction keeps the inputs on similar scales without standardising |
 | Two lines separate XOR; a network of three neurons; the hidden layer; what is missing; what a modern network keeps | Parked, for Lecture 11 | Two layers are the opening of Lecture 11, From Neurons to Language Models |
 | The quiz on the distance from the line | Parked | The distance is in For the Curious |
 

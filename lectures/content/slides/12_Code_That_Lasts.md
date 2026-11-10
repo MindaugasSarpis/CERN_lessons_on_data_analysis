@@ -103,6 +103,8 @@ hideInToc: true
 
 <div class="note-text mt-md">One file per row, each written by hand. Everything else in the folder is made from them.</div>
 
+<div class="note-text mt-sm">SHA-256 <code>3f1ad06d…</code>: a <strong>checksum</strong>, 64 hexadecimal digits computed from every byte of the file; one changed byte gives another.</div>
+
 <!--
 **Say:** the lecture takes the rows in this order: modules, objects, tests, environments, the one command; then deletes every result and makes it again from these files alone.
 **If asked:** the checksum of the raw file was taken in Lecture 4: 3f1ad06d…fbe00756, 2 515 215 bytes.
@@ -139,16 +141,20 @@ hideInToc: true
 
 </div>
 
-<div v-click class="card card-info card-glass pad-compact mt-md">
+<div class="card card-info card-glass pad-compact mt-md">
 
-$$
-\bar{x} = \frac{1}{N}\sum_{i=1}^{N} x_i: \qquad \frac{101.1}{4} = 25.275, \qquad \frac{626\,869.3}{87\,552} = 7.16
-$$
+<FormulaSteps mode="morph" steps="
+  \bar{x} = \frac{x_1 + x_2 + \ldots + x_N}{N}
+  \bar{x} = \frac{27.3 + 25.6 + 24.6 + 23.6}{4}
+  \bar{x} = \frac{101.1}{4} = 25.275
+  \bar{x} = \frac{626\,869.3}{87\,552} = 7.16
+" />
 
 </div>
 
 <!--
 **Say:** the four functions of Lecture 5, one step each; each hands its result to the next: `mean(temps(path))`. The six hours and the whole log go through the same four.
+**Do:** click through the mean: the formula, the four hours, 25.275, then the whole log, 7.16.
 **Ask:** the station marks a missing hour with an empty field instead of −999. Which function changes? Only `temps`, through the name `MISSING`.
 (~3 min)
 -->
@@ -187,7 +193,7 @@ hideInToc: true
 ## 📦 **`scripts/weather.py`**
 
 ```python
-"""Read the hourly log of the weather station."""
+"""Read the hourly log of the station."""
 
 MISSING = -999.0
 
@@ -198,7 +204,7 @@ def temp_of(line):
     return float(line.split(",")[1])
 
 def temps(path):
-    ...  # temp_of of each line, MISSING left out
+    ...  # each temp_of, MISSING left out
 
 def mean(values):
     return sum(values) / len(values)
@@ -215,7 +221,8 @@ def mean(values):
 ```python
 import weather
 
-values = weather.temps("data/raw/weather.csv")
+path = "data/raw/weather.csv"
+values = weather.temps(path)
 print(len(values), weather.mean(values))
 ```
 
@@ -367,7 +374,7 @@ The mean of a list of numbers: their sum over their count.
 
 <!--
 **Say:** a year later, the reader is often the author. One line under each `def` says what goes in and what comes out; the code says how.
-**If asked:** the first line of `weather.py` is the module's own docstring: `print(weather.__doc__)` gives "Read the hourly log of the weather station."
+**If asked:** the first line of `weather.py` is the module's own docstring: `print(weather.__doc__)` gives "Read the hourly log of the station."
 (~2 min)
 -->
 
@@ -427,13 +434,13 @@ $$
 
 ## ❄️ **8 December 2025, 18:00**
 
-$x_1 = 2.6$ °C, $x_2 = 0.85$
+$x_1 = 2.6$ °C, the temperature; $x_2 = 0.85$, the humidity, 85 %
 
-<v-click>
-
-$z = (-1)(2.6) + 0 \cdot 0.85 + 3.8 = 1.2$: frost
-
-</v-click>
+<FormulaSteps steps="
+  z = w_1 x_1 + w_2 x_2 + b
+  = (-1)(2.6) + (0)(0.85) + 3.8
+  = 1.2 > 0
+" />
 
 <v-click>
 
@@ -447,7 +454,7 @@ $z = (-1)(2.6) + 0 \cdot 0.85 + 3.8 = 1.2$: frost
 
 ## 🗃️ **What the model is**
 
-- three numbers: $w_1$, $w_2$, $b$
+- three numbers: the **weights** $w_1$, $w_2$, how much each input counts, and the **bias** $b$
 - two things done with them: **predict** an evening, **fit** the numbers to evenings
 
 </div>
@@ -458,7 +465,7 @@ $z = (-1)(2.6) + 0 \cdot 0.85 + 3.8 = 1.2$: frost
 
 <!--
 **Say:** the neuron of Lecture 10, its weights set by hand: frost when the evening is below 3.8 °C, the humidity, as a fraction, given weight 0.
-**Do:** click through: z, then the morning.
+**Do:** click through: the numbers in place of the letters, $z = 1.2$, above 0, so frost; then the morning.
 (~2 min)
 -->
 
@@ -478,7 +485,6 @@ class Perceptron:
         if z > 0:
             return 1
         return 0
-
 model = Perceptron()
 model.w = [-1.0, 0.0]                  # the rule "below 3.8 °C"
 model.b = 3.8
@@ -511,7 +517,8 @@ hideInToc: true
 import json
 
 numbers = {"w": model.w, "b": model.b}
-open("results/model.json", "w").write(json.dumps(numbers))
+text = json.dumps(numbers)
+open("results/model.json", "w").write(text)
 ```
 
 ```text
@@ -525,7 +532,8 @@ open("results/model.json", "w").write(json.dumps(numbers))
 ## 📂 **Read back, anywhere**
 
 ```python
-numbers = json.loads(open("results/model.json").read())
+text = open("results/model.json").read()
+numbers = json.loads(text)
 model = Perceptron()
 model.w = numbers["w"]
 model.b = numbers["b"]
@@ -644,21 +652,11 @@ hideInToc: true
 
 ## ✏️ **By hand**
 
-<v-click>
-
-$$
-\bar{x} = \frac{27.3 + 25.6 + 24.6 + 23.6}{4}
-$$
-
-</v-click>
-
-<v-click>
-
-$$
-= \frac{101.1}{4} = 25.275
-$$
-
-</v-click>
+<FormulaSteps steps="
+  \bar{x} = \frac{27.3 + 25.6 + 24.6 + 23.6}{4}
+  = \frac{101.1}{4}
+  = 25.275
+" />
 
 <v-click>
 
@@ -804,9 +802,13 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-$$
-|\bar{x} - 25.275| < 10^{-9}
-$$
+<FormulaSteps mode="morph" steps="
+  |\bar{x} - 25.275| < 10^{-9}
+  |25.275000000000002 - 25.275| < 10^{-9}
+  3.6 \times 10^{-15} < 10^{-9}
+" />
+
+$|a - b|$: the distance from $a$ to $b$, without its sign. $10^{-9}$ = 0.000000001, `1e-9` in Python.
 
 </div>
 
@@ -825,8 +827,8 @@ print(abs(mean(six) - 25.275) < 1e-9)    # False
 <div class="note-text mt-sm">10⁻⁹ lets the rounding through and stops a real mistake: the −999 left in give −316.15, 341.425 away.</div>
 
 <!--
-**Do:** press ▶: four lines.
-**Say:** `abs` is the distance, without its sign; `1e-9` is 0.000000001. The tolerance is chosen far above the rounding, 10⁻¹⁵, and far below any mistake that matters.
+**Do:** click through the comparison with the four hours; then press ▶: four lines.
+**Say:** `abs` is $|\ldots|$ in Python. The tolerance is chosen far above the rounding, 10⁻¹⁵, and far below any mistake that matters.
 (~2 min)
 -->
 
@@ -1116,7 +1118,7 @@ $ python -m pytest -q
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-🔍 It finds every function named `test_…` in files named `test_….py` and runs each: a dot per pass, `F` per failure. Its exit status is 0 only when every test passed.
+🔍 It finds every function named `test_…` in files named `test_….py` and runs each: a dot per pass, `F` per failure. Its **exit status**, the number a program ends with (`$?` in the shell), is 0 only when every test passed.
 
 </div>
 
@@ -1166,6 +1168,55 @@ hideInToc: true
 
 ---
 hideInToc: true
+---
+
+# Read a Version Number and a **Range**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact table-compact">
+
+## 🔢 **pandas 3.1.1**
+
+| major | minor | patch |
+| --- | --- | --- |
+| 3 | 1 | 1 |
+| may break old code | adds | fixes |
+
+By convention. Compared number by number: Python 3.14.10 comes after 3.14.9.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact table-compact">
+
+## 📏 **NumPy ≥ 2.0.2, < 3**
+
+| NumPy | In the range? |
+| --- | --- |
+| 1.26.4 | no: below 2.0.2 |
+| 2.0.2 | yes |
+| 2.5.4 | yes |
+| a 3.0 | no: not below 3 |
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+⚠️ pandas 2.3.3 → 3.0.0, a new major version: defaults that old code relied on changed.
+
+</div>
+
+<!--
+**Say:** a version is three numbers, compared one at a time from the left. By convention the first changes when old code may break, the second when something is added, the third for fixes.
+**Ask:** is 3.14.10 newer than 3.14.9? Yes: 10 is more than 9; a version is not a decimal number.
+**Say:** a package states which versions of another it accepts as a range: from 2.0.2 up to, not including, 3. Any NumPy 2 from 2.0.2 on will do.
+(~2 min)
+-->
+
+---
+hideInToc: true
 class: fill
 ---
 
@@ -1173,14 +1224,14 @@ class: fill
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-📦 `python=3.14 pandas=3.1` on macOS: 2 asked for, 32 installed; Python alone is 18. On Windows: 36 and 20.
+📦 A **dependency**: a package another one needs; each arrow, with the versions it accepts. `python=3.14 pandas=3.1` on macOS: 2 asked for, 32 installed; Python alone is 18. On Windows: 36 and 20.
 
 </div>
 
 <img class="fig fig-fill mt-sm" src="/figures/viz_lasting_tree_pandas.svg">
 
 <!--
-**Say:** a package names the packages it needs, its dependencies, each with a range of versions; they name theirs. NumPy brings a library for linear algebra, OpenBLAS, and the compiled libraries it runs on.
+**Say:** a package names the packages it needs, each with a range of versions; they name theirs: a tree. NumPy brings a library for linear algebra, OpenBLAS, and the compiled libraries it runs on.
 **If asked:** counted by solving the environment on conda-forge without installing it, on 9 November 2026.
 (~2 min)
 -->
@@ -1670,9 +1721,9 @@ hideInToc: true
 ````md magic-move
 ```text
 $ sha256sum data/processed/*.csv results/temp_c.txt
-33fe5e77a97900b6e8f94776f266da4d6e3c96590088d21bc9842987f705483d  data/processed/daily.csv
-85b1f38d0df905a9232078d97c6bb21455e87239ea8754faceda0d868b564881  data/processed/weather_valid.csv
-ade2805b90fe64a0053fa65e28329eee616ad0389f9ca55db86400b1c7a9a18b  results/temp_c.txt
+33fe5e77a97900b6…  data/processed/daily.csv
+85b1f38d0df905a9…  data/processed/weather_valid.csv
+ade2805b90fe64a0…  results/temp_c.txt
 ```
 ```text
 $ rm -r data/processed results
@@ -1683,9 +1734,9 @@ $ ./scripts/rebuild.sh
 ```
 ```text
 $ sha256sum data/processed/*.csv results/temp_c.txt
-33fe5e77a97900b6e8f94776f266da4d6e3c96590088d21bc9842987f705483d  data/processed/daily.csv
-85b1f38d0df905a9232078d97c6bb21455e87239ea8754faceda0d868b564881  data/processed/weather_valid.csv
-ade2805b90fe64a0053fa65e28329eee616ad0389f9ca55db86400b1c7a9a18b  results/temp_c.txt
+33fe5e77a97900b6…  data/processed/daily.csv
+85b1f38d0df905a9…  data/processed/weather_valid.csv
+ade2805b90fe64a0…  results/temp_c.txt
 ```
 ````
 
@@ -1696,6 +1747,7 @@ ade2805b90fe64a0053fa65e28329eee616ad0389f9ca55db86400b1c7a9a18b  results/temp_c
 <!--
 **Do:** click through: the checksums, the delete and the rebuild, the checksums again.
 **Say:** a checksum changes when any byte changes; three equal lines mean three equal files.
+**If asked:** each checksum has 64 hexadecimal digits; the slide shows the first 16.
 (~2 min)
 -->
 
@@ -1858,7 +1910,7 @@ hideInToc: true
 
 ## 🔍 **Findable**
 
-A permanent address and an identifier: `github.com/MindaugasSarpis/weather-project`; a DOI for a finished version
+A permanent address and an identifier: `github.com/MindaugasSarpis/weather-project`; a DOI, the permanent identifier papers have, for a finished version
 
 </div>
 
@@ -1874,7 +1926,7 @@ Fetched over HTTPS without a login: `git clone`, a zip from the release
 
 ## 🔗 **Interoperable**
 
-Open formats and standard units: CSV, ISO 8601 times, °C named in the README
+Open formats and standard units: CSV, ISO 8601 times (`2019-07-21T20:00`), °C named in the README
 
 </div>
 
@@ -2051,11 +2103,11 @@ hideInToc: true
 | 1–3 | the station's operator, received 13 Oct 2026; `./scripts/rebuild.sh`; 7.15997, reported as 7.16 |
 | 4–6 | SHA-256 `3f1ad06d…`; 120 hours of −999, 22 to 26 July 2019; four columns with units |
 | 7–9 | the mean of the measured hours, committed before the number; 7.16 ± 0.22 °C from the ten yearly means; 3 tests |
-| 10–12 | °C on every axis; "no trend": the slope, −0.56 ± 0.77 °C per decade; the README |
+| 10–12 | °C on every axis; "no trend": a line through the ten yearly means falls −0.56 ± 0.77 °C per decade; the README |
 
 </div>
 
-<div class="note-text mt-md">Twelve yes. Each answer points to a file or a number.</div>
+<div class="note-text mt-md">Twelve yes. Each answer points to a file or a number. ± 0.22: the ten yearly means scatter by 0.70 °C, and 0.70/√10 = 0.22.</div>
 
 <!--
 **Say:** the course's own example, run through the checklist: every answer has evidence the reviewer can open. Question 11 is the one most reports fail: ten years of yearly means do not show a trend, and the conclusion says so.
@@ -2137,7 +2189,7 @@ print(midrange(four))   # 25.450000000000003: Ben, (23.6 + 27.3) / 2
 <div class="card card-success card-glass pad-compact mt-md">
 
 ```python
-days = weather.group("data/raw/weather.csv", 0, 10)
+days = weather.group("data/raw/weather.csv", 0, 10)    # date -> its temperatures
 mids = []
 for day in days:
     mids.append(weather.midrange(days[day]))
@@ -2265,7 +2317,6 @@ parser = argparse.ArgumentParser(
     description="Mean temperature of a log.")
 parser.add_argument("path", help="CSV file")
 args = parser.parse_args()
-
 values = weather.temps(args.path)
 print(len(values), round(weather.mean(values), 2))
 ```

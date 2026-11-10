@@ -96,7 +96,7 @@ class: fill
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-🧩 Parameters: one, μ; two, a and b; three, c, A and d₀. **Fitting** finds the values that match the data best.
+🧩 Parameters: one, μ; two, a and b; three, c, A and d₀: a level, a size, the coldest day. **Fitting** finds the values that match the data best.
 
 </div>
 
@@ -105,6 +105,35 @@ class: fill
 <!--
 **Say:** a parameter is a number the formula leaves open. x is the year counted from 2016, d the day counted from 1 January 2016.
 **Ask:** in the middle panel, what do a and b mean? a: °C per year; b: the value of the line in 2016.
+(~2 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# The Ten Yearly Means with Error **Bars**
+
+<div class="fig-fill grid-side mt-sm">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📏 **A bar: the point ± σ**
+
+- σ = 0.70 °C: how far one yearly mean typically lies from the long-run value
+- 2016: 7.60 ± 0.70, a bar from 6.90 to 8.30 °C
+- 7 of the 10 bars reach 7.16, the mean of all ten
+
+</div>
+
+<img class="fig" src="/figures/viz_fitting_error_bars.svg">
+
+</div>
+
+<!--
+**Say:** the dot is the measured value; the bar runs one σ below it and one σ above. A bar of ± σ reaches the right value about two times in three: here 7 of 10, and 2018, 2023 and 2025 miss. A figure with error bars says which ± it draws.
+**If asked:** 0.70 is the standard deviation of the ten yearly means themselves: their squared deviations from 7.16 add up to 4.451, and √(4.451 / 9) = 0.70.
 (~2 min)
 -->
 
@@ -501,6 +530,35 @@ hideInToc: true
 class: fill
 ---
 
+# The Gaussian: a Bell of Width **σ**
+
+<div class="fig-fill grid-side mt-sm">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔔 **μ = 7.16 °C, σ = 0.70 °C**
+
+- μ ± σ, 6.46 to 7.86: 68 % of the area; 7 of the 10 years
+- μ ± 2σ, 5.76 to 8.56: 95 %; all 10
+- the height: a density, a chance per °C; 0.57 at the top
+
+</div>
+
+<img class="fig" src="/figures/viz_fitting_bell.svg">
+
+</div>
+
+<!--
+**Say:** the Gaussian, the bell curve, is how scatter from many small causes falls: centred on μ, as wide as σ. The area between two values is the chance of a value there, and the whole area is 1. The height is a density: 0.57 per °C at the top, so a window 0.1 °C wide around 7.16 holds a chance of about 0.057.
+**Ask:** how many of ten years should fall outside μ ± σ? About three: here 2018, 2023 and 2025.
+(~2 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
 # Ten Years Around a Flat **Line**
 
 <div class="card card-info card-glass pad-compact mt-sm">
@@ -522,41 +580,24 @@ hideInToc: true
 
 # How Probable Is **2016**?
 
-<div class="card card-primary card-glass pad-compact mt-md">
+<div class="card card-primary card-glass pad-compact mt-sm">
 
-## 🔔 **The Gaussian, the model in place of its mean**
-
-$$p(y \mid \mu) = \frac{1}{\sigma\sqrt{2\pi}}\; e^{-(y - \mu)^2 / 2\sigma^2}$$
+## 🔔 **The Gaussian with the model's value as its centre: y = 7.605 (2016), μ = 7.16, σ = 0.70**
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact mt-md">
+<FormulaSteps class="mt-md" steps="
+  p(y | \mu) = \frac{1}{\sigma \sqrt{2\pi}} \exp(-\frac{(y - \mu)^2}{2 \sigma^2})
+  = \frac{1}{0.70 \sqrt{2\pi}} \exp(-\frac{(7.605 - 7.16)^2}{2 \times 0.70^2})
+  = \frac{0.82}{1.75}
+  = 0.47 \; \text{per} °C
+" />
 
-## 🔢 **y = 7.605, μ = 7.16, σ = 0.70**
-
-<div v-click>
-
-(7.605 − 7.16) / 0.70 = 0.64 standard deviations
-
-</div>
-
-<div v-click>
-
-$e^{-0.64^2/2}$ = 0.82, and $0.70\sqrt{2\pi}$ = 1.75
-
-</div>
-
-<div v-click>
-
-p = 0.82 / 1.75 = **0.47 per °C**
-
-</div>
-
-</div>
+<div class="note-text mt-md">A density: a window 0.1 °C wide at 7.6 holds a chance of about 0.47 × 0.1 = 0.047.</div>
 
 <!--
-**Say:** a density, not a probability: 0.47 per °C means that a window 0.1 °C wide around 7.6 holds a chance of about 0.047.
-**Do:** three clicks, one step each.
+**Do:** three clicks: the numbers of 2016 in place of the symbols; the two factors, e to the −0.20 = 0.82 and 0.70 √(2π) = 1.75; the density.
+**Say:** 2016 lies (7.605 − 7.16) / 0.70 = 0.64 σ from the line, close, so its density is high.
 (~2 min)
 -->
 
@@ -600,6 +641,39 @@ L(7.16) = 0.47 × 0.37 × … × 0.14 ≈ **4 × 10⁻⁵**
 hideInToc: true
 ---
 
+# The Logarithm Turns a Product into a **Sum**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+## 🪵 **ln x: the power of e = 2.718 that gives x**
+
+$e^{-0.755} = 0.47$, so $\ln 0.47 = -0.755$; $\ln 0.37 = -0.994$; $\ln 1 = 0$, and below 1 ln is negative.
+
+</div>
+
+<FormulaSteps class="mt-md" steps="
+  \ln(a b) = \ln \, a + \ln \, b
+  \ln(0.47 \times 0.37) = \ln \, 0.1739 = -1.749
+  \ln \, 0.47 + \ln \, 0.37 = -0.755 - 0.994 = -1.749
+" />
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+Ten years: L ≈ 3.9 × 10⁻⁵ and ln L = −10.16, the sum of the ten logarithms.
+
+</div>
+
+<!--
+**Say:** a logarithm answers "e to what power?". Multiplying two numbers adds their logarithms, so the product of ten densities, a tiny number, becomes a sum of ten moderate ones.
+**Do:** two clicks: the densities of 2016 and 2017 on the left, then on the right; both give −1.749.
+**If asked:** ln is `math.log` in Python: math.log(0.47) = −0.755.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
 # Maximum Likelihood Is Minimum **χ²**
 
 <div class="card card-primary card-glass pad-compact mt-md">
@@ -609,6 +683,8 @@ hideInToc: true
 $\ln(ab) = \ln a + \ln b$ and $\ln e^u = u$, so
 
 $$-2\ln L = \sum_{i} \frac{\big(y_i - f(x_i)\big)^2}{\sigma^2} + \text{const} = \chi^2 + \text{const}$$
+
+χ², “chi-squared”: the squared misses, each in units of σ, added up.
 
 </div>
 
@@ -915,29 +991,32 @@ hideInToc: true
 
 # The Sums Pushed **Through**
 
-<div class="card card-primary card-glass pad-compact mt-md">
+<div class="card card-primary card-glass pad-compact mt-sm">
 
-## Δ
-
-Δ = 10 × 285 − 45² = 2850 − 2025 = **825**
+➕ N = 10, Σx = 45, Σy = 71.60, Σx² = 285, Σxy = 317.62
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact mt-md" v-click>
+<FormulaSteps mode="morph" class="mt-md" steps="
+  \Delta = N \sum x_i^2 - (\sum x_i)^2
+  \Delta = 10 \times 285 - 45^2
+  \Delta = 2850 - 2025
+  \Delta = 825
+" />
 
-## Slope â
+<FormulaSteps mode="morph" class="mt-md" steps="
+  â = \frac{N \sum x_i y_i - \sum x_i \sum y_i}{\Delta}
+  â = \frac{10 \times 317.62 - 45 \times 71.60}{825}
+  â = \frac{3176.2 - 3222.0}{825}
+  â = -0.056 °C \; \text{a year}
+" />
 
-â = (10 × 317.62 − 45 × 71.60) / 825 = (3176.2 − 3222.0) / 825 = **−0.056 °C a year**
-
-</div>
-
-<div class="card card-accent card-glass pad-compact mt-md" v-click>
-
-## Intercept b̂
-
-b̂ = (285 × 71.60 − 45 × 317.62) / 825 = (20 406.0 − 14 292.9) / 825 = **7.41 °C**
-
-</div>
+<FormulaSteps mode="morph" class="mt-md" steps="
+  b̂ = \frac{\sum x_i^2 \sum y_i - \sum x_i \sum x_i y_i}{\Delta}
+  b̂ = \frac{285 \times 71.60 - 45 \times 317.62}{825}
+  b̂ = \frac{20\,406.0 - 14\,292.9}{825}
+  b̂ = 7.41 °C
+" />
 
 <div class="card card-success card-glass pad-compact mt-md" v-click>
 
@@ -946,7 +1025,7 @@ b̂ = (285 × 71.60 − 45 × 317.62) / 825 = (20 406.0 − 14 292.9) / 825 = **
 </div>
 
 <!--
-**Do:** one click per line; the room can follow on a calculator.
+**Do:** three clicks per formula, the sums in place of the symbols, the products, the result; the room can follow on a calculator.
 **Say:** the slope is a small difference of two large numbers, 3176.2 and 3222.0: keep every digit of the sums until the end.
 (~2.5 min)
 -->
@@ -1079,11 +1158,17 @@ $$\hat a = \frac{\sum_i (x_i - \bar x)(y_i - \bar y)}{\sum_i (x_i - \bar x)^2} =
 
 ## 🔗 **Correlation**
 
-r = −0.239, s_y = 0.703 °C, s_x = 3.03 years:
+r = −0.239, $s_y$ = 0.703 °C, $s_x$ = 3.03 years:
 
 −0.239 × 0.703 / 3.03 = **−0.0555**
 
 </div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+r, the correlation of x and y: from −1, points on a falling straight line, to +1, on a rising one. $s_x$, $s_y$: their standard deviations.
 
 </div>
 
@@ -1172,7 +1257,7 @@ $\left(\sigma_a / \sigma_a\right)^2 = 1$: χ² = 8.56 + 1 = **9.56**
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-The width of that Gaussian is the uncertainty of the slope, σₐ.
+∝: proportional to. The width of that Gaussian is the uncertainty of the slope, σₐ.
 
 </div>
 
@@ -1187,29 +1272,35 @@ hideInToc: true
 
 # σₐ in Closed **Form**
 
-<div class="card card-primary card-glass pad-compact mt-md">
+<FormulaSteps class="mt-sm" steps="
+  \sigma_a = \frac{\sigma}{\sqrt{\sum (x_i - \bar{x})^2}} = \sigma \sqrt{\frac{N}{\Delta}}
+  = 0.70 \sqrt{\frac{10}{825}}
+  = 0.70 \times 0.110
+  = 0.077 °C \; \text{a year}
+" />
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔢 **Per decade**
+
+0.077 × 10 = **0.77 °C per decade**
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
 
 ## 📏 **Equal σ for every point**
 
-$$\sigma_a = \frac{\sigma}{\sqrt{\sum_i (x_i - \bar x)^2}} = \sigma\sqrt{\frac{N}{\Delta}}$$
+σ = 0.70 °C, the yearly means about their mean. No y in it: σ and the spread of the years decide it.
 
 </div>
-
-<div class="card card-secondary card-glass pad-compact mt-md">
-
-## 🔢 **The ten years**
-
-σₐ = 0.70 × √(10 / 825) = 0.70 × 0.110 = **0.077 °C a year** = 0.77 °C per decade
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-σ = 0.70 °C: the yearly means about their mean. No y in it: σ and the spread of the years decide it.
 
 </div>
 
 <!--
+**Do:** three clicks: σ, N and Δ of the ten years in place of the symbols, the root, the result.
 **Say:** Σ(x_i − x̄)² = 82.5 for the ten years: the farther apart the years, the better the slope is known. Doubling σ doubles σ_a.
 **If asked:** â = Σ c_i y_i, a weighted sum of the ten y_i; the variances of independent terms add, so σ_a² = σ² Σ c_i² = σ² N / Δ.
 **If asked:** σ from the residuals about the line instead, with n − 2 = 8: 0.72 °C and ± 0.80 per decade, the textbook error of a least-squares slope. The conclusion stays.
@@ -1273,7 +1364,12 @@ hideInToc: true
 
 ## 📏 **Its ±: the mean, and the slope times the distance from 2020.5**
 
-$$\sigma_f^2 = \frac{\sigma^2}{N} + (x - \bar x)^2\,\sigma_a^2 = 0.049 + 5.5^2 \times 0.0059 = 0.23, \qquad \sigma_f = 0.48$$
+<FormulaSteps mode="morph" steps="
+  \sigma_f^2 = \frac{\sigma^2}{N} + (x - \bar{x})^2 \sigma_a^2
+  \sigma_f^2 = \frac{0.70^2}{10} + 5.5^2 \times 0.0059
+  \sigma_f^2 = 0.049 + 0.18
+  \sigma_f^2 = 0.23 , \quad \sigma_f = 0.48 °C
+" />
 
 </div>
 
@@ -1284,6 +1380,7 @@ One year scatters by 0.70 around the line: √(0.23 + 0.49) = 0.85. **2026: 6.0 
 </div>
 
 <!--
+**Do:** three clicks on the middle line: the numbers, the two terms, σ_f.
 **Say:** the farther from the middle of the data, the more the uncertain slope matters: the band around a fitted line widens at both ends. A single year adds its own scatter on top.
 (~2 min)
 -->
@@ -1389,7 +1486,7 @@ class: fill
 
 <div class="card card-primary card-glass pad-compact">
 
-σₐ falls as $N^{-3/2}$: more years, and farther apart.
+σₐ falls as $N^{-3/2} = 1 / (N\sqrt{N})$: twice the years, 2.8 times smaller.
 
 </div>
 
@@ -1726,7 +1823,7 @@ class: fill
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-🗺️ The contours of S(a, b), the path from (0, 7). A zigzag across a narrow valley, then along it: 500 steps to (−0.56 per decade, 7.41).
+🗺️ Left: lines of equal S(a, b), like heights on a map, and the path from (0, 7): across a narrow valley, then along it, 500 steps to (−0.56 per decade, 7.41). Right: a logarithmic axis, each step ten times smaller.
 
 </div>
 
@@ -1845,7 +1942,7 @@ T = 7 + 11 = **18 °C**
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-With these values the misses of 3648 days: **2.952 °C** root mean square.
+With these values the misses of 3648 days: **2.952 °C** root mean square, √(the mean of the squared misses).
 
 </div>
 
@@ -2053,6 +2150,8 @@ Each fitted parameter takes about 1 off χ².
 
 $$\langle\chi^2\rangle = N - k = \text{ndf}, \qquad \text{the degrees of freedom}$$
 
+⟨χ²⟩: the average χ² over many repeats; N points, k parameters.
+
 </div>
 
 <div class="card card-success card-glass pad-compact mt-md">
@@ -2113,7 +2212,7 @@ class: fill
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-🌀 sd **2.94 °C**. Runs of warm and cold weeks: a day's residual predicts the next day's, **r = 0.875**.
+🌀 Standard deviation (sd) of the residuals **2.94 °C**. Runs of warm and cold weeks: a day's residual predicts the next day's, **r = 0.875**.
 
 </div>
 
@@ -2172,9 +2271,9 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact mt-md">
 
-## 🌊 **The cycle plus a slope k**
+## 🌊 **The cycle plus a trend, in °C per decade**
 
-$$T(d) = c - A\cos\frac{2\pi(d - d_0)}{365.25} + k\,\frac{d}{3652.5}$$
+$$T(d) = c - A\cos\frac{2\pi(d - d_0)}{365.25} + \text{trend} \times \frac{d}{3652.5}$$
 
 </div>
 
@@ -2184,7 +2283,7 @@ $$T(d) = c - A\cos\frac{2\pi(d - d_0)}{365.25} + k\,\frac{d}{3652.5}$$
 
 ## 📉 **Days taken as independent**
 
-k = **−0.57 ± 0.17 °C per decade**: 3.4 σ from zero?
+trend = **−0.57 ± 0.17 °C per decade**: 3.4 σ from zero?
 
 </div>
 
@@ -2726,7 +2825,7 @@ class: fill
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-🔗 cov(a, b) = −σ² Σx / Δ = −0.0267, ρ = −0.84: a steeper line through (4.5, 7.16) starts higher. Count x from mid-2020 and ρ = 0, b = **7.16 ± 0.22**: the mean of the ten years, ± 0.70 / √10.
+🔗 cov(a, b) = −σ² Σx / Δ = −0.0267, their correlation ρ = −0.84: a steeper line through (4.5, 7.16) starts higher. Count x from mid-2020 and ρ = 0, b = **7.16 ± 0.22**: the mean of the ten years, ± 0.70 / √10.
 
 </div>
 
@@ -2869,7 +2968,7 @@ class: fill
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-⚛️ 91&nbsp;583 K⁻π⁺ masses: a peak, the D⁰ meson, on a flat part of random pairs. The fit takes 1820 to 1910 MeV/c², 45 bins, σ = √n.
+⚛️ 91&nbsp;583 K⁻π⁺ masses: a peak, the D⁰ meson, on a flat part of random pairs. The fit takes 1820 to 1910 MeV/c², 45 bins; each bin's bar ± √n, the scatter of a count n.
 
 </div>
 

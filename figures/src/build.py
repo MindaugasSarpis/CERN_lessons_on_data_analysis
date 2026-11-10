@@ -17,7 +17,7 @@ FAMILIES = ["anatomy", "amounts", "distributions", "associations",
             "handson", "beyond", "goodbad", "advanced",
             "arrays", "probability", "perceptron", "cleaning",
             "concepts", "computing", "git", "language", "lasting", "gallery",
-            "lifecycle"]
+            "lifecycle", "reading"]
 
 def main() -> int:
     ap = argparse.ArgumentParser()

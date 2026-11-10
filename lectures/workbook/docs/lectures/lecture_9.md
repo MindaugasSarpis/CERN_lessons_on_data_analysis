@@ -19,16 +19,19 @@ used on a slide; the seminar does the same with NumPy.
 ## What the lecture covers
 
 1. **A model has parameters**: three models of the weather log with one,
-   two and three parameters; the three parts of a fit (a model, data with
+   two and three parameters; the ten yearly means with error bars of
+   ± 0.70 °C (7 of the 10 bars reach 7.16); the three parts of a fit (a model, data with
    their scatter, a measure of the miss); the symbols of the lecture; the sum
    of squared misses S(μ) of the four hours, smallest at their mean, 25.275;
    why squares and not the plain or the absolute misses; the derivative as
    the slope of S, by a nudge (−2.196) and by the rule for a square (−2.2);
    the mean as the least-squares value.
 2. **From likelihood to χ²**: where σ = 0.70 °C comes from (the scatter of
-   the ten yearly means, not the hours); the Gaussian density of one yearly
-   mean (2016: 0.47 per °C); the likelihood of ten independent years; the
-   logarithm, which turns maximum likelihood into minimum χ²; χ² of a flat
+   the ten yearly means, not the hours); the Gaussian as a bell of width σ
+   (68 % within ± σ, 7 of the 10 years; a density, 0.57 per °C at the top);
+   the density of one yearly mean (2016: 0.47 per °C); the likelihood of ten
+   independent years; the logarithm (ln 0.47 = −0.755, a product becomes a
+   sum), which turns maximum likelihood into minimum χ²; χ² of a flat
    line year by year (9.08) and of a rising one (12.64); a line from the
    room, live.
 3. **The best line in closed form**: the derivatives of χ² for a line, the
@@ -73,68 +76,80 @@ The lecture teaches each tool once, where it is first needed, with numbers.
 
 | Tool | Slide | As taught there |
 |--|--|--|
-| Σ, ∏, a hat | 7 | Read aloud, with the four hours as the example |
-| The derivative | 11–12 | The slope of S for a small nudge h; the rule d(y − μ)²/dμ = −2(y − μ) from (d − h)² − d² = −2dh + h² |
-| Setting a derivative to zero | 13 | The lowest point of S, where the slope is zero: the mean |
-| The logarithm | 20 | ln(ab) = ln a + ln b and ln e^u = u, so a product becomes a sum |
-| Partial derivatives | 25 | One parameter moves, the other stays; the extra x_i for the slope |
-| The second derivative | 47–48 | How fast the slope changes, 2N = 8 for the four hours: the limit of the step size |
+| An error bar | 6 | ± σ on each yearly mean: 2016, 7.60 ± 0.70, a bar from 6.90 to 8.30 °C; 7 of 10 bars reach 7.16 |
+| Σ, ∏, a hat | 8 | Read aloud, with the four hours as the example |
+| The derivative | 12–13 | The slope of S for a small nudge h; the rule d(y − μ)²/dμ = −2(y − μ) from (d − h)² − d² = −2dh + h² |
+| Setting a derivative to zero | 14 | The lowest point of S, where the slope is zero: the mean |
+| The Gaussian bell, a density | 18 | μ = 7.16, σ = 0.70 °C: 68 % of the area within ± σ, 95 % within ± 2σ; the height a chance per °C, 0.57 at the top |
+| The logarithm | 22 | ln x, the power of e that gives x: ln 0.47 = −0.755; ln(0.47 × 0.37) = ln 0.47 + ln 0.37 = −1.749, so a product becomes a sum |
+| Partial derivatives | 28 | One parameter moves, the other stays; the extra x_i for the slope |
+| The second derivative | 50–51 | How fast the slope changes, 2N = 8 for the four hours: the limit of the step size |
 
 ## The lecture, part by part
 
-The lecture is slides 1–78 and estimates about 118 min, so in the two-hour
+The lecture is slides 1–81 and estimates about 123 min, so in the two-hour
 slot **plan to skip the slides of the second table** (about 10 min).
-Slides 79–89 are the optional section For the Curious, and slides 90–98 the
+Slides 82–92 are the optional section For the Curious, and slides 93–101 the
 self-check quizzes; neither takes lecture time. To jump, type the slide
 number and press Enter.
 
 | Slides | Part |
 |--|--|
 | 1–3 | The question: is it getting warmer? Two picked pairs of years, +1.80 and −2.33 °C |
-| 4–14 | A model has parameters; S(μ) of four hours; why squares; the derivative and its nudge; the mean as the least-squares value; the slope checked live |
-| 15–23 | σ = 0.70 °C; the Gaussian of one year; the likelihood of ten; minimum χ²; χ² of a flat line year by year; two guessed lines; a line from the room, dragged live |
-| 24–31 | The derivatives for a line; the normal equations; the formulas; the table of ten years; the sums pushed through; the best line; the same in Python, live |
-| 34–37, 39–41 | χ² around its minimum; Δχ² = 1; σ_a; the value for 2026; −0.56 ± 0.77 °C per decade; what the ± means |
-| 43–47, 49–52 | No closed form for the cycle; the update rule; three steps by hand; a step too large; the step size, live; the rule for a line; descent on ten years, live; its path |
-| 53–58 | The daily means; the cosine and its three parameters; two days pushed through; the descent from the starting values; the fitted cycle |
-| 59–60, 62–65, 67–72 | Residuals of the line; what χ² should be; when it is not a test; residuals of the cycle; neighbouring days alike; too few and too many parameters; how many; reading residuals; a sensor shift |
-| 73–78 | The same line by every method; reporting a fit; a checklist; the answer; the recap |
+| 4–15 | A model has parameters; the yearly means with error bars; S(μ) of four hours; why squares; the derivative and its nudge; the mean as the least-squares value; the slope checked live |
+| 16–26 | σ = 0.70 °C; the Gaussian bell; the Gaussian of one year; the likelihood of ten; the logarithm; minimum χ²; χ² of a flat line year by year; two guessed lines; a line from the room, dragged live |
+| 27–34 | The derivatives for a line; the normal equations; the formulas; the table of ten years; the sums pushed through; the best line; the same in Python, live |
+| 37–40, 42–44 | χ² around its minimum; Δχ² = 1; σ_a; the value for 2026; −0.56 ± 0.77 °C per decade; what the ± means |
+| 46–50, 52–55 | No closed form for the cycle; the update rule; three steps by hand; a step too large; the step size, live; the rule for a line; descent on ten years, live; its path |
+| 56–61 | The daily means; the cosine and its three parameters; two days pushed through; the descent from the starting values; the fitted cycle |
+| 62–63, 65–68, 70–75 | Residuals of the line; what χ² should be; when it is not a test; residuals of the cycle; neighbouring days alike; too few and too many parameters; how many; reading residuals; a sensor shift |
+| 76–81 | The same line by every method; reporting a fit; a checklist; the answer; the recap |
 
 | Skip | Slides |
 |--|--|
-| Why x counts from 2016; the slope as r times the spreads | 32–33 |
-| The intercept and its ± | 38 |
-| The ± with more years | 42 |
-| Each step multiplies the gap by 1 − 8η | 48 |
-| The pulls of the line | 61 |
-| The same trend from 3648 days | 66 |
+| Why x counts from 2016; the slope as r times the spreads | 35–36 |
+| The intercept and its ± | 41 |
+| The ± with more years | 45 |
+| Each step multiplies the gap by 1 − 8η | 51 |
+| The pulls of the line | 64 |
+| The same trend from 3648 days | 69 |
 
-- **Do not cut** slides 3 and 77: the opening question and its answer,
+- **Do not cut** slides 3 and 80: the opening question and its answer,
   −0.56 ± 0.77 °C per decade, with the same fan of lines.
-- **Do not cut** slides 11–13, the derivative: the only place the course
+- **Do not cut** slides 12–14, the derivative: the only place the course
   teaches it, and the base of every later slope, χ² minimum and descent
   step. Lecture 10 uses the same update rule for the perceptron.
-- **Do not cut** slides 75–76, reporting a fit and the checklist: the two
+- **Do not cut** slides 78–79, reporting a fit and the checklist: the two
   slides a student needs for the project.
-- **Slides 8, 12, 18, 29, 50 and 56** push numbers through one click at a
-  time: the misses, their squares and S; the nudge and the rule; the
-  Gaussian of 2016; Δ, the slope and the intercept; one descent step for the
-  line; the summer day of the cycle. Slide 49 shows two runs on its click.
-- **Slide 23 is an interactive figure** that works offline: drag the line or
+- **Slides 9, 13, 53 and 59** push numbers through one click at a time:
+  the misses, their squares and S; the nudge and the rule; one descent step
+  for the line; the summer day of the cycle. **Slides 20, 22, 32, 40 and
+  42** step a formula one click at a time, the symbols first, then the
+  numbers in their place (in the accent colour), then the result: the
+  Gaussian of 2016; the logarithm of a product; Δ, the slope and the
+  intercept (three clicks each); σ_a; the ± of the line for 2026. Slide 52
+  shows two runs on its click.
+- **New notions get an explainer where they first appear**: error bars
+  (slide 6, before the three parts of a fit), the Gaussian bell and a
+  density (18), the logarithm (22); one line on the slide for χ² read
+  aloud (23), r (36), ∝ (39), N^−3/2 (45), contour lines and a logarithmic
+  axis (55), the root mean square (59), ⟨χ²⟩ (65), sd (67), √n for a count
+  (90).
+- **Slide 26 is an interactive figure** that works offline: drag the line or
   its ends and χ² follows, term by term; tap a year to push its numbers
   through; take a line from the room to beat the flat line's 9.08, then press
   "best fit" (least squares 8.56; the rounded line itself reads 8.57). Use it
   on the projected window, not in the presenter view.
-- **Slides 14, 31, 49 and 51** run plain Python in the browser: the slope of
+- **Slides 15, 34, 52 and 54** run plain Python in the browser: the slope of
   S by formula and by nudge; the five sums; the step size; gradient descent
   on ten years. The first run downloads the Python runtime, so run one before
-  the lecture. On slide 49 the room chooses the step sizes 0.3, 0.25 and
+  the lecture. On slide 52 the room chooses the step sizes 0.3, 0.25 and
   0.01.
 - **Every number** on the slides is printed by
   `python figures/src/fitting.py` from `weather.csv`; the ten yearly means
   are shown with three decimals so that the sums and the slope come out the
   same by hand.
-- **Slides 79–89** (For the Curious) are for time left at the end or for
+- **Slides 82–92** (For the Curious) are for time left at the end or for
   students afterwards; the pendulum and the LHCb file appear only there.
 
 Before the session, start the local copy of the slides: `node
@@ -144,7 +159,7 @@ scripts/serve-local.mjs 8123`, then open
 ## Check yourself
 
 No quiz interrupts the lecture. The deck closes with a self-check section,
-slides 90–98: eight quiz slides for students to try afterwards. The same
+slides 93–101: eight quiz slides for students to try afterwards. The same
 questions, with their answers:
 
 1. Which value of μ makes the sum of squared misses Σ(y − μ)² smallest for
@@ -178,14 +193,7 @@ questions, with their answers:
 
 ## Paired seminar
 
-[Seminar 9 · NumPy](../seminars/seminar_09.md) asks the same question with
-the real library. Every student starts from today's folder, finds NumPy in
-the `analysis` environment (Matplotlib and pandas need it: a dependency), turns the
-temperature column into a NumPy array, computes the ten yearly means with a
-mask, fits the line by the five sums of slide 26 and with `np.polyfit`, gets
-−0.56 ± 0.77 °C per decade, draws the points, the line and the residuals,
-and fits a straight line through a file of their own. An optional part
-installs SciPy and fits the yearly cycle with `curve_fit`.
+[Seminar 9 · NumPy](../seminars/seminar_09.md) asks how fast Vilnius is getting warmer, at the real station. The lecturer runs four NumPy scripts on open data: the squared misses of the 365 days of 2023 for 1600 guesses, smallest at the mean; a line through 67 yearly means of CO₂ at Mauna Loa by the five sums and by `np.polyfit` (1.6720 ± 0.0008 ppm a year with NOAA's σ = 0.12 ppm); its residuals, a U with χ²/ndf = 1484, against a parabola's 40; polynomials of degree 0 to 9 through ten years of Vilnius, degree 9 saying 44.7 °C for 2023. In pairs, LLMs allowed, the room fits the yearly means of NOAA's GHCN-Daily station file, 1881–2024: one line since 1881 gives 0.05 ± 0.02 °C per decade, a model its residuals reject (χ² = 187 for 132, σ = 0.82 °C from neighbouring years); since 1981, 0.48 ± 0.09 (χ² = 36 for 42). NumPy is already in `analysis`, a dependency of pandas and Matplotlib. Optional: SciPy's `curve_fit` for the yearly cycle (A = 11.03 ± 0.09 °C from all days, ± 0.35 from ten separate years).
 
 ## Slides that left the deck
 

@@ -116,7 +116,7 @@ class: fill
 
 <div class="card card-success card-glass pad-compact mt-sm">
 
-📊 Two peaks, the cold months and the warm months, and the mean in the dip between them
+📊 A bar per degree, as tall as its hours: a cold peak, a warm peak, and the mean in the dip
 
 </div>
 
@@ -137,7 +137,7 @@ class: fill
 
 <div class="card card-warning card-glass pad-compact mt-sm">
 
-⚠️ Four tables of 11 points (Anscombe, 1973), the same in all four: mean of x 9.0 · mean of y 7.5 · line y = 3.00 + 0.50x
+⚠️ Four tables of 11 points, the same in all four: mean of x 9.0 · mean of y 7.5 · line y = 3.00 + 0.50x
 
 </div>
 
@@ -150,7 +150,7 @@ class: fill
 </div>
 
 <!--
-**Do:** read the numbers first.
+**Do:** read the numbers first (Anscombe, 1973).
 **Ask:** what do the four tables look like?
 **Say:** after the click: a line with scatter, a curve, a line with one point off it, and ten points at one x with a single point that makes the whole slope. The mean 7.16 °C was one such number: it hid the two peaks.
 **If asked:** each panel also prints r = 0.82: r says how near the points lie to a straight line, 1 on a rising line, −1 on a falling one, 0 with no trend. All four tables have the same r.
@@ -250,6 +250,79 @@ class: fill
 
 ---
 hideInToc: true
+class: fill
+---
+
+# An Error Bar on a Count: ± **√n**
+
+<div class="fig-fill grid-side mt-sm">
+
+<div class="card card-info card-glass pad-compact">
+
+## 📏 **Top bin: 95 pairs, √95&nbsp;=&nbsp;9.7**
+
+- The bar: 85.3 to 104.7 pairs
+- The file in 61 blocks of 1500 rows: 70 to 117
+- 39 of the other 60 inside the bar: about 2 in 3
+
+</div>
+
+<img class="fig" src="/figures/viz_reading_repeats.svg">
+
+</div>
+
+<!--
+**Say:** a count of n changes from one repetition of the measurement to the next by about √n. The file holds the same measurement 61 times: each block of 1500 rows counts the same bin again. The bar is where a repeat lands, about two times in three.
+**Ask:** how many of the 60 repeats should land inside the first block's bar? About two in three: 39.
+**If asked:** the 61 counts have a mean of 90.2 and a standard deviation of 9.3; √90.2 = 9.5. A bar of ± one standard deviation holds about 68 % of the repeats, twice as long about 95 %.
+(~2 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# The Fitted Curve: the Smallest **χ²**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+📐 χ² = Σ ((count − curve) ÷ bar)² · top bin: (13.6 ÷ 9.75)² = 1.9 · 30 bins: 24.3, the smallest for this shape
+
+</div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_reading_chi2.svg">
+
+<!--
+**Say:** the curve has a fixed shape, a Gaussian on a straight line, and five numbers: the height, centre and width σ of the peak, the level and slope of the line. The fit tries values of the five and keeps those with the smallest χ². A distance is counted in error bars, so a point with a short bar pulls harder.
+**Ask:** the same curve moved by 5 MeV/c²: which red lines grow? Those beside the peak; χ² rises to 56.0.
+**If asked:** the ± of the fit result: moving the centre away from 1865.2, the other four refitted each time, until χ² has risen by 1, gives ± 0.9 MeV/c².
+(~2 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# A Pull: (Count − Fit) ÷ Error **Bar**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+📏 Top bin: (95 − 81.4) ÷ 9.75 = +1.39 · 21 of 30 within ±1, all within ±2 · χ²/ndf = 24.3 ÷ (30 bins − 5 fitted) = 0.97
+
+</div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_reading_pulls.svg">
+
+<!--
+**Say:** a pull is a point's distance from the curve in error bars, with its sign. When the curve and the bars are right, about 2 pulls in 3 lie within ±1 and 19 in 20 within ±2, with no pattern; χ² is the sum of the pulls squared, so it is near the number of bins left free, ndf, and χ²/ndf near 1. The straight line alone misses the peak: 9 pulls beyond ±2, up to +5.5, and χ²/ndf = 144.4/28 = 5.2.
+**Ask:** if every bar were drawn half as long, what would χ²/ndf be? Every pull doubles, χ² four times: 3.9.
+(~2 min)
+-->
+
+---
+hideInToc: true
 ---
 
 # The **Legend**
@@ -292,7 +365,7 @@ class: fill
 
 <img class="fig" src="/figures/viz_legend_samples_bad.svg">
 
-🚫 **Names without samples**: which line is which, in what unit?
+🚫 **Names without samples**: which line, what unit?
 
 </div>
 
@@ -551,6 +624,35 @@ class: fill
 
 ---
 hideInToc: true
+---
+
+# Tufte's **Lie Factor**
+
+<div class="card card-info card-glass pad-tight mt-sm table-compact">
+
+## 📐 **The effect shown ÷ the effect in the data** (Tufte, 1983)
+
+An effect: (second − first) ÷ first, here from School E to School A
+
+| | E → A | Effect | Lie factor |
+| --- | --- | --- | --- |
+| Pass rates (%) | 49.1 → 58.2 | 0.185 | |
+| Bars from 48 | 1.1 → 10.2 | 8.27 | **44.6** |
+| Bars from 0 | 49.1 → 58.2 | 0.185 | **1.0** |
+
+</div>
+
+<div class="note-text mt-md">Tufte: a lie factor below 0.95 or above 1.05 distorts the data.</div>
+
+<!--
+**Say:** one number for how far a figure exaggerates: the change the eye sees, divided by the change in the numbers. 8.27 ÷ 0.185 = 44.6: the bars from 48 show the difference 45 times as large as it is.
+**Ask:** what lie factor would a figure have that shows a rise as a fall? A negative one.
+**If asked:** Edward Tufte, *The Visual Display of Quantitative Information* (1983). His example, a newspaper chart of the fuel economy required of new cars, had a lie factor of 14.8.
+(~2 min)
+-->
+
+---
+hideInToc: true
 class: fill
 ---
 
@@ -764,7 +866,7 @@ class: fill
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-📏 The ages of the Titanic passengers in bins of 0.5, 5 and 20 years: whole years leave every other narrow bin nearly empty
+📏 Titanic ages in bins of 0.5, 5 and 20 years: whole years leave every other narrow bin near empty
 
 </div>
 
@@ -825,7 +927,7 @@ class: fill
 
 <img class="fig" src="/figures/viz_distributions_ii_weather_violin.svg">
 
-🎻 **Violin**: all hours, two peaks
+🎻 **Violin**: a mirrored density
 
 </div>
 
@@ -841,7 +943,7 @@ class: fill
 
 <div class="card card-success card-glass pad-compact mt-sm">
 
-📐 The box: the middle half of the values. The line in it: the **median**, half of the values below, half above.
+📐 Box: the middle half · line: the **median** · whiskers: 1.5 box lengths · dots: beyond them
 
 </div>
 
@@ -909,7 +1011,7 @@ class: fill
 
 <img class="fig" src="/figures/viz_proportions_pie_bad.svg">
 
-🥧 **Pie**: compared by angle
+🥧 **Pie**: by angle
 
 </div>
 
@@ -917,7 +1019,7 @@ class: fill
 
 <img class="fig" src="/figures/viz_proportions_proportions_stacked_bar.svg">
 
-📚 **Stacked bar**: compared by length
+📚 **Stacked bar**: by length
 
 </div>
 
@@ -925,7 +1027,7 @@ class: fill
 
 <img class="fig" src="/figures/viz_proportions_proportions_side_by_side_bars.svg">
 
-📊 **Separate bars**: compared by position
+📊 **Bars**: by position
 
 </div>
 
@@ -955,7 +1057,7 @@ class: fill
 
 <img class="fig" src="/figures/viz_proportions_marketshare_pies_bad.svg">
 
-🚫 **Three pies**: a share across the years cannot be followed
+🚫 **Three pies**: a share is hard to follow
 
 </div>
 
@@ -1110,7 +1212,7 @@ class: fill
 
 <img class="fig" src="/figures/viz_overlapping_points_nycflights_hex_bins.svg">
 
-✅ **Hexagonal bins**: the colour is the count per cell
+✅ **Hexagonal bins**: colour = flights per cell, 1, 10, 100
 
 </div>
 
@@ -1236,7 +1338,7 @@ class: fill
 </div>
 
 <!--
-**Say:** five group means, each with a bar of ± one standard error. The more values behind a mean, the shorter its bar: √N divides.
+**Say:** five group means, each with a bar of ± one standard error. The more values behind a mean, the shorter its bar: √N divides. As with the bar √n of a count, a repeated mean lands inside the bar about two times in three.
 **If asked:** with 36 values instead of 9, the same 0.3 °C gives 0.3 / √36 = 0.05 °C.
 (~1 min)
 -->
@@ -1260,7 +1362,7 @@ class: fill
 
 <img class="fig" src="/figures/viz_uncertainty_ci_band.svg">
 
-🎗️ **A band**: where the line could lie; wider, less certain
+🎗️ **A band**: where the line could lie
 
 </div>
 
@@ -1518,7 +1620,7 @@ class: fill
 
 <img class="fig" src="/figures/viz_goodbad_spaghetti_bad.svg">
 
-🚫 **Ten colours and a legend**: no year can be followed
+🚫 **Ten colours, a legend**: no year to follow
 
 </div>
 
@@ -1547,7 +1649,7 @@ class: fill
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-📐 Citations of five papers: 5, 60, 540, 4900, 46 000. Linear: three in the lowest 2 %. Logarithmic: each step × 10, all five apart
+📐 Citations: 5, 60, 540, 4900, 46 000. Linear: three in the lowest 2 %. Log: each step × 10
 
 </div>
 
@@ -1570,10 +1672,10 @@ class: runner-side
 import matplotlib.pyplot as plt
 days = []
 counts = []
-for day in range(1, 60):           # 1, 2, ..., 59
+for day in range(1, 60):     # 1, 2, ..., 59
     days.append(day)
-    counts.append(5 * 1.2 ** day)  # 20 % more every day
-SCALE = "linear"                   # <-- try "log"
+    counts.append(5 * 1.2 ** day)  # +20 % a day
+SCALE = "linear"             # <-- try "log"
 fig, ax = plt.subplots(figsize=(5, 4.6),
                        layout="constrained")
 ax.plot(days, counts, "o-", ms=3)
@@ -1667,7 +1769,7 @@ class: fill
 
 <img class="fig" src="/figures/viz_goodbad_two_axes_bad.svg">
 
-🚫 **Two y-axes**: crossings set by two ranges chosen by hand
+🚫 **Two y-axes**: crossings set by hand
 
 </div>
 
@@ -1849,7 +1951,7 @@ class: fill
 
 <img class="fig" src="/figures/viz_goodbad_window_bad.svg">
 
-🚫 **Two ends picked, the axis cut**: a trend made by the choice
+🚫 **Ends picked, axis cut**: a chosen trend
 
 </div>
 
@@ -1867,6 +1969,283 @@ class: fill
 **Ask:** from 2023 to 2025, what would the same trick give? −2.3 °C in two years.
 **Say:** choose the window before looking at the result, and show the whole series.
 (~2 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# Misleading **Figures**
+
+A figure misleads when the size or slope of its marks does not follow its numbers.
+
+<!--
+**Say:** four figures with correct numbers that still mislead, each followed by the same data drawn honestly, and measured with the lie factor.
+(~0.5 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# Ink in Proportion to the **Value**
+
+<div class="fig-fill grid-side mt-sm">
+
+<div class="card card-info card-glass pad-compact">
+
+## 🖋️ **The principle of proportional ink**
+
+- Shaded area ∝ value
+- Bar from zero: length ∝ value
+- Circle: area ∝ value
+- Radius × 2: area × 4
+
+</div>
+
+<img class="fig" src="/figures/viz_reading_ink.svg">
+
+</div>
+
+<!--
+**Say:** the eye reads the amount of ink, so the ink follows the value: Tufte's rule, which Bergstrom and West call the principle of proportional ink. A circle twice as wide holds four times the ink: π(2r)² = 4πr².
+**If asked:** for an area twice as large the radius grows by √2 = 1.41: radius ∝ √value.
+(~1 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# Frost Hours as Circles Sized by **Radius**
+
+<div class="fig-fill grid-side mt-sm">
+
+<div class="card card-warning card-glass pad-compact">
+
+## ⚠️ **Radius ∝ frost hours**
+
+- 2023: 1845 h, 2025: 2677 h
+- Hours × 1.45, areas × 2.11
+- Lie factor: 1.11 ÷ 0.45 = 2.5
+
+</div>
+
+<img class="fig" src="/figures/viz_reading_circles_bad.svg">
+
+</div>
+
+<!--
+**Ask:** how many more frost hours had 2025 than 2023? The circles say twice as many; the numbers say 45 % more.
+**Say:** the eye reads a circle by its area, and an area grows with the square of the radius: (2677 ÷ 1845)² = 1.45² = 2.11. The effects: 1.11 drawn, 0.45 in the data.
+(~1 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# The Same Frost Hours as **Bars**
+
+<div class="fig-fill grid-side mt-sm">
+
+<div class="card card-success card-glass pad-compact">
+
+## ✅ **Bars from zero: length ∝ hours**
+
+- 2025's bar 1.45 times 2023's, as the hours
+- Lie factor 1.0
+- Read by length, not by area
+
+</div>
+
+<img class="fig" src="/figures/viz_reading_frost_bars.svg">
+
+</div>
+
+<!--
+**Say:** the same ten numbers. A length is read more exactly than an area, and from zero it is proportional to the count. Where circles are wanted, as in a bubble chart, their area follows the value.
+(~1 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# A Pie in **Perspective**
+
+<div class="fig-fill grid-side mt-sm">
+
+<div class="card card-warning card-glass pad-compact table-compact">
+
+## ⚠️ **87 552 hours in four bands**
+
+| | hours | ink |
+| --- | --- | --- |
+| below 0 °C | 25.5 % | 53.2 % |
+| 10 to 20 °C | 31.0 % | 15.5 % |
+
+Lie factor −3.3: the larger share drawn smaller
+
+</div>
+
+<img class="fig" src="/figures/viz_reading_pie3d_bad.svg">
+
+</div>
+
+<!--
+**Ask:** which band holds the most hours? The front wedge looks largest; it holds the second fewest.
+**Say:** perspective enlarges the front and shrinks the back, and the rim adds ink to the front wedges only.
+**If asked:** the ink of a wedge is its drawn area, top and visible rim, measured on the picture. Lie factor: (15.5 − 53.2) ÷ 53.2 = −0.709 shown, (31.0 − 25.5) ÷ 25.5 = 0.216 in the data, −0.709 ÷ 0.216 = −3.3.
+(~1 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# The Four Temperature Bands as **Bars**
+
+<div class="fig-fill grid-side mt-sm">
+
+<div class="card card-success card-glass pad-compact">
+
+## ✅ **In the order of temperature, from zero**
+
+- Each share a length: lie factor 1.0
+- 0 to 10 °C the largest, 35.0 %
+
+</div>
+
+<img class="fig" src="/figures/viz_reading_bands_bars.svg">
+
+</div>
+
+<!--
+**Say:** the bands have an order of their own, so the bars keep it, as the age groups did. A flat pie of these four shares would be honest too; bars are read more exactly.
+(~1 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# A Running Total Hides a **Fall**
+
+<div class="fig-fill grid-side mt-sm">
+
+<div class="card card-warning card-glass pad-compact">
+
+## ⚠️ **Hours of 20 °C or more, added up since 2016**
+
+- 2023 → 2024: 1072 → 695, −35.2&nbsp;%
+- Total: 5969 → 6664, +11.6&nbsp;%
+- Lie factor −0.33: a fall drawn as a rise
+
+</div>
+
+<img class="fig" src="/figures/viz_reading_running_total_bad.svg">
+
+</div>
+
+<!--
+**Ask:** which year had the fewest warm hours? The curve cannot say: it rises every year, by that year's count.
+**Say:** a running total never falls, so a fall in the yearly numbers shows only as a flatter step.
+**If asked:** a running total answers a question about the total, here 7427 warm hours in ten years; a change from year to year needs each year's own count.
+(~1 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# Warm Hours Year by **Year**
+
+<div class="fig-fill grid-side mt-sm">
+
+<div class="card card-success card-glass pad-compact">
+
+## ✅ **Each year's own count, from zero**
+
+- 2023: 1072, the most
+- 2024: 695, the fall the total hid
+- 494 (2017) to 1072: × 2.2
+
+</div>
+
+<img class="fig" src="/figures/viz_reading_warm_hours.svg">
+
+</div>
+
+<!--
+**Say:** the same ten numbers before they were added up. Warm hours swing by a factor of two from year to year, with the summer's weather.
+(~1 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# Years Drawn as Equal **Steps**
+
+<div class="fig-fill grid-side mt-sm">
+
+<div class="card card-warning card-glass pad-compact">
+
+## ⚠️ **CO₂ every 10 years, then every 5**
+
+- 1990 → 2000: +15.3 ppm, 1.53 a year
+- 2000 → 2005: +10.3 ppm, 2.05 a year
+- Same width: the line bends down; lie factor −0.95
+
+</div>
+
+<img class="fig" src="/figures/viz_reading_co2_steps_bad.svg">
+
+</div>
+
+<!--
+**Ask:** did CO₂ rise faster or slower after 2000? The line says slower.
+**Say:** years as text are names, and names are spaced evenly: `ax.plot(["1960", "1970", ...], values)` does this, as a spreadsheet does. Per year the rise went from 1.53 to 2.05 ppm, a third faster; drawn, the step is a third flatter.
+**If asked:** NOAA Global Monitoring Laboratory, the annual means of CO₂ at Mauna Loa, public domain; before 1974 C. D. Keeling, Scripps. ppm: molecules of CO₂ per million molecules of dry air.
+(~1 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# The Same Years on a Time **Axis**
+
+<div class="fig-fill grid-side mt-sm">
+
+<div class="card card-success card-glass pad-compact">
+
+## ✅ **The year as a number**
+
+- A step as wide as its years
+- 1960 → 2000: 1.3 ppm a year
+- 2000 → 2025: 2.3 ppm a year
+
+</div>
+
+<img class="fig" src="/figures/viz_reading_co2_years.svg">
+
+</div>
+
+<!--
+**Say:** `ax.plot([1960, 1970, ...], values)`: with numbers, Matplotlib puts each year at its place. The ten values lie on the record of every year, 1959 to 2025, and the curve steepens.
+(~1 min)
 -->
 
 ---
@@ -2034,13 +2413,13 @@ class: fill
 
 <div class="card card-primary card-glass pad-compact">
 
-📏 **Range: −17 to 33 °C.** Every hour, −16.3 to 32.4, with edges on whole degrees
+📏 **Range: −17 to 33 °C.** Every hour, −16.3 to 32.4; edges on whole degrees
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-📐 **Bin width.** Several of the station's tenths per bin, and enough hours that neighbours do not differ by chance
+📐 **Bin width.** Wider than the station's tenths, narrow enough for the shape
 
 </div>
 
@@ -2206,7 +2585,7 @@ class: fill
 <!--
 **Say:** three variables on a plane: two positions and a colour, diverging at 0 °C. 366 × 24 cells, each the mean of 10 hours or fewer. Both cycles at once: the year from left to right, the day from bottom to top.
 **Ask:** where is the day-night difference largest? In summer: a July day swings 10 °C, a January day 4 °C.
-**If asked:** `ax.imshow(grid, aspect="auto", origin="lower", cmap="RdBu_r", vmin=-30, vmax=30)`; the grid comes from `weather.group(path, 5, 13)`: the key `07-28T15` is a day and an hour.
+**If asked:** `ax.imshow(grid, aspect="auto", origin="lower", cmap="RdBu_r", vmin=-30, vmax=30)`; the grid comes from the temperatures grouped by `line[5:13]`: the key `07-28T15` is a day and an hour.
 (~2 min)
 -->
 
@@ -2240,7 +2619,7 @@ class: fill
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
-🗺️ Lines of equal humidity, like heights on a map: 70 % around summer afternoons, above 90 % on January nights
+🗺️ Lines of equal humidity, as on a map: 70 % on summer afternoons, over 90 % on January nights
 
 </div>
 
@@ -2284,7 +2663,7 @@ class: fill
 
 <div class="card card-success card-glass pad-compact mt-sm">
 
-🧩 The year as a panel, not a height: nothing hidden, one colour scale. In 2019 a dark line: 22–26 July, the missing hours
+🧩 A panel per year: nothing hidden, one colour scale. 2019's dark line: 22–26 July, not measured
 
 </div>
 
@@ -2410,18 +2789,18 @@ hideInToc: true
 class: fill
 ---
 
-# Deaths in the Army in the East, 1854–56: **Nightingale's Roses**
+# Deaths by Cause, 1854–56: **Nightingale's Roses**
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-🌹 A wedge per month, area = deaths: 17 982 deaths, 14 476 (80.5 %) from preventable disease. January 1855 alone: 2761
+🌹 A wedge per month, area = deaths: 17 982, of them 14 476 (80.5 %) from preventable disease
 
 </div>
 
 <img class="fig fig-fill mt-sm" src="/figures/viz_gallery_nightingale.svg">
 
 <!--
-**Say:** three variables in each rose: the month as the angle, the cause as colour, the deaths as area, each wedge measured from the centre. The radius grows with the square root: a wedge twice as long holds four times the deaths. First year, on the right: 13 294 deaths, 83.9 % from disease; second year, on the left: 4688.
+**Say:** the deaths in the British army in the East. Three variables in each rose: the month as the angle, the cause as colour, the deaths as area, each wedge measured from the centre. January 1855 alone: 2761. The radius grows with the square root: a wedge twice as long holds four times the deaths. First year, on the right: 13 294 deaths, 83.9 % from disease; second year, on the left: 4688.
 **If asked:** Florence Nightingale, "Diagram of the causes of mortality in the army in the East", 1858. Data: `Nightingale` of the R package HistData (from Pearson and Short, 2007), as CSV from Rdatasets; GPL; the numbers are historical records. A Sanitary Commission reached the army in March 1855. The file also gives annual rates per 1000 soldiers: the army grew from 8571 (April 1854) to 46 140 (March 1856), so the rates fall further than the counts.
 (~1 min)
 -->
@@ -2435,7 +2814,7 @@ class: fill
 
 <div class="card card-warning card-glass pad-compact mt-sm">
 
-🗺️ Band width = soldiers: 422 000 at Kaunas, 100 000 at Moscow, 10 000 back. Coldest: −30 °Réaumur (−37.5 °C), 6 December
+🗺️ Band width = soldiers: 422 000 at Kaunas, 100 000 at Moscow, 10 000 back · coldest −37.5 °C
 
 </div>
 
@@ -2443,7 +2822,7 @@ class: fill
 
 <!--
 **Say:** six variables on one page: the size of the army as the band's width, longitude and latitude, the direction as colour (tan to Moscow, light grey back: Minard drew it black), and below, the temperature on the retreat with its date, joined to the map by thin lines. 422 000 become 10 000, one in 42; the cold of November and December falls on the way back.
-**If asked:** Charles Joseph Minard, 1869; Edward Tufte called it perhaps the best statistical graphic ever drawn. Data: `Minard.troops`, `Minard.cities`, `Minard.temp` of the R package HistData (Lee Wilkinson's transcription), as CSV from Rdatasets; GPL; the numbers are historical records. Minard gave degrees Réaumur: × 1.25 for °C. The date 24 November is empty in the file and follows from its column of days (14 Nov + 10).
+**If asked:** Charles Joseph Minard, 1869; Edward Tufte called it perhaps the best statistical graphic ever drawn. Data: `Minard.troops`, `Minard.cities`, `Minard.temp` of the R package HistData (Lee Wilkinson's transcription), as CSV from Rdatasets; GPL; the numbers are historical records. Minard gave degrees Réaumur: × 1.25 for °C; the coldest, −30 °R on 6 December, is −37.5 °C. The date 24 November is empty in the file and follows from its column of days (14 Nov + 10).
 (~1 min)
 -->
 
@@ -2500,7 +2879,7 @@ class: fill
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
-🧭 The LHC ring is 42 × the PS and 170 × the Booster: to scale, they are dots. The schematic keeps only the order and the four experiments
+🧭 LHC: 42 × the PS, 170 × the Booster, so to scale they are dots; a schematic keeps the order
 
 </div>
 
@@ -2624,7 +3003,19 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Put the main variable on **position**, and start bars at zero
+✅ Put the main variable on **position**; keep the **ink in proportion**: a lie factor near 1
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Read an **error bar** (√n of a count), a fit's **χ²** and its **pulls**
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Spot a **misleading** figure: radius for area, perspective, a running total, years as names
 
 </div>
 
@@ -2799,7 +3190,7 @@ The figures of the weather log, call by call.
 hideInToc: true
 ---
 
-# The Time of Each Hour: `weather.hours`
+# The Time of Each Hour: `datetime`
 
 <div class="grid-2 mt-sm gap-md" style="grid-template-columns: 3fr 2fr;">
 
@@ -2807,24 +3198,24 @@ hideInToc: true
 
 ````md magic-move {lines: true}
 ```py
-def temps(path):
-    result = []
-    for line in read_lines(path):
-        temp = temp_of(line)
-        if temp != MISSING:
-            result.append(temp)
-    return result
+text = open("data/raw/weather.csv").read()
+values = []
+for line in text.splitlines()[1:]:
+    temp = float(line.split(",")[1])   # temp_c
+    if temp != -999:
+        values.append(temp)
 ```
-```py {1,2,7,9}
-def hours(path):
-    times = []
-    result = []
-    for line in read_lines(path):
-        temp = temp_of(line)
-        if temp != MISSING:
-            times.append(datetime.fromisoformat(line[0:16]))
-            result.append(temp)
-    return times, result
+```py {1,3,8-9}
+from datetime import datetime
+text = open("data/raw/weather.csv").read()
+times = []
+values = []
+for line in text.splitlines()[1:]:
+    temp = float(line.split(",")[1])   # temp_c
+    if temp != -999:
+        time = datetime.fromisoformat(line[0:16])
+        times.append(time)
+        values.append(temp)
 ```
 ````
 
@@ -2836,7 +3227,8 @@ def hours(path):
 
 ```text
 >>> from datetime import datetime
->>> datetime.fromisoformat("2016-01-01T00:00")
+>>> t = "2016-01-01T00:00"
+>>> datetime.fromisoformat(t)
 datetime.datetime(2016, 1, 1, 0, 0)
 ```
 
@@ -2844,10 +3236,10 @@ datetime.datetime(2016, 1, 1, 0, 0)
 
 </div>
 
-<div class="note-text mt-sm">In <code>weather.py</code>, beside <code>temps</code>, with <code>from datetime import datetime</code> at its top. <code>line[0:16]</code> is the time column. <code>hours</code> returns two lists of equal length; <code>times, values = weather.hours(path)</code> names both, as <code>fig, ax</code> does.</div>
+<div class="note-text mt-sm"><code>line[0:16]</code> is the time column, <code>2016-01-01T00:00</code>. Two lists of equal length: <code>times[i]</code> is the time of <code>values[i]</code>.</div>
 
 <!--
-**Do:** first step: `temps`, the opening slide's loop as a function; click: the four lines that change.
+**Do:** first step: the opening slide's loop; click: the four lines that add the times.
 **Say:** `datetime` is in the standard library; a `datetime` object knows its year, month, day and hour, and Matplotlib puts years on an axis of them.
 (~2 min)
 -->
@@ -2864,7 +3256,7 @@ class: fill
 <div>
 
 ```python {all|1|3|4|5-6|all}
-times, values = weather.hours("data/raw/weather.csv")
+# times, values: the 87 552 measured hours
 fig, ax = plt.subplots()
 ax.plot(times, values, linewidth=0.2)
 ax.set_xlabel("time")
@@ -2903,7 +3295,7 @@ fig.savefig("results/every_hour.png", dpi=150)
 hideInToc: true
 ---
 
-# The Temperatures of Each Year: `weather.group`
+# The Temperatures of Each Year: `group`
 
 <div class="grid-2 mt-sm gap-md" style="grid-template-columns: 3fr 2fr;">
 
@@ -2911,11 +3303,12 @@ hideInToc: true
 
 ````md magic-move {lines: true}
 ```py
-def group(path, start, stop):
+def group(start, stop):
+    text = open("data/raw/weather.csv").read()
     groups = {}
-    for line in read_lines(path):
-        temp = temp_of(line)
-        if temp == MISSING:
+    for line in text.splitlines()[1:]:
+        temp = float(line.split(",")[1])   # temp_c
+        if temp == -999:
             continue
         key = line[start:stop]
         if key not in groups:
@@ -2924,11 +3317,12 @@ def group(path, start, stop):
     return groups
 ```
 ```py
-by_year = weather.group("data/raw/weather.csv", 0, 4)
-print(len(by_year))                # 10
-print(list(by_year))               # ['2016', '2017', ..., '2025']
-print(len(by_year["2019"]))        # 8640
-print(weather.mean(by_year["2025"]))   # 5.982077625570776
+by_year = group(0, 4)
+print(len(by_year))             # 10
+print(list(by_year))            # '2016' to '2025'
+print(len(by_year["2019"]))     # 8640
+temps = by_year["2025"]
+print(sum(temps) / len(temps))  # 5.982077625570776
 ```
 ````
 
@@ -2949,10 +3343,10 @@ print(weather.mean(by_year["2025"]))   # 5.982077625570776
 
 </div>
 
-<div class="note-text mt-sm">A <code>dict</code> of lists in <code>weather.py</code>: one list of temperatures per key, in the order the keys first occur. <code>key not in groups</code> is <code>True</code> the first time a key turns up; <code>for year in by_year</code> runs over the keys, and <code>list(by_year)</code> lists them.</div>
+<div class="note-text mt-sm">A <code>dict</code> of lists: one list of temperatures per key, in the order the keys first occur. <code>key not in groups</code> is <code>True</code> the first time a key turns up; <code>for year in by_year</code> runs over the keys, and <code>list(by_year)</code> lists them.</div>
 
 <!--
-**Do:** first step: the function; click: what it gives for the years.
+**Do:** first step: the function, the opening slide's loop with a key for each line; click: what it gives for the years.
 **Ask:** why 8640 hours in 2019, not 8760? The 120 missing hours of July.
 **If asked:** 3653 days in ten years; the five days of July 2019 without a single measured hour have no key.
 (~3 min)
@@ -2965,11 +3359,11 @@ class: fill
 
 # Hours Below 0 °C per Year: `ax.bar`
 
-<div class="fig-fill grid-2 mt-sm gap-md">
+<div class="fig-fill grid-2 mt-sm gap-md" style="grid-template-columns: 3fr 2fr;">
 
 <div>
 
-```python {all|1-6|8-9|10-14|all}
+```python {all|1-7|8-12|13-17|all}
 frost = []
 for year in by_year:
     count = 0
@@ -2977,15 +3371,16 @@ for year in by_year:
         if temp < 0:
             count = count + 1
     frost.append(count)
-
 fig, ax = plt.subplots(figsize=(6, 3.2))
-ax.bar(range(2016, 2026), frost, color="#56B4E9", width=0.7)
-ax.set(xlabel="year", ylabel="hours below 0 °C", ylim=(0, 3000))
-ax.yaxis.grid(True, color="#b0bec5", linewidth=0.6)
+ax.bar(range(2016, 2026), frost, width=0.7,
+       color="#56B4E9")
+ax.set(xlabel="year", ylim=(0, 3000),
+       ylabel="hours below 0 °C")
+ax.yaxis.grid(True, color="#b0bec5", lw=0.6)
 ax.set_axisbelow(True)
 for side in ("top", "right", "left"):
     ax.spines[side].set_visible(False)
-fig.savefig("results/frost_hours.svg", bbox_inches="tight")
+fig.savefig("results/frost_hours.svg")
 ```
 
 </div>
@@ -3000,11 +3395,9 @@ fig.savefig("results/frost_hours.svg", bbox_inches="tight")
 
 </div>
 
-<div class="note-text mt-sm"><code>range(2016, 2026)</code> puts the years on x as numbers, so Matplotlib chooses which to label. <code>figsize</code> is the size in inches. The four <code>ax.spines</code> are the lines of the box around the plot; <code>set_axisbelow(True)</code> draws the grid behind the bars.</div>
-
 <!--
 **Say:** a count has a true zero, so its bars start at zero; the years keep their own order.
-**If asked:** 22 352 of the 87 552 hours were below 0 °C, a quarter.
+**If asked:** `range(2016, 2026)` puts the years on x as numbers, so Matplotlib chooses which to label; `figsize` is the size in inches; the four `ax.spines` are the lines of the box around the plot, and `set_axisbelow(True)` draws the grid behind the bars. 22 352 of the 87 552 hours were below 0 °C, a quarter.
 (~2 min)
 -->
 
@@ -3015,21 +3408,24 @@ class: fill
 
 # Yearly Means and the Mean of All **Hours**
 
-<div class="fig-fill grid-2 mt-sm gap-md">
+<div class="fig-fill grid-2 mt-sm gap-md" style="grid-template-columns: 3fr 2fr;">
 
 <div>
 
-```python {all|1-3|5-6|7-8|9-10|all}
+```python {all|1-4|6-9|10-11|12-15|all}
 year_means = []
 for year in by_year:
-    year_means.append(weather.mean(by_year[year]))
+    temps = by_year[year]
+    year_means.append(sum(temps) / len(temps))
 
+all_mean = sum(values) / len(values)   # 87 552 h
 fig, ax = plt.subplots(figsize=(5.2, 3.6))
-all_mean = weather.mean(weather.temps("data/raw/weather.csv"))
-ax.axhline(all_mean, color="#D55E00", label="2016–2025: 7.16 °C")
-ax.plot(list(by_year), year_means, "o",   # "o": a point each
+ax.axhline(all_mean, color="#D55E00",
+           label="2016–2025: 7.16 °C")
+ax.plot(list(by_year), year_means, "o",
         color="#56B4E9", label="one year")
-ax.set(xlabel="year", ylabel="mean temperature (°C)", ylim=(5, 9))
+ax.set(xlabel="year", ylim=(5, 9),
+       ylabel="mean temperature (°C)")
 ax.legend(loc="lower left")
 fig.savefig("results/year_means.png", dpi=150)
 ```
@@ -3060,22 +3456,26 @@ class: fill
 
 # The Monthly Means, Annotated
 
-<div class="fig-fill grid-2 mt-sm gap-md">
+<div class="fig-fill grid-2 mt-sm gap-md" style="grid-template-columns: 3fr 2fr;">
 
 <div>
 
-```python {all|1-4|6-7|8-10|11-13|all}
-months = weather.group("data/raw/weather.csv", 5, 7)
+```python {all|1-5|6-8|9-13|14-17|all}
+months = group(5, 7)
 month_means = []
 for month in months:
-    month_means.append(weather.mean(months[month]))
-
+    temps = months[month]
+    month_means.append(sum(temps) / len(temps))
 fig, ax = plt.subplots(figsize=(5.6, 3.6))
-ax.plot(list(months), month_means, "o-", color="#56B4E9")
+ax.plot(list(months), month_means, "o-",
+        color="#56B4E9")
 arrow = {"arrowstyle": "->", "color": "#D55E00"}
-ax.annotate("July, 18.5 °C", xy=("07", month_means[6]), xytext=("09", 19.5),
-            color="#D55E00", arrowprops=arrow)
-ax.set(xlabel="month", ylabel="mean temperature (°C)", ylim=(-6, 22))
+july = month_means[6]                  # 18.53
+ax.annotate("July, 18.5 °C", xy=("07", july),
+            xytext=("09", 19.5), color="#D55E00",
+            arrowprops=arrow)
+ax.set(xlabel="month", ylim=(-6, 22),
+       ylabel="mean temperature (°C)")
 ax.set_title("July is 22.4 °C warmer than January")
 fig.savefig("results/month_means.png", dpi=150)
 ```
@@ -3130,7 +3530,7 @@ plt.rcParams.update({
 ```
 
 <!--
-**Say:** the eight Okabe–Ito colours stay distinct for the colour-blind. The style lives in one place, for example in `weather.py`, and every script that imports it draws alike.
+**Say:** the eight Okabe–Ito colours stay distinct for the colour-blind. The style lives in one place, a file of its own that every script imports, so all figures draw alike.
 (~1 min)
 -->
 
@@ -3143,17 +3543,18 @@ class: runner-side
 
 ```py {monaco-run} {autorun:false}
 import random, matplotlib.pyplot as plt
-random.seed(7)                  # same numbers every run
+random.seed(7)               # the same each run
 values = []
-for i in range(3000):           # 3000 times
-    cold = random.gauss(-1, 4)  # an hour, Nov to Mar
-    warm = random.gauss(13, 5)  # an hour, Apr to Oct
-    values.append(round(cold, 1))  # tenths, as the
-    values.append(round(warm, 1))  # station writes
-BINS = 5                        # <-- try 5, 55, 1100
+for i in range(3000):        # 3000 times
+    cold = random.gauss(-1, 4)   # Nov to Mar
+    warm = random.gauss(13, 5)   # Apr to Oct
+    values.append(round(cold, 1))  # in tenths,
+    values.append(round(warm, 1))  # as measured
+BINS = 5                     # <-- try 55, 1100
 fig, ax = plt.subplots(figsize=(5, 4.6),
                        layout="constrained")
-ax.hist(values, bins=BINS, range=(-20.025, 34.975))
+ax.hist(values, bins=BINS,
+        range=(-20.025, 34.975))
 ax.set_xlabel("temperature (°C)")
 ax.set_ylabel("values per bin")
 plt.show()
@@ -3191,6 +3592,38 @@ hideInToc: true
   ]"
   :correct="1"
   explanation="This is Anscombe's quartet. The four tables share their means, their line y = 3.00 + 0.50x and r = 0.82, and they are a line with scatter, a curve, a line with one point off it, and a column of points with one far point. Only the plot shows which."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="A bin of a histogram holds 400 counts. If the measurement were repeated many times, where would about two in three of its counts land?"
+  :options="[
+    '398 to 402',
+    '380 to 420',
+    '360 to 440',
+    '200 to 600'
+  ]"
+  :correct="1"
+  explanation="A count of n changes from one repetition to the next by about √n: √400 = 20. The error bar runs from 380 to 420, and about two repeats in three land inside it; about 19 in 20 land inside twice that, 360 to 440."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="A curve with 4 free numbers is fitted to 40 bins and gives χ² = 108. What does χ²/ndf say?"
+  :options="[
+    'The fit is good, since χ² is large',
+    '108 / 36 = 3: the curve misses the points by more than their error bars',
+    '108 / 40 = 2.7: the error bars are too long',
+    'Nothing: χ² depends only on the number of bins'
+  ]"
+  :correct="1"
+  explanation="ndf = 40 bins − 4 fitted numbers = 36, and 108 / 36 = 3. With the right curve and the right error bars most pulls lie within ±1 and χ²/ndf is near 1. At 3 the curve misses (look for a pattern in the pulls) or the bars are too short."
 />
 
 ---
@@ -3303,6 +3736,22 @@ hideInToc: true
   ]"
   :correct="1"
   explanation="The bars are drawn from 48, so their lengths are 50 − 48 = 2 and 52 − 48 = 4: the second is twice as long. The values differ by 4 %. A bar shows its value by its length, so its axis starts at zero."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="An infographic draws the values 100 and 200 as two circles whose radius follows the value. What is Tufte's lie factor?"
+  :options="[
+    '1',
+    '2',
+    '3',
+    '4'
+  ]"
+  :correct="2"
+  explanation="In the data the effect is (200 − 100) / 100 = 1. The radius doubles, so the area grows four times: an effect of (4 − 1) / 1 = 3 in the figure. Lie factor 3 / 1 = 3. With the area following the value it is 1."
 />
 
 ---

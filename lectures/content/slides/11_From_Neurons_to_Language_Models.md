@@ -142,14 +142,14 @@ class: fill
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-🧠 Each circle is one neuron: $z = w_1 x_1 + w_2 x_2 + b$, then a step: 1 if $z > 0$, else 0. The output neuron takes $h_1$ and $h_2$ as its inputs. Nine numbers.
+🧠 Each circle is one neuron: weights $w_1$, $w_2$ and a bias $b$ give $z = w_1 x_1 + w_2 x_2 + b$, then a step: 1 if $z > 0$, else 0. The middle two, $h_1$ and $h_2$, are the **hidden layer**: the inputs of the output neuron. Nine numbers.
 
 </div>
 
 <img class="fig fig-fill mt-sm" src="/figures/viz_language_xor_network.svg">
 
 <!--
-**Say:** two inputs, two neurons in between, one output: a 2-2-1 network. The middle layer is called hidden: its outputs are neither the inputs nor the answer. Three numbers per neuron, nine in all, set by hand.
+**Say:** two inputs, two neurons in between, one output: a 2-2-1 network. Hidden, because their outputs are neither the inputs nor the answer. Three numbers per neuron, nine in all, set by hand.
 **If asked:** the output neuron computes “h1 and not h2”: weight 1 on h1, −1 on h2, bias −0.5.
 (~2 min)
 -->
@@ -247,6 +247,55 @@ Nine weights set by hand work for XOR. For data, gradient descent finds them, th
 hideInToc: true
 ---
 
+# The Loss of One **Answer**
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-primary card-glass pad-compact table-compact">
+
+## 🎯 **Frost came, $y = 1$; the network said $\hat{y}$**
+
+| $\hat{y}$ | 0.9 | 0.5 | 0.3865 | 0.1 |
+| --- | --- | --- | --- | --- |
+| $-\ln \hat{y}$ | 0.105 | 0.693 | 0.951 | 2.303 |
+
+Right and sure: near 0. Wrong and sure: large. No frost, $y = 0$: $-\ln(1 - \hat{y})$.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📐 **$\ln a$: the power of $e = 2.718$ that gives $a$**
+
+<FormulaSteps steps="
+  \text{loss} = -\ln\,0.3865
+  = -(-0.951)
+  = 0.951
+" />
+
+Check: $e^{-0.951} = 0.386$.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+📉 A **loss**: one number for how wrong the network is, lower is better. Training lowers its mean over all examples.
+
+</div>
+
+<!--
+**Say:** to train a network, one number must say how wrong it is. For a yes-or-no answer given as a probability: minus the logarithm of the probability given to what happened.
+**Do:** click through: the network says 0.3865, frost came, the loss is 0.951.
+**If asked:** this loss is called the cross-entropy; Python's `math.log` is ln.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
 # Gradient Descent Needs a **Slope**
 
 <div class="grid-2 mt-sm gap-md">
@@ -259,7 +308,7 @@ $$
 \theta \leftarrow \theta - \eta\,\frac{\partial\,\text{loss}}{\partial \theta}
 $$
 
-$\eta$ is the step size. A weight moves against the slope of the loss.
+$\partial\,\text{loss}/\partial\theta$, the **slope**: the change of the loss per unit of $\theta$, the other numbers fixed. $\eta$: the step size.
 
 </div>
 
@@ -307,7 +356,7 @@ class: fill
 
 <!--
 **Say:** the smallest network with a hidden neuron: the temperature at 18:00 in, the probability of frost by 06:00 out, the question of Lecture 10 with one input.
-**Do:** read the values left to right: u = −1 · 2.0 + 1 = −1.0; h = sigmoid(−1.0) = 0.269; z = 2 · 0.269 − 1 = −0.462; ŷ = sigmoid(−0.462) = 0.386; the loss −ln 0.386 = 0.951.
+**Do:** read the values left to right: u = −1 · 2.0 + 1 = −1.0; h = sigmoid(−1.0) = 0.269; z = 2 · 0.269 − 1 = −0.462; ŷ = sigmoid(−0.462) = 0.386; the loss −ln 0.3865 = 0.951.
 **If asked:** for y = 1 the cross-entropy of Lecture 10, −[y ln ŷ + (1 − y) ln(1 − ŷ)], is −ln ŷ. The four starting weights are round numbers; training starts from small random ones.
 (~3 min)
 -->
@@ -324,13 +373,13 @@ hideInToc: true
 
 ## 🔗 **A function of a function**
 
-If $f$ depends on $a$, and $a$ on $t$:
+If $f$ depends on $a$, and $a$ on $t$. Here $f = a^2$, $a = 3t + 1$; at $t = 1$, $a = 4$:
 
-$$
-\frac{df}{dt} = \frac{df}{da} \cdot \frac{da}{dt}
-$$
-
-$f = a^2$ with $a = 3t + 1$, at $t = 1$: $a = 4$, $\;df/da = 2a = 8$, $\;da/dt = 3$, so $df/dt = 24$.
+<FormulaSteps steps="
+  \frac{{d}{f}}{{d}{t}} = \frac{{d}{f}}{{d}{a}} \cdot \frac{{d}{a}}{{d}{t}}
+  = 2a \cdot 3
+  = 8 \cdot 3 = 24
+" />
 
 </div>
 
@@ -356,6 +405,7 @@ $$
 
 <!--
 **Say:** the derivative of Lecture 9 and its check by a small nudge, for a function inside a function: multiply the slopes of the links.
+**Do:** click through: the rule, the two slopes, $2a = 8$ at $a = 4$ and 3, their product.
 (~3 min)
 -->
 
@@ -675,7 +725,7 @@ $$
 P(b \mid a) = \frac{\text{count}(a\ b)}{\text{count}(a)}
 $$
 
-After “was”:
+$P(b \mid a)$: the probability that $b$ comes next, given $a$. After “was”:
 
 - cold: 3/12 = 0.250
 - cool: 4/12 = 0.333
@@ -703,9 +753,10 @@ hideInToc: true
 # Count the Pairs in **Python**
 
 ```py {monaco-run} {autorun:false}
-text = """in january it was cold . in february it was cold . in march it was cool . in april it was cool .
-in may it was mild . in june it was warm . in july it was warm . in august it was warm .
-in september it was mild . in october it was cool . in november it was cool . in december it was cold ."""
+text = """in january it was cold . in february it was cold . in march it was cool .
+in april it was cool . in may it was mild . in june it was warm .
+in july it was warm . in august it was warm . in september it was mild .
+in october it was cool . in november it was cool . in december it was cold ."""
 words = text.split()                       # 72 words
 follow = {}                                # word -> the words that came right after it
 for i in range(len(words) - 1):
@@ -871,6 +922,8 @@ After the three words “july it was”, the text holds one continuation: warm.
 | 3 words | 8000 | $1.25 \times 10^{14}$ |
 | 10 words | $1.0 \times 10^{13}$ | $9.8 \times 10^{46}$ |
 
+A **token**: a word or a piece of one.
+
 </div>
 
 </div>
@@ -952,9 +1005,9 @@ $$
 $$
 
 - ‖january‖ = √82 = 9.055, ‖february‖ = 10
-- january, february: 90 / 90.55 = **0.994**
+- january, february: 90 / 90.55 = **0.994**, nearly one direction
 - january, march: 18 / 82 = **0.220**
-- january, july: **0**
+- january, july: **0**, no word in common
 
 </div>
 
@@ -976,7 +1029,7 @@ class: fill
 
 <div class="card card-success card-glass pad-compact">
 
-🗓️ The cosine of every pair of months. Four groups appear, from the words alone:
+🗓️ Each cell: the cosine of its row's month and its column's, yellow 1, violet 0. Four groups appear, from the words alone:
 
 - December to February
 - March, April, October, November
@@ -1093,9 +1146,12 @@ hideInToc: true
 
 ## 🔢 **Scores to probabilities**
 
-$$
-p_i = \frac{e^{s_i}}{e^{s_1} + e^{s_2} + \dots + e^{s_K}}
-$$
+<FormulaSteps mode="morph" steps="
+  p_i = \frac{e^{s_i}}{e^{s_1} + e^{s_2} + \dots + e^{s_K}}
+  p_{\text{warm}} = \frac{e^{2.0}}{e^{2.0} + e^{1.0} + e^{0.1}}
+  p_{\text{warm}} = \frac{7.389}{7.389 + 2.718 + 1.105}
+  p_{\text{warm}} = \frac{7.389}{11.213} = 0.659
+" />
 
 Every $p_i$ is positive, together they make 1, and a larger score gets a larger probability.
 
@@ -1124,7 +1180,7 @@ Every $p_i$ is positive, together they make 1, and a larger score gets a larger 
 
 <!--
 **Say:** e to the power of a score is always positive; dividing by the sum makes the numbers add to 1.
-**Do:** 7.389 / 11.213 = 0.659, row by row.
+**Do:** click through warm: its score in place, $e^{2.0} = 7.389$, the sum 11.213, then 0.659; the table gives the other two rows.
 (~3 min)
 -->
 
@@ -1295,7 +1351,7 @@ hideInToc: true
 ## ⚖️ **Weights from scores, by softmax**
 
 $$
-a_i = \frac{e^{s_i}}{\sum_j e^{s_j}}, \qquad \mathbf{c} = a_1 \mathbf{v}_1 + a_2 \mathbf{v}_2 + a_3 \mathbf{v}_3
+a_i = \frac{e^{s_i}}{e^{s_1} + e^{s_2} + e^{s_3}}, \qquad \mathbf{c} = a_1 \mathbf{v}_1 + a_2 \mathbf{v}_2 + a_3 \mathbf{v}_3
 $$
 
 <v-clicks>
@@ -1608,6 +1664,8 @@ class: fill
 
 🔢 Weights, biases and vectors. The tiny network of the frost evening: 4. XOR: 9. GPT-2 (2019): $1.5 \times 10^{9}$. GPT-3 (2020): $1.75 \times 10^{11}$, as their papers state.
 
+A **logarithmic axis**: each tick 100 times the one before, so 4 and $10^{11}$ fit on one line.
+
 The step is the same for all of them.
 
 </div>
@@ -1877,6 +1935,7 @@ The model has not seen the file. A number in its reply is a likely-looking guess
 ## 🐍 **Computed from the file**
 
 ```python
+# every temperature of the file, -999 left out
 temps = weather.temps("data/raw/weather.csv")
 count = 0
 for t in temps:
@@ -1895,7 +1954,7 @@ print(count, len(temps))
 
 <!--
 **Say:** a statement about your data is computed from the data. A model can help write these six lines; the number comes from running them.
-**If asked:** `weather.temps` is the function of Lecture 5: every temperature that is not −999.
+**If asked:** `weather.temps` is the function of Lecture 5, in the module `weather.py`: every temperature that is not −999.
 (~2 min)
 -->
 

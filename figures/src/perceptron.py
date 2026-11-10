@@ -513,6 +513,16 @@ def report():
     print(f"    tonight: z = {zt:.4f}, yhat = {sigmoid(zt):.4f}")
     for t in (1.0, 3.0, 5.0):
         print(f"    {t} °C, 0.85: yhat = {sigmoid(z_of([t, 0.85], wl, bl)):.3f}")
+    years, (n_all, k_all) = bin_by_year(rows)
+    print(f"  error bars, evenings at {ERROR_BAR_BIN[0]} to {ERROR_BAR_BIN[1]} °C: all ten "
+          f"years {k_all} of {n_all} = {k_all / n_all:.3f}")
+    reach = 0
+    for year, (n, k) in years.items():
+        e = plus_minus(k / n, n)
+        reach += abs(k / n - k_all / n_all) <= e
+        print(f"    {year}: {k} of {n} = {k / n:.3f} ± {e:.3f}, "
+              f"p (1 - p) = {k / n * (1 - k / n):.4f}")
+    print(f"    {reach} of {len(years)} bars reach {k_all / n_all:.3f}")
     caught = sum(1 for i in range(len(xte)) if yte[i] == 1 and predict(xte[i], wl, bl) == 1)
     missed = sum(1 for i in range(len(xte)) if yte[i] == 1 and predict(xte[i], wl, bl) == 0)
     alarms = sum(1 for i in range(len(xte)) if yte[i] == 0 and predict(xte[i], wl, bl) == 1)
@@ -984,6 +994,54 @@ def _probability():
     style.save(fig, "viz_perceptron_probability")
 
 
+ERROR_BAR_BIN = (3.0, 4.0)   # the evenings at 3 to 4 °C, the error bar explainer
+ERROR_BAR_YEAR = "2020"      # the year whose bar the slide derives
+
+
+def bin_by_year(rows, lo=ERROR_BAR_BIN[0], hi=ERROR_BAR_BIN[1]):
+    """{year: (evenings, frosts)} of the evenings with lo <= x1 < hi, and the
+    totals of all ten years."""
+    out = {}
+    for r in rows:
+        if lo <= r[1] < hi:
+            n, k = out.get(r[0][0:4], (0, 0))
+            out[r[0][0:4]] = (n + 1, k + r[3])
+    total = (sum(v[0] for v in out.values()), sum(v[1] for v in out.values()))
+    return dict(sorted(out.items())), total
+
+
+def _error_bars():
+    """The share of the 3-4 °C evenings followed by frost, year by year, each
+    with its bar of one standard error, against the share of all ten years:
+    what an error bar is, before the first figure that draws them."""
+    years, (n_all, k_all) = bin_by_year(evenings())
+    p_all = k_all / n_all
+    fig, ax = style.new_fig(6.2, 4.3)
+    ax.axhline(p_all, color=style.DIM, lw=1.2, ls="--", zorder=1,
+               label=f"all ten years: {k_all} of {n_all} = {p_all:.2f}")
+    labels = []
+    for i, (year, (n, k)) in enumerate(years.items()):
+        p = k / n
+        e = plus_minus(p, n)
+        col = C1 if abs(p - p_all) <= e else C0
+        ax.errorbar(i, p, yerr=e, fmt="o", color=col, ms=6, lw=1.6, capsize=4, zorder=3)
+        labels.append(f"{year}\n{n}")
+        if year == ERROR_BAR_YEAR:
+            ax.annotate(f"{k} of {n} = {p:.3f}\n± {e:.3f}", xy=(i + 0.12, p + e),
+                        xytext=(i + 0.7, 0.93), color=LINE, fontsize=10.5, va="center",
+                        arrowprops={"arrowstyle": "-", "color": LINE, "lw": 1.0})
+    ax.plot([], [], "o", color=C1, ms=6, label="its bar reaches the share of all ten years")
+    ax.plot([], [], "o", color=C0, ms=6, label="it does not")
+    ax.set_xticks(range(len(years)))
+    ax.set_xticklabels(labels, fontsize=10)
+    ax.set_xlim(-0.6, len(years) - 0.4)
+    ax.set_ylim(0, 1.05)
+    ax.set_xlabel("year, and its evenings at 3 to 4 °C")
+    ax.set_ylabel("share followed by frost")
+    ax.legend(loc="lower left", fontsize=9.5)
+    style.save(fig, "viz_perceptron_error_bars")
+
+
 def _test_fig():
     rows = evenings()
     train, test = split(rows)
@@ -1322,6 +1380,7 @@ FIGURES = {
     "viz_perceptron_cross_entropy": _cross_entropy,
     "viz_perceptron_training": _training,
     "viz_perceptron_bowl": _bowl,
+    "viz_perceptron_error_bars": _error_bars,
     "viz_perceptron_probability": _probability,
     "viz_perceptron_test": _test_fig,
     "viz_perceptron_xor_lines": _xor_lines,

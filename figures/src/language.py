@@ -978,7 +978,8 @@ def _sizes():
         text = f"{v:g}" if v < 1e3 else f"{v / 10 ** e:.3g} × 10$^{{{e}}}$"
         ax.text(v * 2.2, y_, text, va="center", fontsize=12, color=FG)
     ax.set_xscale("log")
-    ax.set_xlim(1, 1e14)
+    ax.set_xlim(1, 1e16)
+    ax.set_xticks([10.0 ** k for k in range(0, 17, 2)])
     ax.set_yticks(ys)
     ax.set_yticklabels(names)
     ax.set_xlabel("parameters: weights, biases, vectors")
