@@ -101,6 +101,20 @@ While drafts are mid-rework on `main`, a batch ships from a worktree of
       fit result is plain text without its box; the slide has no visible
       heading (`title:` in the frontmatter), so the 16:9 figure is 839 × 472 px
       and not 723 × 407.
+- [x] Lecture 7, "The Parts of a Figure" full screen, 10 November (the
+      lecturer, on the version above: "Full screen, it's important"). Read
+      as: the figure covers the whole slide, at every click. Decisions: the
+      stack of stages is an absolute box over the slide's full frame with
+      `object-fit: cover`, as a video slide, so the figure is 980 × 551 px
+      and not 839 × 472; it is drawn at 10.89 × 6.13 in (90 px/in, the type
+      as large as on every other figure, the plot larger); the lower panel
+      is drawn from the first stage, empty until its pulls come at the fifth
+      click (with the room only kept for it, the bottom quarter of the
+      screen was blank for five clicks); the deck's two buttons lie over the
+      top right corner, and no part of the figure goes under them
+      (`anatomy.py` checks the name of the title); the dashed frame that
+      names the Figure runs outside the buttons; `class: fill` stays on the
+      slide so that `scripts/measure-figures.mjs` still measures the stages.
 - [ ] Open: John Snow's cholera map (not drawn); Lecture 3's bulb and
       transistor photos at a higher resolution; `preloadImages` off for phones;
       the zips `weather-s08`…`s12` (need the lecturer's go-ahead to upload);

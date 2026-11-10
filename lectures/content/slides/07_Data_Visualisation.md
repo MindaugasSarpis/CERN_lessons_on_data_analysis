@@ -237,15 +237,15 @@ class: fill
 </div>
 
 <!--
-**Do:** click six times, naming what each click adds: the points (pairs of a K⁻ and a π⁺ from LHCb, counted in bins of 3 MeV/c² of their mass; the first 1500 rows of the file), their error bars √n, the fitted curve with its two components and its result, the known D⁰ mass with the annotation, legend and title, the pulls, the names of the parts.
+**Do:** click six times, naming what each click adds: the points (pairs of a K⁻ and a π⁺ from LHCb, counted in bins of 3 MeV/c² of their mass; the first 1500 rows of the file), their error bars √n, the fitted curve with its two components and its result, the known D⁰ mass with the annotation, legend and title, the pulls (in the lower panel, empty until then), the names of the parts.
 **Say:** each part answers a reader's question: what is measured, in which units, how sure, which model, and does it fit: every pull within ±2, χ²/ndf = 24.3/25. The top bin holds 95 pairs, so its bar is √95 = 9.7. The fit finds 334 ± 37 D⁰ decays at 1865.2 ± 0.9 MeV/c²; the known mass is 1864.84.
 **If asked:** why 1500 rows of 91 583: with every row the top bin holds 5505 pairs and its bar, 74, is shorter than the marker.
 (~3 min)
 -->
 
 <style>
-.anatomy-stack { position: relative; }
-.anatomy-stack img { position: absolute; inset: 0; margin: auto; height: 100%; width: auto; max-width: 100%; aspect-ratio: 16 / 9; object-fit: contain; }
+.anatomy-stack { position: absolute; inset: 0; background: var(--bg); }
+.anatomy-stack img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 </style>
 
 ---

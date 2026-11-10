@@ -29,7 +29,7 @@ weather-log figure, call by call, for after the lecture.
    quartet: four tables with the same means and the same closest line,
    told apart only by a plot.
 2. **Mechanics of a figure** (7–16): the visual channels and their ranking;
-   the parts of a figure, built up on the histogram of the hours; the
+   the parts of a figure, built up on a mass peak of LHCb with its fit; the
    legend, and a legend without samples against names at the lines; axis
    labels with units and their size; the coordinate system; the aspect
    ratio.
@@ -114,7 +114,7 @@ type the slide number and press Enter.
 | Slides | Part |
 |--|--|
 | 1–6 | The mean of 87 552 hours, computed on the slide (the question of the lecture), every hour from 2016 to 2025, the hours in bins of 1 °C, which answer the question on slide 5, then Anscombe's quartet: four tables that their numbers cannot tell apart |
-| 7–16 | Mechanics: visual channels and their ranking, the parts of a figure on the histogram of the hours, the legend, axis labels with units and their size, the coordinate system, the aspect ratio |
+| 7–16 | Mechanics: visual channels and their ranking, the parts of a figure on a mass peak of LHCb with its fit, the legend, axis labels with units and their size, the coordinate system, the aspect ratio |
 | 17–29 | Amounts: long labels under vertical, wider and horizontal bars, bars from zero, ordered categories, stacked and 3D bars, the dot plot from alphabetical order to sorted dots |
 | 30–33 | Distributions: bin widths of ages, density, the hours as a boxplot, a violin and a strip, lines or fill |
 | 34–40 | Proportions and associations: pie, stacked bar and separate bars, when a pie works; the scatter plot, the bubble chart, the pair plot, overlapping points, hexagonal bins |
@@ -162,8 +162,10 @@ type the slide number and press Enter.
   first 1500 rows of the LHCb file `D0_KPi.csv`, counted in bins of 3 MeV/c²)
   up in six clicks: the points, their error bars √n, the fitted Gaussian on a
   straight line with its two components and its result, the known D⁰ mass with
-  annotation, legend and title, the pull panel, and the names of its nineteen
-  parts. The slide has no heading: the figure is 16:9 and fills it.
+  annotation, legend and title, the pulls in the lower panel (its frame is
+  there from the first click), and the names of its nineteen parts. The slide
+  has no heading: the figure covers the whole screen, and the deck's two
+  buttons lie over its top right corner, which the figure leaves free.
 - **Slides 22, 41, 53, 72, 82, 84, 88 and 89 are interactive figures** that work
   offline: drag where the bar axis starts (22), the smoothing window (41),
   switch the palette of the day-and-hour grid (53), drag the bin width from

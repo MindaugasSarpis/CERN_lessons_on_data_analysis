@@ -24,13 +24,30 @@ file, the K- pi+ pairs of LHCb (D0_KPi.csv, 91 583 rows):
   * the residual panel: the pulls (data - fit) / sigma.
 
 Seven stages of IDENTICAL geometry (fixed margins, a solid 16:9 canvas), each
-stage adding its parts: the frame; the data points; the error bars; the
-fitted curve, its two components and the fit result; the reference line, the
-annotation, the legend and the title; the residual panel; callouts naming
-each part.
+stage adding its parts: the frames of the two panels; the data points; the
+error bars; the fitted curve, its two components and the fit result; the
+reference line, the annotation, the legend and the title; the pulls in the
+lower panel; callouts naming each part.
 
 The lecturer, 10 Nov 2026, while this version was drawn: "legend with no
 frame". The legend has none, and the fit result is plain text without a box.
+
+The lecturer, 10 Nov 2026, on the version that sat inside the slide's padding
+(839 x 472 px of 980 x 551): "Full screen, it's important". The canvas is the
+whole slide: 980 x 552 px = 10.89 x 6.13 in at the 90 px/in of every other
+figure, so the type is as large as on any slide and the plot is larger. The
+slide lays the stages over its full frame (an absolute box, object-fit:
+cover, as a video slide), so the canvas edge is the screen edge:
+
+  * the margins are a little wider than a figure in a padded box needs;
+  * the lower panel is drawn from the first stage, empty until its pulls
+    come at stage 6: with the room only kept for it, the bottom quarter of
+    the screen was blank for five clicks;
+  * the deck's two buttons (home and the lecture list) lie over the top
+    right corner, NAV_W x NAV_H inches of it: no part of the figure goes
+    there (the title and its name end left of it; `_callouts` checks);
+  * the dashed frame that names the Figure runs outside the buttons, FRAME
+    from the edge.
 
 Every number on the figure is computed here. Print them with
 
@@ -129,10 +146,14 @@ def numbers():
 # The figure
 # ---------------------------------------------------------------------------
 
-# The canvas, in inches: the 16:9 box of the slide (sizes.json), else this.
-W, H = style.SIZES.get(NAME.format(1), (9.30, 5.23))
-LEFT, RIGHT, TOP, BOTTOM = 0.80, 0.30, 0.50, 0.62   # margins around the panels (in)
-RES_H = 0.95                                        # residual panel height (in)
+# The canvas, in inches: the whole 16:9 slide (sizes.json), else this.
+W, H = style.SIZES.get(NAME.format(1), (10.89, 6.13))
+LEFT, RIGHT, TOP, BOTTOM = 0.95, 0.45, 0.58, 0.80   # margins around the panels (in)
+RES_H = 1.10                                        # residual panel height (in)
+NAV_W, NAV_H = 0.90, 0.50        # the corner under the deck's two buttons (in)
+FRAME = 0.04                     # the dashed Figure frame, from the canvas edge (in)
+EDGE = 0.17                      # a name beside the canvas edge: its distance (in)
+Y_NAMES = 0.23                   # the names under the panels: their height (in)
 MAIN_BOTTOM = BOTTOM + RES_H
 YLIM, PULL_LIM = (0, 125), (-3.5, 3.5)
 Y_MAJOR, Y_MINOR = 25, 5
@@ -161,8 +182,7 @@ def build(n: int):
     OPAQUE canvas of identical geometry: the panels are placed by hand (no
     constrained layout, no tight bbox), so every part sits at the same pixel
     in every stage, and a solid background makes stage n cover stage n-1.
-    Until the residual panel comes (stage 6) the main panel carries the
-    mass labels itself."""
+    Both panels are there from stage 1; the lower one is empty until 6."""
     import matplotlib.pyplot as plt
     from matplotlib.ticker import MultipleLocator
 
@@ -178,8 +198,15 @@ def build(n: int):
     ax.yaxis.set_major_locator(MultipleLocator(Y_MAJOR))
     ax.yaxis.set_minor_locator(MultipleLocator(Y_MINOR))
     ax.set_ylabel(rf"pairs per {BIN_W:.0f} {MASS_UNIT}")
-    _mass_axis(ax, labels=n < 6)
-    parts = dict(ax=ax)
+    _mass_axis(ax, labels=False)
+    rax = fig.add_axes(_box(BOTTOM, RES_H), sharex=ax)      # the residual panel
+    _mass_axis(rax, labels=True)
+    rax.set_ylim(*PULL_LIM)
+    rax.yaxis.set_major_locator(MultipleLocator(2))
+    rax.yaxis.set_minor_locator(MultipleLocator(1))
+    rax.set_ylabel("(data − fit)/σ")
+    fig.align_ylabels([ax, rax])
+    parts = dict(ax=ax, rax=rax)
 
     if n >= 2:      # the data points
         parts["points"], = ax.plot(x, cnt, "o", ms=MS, color=fg, zorder=5)
@@ -224,17 +251,9 @@ def build(n: int):
         parts["title"] = ax.set_title(
             rf"LHCb: the $D^0$ meson is a peak at {f['mu']:.1f} {MASS_UNIT} "
             rf"in the mass of $K^-\pi^+$ pairs")
-    if n >= 6:      # the residual panel
-        rax = fig.add_axes(_box(BOTTOM, RES_H), sharex=ax)
-        _mass_axis(rax, labels=True)
-        rax.set_ylim(*PULL_LIM)
-        rax.yaxis.set_major_locator(MultipleLocator(2))
-        rax.yaxis.set_minor_locator(MultipleLocator(1))
+    if n >= 6:      # the pulls
         rax.axhline(0, color=dim, lw=0.9, zorder=1)
         rax.plot(x, f["pulls"], "o", ms=MS, color=fg, zorder=4)
-        rax.set_ylabel("(data − fit)/σ")
-        fig.align_ylabels([ax, rax])
-        parts["rax"] = rax
     if n >= 7:
         _callouts(fig, parts)
     return fig, parts
@@ -279,30 +298,35 @@ def _callouts(fig, p):
         if dot:
             fig.add_artist(Line2D([target[0]], [target[1]], transform=inch, marker="o",
                                   ms=3.2, color=acc, ls="none", zorder=21))
+        return ann
 
     tick = 5 / 72                             # major tick length, inches
     top = YLIM[1]
     x_left, x_right = at(ax, WINDOW[0], 0)[0], at(ax, WINDOW[1], 0)[0]
 
     # the canvas: a dashed frame along its edge, named in its corner
-    e = 0.035
+    e = FRAME
     fig.add_artist(Rectangle((e, e), W - 2 * e, H - 2 * e, transform=inch, fill=False,
                              edgecolor=acc, lw=0.8, ls=(0, (4, 3)), zorder=19))
-    fig.text(0.12, 0.15, "Figure", transform=inch, ha="left", va="center", color=acc,
+    fig.text(EDGE, Y_NAMES, "Figure", transform=inch, ha="left", va="center", color=acc,
              fontsize=11, fontweight="bold", zorder=20)
 
     # around the panels
     title_end = on(p["title"], 1, 0.45)
-    callout("Title", (title_end[0] + 0.04, title_end[1]), (title_end[0] + 0.32, title_end[1]),
-            rel=(0, 0.5))
+    name = callout("Title", (title_end[0] + 0.04, title_end[1]),
+                   (title_end[0] + 0.32, title_end[1]), rel=(0, 0.5))
+    name.update_positions(r)
+    reach = Text.get_window_extent(name, r).transformed(inch.inverted()).x1
+    assert reach < W - NAV_W, f"the name of the title ends at {reach:.2f} in, under the buttons"
     ylab = on(ax.yaxis.label, 0.5, 1)
-    callout("y-axis label", (ylab[0], ylab[1] + 0.03), (0.12, H - 0.19), rel=(0.22, 0.5))
+    callout("y-axis label", (ylab[0], ylab[1] + 0.03), (EDGE, H - 0.26), rel=(0.22, 0.5))
     label = next(t for t in rax.get_xticklabels() if t.get_text() == "1840")
     lab = on(label, 0.5, 0)
-    callout("Tick label", (lab[0], lab[1] - 0.02), (lab[0], 0.14), ha="center")
+    callout("Tick label", (lab[0], lab[1] - 0.02), (lab[0], Y_NAMES), ha="center")
     xlab = on(rax.xaxis.label, 1, 0.5)
     callout("x-axis label", (xlab[0] + 0.04, xlab[1]), (xlab[0] + 0.4, xlab[1]), rel=(0, 0.5))
-    callout("Residual panel", at(rax, 1904.0, -2.6), (W - 1.39, 0.14), rel=(0.5, 0.5))
+    callout("Residual panel", at(rax, 1904.0, -2.6), (W - RIGHT, Y_NAMES), ha="right",
+            rel=(0.5, 0.5))
 
     # left of the peak: the legend, a spine, the curve
     leg = on(p["legend"], 0.42, 0.0)
