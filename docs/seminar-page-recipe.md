@@ -49,7 +49,7 @@ lecturer, then a problem the students solve in pairs, LLMs included. Spec:
    Open-Meteo archive for Vilnius's real weather, CC BY 4.0, NOAA's Mauna
    Loa CO₂, NASA GISTEMP, CERN Open Data, Rdatasets, Our World in Data). No `weather-sNN.zip`, no ready-made project, module
    or script, nothing added to the course's resources. The pages of
-   Seminars 8 to 12 still start from `weather-sNN.zip` (the rule before
+   Seminars 9 to 12 still start from `weather-sNN.zip` (the rule before
    10 Nov 2026: release `seminar-files` of
    [MindaugasSarpis/weather-project](https://github.com/MindaugasSarpis/weather-project/releases),
    made by `misc/weather_repo/seminar_zips.py` from

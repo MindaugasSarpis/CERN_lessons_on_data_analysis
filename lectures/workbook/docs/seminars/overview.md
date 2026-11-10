@@ -13,19 +13,13 @@ Every seminar works on the same project as the lectures, the weather
 station, with ten years of hourly readings in `data/raw/weather.csv`. Each
 seminar asks one question about it and answers it by the end.
 
-- **Every seminar stands on its own.** Seminars 1 to 5 download nothing:
-  the room types its data from the page, six hours of the station's log
-  (the evening of 21 July 2019, when the temperature sensor failed) and,
-  where needed, the nine days of the spreadsheet export. Seminar 7 types
-  its data too: twelve monthly means in one script, then in a small CSV
-  file; its last part downloads one public data set from its own address.
-  The other seminars from Seminar 6 on
-  start from their own folder, `weather-sNN.zip` on the
-  [Releases page](https://github.com/MindaugasSarpis/weather-project/releases)
-  of the project, which holds everything the session needs: the data, the
-  finished files of earlier seminars, and the `environment.yml` of its
-  conda environment. Missing a week costs nothing; nothing has to be
-  carried over from an earlier session.
+- **Every seminar stands on its own.** It starts in a new, empty folder
+  and hands out no file: the data is typed from the page or fetched by the
+  code itself from an openly available data set at its public address
+  (the real weather of Vilnius from the Open-Meteo archive, NOAA's Mauna
+  Loa CO₂ table, and others, each with its source and licence). Missing a
+  week costs nothing; nothing has to be carried over from an earlier
+  session.
 - **Seminar 5** is the first Python of the room: the interpreter, a Jupyter
   notebook, IDLE and VS Code, functions, a class and a module, and the first
   conda environment. It starts from an empty folder; the six hours are typed
@@ -35,26 +29,34 @@ seminar asks one question about it and answers it by the end.
   (about 0.5 MB) and publishes it to their own GitHub. Seminar 12 uses Git
   again; the other seminars do not need it.
 - **Weeks 8 to 12 share one conda environment, `analysis`.** Seminar 8
-  creates it from its folder's `environment.yml`; each later seminar adds
-  the package of the week itself (`conda install`, then the file is written
-  again), so packages and environments are learned one at a time. Whoever
-  missed a week creates it from that week's folder with one command.
+  creates it with one `conda create` line and adds pandas and Matplotlib;
+  each later seminar adds the package of the week (`conda install`, then
+  the file is written again). Whoever missed a week creates it with the
+  line on that week's page.
 - **One new tool per seminar from week 8:** pandas (8), NumPy (9), a class
   of your own (10), a language model in plain Python and an LLM (11),
-  pytest (12). The lecture of the week gives the idea; the seminar does it
-  with the tool, step by step.
-- **Your project:** from week 8, the last part of every seminar repeats the
-  day's steps on your own file, nothing new.
+  pytest (12). The lecture of the week gives the idea; the seminar shows
+  the tool at work and then gives the room a problem to solve with it.
+- **Your project:** from week 8, the problem of each seminar can be asked
+  of your own file instead.
 - **The terminal:** zsh on macOS and Git Bash on Windows, in the terminal
   of VS Code. They take the same commands, so a line typed on the projector
   is the line typed on every laptop.
 
 ## How a page works
 
-Section 1 makes or gets the day's folder. Each section is a few short steps (the
-instruction, then the typed line and its output in one block), a **Check:** line, and each part
-ends with a **Task** for the room, its answer folded under it. The
-**▶ Steps** button (bottom right) shows the page one step at a time.
+A seminar has four parts. **Set up** makes the day's folder and, when
+needed, the conda environment. In the **Showcase** the lecturer runs three
+to five complete examples from the page, each on real data, with what to
+notice and a question for the room; a table of the calls they used closes
+it. Then **the problem**: one real question, worked on in pairs with any
+tools, an LLM included. First a prediction, then the work, then checks that
+no LLM can do for you (a number by hand, the units and the uncertainty read
+off the result, the answer set against the prediction), and last one
+figure or number with two sentences. Hints and a worked solution are
+folded under it. In **Show and discuss** two or three pairs show their
+answer. The **▶ Steps** button (bottom right) shows the page one step at a
+time.
 
 ## The project folder
 
@@ -83,7 +85,7 @@ rebuild both with one command.
 |--|--|--|
 | What | One hands-on session per week on the weather project | One project of your own, developed across the semester |
 | Topic | Set by the page | **Entirely your choice**: field, data, and form (analysis, app, dashboard, educational piece) |
-| Continuity | Each seminar starts from what it types (Seminars 1 to 5 and 7) or from its own folder, `weather-sNN.zip` | Grows all term; the seminar skills are meant to be carried into it |
+| Continuity | Each seminar starts from an empty folder; its data is typed or fetched from a public address | Grows all term; the seminar skills are meant to be carried into it |
 | Assessed | No | Yes: repository, one-page report, short video, final presentation (see Lecture 1) |
 
 How much the two overlap is up to you: a seminar step can be repeated on

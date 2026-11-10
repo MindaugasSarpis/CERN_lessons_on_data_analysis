@@ -92,7 +92,7 @@
     var steps = [];
     var part = "";
     var section = null;   // {title, meta, anchor}
-    var pending = null;   // last Task step, to attach its Answer
+    var pending = null;   // last Task or Ask step, to attach its Answer
     var intro = document.createElement("div");
     var inIntro = true;
 
@@ -148,6 +148,7 @@
       var kind = "Note";
       if (/^\s*Check:/.test(el.textContent)) kind = "Check";
       else if (el.classList.contains("question")) kind = "Task";
+      else if (/^\s*Ask the room:/.test(el.textContent)) kind = "Ask";
       else if (el.classList.contains("warning")) kind = "Watch for";
       var els = [el];
       var step = { part: part, section: section, kind: kind, els: els, body: new Body(function () {
@@ -156,7 +157,7 @@
         return box;
       }) };
       steps.push(step);
-      pending = kind === "Task" ? step : null;
+      pending = (kind === "Task" || kind === "Ask") ? step : null;
     });
 
     steps.unshift({ part: "", section: { title: "Start", meta: "", anchor: "" }, kind: "Overview",
