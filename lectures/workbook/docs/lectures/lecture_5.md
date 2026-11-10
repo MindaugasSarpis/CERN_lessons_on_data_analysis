@@ -13,7 +13,7 @@ spreadsheet beside the Python where the comparison is natural, and the
 lecture closes on what each leaves behind for the 7.16. Every piece of code
 grows on its slide one line, or one result, per click. Writing a class of
 your own is in the optional section For the Curious at the end. The tools
-(the interpreter, a notebook, an editor, scripts) are shown live in
+(the interpreter, an editor, scripts) are shown live in
 Seminar 5.
 
 | Part | Question | Answer |
@@ -219,15 +219,17 @@ questions, with their answers:
 
 ## Paired seminar
 
-[Seminar 5](../seminars/seminar_05.md) follows and shows live what the
-lecture explained: Python at the `>>>` prompt, a conda environment with
-JupyterLab and a first notebook, an editor (IDLE, then VS Code), the script
-`scripts/mean_temp.py` that prints 25.3 for six typed hours of the log, the
-same steps as functions, a
-class `Hour`, and a module `scripts/weather.py` that `mean_temp.py` and
-`coldest_hour.py` import, the standard library (the Open-Meteo answer fetched with
-`urllib` and `json`), and the environment written down in
-`environment.yml`. It starts from an empty folder.
+[Seminar 5](../seminars/seminar_05.md) starts from an empty folder: the
+room's first conda environment, `s05`, Python at the `>>>` prompt, and a
+script with a list and a loop over six typed hours (25.3 °C without the two
+`-999`). The lecturer runs four complete scripts: the weather of Vilnius
+now from Open-Meteo, a dict inside a dict; seven days grouped by date in a
+dict; 145 years of the Vilnius station from GHCN-Daily, read with `csv`,
+skipping days without a value; one function called for three Baltic
+capitals. Pairs, with any tools and an LLM, then answer in plain Python
+whether the coast is milder in winter and cooler in summer: Klaipėda is 2.9
+°C milder in January 1991–2020 and 0.1 °C cooler in July, about 1 °C once
+the 150 m height difference is counted.
 
 ## What left the deck
 

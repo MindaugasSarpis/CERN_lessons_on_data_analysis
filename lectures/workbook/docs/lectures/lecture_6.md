@@ -97,7 +97,7 @@ jump, type the slide number and press Enter.
 | Source Control in VS Code: say it while doing slide 14 | 13 |
 | The same diff, typed | 26 |
 | Publish to GitHub, typed: slide 38 publishes from VS Code | 39 |
-| The table of every step: it is on the projector in the seminar | 58 |
+| The table of every step: the seminar's library card lists the commands | 58 |
 
 - **Take your time over slides 12–17 and 40–41.** They are the answer to
   "what does add, commit, push do": each picture shows the four places
@@ -287,12 +287,19 @@ slides 86–97: twelve quiz slides for students to try afterwards. Questions
 
 ## Paired seminar
 
-[Seminar 6](../seminars/seminar_06.md) clones the weather project from
-GitHub (`MindaugasSarpis/weather-project`) and works on its history: who
-changed the mean temperature, when and why, found with `git log`,
-`git blame` and `git show`, and taken back with `git revert`. The room then
-leaves made files out with `.gitignore`, commits its own work, and
-publishes the repository to a private one on each student's GitHub account.
+[Seminar 6](../seminars/seminar_06.md) is a showcase, then a problem. The
+lecturer clones a public data repository, `datasets/global-temp` (NASA's
+and the Met Office's yearly temperatures, committed every month by a bot),
+and reads its history: 1998 in four versions of the file (`git log`, `git
+grep`), the commit that moved the GCAG numbers and why (`git log -S`, `git
+show`, `git blame`), a conflict between a fix of one README line and the
+maintainers' fix of the same line, and `git revert` against `git reset
+--hard`. In pairs, with LLMs allowed, the room then clones the weather
+project (`MindaugasSarpis/weather-project`), finds who changed its mean
+temperature, when and why, takes the change back with `git revert`,
+rebuilds and checks 7.16 °C, merges a second fix written by an LLM and
+resolves the conflict, and publishes the repository as a private one on
+each student's GitHub account.
 
 ## What left the deck
 

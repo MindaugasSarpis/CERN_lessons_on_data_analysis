@@ -146,11 +146,13 @@ questions, with their answers:
 
 ## Paired seminar
 
-[Seminar 15 · Computing](../seminars/seminar_15.md) works on the weather project of
-Lectures 1 to 5. Every student times the rebuild and one slow script, finds
-which part of it is slow, makes it 17 times faster on one core, compares
-that with more cores, runs it as a background job, and writes the times into
-the README.
+[Seminar 15 · Computing](../seminars/seminar_15.md) starts from an empty
+folder and the Vilnius station's daily file. The lecturer times a loop
+against NumPy five times, splits one run into import, read and compute,
+runs one job on one to eight worker processes, and shows why a background
+job's log stays empty. Then pairs estimate how long their laptop would need
+to find the hottest day of every one of the 133 041 GHCN-Daily stations,
+which part limits it, and whether more cores or a cluster would help.
 
 ## Slides that left the deck
 

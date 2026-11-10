@@ -133,7 +133,7 @@ time. To jump, type the slide number and press Enter.
 - **The slides carry everything.** Each step in VS Code is shown on its
   slide with its result, so nothing is opened beside the deck. Ask the room
   for each unit before showing its card.
-- **Slides 39–64 are what Seminar 1 practises** by hand.
+- **Slides 39–53 are what Part 1 of Seminar 1 practises** by hand; the repair of slides 54–61 is its section 10.
 - **The speaker notes** of every slide have the same short form: **Do**,
   **Say**, **Ask**, **If asked**, and the minutes.
 
@@ -179,10 +179,15 @@ questions, with their answers:
 
 ## Paired seminar
 
-[Seminar 1, VS Code and Markdown](../seminars/seminar_01.md) is the first
-session in class and starts from zero. It practises the ideas of slides
-39–64 by hand: VS Code and a project folder, a README in Markdown, and a
-table repaired in the editor. All of it is done in class.
+[Seminar 1](../seminars/seminar_01.md) is the first session in class and
+starts from zero. Part 1 installs VS Code and writes a README in Markdown,
+step by step (slides 39–53). Part 2 opens three open-data files in the
+editor (a week of Vilnius from a weather model as CSV, a day at the Vilnius
+station as JSON, NOAA's CO₂ at Mauna Loa) and repairs the export of slides
+54–61 with Find and Replace and a cursor on every line. In Part 3 pairs,
+LLMs allowed, count the days missing from the daily record of the Vilnius
+station since 1881 and write the file's rule into the README. All of it is
+done in class.
 
 ## Parked slides
 

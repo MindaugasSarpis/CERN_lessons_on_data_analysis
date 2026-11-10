@@ -260,11 +260,16 @@ questions, with their answers:
 
 ## Paired seminar
 
-[Seminar 4](../seminars/seminar_04.md) works on the same weather project:
-the room installs the tools with a package manager, sets up its shell,
-types six hours of the station's log into a file from the terminal, and
-checks and rebuilds their mean temperature, 25.3 °C without the `-999`
-rows, with typed lines and a script.
+[Seminar 4](../seminars/seminar_04.md) installs Git and Miniforge with a
+package manager, then runs the lecture's commands on a public file, the
+daily record of the Vilnius weather station since 1881 (NOAA's GHCN-Daily),
+fetched with `curl`: `head`, `wc`, `cut`, `sort`, `uniq -c`, `grep`, `awk`,
+and a script with a loop and `set -e` whose second run gives the same
+checksum. Pairs, with any tools and an LLM, then answer with the shell
+alone whether Vilnius has fewer frost days a year than in 1961–1990: 135.7
+then, about 124 to 126 in 1991–2020, not the 93.5 that counting lines
+gives, because since 2010 the file has the lowest temperature for one day
+in three.
 
 ## What left the deck
 

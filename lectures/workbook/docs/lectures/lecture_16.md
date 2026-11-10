@@ -74,7 +74,7 @@ scikit-learn. To jump, type the slide number and press Enter.
 | The ROC curve by hand, its area, the ROC of the test rows | 39–41 |
 | Cross-Validation | 43 |
 | Learning Without Labels, the whole section | 46–51 |
-| scikit-learn, the whole section. Seminar 16 does it in sections 2 and 9–11 | 52–55 |
+| scikit-learn, the whole section. Seminar 16 shows it in sections 3 to 6 | 52–55 |
 | From Two Classes to Many | 57 |
 | Generating Text. Show its output on slide 60 | 59 |
 | Keeping the Work Reproducible | 65 |
@@ -146,11 +146,13 @@ questions, with their answers:
 
 ## Paired seminar
 
-[Seminar 16 · Machine Learning](../seminars/seminar_16.md) works on the weather project
-of Lectures 1 to 5. Every student adds scikit-learn to the environment,
-builds a table of days, measures two baselines, trains a linear model and a
-tree on 2016 to 2023, tests them once on 2024 and 2025, and writes the
-errors in °C into the README.
+[Seminar 16 · Machine Learning](../seminars/seminar_16.md) adds
+scikit-learn to `analysis`. The lecturer runs four examples on the penguins
+of Palmer Station: one neuron and a network on test rows, the threshold of
+a classifier, a tree's depth against cross-validation, and k-means with and
+without scaling. Then pairs ask whether tomorrow in Vilnius will be warmer
+than today: a split by years, a model chosen on validation years and tested
+once against a coin, and checked for a leak.
 
 ## Further reading
 

@@ -79,8 +79,8 @@ time. To jump, type the slide number and press Enter.
 - **Do not cut** slide 3 (the table of 148 bytes) or slide 85 (the Recap,
   which names all 148). Slide 69 (Reading a Hexdump) is where the count is
   done; reach it by about minute 65.
-- **Do not cut** slides 72–79, the terminal. Seminar 4 uses exactly these
-  commands.
+- **Do not cut** slides 72–79, the terminal. Seminar 4 types `pwd`,
+  `mkdir`, `cd`, `ls` and `wc` from them.
 - **Slides 10–34 are fast.** Most are one word or one picture: counting in
   unary, binary and decimal. Together they take about ten minutes.
 - **Slide 38** (The First Five Bytes of `weather.csv`): hex is the short way
@@ -208,10 +208,13 @@ questions, with their answers:
 
 ## Paired seminar
 
-[Seminar 3](../seminars/seminar_03.md) types `daily.csv` and six hours of
-`weather.csv`, opens them as bytes in VS Code's Hex Editor, names the 148
-bytes of `daily.csv` and finds the `-999` of the six hours among the bytes; the commands of
-slides 72–79 are typed in Seminar 4.
+[Seminar 3](../seminars/seminar_03.md) types `daily.csv`, counts its 148
+bytes in VS Code's Hex Editor, then opens real files as bytes: a Lithuanian
+line in UTF-8 and Windows 1257, Lithuanian letters as JSON escapes in the
+Lithuanian weather service's station list, a PNG's first bytes and its size
+read with the byte order, and a zip of each. In Part 3 pairs predict, then
+measure, how many bytes a year of the hourly temperature of Vilnius takes
+as CSV and as float32. The commands of slides 72–79 are typed in Seminar 4.
 
 ## Parked slides
 

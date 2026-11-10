@@ -39,8 +39,8 @@ While drafts are mid-rework on `main`, a batch ships from a worktree of
 
 ## Batch 3 — visible changes, each with before/after screenshots
 
-- [ ] Fade transitions (~0.25 s, the landing's ease) as a theme default.
-- [ ] Larger type for projector and phones (card text 13.6 → ~16–17 px, code
+- [x] Fade transitions (~0.25 s, the landing's ease) as a theme default.
+- [x] Larger type for projector and phones (card text 13.6 → ~16–17 px, code
       12 → 14 px, Monaco 13–14 px); fix what the overflow gate then flags.
 - [ ] Emoji → monochrome icons (Phosphor via `@iconify-json/ph`) in card
       headings; decorative emoji in captions dropped; the convention in
@@ -48,7 +48,7 @@ While drafts are mid-rework on `main`, a batch ships from a worktree of
       recommends it; the lecturer had asked to avoid an AI-made look.)
 - [ ] Readable slide sources: layouts `figure`, `figure-side`, `pair` with
       named slots; a conversion script; proof by pixel-identical screenshots.
-- [ ] KaTeX click-stepping for formulas with numbers (`$$ {1|1-2|...}`, the
+- [x] KaTeX click-stepping for formulas with numbers (`$$ {1|1-2|...}`, the
       substituted values in the accent colour) in decks 08–12.
 - [x] Figures baseline: every family redrawn once with the canonical
       `figures` environment; screenshots compared.
@@ -210,7 +210,7 @@ While drafts are mid-rework on `main`, a batch ships from a worktree of
       show smaller, with a margin at each side. Not redrawn on 10 Nov (the
       lecture was hours away and only slide 10 was asked for): re-measure,
       redraw the family `gallery` and look at both figures before pushing.
-- [ ] Open: a figure in `public/figures/` keeps its URL when its content
+- [x] Open: a figure in `public/figures/` keeps its URL when its content
       changes, and GitHub Pages lets a browser keep a file for 10 minutes
       (`max-age=600`): after a deploy that changes a slide's layout
       together with its figure, a browser that loaded the slide shortly
@@ -228,11 +228,49 @@ While drafts are mid-rework on `main`, a batch ships from a worktree of
       because the data's own is stated nowhere definitive.
       `misc/weather_repo/starts/s07/` and `weather-s07.zip` are no longer
       used by the page and were left as they are.
-- [ ] Open: Seminars 8–12 still start from `weather-sNN.zip`. Each needs
+- [x] Open: Seminars 8–12 still start from `weather-sNN.zip`. Each needs
       the rework of Seminar 7 before it is taught (Seminar 8: 17 Nov 2026);
       the zips `weather-s08` … `weather-s12` are then not uploaded.
-- [ ] Open: Lecture 7's slides "The Time of Each Hour: `weather.hours`" and
+- [x] Open: Lecture 7's slides "The Time of Each Hour: `weather.hours`" and
       "The Temperatures of Each Year: `weather.group`", in For the Curious,
       and the code after them still call the module `weather.py`
       (`weather.hours`, `weather.group`, `weather.mean`). The lecturer's
       "has to be self contained" (slide 69) may apply there too.
+
+## The evening of 10 November, after Lecture 7 and Seminar 7
+
+The lecturer: "Lecture was ok, maybe could have been a bit more textbook
+content, a few more examples of misleading or bad plots and then good ones.
+Also where we introduce error bars and things some people see it for the
+first time. Need an explainer slide of what they are. … a bit of a showcase
+with real examples, libraries and so on and then hand over to the students a
+problem they try to solve … Please implement everywhere. Also the planned
+improvements to the course can now be deployed." Spec:
+`docs/superpowers/specs/2026-11-10-seminars-showcase-then-problem-design.md`.
+Built by twelve builder agents with a shared brief, the coordinator owning
+the shared files.
+
+- [x] Every seminar page (1, 3–12, 14–16) rebuilt as set up, showcase,
+      problem, show and discuss; no zip, open data at public addresses
+      (NOAA NCEI's GHCN-Daily file of the Vilnius station for long records;
+      Open-Meteo only in short requests: it counts days ÷ 14 × variables
+      ÷ 10 calls and allows 600 a minute per address). Live 21:15–21:54.
+- [x] Lecture 7: explainers of the error bar (√n), the fitted curve
+      (smallest χ²) and the pull after "The Parts of a Figure"; Tufte's lie
+      factor; a section "Misleading Figures" with four bad/good pairs; For
+      the Curious without `weather.py`; the gallery figures redrawn at
+      their boxes (family `reading`). 129 min.
+- [x] Lectures 8–12: an explainer where a figure or formula first shows a
+      notion; formulas stepped with `FormulaSteps` (numbers in the accent).
+- [x] Theme: card text 16 px, code 14 px, Monaco 13 px; 0.25 s fade; the 39
+      overflowing slides fixed. Components in the figures' typeface and
+      look; PaletteHeatmap as SVG; content hash in figure URLs.
+- [x] The branch `explain3d` of the 3D-explainer session (four explainers
+      from the toolkit, pinned to v0.12.1) merged into these decks.
+- [ ] Open: `FormulaSteps.vue` sets `\hat`, `\bar` in subscripts,
+      `\sum` limits, `\mid` and spaces after `\ln` wrongly (worked around
+      on the slides; reported by the builders of 08–12).
+- [ ] Open: emoji → monochrome icons, readable slide sources, Lecture 1's
+      video addon and particle cover, fact citations (the rest of Batch 3).
+- [ ] Open: `misc/weather_repo/starts/s06`–`s16`, `docs/data/concepts_*`,
+      `hpc_*`, `ml_*` are used by no page.

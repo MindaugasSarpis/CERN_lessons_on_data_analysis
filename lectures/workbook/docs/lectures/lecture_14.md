@@ -95,7 +95,7 @@ time. To jump, type the slide number and press Enter.
 - **Do not cut** slides 23–25 and 28–29: one derivation, two demonstrations
   on the course files, and the defence.
 - **Do not cut** slides 37–38 (the checklist and the reviewed report) and
-  slide 49 (the headings of a data management plan). The seminar uses both.
+  slide 49 (the headings of a data management plan).
 - **Slide 8** ends on a question: has this course found that the D⁰ mass is
   wrong? Let the room answer before slide 9.
 - **Slide 23** is derived on the board: 0.95 for one quiet look, 0.95ᵏ for
@@ -158,10 +158,14 @@ questions, with their answers:
 
 ## Paired seminar
 
-[Seminar 14 · Data Analysis](../seminars/seminar_14.md) works on the weather project of
-Lectures 1 to 5. Every student fixes a rule before looking, answers the
-question with it, sees how many "unusual" months chance alone gives, checks
-the answer under other choices, and records each step in a commit.
+[Seminar 14 · Data Analysis](../seminars/seminar_14.md) starts from an
+empty folder. The lecturer runs four examples on open data: the Z mass from
+10 000 CMS events against the world average, twenty groups drawn by lot,
+the Berkeley admissions of 1973, and a pytest test with a known answer that
+catches a wrong mass formula. Then pairs ask whether weekends in Vilnius
+are warmer or colder than weekdays: a plan committed before the data is
+opened, the difference within each week with its standard error, and checks
+an LLM cannot do.
 
 ## Sources
 
