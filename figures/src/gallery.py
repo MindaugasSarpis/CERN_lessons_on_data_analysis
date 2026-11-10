@@ -71,10 +71,21 @@ TEMP_RECT = [0.05, 0.095, 0.94, 0.20]
 BAND = 0.42 / 340_000               # inches of band per soldier
 MONTH_NO = {"Oct": 10, "Nov": 11, "Dec": 12}
 
-# City labels: offset in points and alignment (default: above the dot).
+# The file keeps the spelling of Minard's French original; the map shows English names
+# (Kaunas and Vilnius as today, the others as in English histories of 1812).
+CITY_EN = {
+    "Kowno": "Kaunas", "Wilna": "Vilnius", "Smorgoni": "Smorgon",
+    "Moiodexno": "Molodechno", "Gloubokoe": "Glubokoe", "Studienska": "Studienka",
+    "Polotzk": "Polotsk", "Witebsk": "Vitebsk", "Orscha": "Orsha", "Mohilow": "Mogilev",
+    "Dorogobouge": "Dorogobuzh", "Wixma": "Vyazma", "Chjat": "Gzhatsk",
+    "Mojaisk": "Mozhaysk", "Moscou": "Moscow", "Tarantino": "Tarutino",
+    "Malo-Jarosewii": "Maloyaroslavets",
+}
+
+# City labels: offset in points and alignment (default: above the dot); keys as in the file.
 CITY_LABEL = {
     "Kowno": (-5, 0, "right", "center"),
-    "Wilna": (8, 21, "center", "bottom"),
+    "Wilna": (5, 24, "center", "bottom"),
     "Smorgoni": (-3, -5, "right", "top"),
     "Moiodexno": (6, -6, "center", "top"),
     "Gloubokoe": (0, 5, "center", "bottom"),
@@ -89,7 +100,7 @@ CITY_LABEL = {
     "Dorogobouge": (-3, 8, "right", "bottom"),
     "Wixma": (4, -5, "left", "top"),
     "Chjat": (0, 8, "center", "bottom"),
-    "Mojaisk": (0, 8, "center", "bottom"),
+    "Mojaisk": (-5, 9, "center", "bottom"),
     "Moscou": (-3, 6, "right", "bottom"),
     "Tarantino": (6, 3, "center", "bottom"),
     "Malo-Jarosewii": (0, -6, "center", "top"),
@@ -193,7 +204,7 @@ def _minard():
     for lon, lat, city in minard_cities():
         dx, dy, ha, va = CITY_LABEL.get(city, (0, 6, "center", "bottom"))
         ax.plot(lon, lat, "o", ms=2.6, color=style.FG, mec=BG, mew=0.5, zorder=5)
-        ax.annotate(city, (lon, lat), xytext=(dx, dy), textcoords="offset points",
+        ax.annotate(CITY_EN.get(city, city), (lon, lat), xytext=(dx, dy), textcoords="offset points",
                     ha=ha, va=va, fontsize=8.5, color=style.FG, zorder=6, path_effects=HALO)
 
     start = sum(pts[0][2] for (g, dn), pts in paths if dn == "A")
@@ -520,7 +531,7 @@ def _report():
     start = sum(pts[0][2] for (g, dn), pts in paths if dn == "A")
     moscow = max(pts[-1][2] for (g, dn), pts in paths if dn == "A")
     end = sum(pts[-1][2] for (g, dn), pts in paths if dn == "R" and pts[-1][0] < 24.5)
-    print(f"  start (three groups at Kowno) {start}; at Moscow {moscow}; back at the Niemen "
+    print(f"  start (three groups at Kaunas) {start}; at Moscow {moscow}; back at the Niemen "
           f"{end} = {end / start:.1%} of the start ({start / end:.0f} to 1)")
     lost = [(pts[i][2] - pts[i + 1][2], pts[i][0], pts[i + 1][0])
             for (g, dn), pts in paths if (g, dn) == (1, "R") for i in range(len(pts) - 1)]

@@ -82,7 +82,7 @@ print(len(temps), sum(temps) / len(temps))
 <!--
 **Say:** ten years of one weather station, hour by hour, and one number for all of it: 7.16 °C. The rest of the lecture looks at the hours themselves.
 **Ask:** hands up for "yes, the most hours", hands up for "no". The histogram of the hours answers it.
-**If asked:** the 120 hours of −999 are 22–26 July 2019, when the sensor failed. The same steps are kept as `weather.temps` and `weather.mean` in `weather.py`, used from slide 69 on; `lines[1:]` skips the header row.
+**If asked:** the 120 hours of −999 are 22–26 July 2019, when the sensor failed; `lines[1:]` skips the header row.
 (~2 min)
 -->
 
@@ -1879,7 +1879,7 @@ hideInToc: true
 The figures of the start, in a few lines of Matplotlib.
 
 <!--
-**Say:** now the code: the figures of the start, drawn from the lists that `weather.py` reads (the opening slide's loop, kept as functions), one call for each part. Every hour at its time, with dates on x, is in the reference section after the lecture.
+**Say:** now the code: the figures of the start, drawn from the list that the opening slide's loop reads, one call for each part. Every hour at its time, with dates on x, is in the reference section after the lecture.
 (~0.5 min)
 -->
 
@@ -1918,7 +1918,7 @@ class: fill
 </div>
 
 <!--
-**Say:** the Figure is the sheet, the Axes one plot on it, and everything drawn is an artist that a call on `ax` put there: `ax.plot` points or a line, `ax.hist` bars, `ax.set_xlabel` a text. Lecture 5 drew four hours this way. `plt` is the short name the library is loaded under.
+**Say:** the Figure is the sheet, the Axes one plot on it, and everything drawn is an artist that a call on `ax` put there: `ax.plot` points or a line, `ax.hist` bars, `ax.set_xlabel` a text. `plt` is the short name the library is loaded under.
 **If asked:** the twelve points are the monthly means of the ten years. Shorter calls such as `plt.plot(x, y)` draw into the figure made last; a call on `ax` names the axes it draws into.
 (~2 min)
 -->
@@ -1934,11 +1934,15 @@ class: fill
 
 <div>
 
-```python {all|1-2|4|6-7|8|all}
+```python {all|1|3-8|10-11|12|all}
 import matplotlib.pyplot as plt
-import weather
 
-values = weather.temps("data/raw/weather.csv")
+text = open("data/raw/weather.csv").read()
+values = []
+for line in text.splitlines()[1:]:
+    temp = float(line.split(",")[1])   # temp_c
+    if temp != -999:
+        values.append(temp)
 
 fig, ax = plt.subplots()
 ax.plot(values)
@@ -1947,7 +1951,7 @@ fig.savefig("results/every_hour.png")
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-- `weather.temps`: the opening slide's loop, as a function in `weather.py` beside the script: 87 552 temperatures
+- `values`: 87 552 temperatures; the 120 hours of −999 are left out
 - One list: drawn against its positions 0, 1, 2, …
 
 </div>
@@ -1965,7 +1969,7 @@ fig.savefig("results/every_hour.png")
 </div>
 
 <!--
-**Say:** the script `scripts/figures.py` sits beside `weather.py` and runs with `python scripts/figures.py`. Ten summers and ten winters already show; the axes say nothing, not even a unit.
+**Say:** lines 3 to 8 are the opening slide's loop: every line after the header, its second column as a number, the hours of −999 left out. Ten summers and ten winters already show; the axes say nothing, not even a unit.
 **Ask:** what can be read already, and what is missing?
 **If asked:** after 2019-07-21T23:00 the next value is 2019-07-27T00:00: the 120 hours the sensor did not record are left out, so every later position is 120 hours early.
 (~2 min)
@@ -1982,9 +1986,8 @@ class: fill
 
 <div>
 
-```python {all|1|3|4|5|all}
-values = weather.temps("data/raw/weather.csv")
-
+```python {all|1|2|3|4|all}
+# values: the list of 87 552 temperatures
 fig, ax = plt.subplots()
 ax.hist(values)
 fig.savefig("results/temp_hist.png")
@@ -2432,7 +2435,7 @@ class: fill
 
 <div class="card card-warning card-glass pad-compact mt-sm">
 
-🗺️ Band width = soldiers: 422 000 at Kowno, 100 000 at Moscow, 10 000 back. Coldest: −30 °Réaumur (−37.5 °C), 6 December
+🗺️ Band width = soldiers: 422 000 at Kaunas, 100 000 at Moscow, 10 000 back. Coldest: −30 °Réaumur (−37.5 °C), 6 December
 
 </div>
 
