@@ -1,57 +1,54 @@
 # Seminar 6 · Git
 
-**Paired lecture:** 06 Version Control with Git · **Format:** type-along tutorial, in class
+**Paired lecture:** 06 Version Control with Git · **Format:** a showcase, then a problem, in class
 
 <!-- ~120 min: the length pnpm timing:check reads -->
 
 **Today's question:** Who changed the mean?
 
-**Today's goal:** every student clones the weather project, finds the commit
-that changed its mean temperature, takes it back, commits their own work and
-pushes it to their own GitHub repository.
-
+The lecturer runs Part 2 from this page; in Part 3 the room works in pairs.
 Everything is typed in the terminal of VS Code (zsh on macOS, Git Bash on
-Windows; the lines are the same in both). In the blocks, a line that starts
-with `$` is typed, every other line is what comes back, and `...` stands
-for lines left out. The **Source Control** view (`Ctrl+Shift+G`, macOS `Cmd+Shift+G`) stays open and shows
-each change.
+Windows; the same lines in both). A line that starts with `$` is typed without
+the `$`; `...` stands for lines left out.
 
-**If time runs short:** stop after section 12; sections 13 to 16 are optional.
+**If time runs short:** leave out section 6 (the conflict); Hint 3 of Part 3 gives the steps to resolve one.
 
 ??? info "Before the session"
     - **Room:** Git and Miniforge on every laptop (installed in Seminar 4;
-      the [Setup](../setup.md) page for a laptop that missed it), internet, and a mailbox each student can open (GitHub sends a
-      code). Nothing from earlier seminars is needed: the clone and one zip
-      bring every file.
+      the [Setup](../setup.md) page for a laptop that missed it), internet,
+      and a mailbox each student can open (GitHub sends a code).
+    - **No file is handed out.** Two public repositories are cloned from
+      their addresses:
+        - [datasets/global-temp](https://github.com/datasets/global-temp),
+          the yearly and monthly temperature of the Earth from NASA GISS
+          (GISTEMP v4, public domain) and the Met Office (HadCRUT5, Open
+          Government Licence v3), as a data package of datahub.io (CC BY
+          4.0): 70 commits since 2015, 243 KiB;
+        - [MindaugasSarpis/weather-project](https://github.com/MindaugasSarpis/weather-project),
+          the weather station of the lectures: seven commits by Smiltė and
+          Tomas, data CC0, scripts MIT, 554 KiB.
+    - **The outputs** come from runs on 10 November 2026 with Git 2.56.0.
+      A bot adds a commit to `global-temp` on the first day of every month:
+      a later clone has more commits on top, and `main` stands on a newer
+      one. Sections 6 and 7 name the commits they start from by their ids,
+      so their outputs stay as printed. The ids of both clones are the same
+      on every laptop; commits made today get other ids on every laptop.
     - **Missing a tool?** Git and Miniforge: [Setup, steps
-      2–4](../setup.md#shell); your name for Git and a GitHub account:
-      [Setup, step 6](../setup.md#github).
-    - **You:** nothing to prepare. The repository
-      [MindaugasSarpis/weather-project](https://github.com/MindaugasSarpis/weather-project)
-      is small (about 0.5 MB to download) and the same for everyone, so its
-      ids on this page are the ids in the room. Ids of commits made today
-      differ on every laptop.
+      2–4](../setup.md#shell); VS Code: [Setup, step 1](../setup.md#vscode).
+    - **Keys** are written for Windows, macOS in brackets. Paths are shown
+      for a Mac (`/Users/smilte/...`); Git Bash shows `/c/Users/smilte/...`.
     - **Page:** the **▶ Steps** button (bottom right) shows one step at a
       time; arrows or swipe to move, `Esc` to close.
 
 ---
 
-## Part 1 · Git and the project { #part-1 }
-
-<!-- 0:00 to 0:20 -->
-
-**Git** keeps every saved state of a project. A folder together with that history is a **repository**.
-
-Further reading: [Pro Git, chapter 2: Git Basics](https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository);
-[HSF Analysis Essentials, Git](https://hsf-training.github.io/analysis-essentials/git/README.html).
-
----
+## Part 1 · Set up { #part-1 }
 
 ### 1. Check Git, give it your name { #check }
 
-<!-- 0:00 · 10 min -->
+<!-- 0:00 · 8 min -->
 
-Every commit records a name and an e-mail. Set them once.
+Every commit records a name and an e-mail. Set them once per laptop.
 
 1. Open VS Code, then the terminal: **View** > **Terminal**. The prompt
    ends in `%` on a Mac (zsh) and `$` on Windows (Git Bash).
@@ -88,20 +85,15 @@ Every commit records a name and an e-mail. Set them once.
 
         Close the terminal and open a new one.
 
-3. Your name, as it should appear on every commit.
+3. Your name as it should appear on every commit, and your e-mail: the one
+   of your GitHub account, or the one you will sign up with in section 2.
 
     ```text
     $ git config --global user.name "Your Name"
-    ```
-
-4. Your e-mail: the one of your GitHub account, or the one you will sign
-   up with today.
-
-    ```text
     $ git config --global user.email "you@example.org"
     ```
 
-5. The three settings of the lecture: the first branch of a new repository
+4. The three settings of the lecture: the first branch of a new repository
    is called `main`, `git pull` joins two histories with a merge, and Git
    leaves line endings as they are. None prints anything.
 
@@ -111,7 +103,7 @@ Every commit records a name and an e-mail. Set them once.
     $ git config --global core.autocrlf false
     ```
 
-6. List what Git now knows.
+5. List what Git now knows. It prints the names in small letters.
 
     ```text
     $ git config --global --list
@@ -122,184 +114,426 @@ Every commit records a name and an e-mail. Set them once.
     core.autocrlf=false
     ```
 
-    Git prints the names in small letters: `init.defaultbranch` is the
-    setting typed as `init.defaultBranch`.
-
 **Check:** your own name and e-mail in the list.
 
 ---
 
-### 2. Clone the weather project { #clone }
+### 2. A GitHub account { #account }
 
-<!-- 0:10 · 10 min -->
+<!-- 0:08 · 4 min -->
 
-`git clone` downloads a project with its whole history.
+GitHub keeps a copy of a repository online; Part 3 ends there.
 
-1. From the home folder, clone the project into a new folder,
-   `weather-s06`: the name after the address names the folder.
+1. Open [github.com](https://github.com) > **Sign up**: the e-mail of
+   section 1, a password and a username, then the code that GitHub e-mails
+   you. The username is in the address of every repository you make. With
+   an account already: **Sign in**.
 
-    ```text
-    $ cd ~
-    $ git clone https://github.com/MindaugasSarpis/weather-project.git weather-s06
-    Cloning into 'weather-s06'...
-    remote: Enumerating objects: 37, done.
-    remote: Counting objects: 100% (37/37), done.
-    remote: Compressing objects: 100% (20/20), done.
-    remote: Total 37 (delta 15), reused 37 (delta 15), pack-reused 0 (from 0)
-    Receiving objects: 100% (37/37), 554.27 KiB | 4.43 MiB/s, done.
-    Resolving deltas: 100% (15/15), done.
-    ```
-
-2. Open it: **File** > **Open Folder...** > `weather-s06` > **Open**.
-   Answer **Yes, I trust the authors**.
-3. Open the terminal again (**View** > **Terminal**). It starts in the
-   project folder.
-
-    ```text
-    $ git status
-    On branch main
-    Your branch is up to date with 'origin/main'.
-
-    nothing to commit, working tree clean
-    ```
-
-4. The history lives in a hidden folder, `.git`: `ls` leaves out names
-   that start with a dot unless one is asked for by name, and `-d` names
-   the folder instead of listing what is in it.
-
-    ```text
-    $ ls -d .git
-    .git
-    ```
-
-    Without `.git` the folder is a plain folder again.
-
-**Check:** the Explorer shows `data`, `scripts`, `.gitattributes`, `LICENSE`, `README.md`.
+**Check:** you are signed in on github.com and know your username.
 
 ---
 
-## Part 2 · Who changed the mean? { #part-2 }
+### 3. A new folder for today's clones { #start }
 
-<!-- 0:20 to 0:55 -->
+<!-- 0:12 · 3 min -->
 
-Without the 120 rows of `-999`, the mean temperature is 7.16 °C. Open the clone's `README.md`: its **Result** says 5.78 °C. The history says who changed it, when and why.
+Both repositories of today are cloned into one new folder.
+
+1. Make it and go into it.
+
+    ```text
+    $ mkdir ~/s06
+    $ cd ~/s06
+    $ pwd
+    /Users/smilte/s06
+    ```
+
+2. **File** > **Open Folder...** > `s06` (in your home folder) > **Open**,
+   then **View** > **Terminal**.
+
+**Check:** the Explorer shows the empty folder `s06`, and the terminal is in it.
 
 ---
 
-### 3. Read the history: `git log` { #log }
+## Part 2 · Showcase { #part-2 }
 
-<!-- 0:20 · 10 min -->
+The lecturer clones a real data repository, kept by people and since May 2026
+also by a bot, and asks its history four questions; the room watches or types
+along. Every block is typed as it stands.
 
-A commit is one saved state: id, author, date, message.
+### 4. Clone the global temperature data and read 1998 in four versions { #log }
 
-1. One line per commit, newest first.
+<!-- 0:15 · 11 min -->
 
-    ```text
-    $ git log --oneline
-    0f19f54 (HEAD -> main, origin/main, origin/HEAD) Add a licence
-    85e435e Take the mean over all rows of weather.csv
-    a9c513d Write the mean temperature into results and the README
-    9f28b51 Add the rebuild script
-    96f2dc4 Describe the columns and the -999 rows
-    2d282c7 Add the two scripts handed out with the data
-    3e72263 Add the station's hourly log and the spreadsheet export
-    ```
+A clone brings every version of every file. `git log -- FILE` lists the commits that changed the file: who, when, and their message.
 
-    The seven-character code is the commit's **id**. `HEAD -> main` marks
-    where you are; `origin/main`, where GitHub was at the clone.
+```text
+$ cd ~/s06
+$ git clone https://github.com/datasets/global-temp.git
+Cloning into 'global-temp'...
+...
+Receiving objects: 100% (284/284), 242.56 KiB | 3.11 MiB/s, done.
+...
+$ cd global-temp
+$ head -3 data/annual.csv
+Source,Year,Mean
+GCAG,1850,-0.4265
+GCAG,1851,-0.2635
+$ git rev-list --count HEAD
+70
+$ git log --format="%h %ad %an: %s" --date=short -- data/annual.csv
+b90e8a3 2026-11-01 Automated commit: Automated commit
+44571fe 2026-10-01 Automated commit: Automated commit
+...
+701a808 2026-05-14 Ola Rubaj: Fix data freshness: add missing entrypoint, bump HadCRUT5 to 5.1.0.0 (#17)
+f5e1081 2024-10-04 gradedSystem: [update][m] Adding necessary changes to files
+d92a358 2017-01-21 Soren Jones: add latest data
+...
+8aa154f 2015-01-22 Soren Jones: initial commit
+$ git grep "GISTEMP,1998," 8aa154f d92a358 f5e1081 b90e8a3 -- data/annual.csv
+8aa154f:data/annual.csv:GISTEMP,1998,0.61
+d92a358:data/annual.csv:GISTEMP,1998,0.64
+f5e1081:data/annual.csv:GISTEMP,1998,0.605
+b90e8a3:data/annual.csv:GISTEMP,1998,0.6083
+```
 
-2. The last two commits in full.
+Your speed differs. `Mean` is in °C above or below the mean of a reference
+period, 1951–1980 for NASA's rows, GISTEMP. `git grep` searches the file as it
+was in each commit named.
 
-    ```text
-    $ git log -n 2
-    commit 0f19f54e1b79db8133153f28d76be685862182b5 (HEAD -> main, origin/main, origin/HEAD)
-    Author: Smiltė <smilte@example.org>
-    Date:   Mon Oct 19 17:05:00 2026 +0300
+**Notice:** 21 of the 70 commits changed `data/annual.csv`, and in four of them the row of 1998 reads 0.61, 0.64, 0.605 and 0.6083 °C.
 
-        Add a licence
+**Ask the room:** a report of 2017 gives 1998 as 0.64 °C warmer than 1951–1980; the file says 0.6083 today. Which number is wrong?
 
-    commit 85e435ef56fe4308debf88b5b2d546e4000bbce6
-    Author: Tomas <tomas@example.org>
-    Date:   Mon Oct 19 11:45:00 2026 +0300
-
-        Take the mean over all rows of weather.csv
-
-        The valid file leaves 120 hours out. The raw file has every hour.
-    ```
-
-3. Only the commits that touched the raw data. `--` separates the
-   options from the paths.
-
-    ```text
-    $ git log --oneline -- data/raw
-    3e72263 Add the station's hourly log and the spreadsheet export
-    ```
-
-    The raw files are as they arrived: nobody changed them since.
-
-4. In Source Control, open the **Graph** section: the same seven commits,
-   newest at the top. Drawn the other way, oldest at the left:
-
-    ```mermaid
-    gitGraph
-      commit id: "3e72263 data"
-      commit id: "2d282c7 scripts"
-      commit id: "96f2dc4 columns"
-      commit id: "9f28b51 rebuild"
-      commit id: "a9c513d 7.16"
-      commit id: "85e435e Tomas" type: HIGHLIGHT
-      commit id: "0f19f54 licence"
-    ```
-
-**Check:** seven commits, by Smiltė and Tomas; one commit for `data/raw`.
+??? note "Answer"
+    Neither: each is right for its version of the data. NASA recomputes the
+    whole record every month, with late reports and corrections from the
+    stations, and in June 2019 moved to a larger collection of station data
+    (GHCN version 4). A number in a report needs the id of the data it came
+    from: `git show d92a358:data/annual.csv` gives back the file of January
+    2017, byte for byte.
 
 !!! warning "The terminal shows `:` or `(END)` and takes no commands"
     Git shows long output one screen at a time. Press `q`.
 
 ---
 
-### 4. Find who wrote a line: `git blame` { #blame }
+### 5. Find which commit moved the GCAG numbers, and why { #blame }
 
-<!-- 0:30 · 10 min -->
+<!-- 0:26 · 9 min -->
 
-`git blame` gives, for each line, the commit that wrote it.
+`git log -S` lists the commits that added or removed a text; `git show` prints what a commit changed; `git blame` names the last commit of a line.
 
-1. The **Result** in `README.md` says 5.78 °C; without the 120 hours of
-   `-999` the mean is 7.16 °C. Find the line with 5.78.
+```text
+$ git grep "GCAG,1880," d92a358 b90e8a3 -- data/annual.csv
+d92a358:data/annual.csv:GCAG,1880,-0.1148
+b90e8a3:data/annual.csv:GCAG,1880,-0.3032
+$ git log -S "GCAG,1880,-0.1148" --oneline -- data/annual.csv
+f5e1081 [update][m] Adding necessary changes to files
+d92a358 add latest data
+$ git log -S "hadcrut5" --oneline -- scripts/process.py
+17a07be [update/polish][l] Updated scripts / added requirements.txt
+$ git show 17a07be -- scripts/process.py | grep -e "cag/time-series" -e "^+GCAG_URL_annual"
+-        self.base_url = 'http://www.ncdc.noaa.gov/cag/time-series/global'
++GCAG_URL_annual = 'https://www.metoffice.gov.uk/hadobs/hadcrut5/data/HadCRUT.5.0.2.0/analysis/diagnostics/HadCRUT.5.0.2.0.analysis.summary_series.global.annual.csv'
+$ git blame -L 8,8 scripts/process.py
+701a808 (Ola Rubaj 2026-05-14 16:44:15 +0200 8) GCAG_URL_annual = 'https://www.metoffice.gov.uk/hadobs/hadcrut5/data/HadCRUT.5.1.0.0/analysis/diagnostics/HadCRUT.5.1.0.0.analysis.summary_series.global.annual.csv'
+```
 
-    ```text
-    $ grep -n '5.78' README.md
-    38:Mean `temp_c`, 2016 to 2025: **5.78 °C**, over all 87 672 hours of
-    ```
+GCAG is NOAA's series, *Climate at a Glance*. Its number for 1880 left the file
+in `f5e1081`, which wrote the data again; the reason is in the script, changed
+the same day in `17a07be`: since October 2024 the rows labelled GCAG come from
+the Met Office's HadCRUT5, no longer from NOAA (`ncdc.noaa.gov/cag`). Neither
+message says so.
 
-2. Ask who wrote line 38. `blame` prints one more digit of the id.
+**Notice:** NOAA measured from the mean of the 20th century, HadCRUT5 from the mean of 1961–1990, a period 0.12 °C warmer in NOAA's own rows of 2017: the same year now gets a lower number.
 
-    ```text
-    $ git blame -L 38,38 README.md
-    85e435ef (Tomas 2026-10-19 11:45:00 +0300 38) Mean `temp_c`, 2016 to 2025: **5.78 °C**, over all 87 672 hours of
-    ```
+**Ask the room:** `git blame` names `701a808` for the line with the Met Office's address, `git log -S` names `17a07be`. Why two commits?
 
-3. Ask which commits added or removed the text `5.78`.
-
-    ```text
-    $ git log -S "5.78" --oneline
-    85e435e Take the mean over all rows of weather.csv
-    ```
-
-**Check:** commit `85e435e`, Tomas, 19 October.
+??? note "Answer"
+    `blame` gives the last commit that changed a line: in May 2026 `701a808`
+    changed this one again, from HadCRUT 5.0.2.0 to 5.1.0.0. `log -S` gives
+    every commit that added or removed the text `hadcrut5`: `17a07be`
+    brought it in. To find when a number first changed, search for the text;
+    to find who wrote a line as it stands, blame it.
 
 ---
 
-### 5. See what a commit changed: `git show` { #show }
+### 6. Merge the maintainers' fix of a line you also fixed: a conflict { #conflict }
 
-<!-- 0:40 · 15 min -->
+<!-- 0:35 · 9 min -->
 
-`git show` prints a commit and its changes: `-` is the old line, `+` the new.
+Git joins two branches by itself where they changed different lines, and stops where both changed the same line.
 
-1. The files it changed.
+In November 2024, at `3cb5a07`, line 90 of `README.md` still sent readers to
+NOAA for the GCAG rows. Fix it on a branch of your own made at that commit, then
+merge `b90e8a3` (`main` on 10 November 2026), in which the maintainers fixed the
+same line in May 2026.
+
+```text
+$ git switch -c gcag-link 3cb5a07
+Switched to a new branch 'gcag-link'
+$ sed -n 90,91p README.md
+[gcag]: https://www.ncei.noaa.gov/node/6696
+[hadcrut5]: https://www.metoffice.gov.uk/hadobs/hadcrut5/index.html
+```
+
+In VS Code, open `README.md` and give line 90 the address of line 91, so that it
+reads `[gcag]: https://www.metoffice.gov.uk/hadobs/hadcrut5/index.html`. Save.
+
+```text
+$ git commit -am "Link the GCAG rows to HadCRUT5, their source"
+[gcag-link b09bede] Link the GCAG rows to HadCRUT5, their source
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+$ git merge --no-edit b90e8a3
+Auto-merging README.md
+CONFLICT (content): Merge conflict in README.md
+Automatic merge failed; fix conflicts and then commit the result.
+$ git status --short
+A  .gitattributes
+M  .github/workflows/actions.yml
+UU README.md
+A  UPDATE_SCRIPT_MAINTENANCE_REPORT.md
+M  data/annual.csv
+M  data/monthly.csv
+M  datapackage.json
+M  scripts/process.py
+```
+
+Your ids differ. `README.md` now holds both versions of the line, at line 96:
+
+```text
+<<<<<<< HEAD
+[gcag]: https://www.metoffice.gov.uk/hadobs/hadcrut5/index.html
+=======
+[gcag]: https://www.metoffice.gov.uk/hadobs/hadcrut5/
+>>>>>>> b90e8a3
+```
+
+Over the `<<<<<<<` line VS Code offers **Accept Current Change** (yours),
+**Accept Incoming Change** (`b90e8a3`) and **Accept Both Changes**. Click
+**Accept Incoming Change**, save, then mark the file resolved and commit the
+merge.
+
+```text
+$ git add README.md
+$ git commit --no-edit
+[gcag-link 86959a8] Merge commit 'b90e8a3' into gcag-link
+$ git show --no-patch HEAD
+commit 86959a80f1fa8be12caf4bc41263a5f5630db576 (HEAD -> gcag-link)
+Merge: b09bede b90e8a3
+Author: Your Name <you@example.org>
+Date:   Tue Nov 10 21:32:00 2026 +0200
+
+    Merge commit 'b90e8a3' into gcag-link
+
+    # Conflicts:
+    #       README.md
+```
+
+**Notice:** the changes of 16 commits in seven files came in by themselves (`A`, `M`); only the line that both sides changed (`UU`) waited for a person. The merge commit has two parents, yours and theirs.
+
+**Ask the room:** had you typed exactly the maintainers' address, `https://www.metoffice.gov.uk/hadobs/hadcrut5/`, would the merge have stopped?
+
+??? note "Answer"
+    No. The same change on both sides is no conflict: Git takes it once.
+    Git stops only where the two sides changed the same lines differently,
+    and it never judges which of them is right: a person does.
+
+---
+
+### 7. Undo the November update with revert, then with reset { #revert }
+
+<!-- 0:44 · 8 min -->
+
+`git revert` undoes a commit with a new commit; `git reset --hard` moves the branch back, and the commits after that point leave it. Try both on a branch of your own.
+
+```text
+$ git switch -c undo b90e8a3
+Switched to a new branch 'undo'
+$ git revert --no-edit b90e8a3
+[undo 2d1567c] Revert "Automated commit"
+ Date: Tue Nov 10 21:40:00 2026 +0200
+ 2 files changed, 643 insertions(+), 643 deletions(-)
+$ git log --oneline -3
+2d1567c (HEAD -> undo) Revert "Automated commit"
+b90e8a3 (origin/main, origin/HEAD, main) Automated commit
+44571fe Automated commit
+$ grep "GISTEMP,1998," data/annual.csv
+GISTEMP,1998,0.6092
+$ git reset --hard 44571fe
+HEAD is now at 44571fe Automated commit
+$ git log --oneline -3
+44571fe (HEAD -> undo) Automated commit
+c3fd761 Automated commit
+bc6ef15 Automated commit
+$ grep "GISTEMP,1998," data/annual.csv
+GISTEMP,1998,0.6092
+```
+
+Your id and date of the revert differ. The November update changed 643 values of
+NASA's rows, 116 of them yearly means, and added no month.
+
+**Notice:** both leave October's numbers in the folder (1998: 0.6092). After `revert` the November update stays in the history with its undoing on top; after `reset` it is gone from the branch.
+
+**Ask the room:** others have already pulled `b90e8a3` from GitHub. Which of the two can you push, and what would the other do to them?
+
+??? note "Answer"
+    The revert: the push adds one commit on top of theirs. After the reset
+    the branch lacks `b90e8a3`, which GitHub has, so Git refuses the push;
+    `git push --force` would remove the commit from GitHub, and everyone who
+    pulled it would hold a history that GitHub no longer has. Reset only
+    commits that nobody else has. An LLM asked to "undo a commit" may answer
+    with `git reset --hard`: first ask whether the commit was pushed.
+
+---
+
+### 8. Library card: the Git commands of this page { #card }
+
+<!-- 0:52 · 3 min -->
+
+Every Git command of the examples and of the solution below, one line each.
+
+| Command | What it does |
+|--|--|
+| `git clone URL` | a copy of the repository with its whole history, in a new folder |
+| `git log --oneline`, `git log --format="%h %ad %an: %s" --date=short` | one line per commit, newest first; the second with date (`%ad`) and author (`%an`); `-- FILE` keeps the commits that changed FILE |
+| `git rev-list --count HEAD` | the number of commits that lead to the current one |
+| `git show ID -- FILE` | the commit, and what it changed in FILE: `-` the old line, `+` the new; `--stat` lists only the files, `--no-patch` leaves the changes out |
+| `git show ID:FILE` | FILE as it was in commit ID |
+| `git grep "TEXT" ID1 ID2 -- FILE` | the lines with TEXT in FILE, as it was in each commit |
+| `git log -S "TEXT" --oneline -- FILE` | the commits that added or removed TEXT |
+| `git blame -L 38,38 FILE` | the last commit that changed line 38, with its author and date |
+| `git switch -c NAME ID`, `git switch main` | a new branch NAME at commit ID; back to `main` |
+| `git commit -am "MESSAGE"` | stage every changed file that Git already tracks, and commit it |
+| `git merge --no-edit NAME` | join branch NAME into the current branch, with Git's message |
+| `git add FILE`, `git commit --no-edit` | after a conflict is settled in the editor: mark the file resolved, commit the merge (`git merge --abort` gives up the merge) |
+| `git revert --no-edit ID` | a new commit that undoes commit ID |
+| `git reset --hard ID` | the branch back to ID: later commits leave it, and so do edits not committed |
+| `git remote -v`, `git remote remove origin` | where the clone pulls from and pushes to; forget that address |
+
+---
+
+## Part 3 · The problem { #part-3 }
+
+### 9. Who changed the mean of the weather station, and how do you take it back? { #problem }
+
+<!-- 0:55 · 50 min -->
+
+The weather project of the lectures is a public repository, seven commits by
+Smiltė and Tomas (data CC0, scripts MIT, as its README says):
+
+```text
+https://github.com/MindaugasSarpis/weather-project.git
+```
+
+Its `README.md` gives the mean temperature of 2016–2025 as 5.78 °C. The same
+README says that `temp_c` is `-999`, the mark of a missing reading, in 120 rows
+of `weather.csv`; without them the mean is 7.16 °C. Find who changed the number,
+when and why, and take the change back so that the history keeps both.
+
+Work in pairs, with any tools, an LLM too: the work is the idea and the checks, not the typing.
+
+Clone it into `~/s06`:
+
+```text
+$ cd ~/s06
+$ git clone https://github.com/MindaugasSarpis/weather-project.git
+Cloning into 'weather-project'...
+...
+Resolving deltas: 100% (15/15), done.
+```
+
+Then **File** > **Open Folder...** > `s06` > `weather-project` > **Open**, and
+**View** > **Terminal**: Source Control shows this repository alone.
+
+1. **Predict**, before any command. Write down:
+    - which number is the mean of the real temperatures, 5.78 or 7.16, and
+      one line of arithmetic that links the two;
+    - whether `git revert` of the commit that changed it will stop on a
+      conflict: Smiltė's licence, the commit after it, also changed
+      `README.md`;
+    - for the second fix below: at which of the two files the merge will
+      stop, and why.
+2. **Solve.**
+    - The commit that changed the mean: its id, author, date, message, and
+      the lines it changed in each file.
+    - Take it back with a new commit. Run `./scripts/rebuild.sh` and read
+      `results/temp_c.txt`.
+    - **A second fix, as an LLM writes it.** Give an LLM lines 38–39 of
+      `README.md` and the last line of `scripts/rebuild.sh`, and ask for
+      lines that leave the 120 rows out. On a branch `llm-fix` made at
+      `0f19f54`, put its lines in place of the old ones and commit; then
+      switch to `main` and merge `llm-fix` into it. Settle what stops.
+    - Publish the repository to your GitHub, private: `git remote remove
+      origin`, then **Publish Branch** in Source Control (VS Code asks you to
+      sign in to GitHub: **Allow**, then **Continue** and **Authorize** in the
+      browser), and **Publish to GitHub private repository**.
+3. **Check the machine's work.**
+    - Every id an LLM gives you: `git show --stat ID` must print that commit
+      and the files it changed. An LLM that has not seen your terminal can
+      name an id that does not exist.
+    - By hand: count the rows of `-999` (`grep -c`) and redo the arithmetic.
+      Does 5.78 come out of 7.16?
+    - `git log --oneline`: are Tomas's commit and Smiltė's licence, `85e435e`
+      and `0f19f54`, still in your history? `git status`: are
+      `data/processed/` and `results/`, which `rebuild.sh` makes, kept out of
+      your commits?
+    - Your answers against your predictions; where they differ, why.
+4. **Hand in.** The id of the commit that changed the mean, with its author,
+   date and the reason its message gives; the mean in `results/temp_c.txt`
+   after your fix, with the id of the commit `rebuild.sh` ran at; the address
+   of your repository on GitHub; two sentences in your own words, ready to
+   show.
+
+!!! warning "`python: command not found` from `rebuild.sh`"
+    The script runs Python from Miniforge: the prompt must start with
+    `(base)`. Without it, see the [Setup page, step 4](../setup.md#terminal).
+
+??? tip "Hint 1: finding the commit"
+    `grep -n "5.78" README.md` gives the line; `git blame -L 38,38 README.md`
+    the commit that last changed it; `git log -S "5.78" --oneline` every
+    commit that added or removed the text; `git show ID` what one changed,
+    file by file. As in section 5, the number is in one file and its cause
+    in another: read every file the commit changed.
+
+??? tip "Hint 2: taking it back"
+    `git revert --no-edit ID`, as in section 7. `git reset --hard a9c513d`
+    would also bring 7.16 back, and would take Smiltė's licence out of the
+    history with Tomas's commit.
+
+??? tip "Hint 3: the branch, the merge, the conflict"
+    `git switch -c llm-fix 0f19f54` makes the branch and goes to it. Edit,
+    `git commit -am "MESSAGE"`, `git switch main`, `git merge --no-edit
+    llm-fix`. Where it stops, `README.md` holds both versions between
+    `<<<<<<<` and `>>>>>>>`: click **Accept Current Change** or **Accept
+    Incoming Change**, save, `git add README.md`, `git commit --no-edit`.
+
+    Without an LLM, put these three lines in place of lines 38–39 of
+    `README.md`:
 
     ```text
-    $ git show --stat 85e435e
+    Mean `temp_c`, 2016 to 2025: **7.16 °C**, over the 87 552 hours of
+    `weather.csv` without the 120 rows of `-999`. The script writes it to
+    `results/temp_c.txt`.
+    ```
+
+    and in the last line of `scripts/rebuild.sh` change `data/raw/weather.csv`
+    back to `data/processed/weather_valid.csv`.
+
+??? note "One solution"
+    **The commit.** Line 38 holds the number; Tomas's commit changed it,
+    and changed the script that computes it.
+
+    ```text
+    $ cd weather-project
+    $ grep -n "5.78" README.md
+    38:Mean `temp_c`, 2016 to 2025: **5.78 °C**, over all 87 672 hours of
+    $ git blame -L 38,38 README.md
+    85e435e (Tomas 2026-10-19 11:45:00 +0300 38) Mean `temp_c`, 2016 to 2025: **5.78 °C**, over all 87 672 hours of
+    $ git log -S "5.78" --oneline
+    85e435e Take the mean over all rows of weather.csv
+    $ git show 85e435e -- scripts/rebuild.sh
     commit 85e435ef56fe4308debf88b5b2d546e4000bbce6
     Author: Tomas <tomas@example.org>
     Date:   Mon Oct 19 11:45:00 2026 +0300
@@ -307,142 +541,28 @@ A commit is one saved state: id, author, date, message.
         Take the mean over all rows of weather.csv
 
         The valid file leaves 120 hours out. The raw file has every hour.
-
-     README.md          | 4 ++--
-     scripts/rebuild.sh | 2 +-
-     2 files changed, 3 insertions(+), 3 deletions(-)
-    ```
-
-2. The change in `rebuild.sh`.
-
-    ```text
-    $ git show 85e435e -- scripts/rebuild.sh
     ...
-    @@ -3,4 +3,4 @@ set -e
-     mkdir -p data/processed results
-     grep -v ',-999,' data/raw/weather.csv > data/processed/weather_valid.csv
-     python scripts/clean_export.py data/raw/daily_export.csv data/processed/daily.csv
     -python scripts/column_stats.py data/processed/weather_valid.csv temp_c > results/temp_c.txt
     +python scripts/column_stats.py data/raw/weather.csv temp_c > results/temp_c.txt
-    ```
-
-3. Count the rows that the raw file has and the valid file has not.
-
-    ```text
-    $ grep -c ',-999,' data/raw/weather.csv
+    $ grep -c ",-999," data/raw/weather.csv
     120
     ```
 
-    Each adds −999 to the sum:
-    (87 552 × 7.16 − 120 × 999) / 87 672 = 5.78.
+    By hand: each of the 120 rows adds −999 to the sum,
+    (87 552 × 7.16 − 120 × 999) / 87 672 = 506 992 / 87 672 = 5.78.
 
-**Check:** the mean now reads `data/raw/weather.csv`, with its 120 rows of
-`-999`.
-
-!!! question "Task: where did 7.16 come from, and is the data file the same as Smiltė's?"
-    1. Find the commit that first wrote 7.16 into the README, and its day.
-    2. Print `scripts/rebuild.sh` as it was in that commit.
-    3. Ask Git for the id of `data/raw/weather.csv`, and compare it with
-       your neighbour's.
-
-??? success "Answer"
-    1. `a9c513d`, 16 October: the older of the two lines.
-
-        ```text
-        $ git log -S "7.16" --oneline
-        85e435e Take the mean over all rows of weather.csv
-        a9c513d Write the mean temperature into results and the README
-        ```
-
-    2. The last line still reads `weather_valid.csv`.
-
-        ```text
-        $ git show a9c513d:scripts/rebuild.sh
-        #!/usr/bin/env bash
-        set -e
-        mkdir -p data/processed results
-        grep -v ',-999,' data/raw/weather.csv > data/processed/weather_valid.csv
-        python scripts/clean_export.py data/raw/daily_export.csv data/processed/daily.csv
-        python scripts/column_stats.py data/processed/weather_valid.csv temp_c > results/temp_c.txt
-        ```
-
-    3. The same id on every laptop: Git names a file by a **hash** of its
-       bytes, a 40-digit number that changes when a single byte changes, so
-       equal ids mean equal bytes.
-
-        ```text
-        $ git hash-object data/raw/weather.csv
-        f811f73d93226acc8a0c96562aef9f7825b85b0a
-        ```
-
----
-
-## Part 3 · Put it right { #part-3 }
-
-<!-- 0:55 to 1:25 -->
-
-Undo the change without losing the history, check the number against the script, then add your own work.
-
----
-
-### 6. Take the commit back: `git revert` { #revert }
-
-<!-- 0:55 · 10 min -->
-
-`git revert` makes a new commit that undoes an old one. The history keeps both.
-
-1. Revert Tomas's commit.
+    **Take it back, rebuild, keep the made files out.** The revert does not
+    stop: the licence changed other lines of the README. Your ids and dates
+    differ from here on.
 
     ```text
-    $ git revert 85e435e --no-edit
+    $ git revert --no-edit 85e435e
     Auto-merging README.md
-    [main 32855d4] Revert "Take the mean over all rows of weather.csv"
-     Date: Tue Oct 27 10:32:00 2026 +0200
+    [main 39ea1fe] Revert "Take the mean over all rows of weather.csv"
+     Date: Tue Nov 10 22:05:00 2026 +0200
      2 files changed, 3 insertions(+), 3 deletions(-)
-    ```
-
-    Your id and date differ.
-
-2. Look at the history: Tomas's commit stays, and the new one undoes it.
-
-    ```text
-    $ git log --oneline -n 3
-    32855d4 (HEAD -> main) Revert "Take the mean over all rows of weather.csv"
-    0f19f54 (origin/main, origin/HEAD) Add a licence
-    85e435e Take the mean over all rows of weather.csv
-    ```
-
-    ```mermaid
-    gitGraph
-      commit id: "a9c513d 7.16"
-      commit id: "85e435e Tomas" type: HIGHLIGHT
-      commit id: "0f19f54 licence"
-      commit id: "32855d4 revert" type: REVERSE
-    ```
-
-3. In `README.md` the **Result** says 7.16 °C again. Smiltė's licence of
-   `0f19f54` is still there.
-
-**Check:** 7.16 in the README, eight commits.
-
----
-
-### 7. Rebuild and check the mean { #rebuild }
-
-<!-- 1:05 · 5 min -->
-
-The README's number must come out of the script.
-
-1. Run the rebuild script.
-
-    ```text
     $ ./scripts/rebuild.sh
     9 rows written to data/processed/daily.csv
-    ```
-
-2. Read the result.
-
-    ```text
     $ cat results/temp_c.txt
     file    data/processed/weather_valid.csv
     column  temp_c
@@ -450,623 +570,209 @@ The README's number must come out of the script.
     min     -16.3
     max     32.4
     mean    7.15997
-    ```
-
-3. Ask Git what is new: the two folders the script made.
-
-    ```text
-    $ git status
-    On branch main
-    Your branch is ahead of 'origin/main' by 1 commit.
-      (use "git push" to publish your local commits)
-
-    Untracked files:
-      (use "git add <file>..." to include in what will be committed)
-            data/processed/
-            results/
-
-    nothing added to commit but untracked files present (use "git add" to track)
-    ```
-
-**Check:** `mean 7.15997`, and two untracked folders.
-
-!!! warning "`command not found: python`"
-    Miniforge is missing (the [Setup](../setup.md) page). The script made
-    `data/processed/weather_valid.csv` before it stopped; go on.
-
----
-
-### 8. Leave made files out: `.gitignore` { #ignore }
-
-<!-- 1:10 · 5 min -->
-
-Files that programs make again at any time stay out of the history.
-
-1. **File** > **New File...**, type `.gitignore`, press `Enter`. Write three
-   lines and save: the two folders that `rebuild.sh` makes, and
-   `__pycache__`, which Python makes when a script imports a module such as
-   the `weather.py` of Seminar 5.
-
-    ```text
-    data/processed/
-    results/
-    __pycache__/
-    ```
-
-2. The two folders of the rebuild are gone from Source Control;
-   `.gitignore` is there.
-
-    ```text
     $ git status --short
-    ?? .gitignore
-    ```
-
-3. Stage it, then commit it.
-
-    ```text
+    ?? data/processed/
+    ?? results/
+    $ printf "data/processed/\nresults/\n" > .gitignore
     $ git add .gitignore
-    $ git commit -m "Leave out the files that scripts make"
-    [main bdde04f] Leave out the files that scripts make
-     1 file changed, 3 insertions(+)
+    $ git commit -m "Leave out the files that rebuild.sh makes"
+    [main 89c347c] Leave out the files that rebuild.sh makes
+     1 file changed, 2 insertions(+)
      create mode 100644 .gitignore
     ```
 
-**Check:** `git status` ends with `nothing to commit, working tree clean`.
-
----
-
-### 9. Commit the work of Seminar 5 { #commit }
-
-<!-- 1:15 · 10 min -->
-
-Copy, look at the change, stage, commit: the loop of every day.
-
-1. Download `weather-s06.zip` from the
-   [Releases page](https://github.com/MindaugasSarpis/weather-project/releases),
-   under **Assets**. It holds a folder `weather-s06` with the files of
-   Seminar 5; unzipped into the home folder, they go into the clone, which
-   has the same name.
+    **The second fix and the merge.**
 
     ```text
-    $ unzip ~/Downloads/weather-s06.zip -d ~
-    Archive:  /Users/smilte/Downloads/weather-s06.zip
-       creating: /Users/smilte/weather-s06/notebooks/
-      inflating: /Users/smilte/weather-s06/environment.yml
-      inflating: /Users/smilte/weather-s06/notebooks/explore.ipynb
-      inflating: /Users/smilte/weather-s06/scripts/coldest_hour.py
-      inflating: /Users/smilte/weather-s06/scripts/hours.py
-      inflating: /Users/smilte/weather-s06/scripts/mean_temp.py
-      inflating: /Users/smilte/weather-s06/scripts/now.py
-      inflating: /Users/smilte/weather-s06/scripts/weather.py
+    $ git switch -c llm-fix 0f19f54
+    Switched to a new branch 'llm-fix'
     ```
 
-    Safari unpacks a zip by itself: then
-    `cp -R ~/Downloads/weather-s06/. ~/weather-s06/` copies its files into
-    the clone.
-
-2. Run two of its scripts, written in Seminar 5 for six hours, on the
-   clone's full log. To one decimal they agree with `results/temp_c.txt`
-   (`mean 7.15997`, `min -16.3`).
+    In `README.md` the three lines of Hint 3 in place of lines 38–39; in
+    `scripts/rebuild.sh` `data/processed/weather_valid.csv` again. Save both.
 
     ```text
-    $ python scripts/mean_temp.py
-    87552 hours, mean 7.2 °C
-    $ python scripts/coldest_hour.py
-    coldest hour: 2025-01-07T05:00, -16.3 °C
-    ```
-
-3. What changed: seven new files, shown as untracked (`??`). The run made
-   `scripts/__pycache__`; `.gitignore` keeps it out of the list.
-
-    ```text
+    $ git commit -am "Take the mean without the -999 rows"
+    [llm-fix e0fbb0d] Take the mean without the -999 rows
+     2 files changed, 4 insertions(+), 3 deletions(-)
+    $ git switch main
+    Switched to branch 'main'
+    Your branch is ahead of 'origin/main' by 2 commits.
+      (use "git push" to publish your local commits)
+    $ git merge --no-edit llm-fix
+    Auto-merging README.md
+    CONFLICT (content): Merge conflict in README.md
+    Automatic merge failed; fix conflicts and then commit the result.
     $ git status --short
-    ?? environment.yml
-    ?? notebooks/
-    ?? scripts/coldest_hour.py
-    ?? scripts/hours.py
-    ?? scripts/mean_temp.py
-    ?? scripts/now.py
-    ?? scripts/weather.py
+    UU README.md
     ```
 
-4. In `README.md`, under the **Result** paragraph, write the two results
-   as two lines and save.
+    The merge stops at the README only: both fixes gave `rebuild.sh` the
+    same line. In `README.md`:
 
     ```text
-    Checked in Python, `scripts/mean_temp.py`: 7.2 °C over 87 552 hours.
-    The coldest hour, `scripts/coldest_hour.py`: 2025-01-07T05:00, -16.3 °C.
+    <<<<<<< HEAD
+    Mean `temp_c`, 2016 to 2025: **7.16 °C**, over 87 552 hours. The 120 hours
+    marked `-999` are left out. The script writes it to `results/temp_c.txt`.
+    =======
+    Mean `temp_c`, 2016 to 2025: **7.16 °C**, over the 87 552 hours of
+    `weather.csv` without the 120 rows of `-999`. The script writes it to
+    `results/temp_c.txt`.
+    >>>>>>> llm-fix
     ```
 
-5. How the README changed. Also: click `README.md` in Source Control.
+    **Accept Current Change** (Smiltė's words, back by the revert), save.
 
     ```text
-    $ git diff
-    diff --git a/README.md b/README.md
-    index a74c2dc..2e5c394 100644
-    --- a/README.md
-    +++ b/README.md
-    @@ -38,6 +38,9 @@ the temperature sensor was down.
-     Mean `temp_c`, 2016 to 2025: **7.16 °C**, over 87 552 hours. The 120 hours
-     marked `-999` are left out. The script writes it to `results/temp_c.txt`.
-
-    +Checked in Python, `scripts/mean_temp.py`: 7.2 °C over 87 552 hours.
-    +The coldest hour, `scripts/coldest_hour.py`: 2025-01-07T05:00, -16.3 °C.
-    +
-     ## How to rebuild
-
-     In the project folder, in zsh on macOS or Git Bash on Windows, with Python
+    $ git add README.md
+    $ git commit --no-edit
+    [main 36104a2] Merge branch 'llm-fix'
+    $ git log --oneline --graph -6
+    *   36104a2 (HEAD -> main) Merge branch 'llm-fix'
+    |\
+    | * e0fbb0d (llm-fix) Take the mean without the -999 rows
+    * | 89c347c Leave out the files that rebuild.sh makes
+    * | 39ea1fe Revert "Take the mean over all rows of weather.csv"
+    |/
+    * 0f19f54 (origin/main, origin/HEAD) Add a licence
+    * 85e435e Take the mean over all rows of weather.csv
     ```
 
-    `git diff` shows changed files only; new files have no old version yet.
-
-6. Stage all of it, look again. `git add` puts the files in the staging
-   area, the content of the next commit.
-
-    ```mermaid
-    flowchart LR
-      W["working folder<br/>your files"] -- "git add" --> S["staging area<br/>the next commit"]
-      S -- "git commit" --> R["repository<br/>the history"]
-      R -- "git push" --> G["GitHub"]
-      G -- "git pull" --> W
-      R -- "git restore" --> W
-    ```
-
-    ```text
-    $ git add scripts notebooks environment.yml README.md
-    $ git status --short
-    M  README.md
-    A  environment.yml
-    A  notebooks/explore.ipynb
-    A  scripts/coldest_hour.py
-    A  scripts/hours.py
-    A  scripts/mean_temp.py
-    A  scripts/now.py
-    A  scripts/weather.py
-    ```
-
-7. Commit.
-
-    ```text
-    $ git commit -m "Add the Python work of Seminar 5"
-    [main 335cde1] Add the Python work of Seminar 5
-     8 files changed, 377 insertions(+)
-     create mode 100644 environment.yml
-     create mode 100644 notebooks/explore.ipynb
-     create mode 100644 scripts/coldest_hour.py
-     create mode 100644 scripts/hours.py
-     create mode 100644 scripts/mean_temp.py
-     create mode 100644 scripts/now.py
-     create mode 100644 scripts/weather.py
-    ```
-
-    Your id differs.
-
-**Check:** `git log --oneline` shows ten commits, three of them yours.
-
-!!! question "Task: break the raw data, then repair it"
-    In VS Code, delete line 2 of `data/raw/weather.csv` and save. Find the
-    change with Git, then undo it with one command.
-
-??? success "Answer"
-    ```text
-    $ git status --short
-     M data/raw/weather.csv
-    $ git diff --stat
-     data/raw/weather.csv | 1 -
-     1 file changed, 1 deletion(-)
-    $ git restore data/raw/weather.csv
-    ```
-
-    `git status --short` prints nothing: the file has its committed bytes
-    again.
-
----
-
-## Part 4 · Your copy on GitHub { #part-4 }
-
-<!-- 1:25 to 2:00 -->
-
-A **remote** is another copy of the repository, here on GitHub: `git push` sends your commits there, `git pull` brings its commits here.
-
----
-
-### 10. A GitHub account { #account }
-
-<!-- 1:25 · 10 min -->
-
-GitHub keeps a copy of the repository online.
-
-1. Ask Git which e-mail your commits carry. Sign up with that one, and
-   GitHub shows those commits as yours.
-
-    ```text
-    $ git config user.email
-    you@example.org
-    ```
-
-2. Open [github.com](https://github.com) > **Sign up**: that e-mail, a
-   password and a username, then the code that GitHub e-mails you. The
-   username is in the address of every repository you make. With an
-   account already: **Sign in**.
-
-**Check:** you are signed in on github.com.
-
----
-
-### 11. Publish, then push and pull { #publish }
-
-<!-- 1:35 · 20 min -->
-
-The clone still points at the course repository, which you cannot write to.
-
-1. Where the clone points.
-
-    ```text
-    $ git remote -v
-    origin  https://github.com/MindaugasSarpis/weather-project.git (fetch)
-    origin  https://github.com/MindaugasSarpis/weather-project.git (push)
-    ```
-
-2. Remove that remote.
+    **Publish.** The clone still points at the course repository, which
+    only its owner can push to.
 
     ```text
     $ git remote remove origin
     ```
 
-3. In Source Control, click **Publish Branch**. VS Code asks to sign in
-   to GitHub: **Allow**, then **Continue** and **Authorize** in the
-   browser, then back to VS Code.
-4. VS Code proposes the folder's name, `weather-s06`: keep it, click
-   **Publish to GitHub private repository**. VS Code sends the ten commits.
-5. Where the clone points now.
+    **Publish Branch** in Source Control, **Publish to GitHub private
+    repository**. Then:
 
     ```text
     $ git remote -v
-    origin  https://github.com/your-username/weather-s06.git (fetch)
-    origin  https://github.com/your-username/weather-s06.git (push)
+    origin  https://github.com/your-username/weather-project.git (fetch)
+    origin  https://github.com/your-username/weather-project.git (push)
+    $ git status
+    On branch main
+    Your branch is up to date with 'origin/main'.
+
+    nothing to commit, working tree clean
     ```
 
-6. Open `https://github.com/your-username/weather-s06`: the files, and
-   **10 Commits**.
+    **Hand in.** `85e435e`, Tomas, 19 October 2026: "The valid file leaves
+    120 hours out. The raw file has every hour." After the revert `39ea1fe`,
+    `results/temp_c.txt` says 7.15997 °C over 87 552 hours;
+    `https://github.com/your-username/weather-project`. Tomas pointed the
+    mean at the raw file to use every hour, but 120 of those hours are
+    `-999`, the mark of a missing reading, and they pull the mean down by
+    1.38 °C. The revert keeps his commit and its reason in the history and
+    puts the correction on top of it.
 
-**Check:** your repository on GitHub, marked **Private**.
-
-!!! question "Task: one change each way"
-    1. On github.com, edit `README.md` (the pencil), add a line, click
-       **Commit changes**. Bring that commit to your laptop.
-    2. On your laptop, add another line to `README.md`, commit it, and send
-       it to GitHub.
-
-??? success "Answer"
-    The ids below are from one run; yours differ.
-
-    1. `git pull` brings the commit made on github.com.
-
-        ```text
-        $ git pull
-        ...
-        From https://github.com/your-username/weather-s06
-           335cde1..1bc67f8  main       -> origin/main
-        Updating 335cde1..1bc67f8
-        Fast-forward
-         README.md | 1 +
-         1 file changed, 1 insertion(+)
-        ```
-
-    2. Stage, commit, push.
-
-        ```text
-        $ git add README.md
-        $ git commit -m "Add a line"
-        [main 415f809] Add a line
-         1 file changed, 1 insertion(+)
-        $ git push
-        ...
-        To https://github.com/your-username/weather-s06.git
-           1bc67f8..415f809  main -> main
-        ```
+**With your own project data:** if your project is a Git repository, which
+commit last changed the number your report gives? `git log -S "THE NUMBER"`,
+`git blame` on its line and `git show` of the commit: hand in its id, author,
+date and reason, and say whether the message alone told you why. If the project
+is not under Git yet, `git init` it, write a `.gitignore` for the files your
+scripts make, commit, and publish it as a private repository.
 
 ---
 
-### 12. Wrap up { #wrap-up }
+## Part 4 · Show and discuss { #part-4 }
 
-<!-- 1:55 · 5 min -->
+### 10. Three questions about the pairs' histories { #discuss }
 
-Who changed the mean, asked of the history once more; then today's commands.
+<!-- 1:45 · 15 min -->
 
-1. Ask which commits added or removed the text `5.78`: Tomas's added it,
-   your revert took it out. The first id is your revert's, so yours differs.
+Two or three pairs show their repository on GitHub (**Commits**) and read their two sentences.
+
+**Ask the room:** one pair followed an LLM that said `git reset --hard a9c513d`. What is missing from their repository?
+
+??? note "Answer"
+    In a fresh clone:
 
     ```text
-    $ git log -S "5.78" --oneline
-    32855d4 Revert "Take the mean over all rows of weather.csv"
-    85e435e Take the mean over all rows of weather.csv
+    $ git reset --hard a9c513d
+    HEAD is now at a9c513d Write the mean temperature into results and the README
+    $ git status
+    On branch main
+    Your branch is behind 'origin/main' by 2 commits, and can be fast-forwarded.
+      (use "git pull" to update your local branch)
+
+    nothing to commit, working tree clean
     ```
 
-2. The room names the command for each row, then reads the right column.
+    Tomas's commit and Smiltė's licence: `LICENSE` and the README's licence
+    section went with the mistake. The README says 7.16 again, but the
+    history no longer says who wrote 5.78 or why, and on a repository shared
+    with others the push would be refused (section 7).
 
-    | To | Type |
-    |--|--|
-    | copy a project with its history | `git clone URL` |
-    | see the history | `git log --oneline` |
-    | find who wrote a line | `git blame -L 38,38 FILE` |
-    | find the commits that added or removed a text | `git log -S "TEXT" --oneline` |
-    | see a commit | `git show ID` |
-    | undo a commit, keep the history | `git revert ID` |
-    | undo an edit not yet committed | `git restore FILE` |
-    | commit | `git status`, `git diff`, `git add FILE`, `git commit -m "…"` |
-    | sync with GitHub | `git push`, `git pull` |
+**Ask the room:** the merge of `llm-fix` stopped at `README.md`. Why not at `scripts/rebuild.sh`, which both fixes changed too?
+
+??? note "Answer"
+    Both fixes changed the line of `rebuild.sh` in the same way, back to
+    `weather_valid.csv`, and the same change on both sides is taken once
+    (section 6). In the README they used different words for the same
+    number. A pair whose LLM changed the script in another way, for example
+    to drop the `-999` rows inside the Python line, met a second conflict
+    there.
+
+**Ask the room:** every monthly commit of `global-temp` says `Automated commit`. What should the message of `b90e8a3` have said?
+
+??? note "Answer"
+    What changed and why, for example `GISTEMP revised by NASA: 116 of 146
+    yearly means changed (1880: -0.1792 to -0.1725); HadCRUT5 unchanged`.
+    Then `git log` answers "why did 1998 change?" without a diff. A bot can
+    write that message as easily as a person can.
+
+A result can be trusted when its history says which commit made it, who changed it and why; a mistake is taken back by a new commit, so that the history keeps both.
 
 ---
 
-## Optional, if the room goes fast { #optional }
+## Optional, if the room is fast { #optional }
 
----
-
-### 13. A branch and a merge { #branch }
+### 11. Let Git find the commit: bisect { #bisect }
 
 <!-- — · 10 min -->
 
-A branch is a second line of commits; merge brings it back. Your ids differ.
+`git bisect` halves the history, tests one commit at each step, and names the first commit that fails the test.
 
-1. Make a branch and go to it.
+Mark `0f19f54` as bad and the first commit, `3e72263`, as good, and let Git run
+a test that fails when the README says 5.78: `sh -c '...'` runs the test, and
+`!` turns its result round.
 
-    ```text
-    $ git switch -c fahrenheit
-    Switched to a new branch 'fahrenheit'
-    ```
+```text
+$ cd ~/s06/weather-project
+$ git bisect start 0f19f54 3e72263
+Bisecting: 2 revisions left to test after this (roughly 2 steps)
+[9f28b51be4d356315e48263d9037af025ee83553] Add the rebuild script
+$ git bisect run sh -c '! grep -q "5.78" README.md'
+running 'sh' '-c' ''\!' grep -q "5.78" README.md'
+...
+85e435ef56fe4308debf88b5b2d546e4000bbce6 is the first 'bad' commit
+...
+bisect found first 'bad' commit
+$ git bisect reset
+...
+Switched to branch 'main'
+...
+```
 
-2. In `README.md`, under the line that ends with `results/temp_c.txt`,
-   add a line and save: 7.16 × 9 / 5 + 32 = 44.89.
+**Ask the room:** three tests for six commits. How many would `global-temp`, with 70, need?
 
-    ```text
-    In Fahrenheit: 44.89 °F.
-    ```
-
-3. Commit all changed files at once.
-
-    ```text
-    $ git commit -am "Give the mean in Fahrenheit"
-    [fahrenheit 917aa83] Give the mean in Fahrenheit
-     1 file changed, 1 insertion(+)
-    ```
-
-4. Back to `main`: the line is gone from `README.md`.
-
-    ```text
-    $ git switch main
-    Switched to branch 'main'
-    Your branch is up to date with 'origin/main'.
-    ```
-
-5. Merge `fahrenheit` into `main`. `main` has no commit of its own since
-   the branch began, so Git only moves it forward: a fast-forward.
-
-    ```text
-    $ git merge fahrenheit
-    Updating 415f809..917aa83
-    Fast-forward
-     README.md | 1 +
-     1 file changed, 1 insertion(+)
-    ```
-
-6. Delete the branch name, push.
-
-    ```text
-    $ git branch -d fahrenheit
-    Deleted branch fahrenheit (was 917aa83).
-    $ git push
-    ...
-    To https://github.com/your-username/weather-s06.git
-       415f809..917aa83  main -> main
-    ```
-
-**Check:** the Fahrenheit line in `README.md` on `main`.
-
----
-
-### 14. A conflict { #conflict }
-
-<!-- — · 15 min -->
-
-Two branches change the same line; Git asks which to keep.
-
-1. A branch, `wording`, that rewrites the Fahrenheit line.
-
-    ```text
-    $ git switch -c wording
-    Switched to a new branch 'wording'
-    ```
-
-    Change the line to `In degrees Fahrenheit: 44.89.`, save.
-
-    ```text
-    $ git commit -am "Spell out the unit"
-    [wording 925a396] Spell out the unit
-     1 file changed, 1 insertion(+), 1 deletion(-)
-    ```
-
-2. On `main`, change the Fahrenheit line differently.
-
-    ```text
-    $ git switch main
-    Switched to branch 'main'
-    Your branch is up to date with 'origin/main'.
-    ```
-
-    Change the line to `In Fahrenheit: 44.9 °F.`, save.
-
-    ```text
-    $ git commit -am "Round the Fahrenheit mean to one decimal"
-    [main 4f7a803] Round the Fahrenheit mean to one decimal
-     1 file changed, 1 insertion(+), 1 deletion(-)
-    ```
-
-3. Merge `wording` into `main`. Both changed the same line, so Git stops.
-
-    ```mermaid
-    gitGraph
-      commit id: "Fahrenheit"
-      branch wording
-      commit id: "Spell out the unit"
-      checkout main
-      commit id: "Round to 44.9"
-      merge wording id: "merge"
-    ```
-
-    ```text
-    $ git merge wording
-    Auto-merging README.md
-    CONFLICT (content): Merge conflict in README.md
-    Automatic merge failed; fix conflicts and then commit the result.
-    ```
-
-4. `README.md` now holds both lines.
-
-    ```text
-    <<<<<<< HEAD
-    In Fahrenheit: 44.9 °F.
-    =======
-    In degrees Fahrenheit: 44.89.
-    >>>>>>> wording
-    ```
-
-    Over the `<<<<<<< HEAD` line VS Code offers **Accept Current Change**
-    (`main`), **Accept Incoming Change** (`wording`), **Accept Both
-    Changes**. Click one, save.
-
-5. Mark it resolved, commit the merge.
-
-    ```text
-    $ git add README.md
-    $ git commit --no-edit
-    [main ca806f8] Merge branch 'wording'
-    ```
-
-6. The history has two lines that join. Your ids differ.
-
-    ```text
-    $ git log --oneline --graph -n 5
-    *   ca806f8 (HEAD -> main) Merge branch 'wording'
-    |\
-    | * 925a396 (wording) Spell out the unit
-    * | 4f7a803 Round the Fahrenheit mean to one decimal
-    |/
-    * 917aa83 (origin/main) Give the mean in Fahrenheit
-    * 415f809 Add a line
-    ```
-
-**Check:** no `<<<<<<<` left in `README.md`, `git status` clean.
-
----
-
-### 15. Tag the result { #tag }
-
-<!-- — · 5 min -->
-
-A tag is a name for one commit that never moves: "the state that gave 7.16".
-
-1. Tag the last commit.
-
-    ```text
-    $ git tag -a v1.0 -m "Mean 7.16 °C, checked"
-    ```
-
-2. Send the tag to GitHub; tags are not pushed by `git push` alone.
-
-    ```text
-    $ git push origin v1.0
-    ...
-    To https://github.com/your-username/weather-s06.git
-     * [new tag]         v1.0 -> v1.0
-    ```
-
-**Check:** on GitHub, the branch menu has a **Tags** tab with `v1.0`.
-
----
-
-### 16. Advanced tasks { #advanced }
-
-<!-- — · 20 min -->
-
-Harder questions about the same history, for a room that is done early. Each answer is folded under its task; the outputs are from a fresh clone, so your own commits come on top of them.
-
-!!! question "Advanced task: let Git find the commit"
-    `git bisect` finds the first commit with a property by halving the
-    history, testing one commit at each step. Mark `0f19f54` as bad and the
-    first commit, `3e72263`, as good, and let Git run a test that fails
-    when the README says 5.78. How many commits does it test?
-
-??? success "Answer"
-    `sh -c '...'` runs the test; `!` turns its result round, so "5.78 found"
-    counts as bad.
-
-    ```text
-    $ git bisect start 0f19f54 3e72263
-    Bisecting: 2 revisions left to test after this (roughly 2 steps)
-    [9f28b51be4d356315e48263d9037af025ee83553] Add the rebuild script
-    $ git bisect run sh -c '! grep -q "5.78" README.md'
-    ...
-    85e435ef56fe4308debf88b5b2d546e4000bbce6 is the first bad commit
-    ...
-    $ git bisect reset
-    ...
-    Switched to branch 'main'
-    ...
-    ```
-
-    Three tests for six commits; a thousand commits would take ten. With a
-    test script that checks the mean, this finds a wrong number in any
-    history.
-
-!!! question "Advanced task: the life of one line"
-    Show every version of README line 38, the mean, with the commit that
-    wrote it, in one command.
-
-??? success "Answer"
-    `-L 38,38:FILE` follows a range of lines back through the history.
-
-    ```text
-    $ git log -L 38,38:README.md --oneline
-    85e435e Take the mean over all rows of weather.csv
-    ...
-    -Mean `temp_c`, 2016 to 2025: **7.16 °C**, over 87 552 hours. The 120 hours
-    -marked `-999` are left out. The script writes it to `results/temp_c.txt`.
-    +Mean `temp_c`, 2016 to 2025: **5.78 °C**, over all 87 672 hours of
-    a9c513d Write the mean temperature into results and the README
-    ...
-    +Mean `temp_c`, 2016 to 2025: **7.16 °C**, over 87 552 hours. The 120 hours
-    +marked `-999` are left out. The script writes it to `results/temp_c.txt`.
-    ```
-
-    In your repository, your revert is the newest entry.
-
-!!! question "Advanced task: who did what"
-    How many commits did each person make, and which files did Tomas
-    change? Use one command for each question.
-
-??? success "Answer"
-    ```text
-    $ git shortlog -sn HEAD
-         6  Smiltė
-         1  Tomas
-    $ git log --author=Tomas --stat --oneline
-    85e435e Take the mean over all rows of weather.csv
-     README.md          | 4 ++--
-     scripts/rebuild.sh | 2 +-
-     2 files changed, 3 insertions(+), 3 deletions(-)
-    ```
-
-    In your repository your own name has a line too. `--author` takes part
-    of a name or e-mail.
+??? note "Answer"
+    Seven: each test halves what is left, and 2⁷ = 128 is the first power
+    of two above 70. A thousand commits take ten tests. With a test that
+    runs the script and checks the mean, bisect finds a wrong number in
+    any history, also when the commit's message does not mention it.
 
 ---
 
 ## Aims practised
 
-- ♻️ **Reproducibility:** the README's number is checked against the script
-  that makes it, and the history says who changed what, when and why.
-- 🔧 **Tool-agnostic:** the same lines in zsh on macOS and Git Bash on Windows;
-  the Source Control view shows the same state.
-- 📁 **Files:** made files stay out of the repository; raw data is restored
-  from the history in one command.
+- ♻️ **Reproducibility:** a number goes with the id of the data and the
+  script that made it; any version of a file comes back by its id, byte for
+  byte, and a mistake is undone by a commit that the history keeps.
+- 🔧 **Tool-agnosticism:** the same lines in zsh on macOS and Git Bash on
+  Windows; the Source Control view and GitHub show the same history.
+- ⚙️ **Automation:** `git log -S`, `git blame` and `git bisect` search a
+  history of any length; a bot commits the temperature data every month.

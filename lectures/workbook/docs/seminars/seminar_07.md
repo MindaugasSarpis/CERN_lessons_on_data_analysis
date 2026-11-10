@@ -32,11 +32,11 @@ that starts with `$` is typed without the `$`; `...` stands for lines left out.
           (WMO Resolution 40), citation in section 8;
         - the yearly temperature of the Earth and of its bands of latitude:
           NASA GISS, GISTEMP v4, public domain.
-    - **Open-Meteo's free service** allows one internet address 10 000
-      calls a day and counts a request of more than two weeks as several
-      (days ÷ 14). The two requests on this page count 1 and 2; 86 years
-      of daily data would count about 2 200. A room usually shares one
-      address.
+    - **Open-Meteo's free service** allows one internet address 600 calls
+      a minute and 10 000 a day, and counts a request as days ÷ 14 ×
+      variables ÷ 10, at least 1. The two requests on this page count 1
+      each; 86 years of one daily variable count about 224. A room usually
+      shares one address.
     - **The numbers** on this page come from runs on 10 November 2026. The
       CO₂ file gains a month every month, so the line that `co2.py` prints
       changes. The Vilnius file ends on 24 August 2025; days added later
@@ -484,8 +484,9 @@ Work in pairs, with any tools, an LLM too: the work is the idea and the checks, 
 
 !!! warning "This question needs the NOAA file, not Open-Meteo"
     86 years of the daily weather of Vilnius from Open-Meteo count as about
-    2 200 of the 10 000 calls a day that its free service allows the room's
-    shared address: four pairs would use up the day for everyone.
+    224 calls. Its free service allows the room's shared address 600 a
+    minute: the third pair that sends the request in the same minute is
+    refused, and so is everyone after it.
 
 ??? tip "Hint 1: reading the file"
     Every field is in quotes, and some hold commas (`"VILNIUS, LH"`, and

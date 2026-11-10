@@ -3,8 +3,9 @@
 How a seminar page in `lectures/workbook/docs/seminars/seminar_NN.md` is
 laid out. The page is read live, on a second screen, by the person at the
 front of the room, who has no time to read paragraphs between the steps.
-[Seminar 6](../lectures/workbook/docs/seminars/seminar_06.md) is the worked
-example (since 13 October 2026; Seminar 3 was the earlier one).
+[Seminar 7](../lectures/workbook/docs/seminars/seminar_07.md) is the worked
+example (since 10 November 2026; Seminar 6, from 13 October, and Seminar 3
+were the earlier ones).
 
 Written on 6 October 2026, after Seminar 3: the lecturer opened a page of
 500 lines, could not see at once what to do, and taught the terminal for
@@ -62,7 +63,11 @@ lecturer, then a problem the students solve in pairs, LLMs included. Spec:
    not to have prerequisite files needed (at least up until 5) it's better
    to define a small list or smth directly. Even a small csv file with a few
    lines. It's cleaner that way and people don't have to download
-   anything."). The student makes the folder and types the data from the
+   anything."). Since 10 Nov 2026 (a showcase, then a problem) a page of
+   Seminars 1 to 5 may open a real open file where the file itself is the
+   lesson, saved from its public address with the browser (Seminars 1 and
+   3, before the room has a shell) or `curl`; nothing the session needs to
+   start is downloaded. The student makes the folder and types the data from the
    page: a Python list where values are enough, else the same short
    `weather.csv`, six real hours of the log, the evening the temperature
    sensor failed:

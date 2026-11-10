@@ -7,11 +7,14 @@ two hours (Seminar 5, the first Python, runs longer), all of it in class: there 
 work done at home. The seminars practise the course's four aims:
 🔧 tool-agnostic, ♻️ reproducible, ⚙️ automated, 📁 well-organised data & files.
 
-## One project, one question per week
+## One theme, one question per week
 
-Every seminar works on the same project as the lectures, the weather
-station, with ten years of hourly readings in `data/raw/weather.csv`. Each
-seminar asks one question about it and answers it by the end.
+The lectures follow one project, a weather station with ten years of
+hourly readings in `data/raw/weather.csv`. The seminars ask one question
+per week about real weather and climate data that anyone can fetch: the
+daily record of the Vilnius station since 1881, the weather of Vilnius
+from a weather model, CO₂ at Mauna Loa, the temperature of the Earth.
+Each question is answered by the end of the session.
 
 - **Every seminar stands on its own.** It starts in a new, empty folder
   and hands out no file: the data is typed from the page or fetched by the
