@@ -21,8 +21,8 @@ that it finds them when it starts.
 
 ??? info "For the lecturer: a slow network"
     Thirty laptops downloading at once make the room's network slow. Start
-    section 1 first thing: the installs are the only downloads of Seminar 4,
-    which types its data from the page.
+    section 1 first thing: the installs are the large downloads of
+    Seminar 4; its data file (section 4) is 0.8 MB.
 
 ---
 

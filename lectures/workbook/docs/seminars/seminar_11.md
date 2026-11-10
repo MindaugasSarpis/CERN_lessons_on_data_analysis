@@ -1,885 +1,718 @@
 # Seminar 11 · A Language Model by Hand
 
-**Paired lecture:** 11 From Neurons to Language Models · **Format:** type-along tutorial, in class
+**Paired lecture:** 11 From Neurons to Language Models · **Format:** a showcase, then a problem, in class
 
 <!-- ~120 min: the length pnpm timing:check reads -->
 
-**Today's question:** What does a language model do with a prompt?
+**Today's question:** What does a language model do with a prompt, and does a longer one always help?
 
-**Today's goal:** every student builds a language model in plain Python from
-the station's twelve months in words: it counts which word follows which,
-turns the counts into next-word probabilities and writes sentences with
-them; turns three scores into probabilities at a temperature; then asks a
-chat model to explain a function of `weather.py` and to write a test for it,
-runs the test, and writes down where the model was used.
+The lecturer runs Part 2 from this page; in Part 3 the room works in pairs.
+Everything is typed in VS Code: the scripts in the editor, the commands in its
+terminal (zsh on macOS, Git Bash on Windows; the same lines in both). A line
+that starts with `$` is typed without the `$`; `...` stands for lines left out.
+A chat LLM runs in the browser beside it.
 
-Everything is typed in VS Code: the scripts in the editor, the commands in
-its terminal (zsh on macOS, Git Bash on Windows; the lines are the same in
-both). In the blocks, a line that starts with `$` is typed in the terminal,
-a line that starts with `>>>` is typed at Python's prompt, and every other
-line is what comes back; `...` stands for lines left out. Today needs no new
-package: plain Python, and a chat model in the browser.
-
-**If time runs short:** skip the Tasks, but keep section 9, the test of a
-chat model's answer, and section 11, your project.
+**If time runs short:** leave out section 4 (the drawn names and the loss); section 5 draws names too.
 
 ??? info "Before the session"
     - **Room:** Miniforge and VS Code with its Python extension on every
-      laptop (the [Setup](../setup.md) page), internet for the download
-      (0.6 MB) and for a chat model in the browser.
-    - **A chat model:** any chat model on a free account works (for
-      example ChatGPT, Claude, Gemini, Copilot). A student without one
-      works with a neighbour, or follows the lecturer's screen.
-    - **You:** a student who has the environment `analysis` of Seminars 8
-      to 10 uses it; one who has not makes it in section 1 (Python,
-      Matplotlib and pandas). Today's code needs Python alone.
+      laptop (the [Setup](../setup.md) page), internet for the data and for
+      a chat LLM; for conda only on a laptop without `analysis` (Python,
+      pandas and Matplotlib, about 100 MB on a Mac and 220 MB on Windows).
+    - **No file is handed out.** The scripts fetch two public text files
+      when they run, the first unchanged since 2022, the second since 2015:
+        - `names.txt`, 32 033 first names, one per line (228 kB), from
+          Andrej Karpathy's [makemore](https://github.com/karpathy/makemore)
+          repository, MIT licence: "the most common 32K names taken from
+          ssa.gov for the year 2018", the baby-name list of the US Social
+          Security Administration;
+        - `input.txt`, 40 000 lines of Shakespeare's plays (1.1 MB), from
+          his [char-rnn](https://github.com/karpathy/char-rnn) repository,
+          MIT licence; the plays are in the public domain.
+    - **The numbers** on this page come from runs on 10 November 2026; with
+      the same files and `random.seed`, every laptop prints the same.
+    - **A chat LLM:** any chat LLM in the browser on a free account (for
+      example ChatGPT, Claude, Gemini or Copilot). The page shows no reply
+      of a chat: replies differ from chat to chat and from day to day. A
+      student without one works with a neighbour who has one, or follows
+      the lecturer's screen. Nothing personal goes into a prompt.
+    - **Missing a tool?** VS Code: [Setup, step 1](../setup.md#vscode);
+      `conda` (Miniforge): [Setup, steps 2–4](../setup.md#shell); the Python
+      extension: [Setup, step 7](../setup.md#extensions).
     - **Keys** are written for Windows, macOS in brackets. Paths are shown
       for a Mac (`/Users/smilte/...`); Git Bash shows `/c/Users/smilte/...`.
 
 ---
 
-## Part 1 · Today's folder and today's text { #part-1 }
+## Part 1 · Set up { #part-1 }
 
-<!-- 0:00 to 0:15 -->
+### 1. A new folder and the environment `analysis` { #start }
 
-The weather log becomes text: one sentence for each month, written by a script from the month's mean temperature.
+<!-- 0:00 · 6 min -->
+
+Today needs no new package: Python counts and draws, and Matplotlib from `analysis`, the environment of weeks 8 to 12, draws the figures.
+
+1. In VS Code, **View** > **Terminal**. Make the folder and go into it.
+
+    ```text
+    $ mkdir ~/weather-s11
+    $ cd ~/weather-s11
+    $ pwd
+    /Users/smilte/weather-s11
+    ```
+
+2. **File** > **Open Folder...** > `weather-s11` (in your home folder) >
+   **Open**, then **View** > **Terminal**. The Explorer on the left is empty.
+
+3. Switch on `analysis`.
+
+    ```text
+    $ conda activate analysis
+    ```
+
+    `EnvironmentNameNotFound`: this laptop does not have it yet. Make it
+    with one line (at `Proceed ([y]/n)?` press `Enter`), then switch it on.
+
+    ```text
+    $ conda create -n analysis python=3.14 pandas=3.1 matplotlib-base=3.11
+    ...
+    #     $ conda activate analysis
+    $ conda activate analysis
+    ```
+
+4. Ask for Matplotlib's version.
+
+    ```text
+    $ python -c "import matplotlib; print(matplotlib.__version__)"
+    3.11.2
+    ```
+
+**Check:** `(analysis)` at the start of the prompt, and `3.11.2` (the last digit may be higher).
 
 ---
 
-### 1. Get today's folder, switch on the environment { #start }
+### 2. Write the environment down, open a chat { #chat }
 
-<!-- 0:00 · 10 min -->
+<!-- 0:06 · 4 min -->
 
-Today's folder holds the data, the module `weather.py`, a script that writes today's text, and `environment.yml`.
+`environment.yml` in today's folder records what today's scripts ran with.
 
-1. On the [Releases page](https://github.com/MindaugasSarpis/weather-project/releases),
-   under **Assets**, click `weather-s11.zip`. Open VS Code, then the
-   terminal (**View** > **Terminal**), and unzip it into the home folder.
+1. Write the environment into a file.
 
     ```text
-    $ unzip ~/Downloads/weather-s11.zip -d ~
-    Archive:  /Users/smilte/Downloads/weather-s11.zip
-       creating: /Users/smilte/weather-s11/
-    ...
-      inflating: /Users/smilte/weather-s11/scripts/weather.py
-    $ cd ~/weather-s11
-    $ ls
-    README.md  data  environment.yml  results  scripts
+    $ conda env export --from-history -f environment.yml
     ```
 
-    Safari unpacks a zip by itself: then `mv ~/Downloads/weather-s11 ~`
-    instead.
-
-2. **File** > **Open Folder...** > `weather-s11` > **Open**. The window
-   reloads: open the terminal again (**View** > **Terminal**); it starts in
-   the folder.
-
-3. Look for the environment of the last weeks.
+2. Click `environment.yml` in the Explorer, delete its last line,
+   `prefix: ...` (a folder on this laptop), save (`Ctrl+S`, macOS `Cmd+S`).
+   The packages may stand in another order, and a package you added in an
+   earlier week stands there too.
 
     ```text
-    $ conda env list
-    ...
-    analysis                 /Users/smilte/miniforge3/envs/analysis
-    ...
-    ```
-
-    `analysis` in the list: switch it on, `conda activate analysis`, and go
-    to step 4. Not in the list: make it from the folder's file first.
-
-    ```text
-    $ cat environment.yml
     name: analysis
     channels:
       - conda-forge
     dependencies:
       - python=3.14
-      - matplotlib-base=3.11
       - pandas=3.1
-    $ conda env create -f environment.yml
-    ...
-    $ conda activate analysis
+      - matplotlib-base=3.11
     ```
 
-4. VS Code too: `Ctrl+Shift+P` (macOS `Cmd+Shift+P`), `Python: Select
-   Interpreter`, pick the entry with `envs/analysis` in its path.
+3. Tell VS Code which Python to use: `Ctrl+Shift+P` (macOS `Cmd+Shift+P`),
+   `Python: Select Interpreter`, pick the entry with `envs/analysis` in its
+   path.
 
-5. Ask for Python's version.
+4. Open a chat LLM in the browser and start a new chat.
 
-    ```text
-    $ python --version
-    Python 3.14.10
-    ```
-
-**Check:** `(analysis)` at the start of the prompt, and `Python 3.14` (the
-last number may differ).
+**Check:** `analysis` in the Status Bar, no `prefix:` in `environment.yml`, an empty chat.
 
 ---
 
-### 2. Write today's text from the log { #text }
+## Part 2 · Showcase { #part-2 }
 
-<!-- 0:10 · 5 min -->
+The lecturer runs four complete scripts on two real texts; the room watches
+or types along, and sends the same questions to a chat LLM. For each script:
+in the Explorer, right-click > **New File...**, the name above the code,
+paste, save, run it in the terminal.
 
-A script writes one sentence per month: the word comes from the month's mean temperature.
+### 3. Which letter follows which in 32 033 names { #count }
 
-1. Run the script that came with the folder.
+<!-- 0:10 · 9 min -->
 
-    ```text
-    $ python scripts/sentences.py
-    12 sentences in data/processed/months.txt
-    120 sentences in data/processed/months_by_year.txt
-    ```
+The simplest language model counts: for each letter, how often each letter came right after it; a count divided by the row's total is the probability of the next letter.
 
-2. Print the first file: the twelve months, each over the ten years
-   2016 to 2025.
+Before running it, ask the chat: *In US first names, which letters follow the letter q, and how often?* Write its answer down.
 
-    ```text
-    $ cat data/processed/months.txt
-    in january it was cold .
-    in february it was cold .
-    in march it was cool .
-    in april it was cool .
-    in may it was mild .
-    in june it was warm .
-    in july it was warm .
-    in august it was warm .
-    in september it was mild .
-    in october it was cool .
-    in november it was cool .
-    in december it was cold .
-    ```
+```python title="next_letter.py"
+import urllib.request
+from collections import Counter
 
-    The full stop stands apart, with a space before it, so that it counts as
-    a word of its own.
+URL = "https://raw.githubusercontent.com/karpathy/makemore/master/names.txt"
+with urllib.request.urlopen(URL) as response:
+    names = response.read().decode().split()
+print(len(names), "names:", names[:5])
 
-3. Open `scripts/weather.py` and find its last function, `word_for`. It
-   gives the word for a mean temperature: below 0 °C `cold`, below 10 °C
-   `cool`, below 15 °C `mild`, else `warm`. `sentences.py` uses it with
-   `group`, the function above it, which collects the temperatures of each
-   month in a dictionary of lists.
+pairs = Counter()                # (letter, next letter) -> how often
+for name in names:
+    word = "." + name + "."      # "." marks the start and the end
+    for a, b in zip(word, word[1:]):
+        pairs[a, b] += 1
+print(sum(pairs.values()), "pairs of neighbours,", len(pairs), "different")
 
-**Check:** twelve lines in `months.txt`, the seventh `in july it was warm .`
+after_q = Counter()
+for (a, b), n in pairs.items():
+    if a == "q":
+        after_q[b] = n
+total = after_q.total()
+for b, n in after_q.most_common(5):
+    print(f"after q: {b}  {n:3} of {total}  P = {n / total:.3f}")
+```
 
----
+```text
+$ python next_letter.py
+32033 names: ['emma', 'olivia', 'ava', 'isabella', 'sophia']
+228146 pairs of neighbours, 627 different
+after q: u  206 of 272  P = 0.757
+after q: .   28 of 272  P = 0.103
+after q: a   13 of 272  P = 0.048
+after q: i   13 of 272  P = 0.048
+after q: w    3 of 272  P = 0.011
+```
 
-## Part 2 · A language model by counting { #part-2 }
+**Notice:** the table holds only what the file holds: after `q`, `u` in 206 of 272 cases, and the end of the name (`.`) in 28.
 
-<!-- 0:15 to 1:05 -->
+**Ask the room:** the chat answered from the text it was trained on. Set its answer beside these counts: where do they differ, and which of the two describes this file?
 
-The simplest language model reads a text, counts which word follows which, and continues a text by drawing from the counts.
-
----
-
-### 3. Split a sentence into words { #split }
-
-<!-- 0:15 · 10 min -->
-
-A **list of words** is the text as a program sees it: `split()` cuts a text at every space and line break.
-
-1. Start Python in the terminal and split one sentence.
-
-    ```pycon
-    >>> sentence = "in july it was warm ."
-    >>> words = sentence.split()
-    >>> words
-    ['in', 'july', 'it', 'was', 'warm', '.']
-    >>> len(words)
-    6
-    >>> words[0]
-    'in'
-    >>> words[3]
-    'was'
-    >>> words[4]
-    'warm'
-    ```
-
-    `words[3]` is the fourth word: the positions start at 0.
-
-2. Each word with the word after it: `i` runs over the positions 0 to 4,
-   and `words[i + 1]` is the next word.
-
-    ```pycon
-    >>> for i in range(len(words) - 1):
-    ...     print(words[i], words[i + 1])
-    ...
-    in july
-    july it
-    it was
-    was warm
-    warm .
-    >>> exit()
-    ```
-
-    `range(len(words) - 1)` gives 0, 1, 2, 3, 4: the last word has nothing
-    after it. Press `Enter` on the empty `...` line to run the loop.
-
-**Check:** five pairs, the fourth `was warm`.
+??? note "Answer"
+    The counts describe the file. In English words `q` is followed by `u`
+    almost always, and a chat that has not seen the file continues with
+    what is likely in general. These names come from many languages:
+    `tariq` and `ishaq` end in `q`, `qiana` has `i` after it. A statement
+    about a file is computed from the file.
 
 ---
 
-### 4. Count which word follows which { #count }
+### 4. New names drawn from the counts, and their loss { #draw }
 
-<!-- 0:25 · 15 min -->
+<!-- 0:19 · 10 min -->
 
-A **dictionary of lists**: one key per word, and under it every word that came right after it in the text.
+The model writes by drawing each next letter with the probabilities of its row, until the end mark; the **loss**, the mean of −ln p of the letter that really came, says how well the table predicts the names.
 
-1. New file `scripts/next_word.py`. Type, save.
+```python title="draw.py"
+import math
+import random
+import urllib.request
+from collections import Counter
 
-    ```python
-    text = open("data/processed/months.txt").read()
-    words = text.split()
-    print(len(words), words[0:6])
-    ```
+URL = "https://raw.githubusercontent.com/karpathy/makemore/master/names.txt"
+with urllib.request.urlopen(URL) as response:
+    names = response.read().decode().split()
+follow = {}                      # letter -> Counter of the letters after it
+for name in names:
+    word = "." + name + "."
+    for a, b in zip(word, word[1:]):
+        follow.setdefault(a, Counter())[b] += 1
 
-2. Run it from the project folder.
+random.seed(3)
+for i in range(8):
+    name, letter = "", "."
+    while True:                  # draw the next letter until "." ends it
+        row = follow[letter]
+        letter = random.choices(list(row), weights=list(row.values()))[0]
+        if letter == ".":
+            break
+        name += letter
+    print(name + (" (in the list)" if name in names else ""))
 
-    ```text
-    $ python scripts/next_word.py
-    72 ['in', 'january', 'it', 'was', 'cold', '.']
-    ```
+loss = 0                         # the mean of -ln P(the letter that came)
+n = 0
+for name in names:
+    word = "." + name + "."
+    for a, b in zip(word, word[1:]):
+        loss -= math.log(follow[a][b] / follow[a].total())
+        n += 1
+print(f"loss {loss / n:.3f}; letters drawn blindly: {math.log(27):.3f}")
+```
 
-    Twelve sentences of six words: 72 words.
+```text
+$ python draw.py
+s
+min (in the list)
+ee
+sbrul
+anireyntarlereeyonieitellden
+ge
+zimeitcorsuoosoyar
+jynielau
+loss 2.454; letters drawn blindly: 3.296
+```
 
-3. Under the three lines, add the counting, save.
+Then the same request in the chat: *Invent eight new first names in the style of US baby names. Only the names, one per line.*
 
-    ```python
-    follow = {}
-    for i in range(len(words) - 1):
-        word = words[i]
-        if word not in follow:
-            follow[word] = []
-        follow[word].append(words[i + 1])
-    print(follow["in"])
-    print(follow["was"])
-    ```
+**Notice:** each pair of neighbours in `sbrul` stands somewhere in the names; the whole is no name, because the model looks one letter back.
 
-    These are the four lines of `group` in `weather.py`: the first time a
-    word turns up, `follow[word] = []` gives it an empty list; `append` adds
-    the word that came after it.
+**Ask the room:** the loss is 2.454; drawing each of the 27 symbols blindly scores ln 27 = 3.296. How many equally likely letters does each number stand for?
 
-4. Run it.
-
-    ```text
-    $ python scripts/next_word.py
-    72 ['in', 'january', 'it', 'was', 'cold', '.']
-    ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december']
-    ['cold', 'cold', 'cool', 'cool', 'mild', 'warm', 'warm', 'warm', 'mild', 'cool', 'cool', 'cold']
-    ```
-
-    After `in` came each month once; after `was`, the twelve weather words
-    in the order of the months.
-
-**Check:** `follow["was"]` holds twelve words: three `cold`, four `cool`,
-two `mild`, three `warm`.
-
----
-
-### 5. From counts to probabilities { #odds }
-
-<!-- 0:40 · 10 min -->
-
-The probability of a next word is its count divided by the count of all words that came after: 4 of 12 for `cool`.
-
-1. At the end of `next_word.py`, add these lines, save.
-
-    ```python
-    after = follow["was"]
-    for word in ["cold", "cool", "mild", "warm"]:
-        print(word, after.count(word), round(after.count(word) / len(after), 3))
-    ```
-
-    `after.count(word)` counts how often `word` stands in the list;
-    `round(x, 3)` keeps three decimals.
-
-2. Run it.
-
-    ```text
-    $ python scripts/next_word.py
-    ...
-    cold 3 0.25
-    cool 4 0.333
-    mild 2 0.167
-    warm 3 0.25
-    ```
-
-    The four probabilities add up to 1. This table, a word in and a
-    probability for each next word out, is a language model.
-
-**Check:** `cool 4 0.333`.
+??? note "Answer"
+    e^2.454 = 11.6: the table predicts as if choosing among about 12
+    equally likely letters; blind, among 27. The
+    [makemore README](https://github.com/karpathy/makemore) reports about
+    1.92 for a small transformer trained on the same file, on names it had
+    not seen: e^1.92 = 6.8 letters. A network that sees all the letters
+    so far guesses better; a chat LLM is a very large network of that
+    kind, which is why its names look like names.
 
 ---
 
-### 6. Write sentences with the model { #generate }
+### 5. The same counts at three temperatures { #temperature }
 
-<!-- 0:50 · 15 min (Task: 5 min, skip if late) -->
+<!-- 0:29 · 9 min -->
 
-The model writes by drawing: from the list of the last word it picks the next one, appends it, and goes on until the full stop.
+Softmax of the scores ln(count) at a temperature T gives each count the weight count^(1/T): T = 1 gives back the counts, T = 0.5 squares them, T = 2 takes their square root.
 
-1. Make `import random` the first line of `next_word.py`: `random` comes
-   with Python and draws at random.
+```python title="temperature.py"
+import random
+import urllib.request
+from collections import Counter
+import matplotlib.pyplot as plt
 
-    ```python
-    import random
+URL = "https://raw.githubusercontent.com/karpathy/makemore/master/names.txt"
+with urllib.request.urlopen(URL) as response:
+    names = response.read().decode().split()
+follow = {}
+for name in names:
+    word = "." + name + "."
+    for a, b in zip(word, word[1:]):
+        follow.setdefault(a, Counter())[b] += 1
 
-    text = open("data/processed/months.txt").read()
-    ...
-    ```
 
-2. At the end of the file, add these lines, save.
+def new_name(T):
+    """Each letter drawn with the weights count ** (1 / T): softmax at T."""
+    name, letter = "", "."
+    while True:
+        row = follow[letter]
+        weights = [n ** (1 / T) for n in row.values()]
+        letter = random.choices(list(row), weights=weights)[0]
+        if letter == ".":
+            return name
+        name += letter
 
-    ```python
-    random.seed(78)
-    for n in range(5):
-        word = "in"
-        sentence = [word]
-        while word != ".":
-            word = random.choice(follow[word])
-            sentence.append(word)
-        print(" ".join(sentence))
-    ```
 
-    `random.choice` picks one element of a list, each equally likely: `cool`
-    stands four times in `follow["was"]`, so it comes with 4 of 12. `while`
-    repeats its block as long as its condition holds, here until the word is
-    the full stop. `" ".join(sentence)` puts the words together with a space
-    between them. `random.seed(78)` makes every laptop draw the same.
+random.seed(1)
+after_a = follow["a"].most_common()     # largest count first: ".", the end
+fig, ax = plt.subplots(figsize=(9, 4), layout="constrained")
+for T in [0.5, 1, 2]:
+    weights = [n ** (1 / T) for b, n in after_a]
+    p = [w / sum(weights) for w in weights]
+    ax.plot([b for b, n in after_a], p, "o-", label=f"T = {T}")
+    print(f"T = {T}: P(end after a) = {p[0]:.3f};",
+          " ".join(new_name(T) for i in range(5)))
+ax.set_xlabel("The letter after “a” (“.” ends the name)")
+ax.set_ylabel("Probability")
+ax.set_title("After “a”, T = 0.5 ends the name twice as often as T = 1")
+ax.legend(frameon=False)
+fig.savefig("temperature.svg")
+```
 
-3. Run it.
+```text
+$ python temperature.py
+T = 0.5: P(end after a) = 0.396; ana mana en klan da
+T = 1: P(end after a) = 0.196; eny siabrabe la jan yr
+T = 2: P(end after a) = 0.101; m kwecki xzusamrarockayssenn epkh inb
+```
 
-    ```text
-    $ python scripts/next_word.py
-    ...
-    in april it was cool .
-    in december it was cool .
-    in november it was cool .
-    in july it was cold .
-    in june it was cool .
-    ```
+![The probability of each of the 27 symbols after the letter a, sorted from the most common, at three temperatures: at T = 0.5 the end of the name rises to 0.396 and n to 0.27, the rare letters fall to near 0; at T = 1 the counts, 0.196 for the end; at T = 2 the curve is flatter, 0.101 for the end and about 0.01 for the rarest letters](img/s11/temperature.svg)
 
-4. Compare with `months.txt`: two of the five sentences are in the text,
-   `april` and `november`. The model wrote `in july it was cold .`: after
-   `was` it sees `was` alone, and three times in twelve `cold` followed it.
+**Notice:** a low T gives the likely symbols more, the end of the name among them, so names come out short (`ana`, `mana`, `en`); a high T gives the rare letters more, and names run long.
 
-**Check:** five sentences, every one grammatical, three of them false.
+**Ask the room:** as T goes to 0, the model takes the most likely letter at every step. Which name does it write?
 
-!!! question "Task: how often is the model right?"
-    Draw 1000 sentences and count those that are in the text. Hint:
-    `text.splitlines()` gives the list of the twelve lines, and `x in a_list`
-    is `True` when `x` is in the list.
-
-??? success "Answer"
-    At the end of `next_word.py`:
-
-    ```python
-    lines = text.splitlines()
-    true = 0
-    for n in range(1000):
-        word = "in"
-        sentence = [word]
-        while word != ".":
-            word = random.choice(follow[word])
-            sentence.append(word)
-        if " ".join(sentence) in lines:
-            true = true + 1
-    print(true, "of 1000 are in the text")
-    ```
+??? note "Answer"
+    Change the loop's line to `for T in [0.05]:` and run it:
 
     ```text
-    $ python scripts/next_word.py
-    ...
-    285 of 1000 are in the text
+    $ python temperature.py
+    T = 0.05: P(end after a) = 0.982; a a a a a
     ```
 
-    About one in four. On average 38 of 144: a month is drawn with 1/12,
-    its own word with 3, 4, 2 or 3 of 12. The other sentences are fluent and
-    false: the counts know which word follows which, not which month was
-    warm.
+    The name `a`, every time: `a` is the most likely first letter, and
+    after `a` the end. No name in the list has fewer than two letters: the
+    most likely step at every point does not give a likely name. Large
+    models that always take the most likely token tend to repeat
+    themselves too; chat models draw at a temperature above 0.
 
 ---
 
-## Part 3 · Scores into probabilities { #part-3 }
+### 6. Shakespeare from 1, 3 and 6 characters of context { #context }
 
-<!-- 1:05 to 1:15 -->
+<!-- 0:38 · 9 min -->
 
-A large model gives every possible next word a score. Softmax turns the scores into probabilities; a temperature makes them sharper or flatter.
+The next character drawn from the last k characters: the longer the context, the more the text reads like the plays, and the larger the table (C. E. Shannon's experiment of 1948, with letters of English).
+
+```python title="shannon.py"
+import random
+import urllib.request
+from collections import Counter
+
+URL = ("https://raw.githubusercontent.com/karpathy/char-rnn/master/data/"
+       "tinyshakespeare/input.txt")
+with urllib.request.urlopen(URL) as response:
+    text = response.read().decode()
+print(len(text), "characters,", len(set(text)), "different ones")
+
+for k in [1, 3, 6]:              # characters of context
+    follow = {}                  # the k characters -> Counter of the next
+    for i in range(k, len(text)):
+        follow.setdefault(text[i - k:i], Counter())[text[i]] += 1
+    random.seed(1)
+    out = text[:k]               # start as the text starts
+    while len(out) < 160:
+        row = follow[out[-k:]]
+        out += random.choices(list(row), weights=list(row.values()))[0]
+    print(f"--- {k} character(s) of context: a table of {len(follow)} rows")
+    print(out)
+```
+
+```text
+$ python shannon.py
+1115394 characters, 65 different ones
+--- 1 character(s) of context: a table of 65 rows
+Figrer in wilande n.
+Bos hano t hed wicouk'l esch is gs d htherined.
+I t wiond tnth hado hiordsink theld thald, t her
+TETh it wisthen t ho m, s fove y!
+Bullyope
+--- 3 character(s) of context: a table of 11556 rows
+First, their faitorswere of more the consel
+they ins thou have stoo here mighwardshio dening Edwarrant to the hou like only chiefs are the backing hast March th
+--- 6 character(s) of context: a table of 283313 rows
+First Citizens, where, Friar, the father:
+Yours, and how to be to his brethren here pitch our sunshine's blood upon my greedy looks he storms than it is a reeli
+```
+
+Then in the chat: *Continue this in the style of Shakespeare for five lines: First Citizen:*
+
+**Notice:** with 6 characters the words and the line breaks are right and the sense is not; pieces of about ten characters (`his brethren`, `upon my gr`) stand word for word in the plays, the whole line nowhere.
+
+**Ask the room:** what does the model write with 20 characters of context?
+
+??? note "Answer"
+    Change the loop's line to `for k in [20]:` and run it:
+
+    ```text
+    $ python shannon.py
+    1115394 characters, 65 different ones
+    --- 20 character(s) of context: a table of 1103360 rows
+    First Citizen:
+    Before we proceed any further, hear me speak.
+
+    All:
+    Speak, speak.
+
+    First Citizen:
+    Your belly's answer? What!
+    The kingly-crowned head, the vigilan
+    ```
+
+    The table has a row for nearly every one of the 1 115 374 positions:
+    almost every 20 characters stand once in the plays, so the model
+    reprints them, and jumps only where 20 characters repeat, as after
+    `First Citizen:`. A longer context copies more of the text it counted.
+    Part 3 asks what that does to a text it has not counted.
 
 ---
 
-### 7. Softmax, then with a temperature { #softmax }
+### 7. Library card: the calls of this page { #card }
 
-<!-- 1:05 · 10 min (Task: 3 min, skip if late) -->
+<!-- 0:47 · 3 min -->
 
-Softmax: e to the power of each score, divided by the sum of these powers. `math.exp(z)` computes e to the power `z`.
+Every call of the examples and of the solution below, one line each.
 
-1. At Python's prompt, three scores: 2.0 for `warm`, 1.0 for `mild`, 0.1
-   for `cool`.
-
-    ```pycon
-    >>> import math
-    >>> math.exp(2.0)
-    7.38905609893065
-    >>> math.exp(1.0)
-    2.718281828459045
-    >>> math.exp(0.1)
-    1.1051709180756477
-    >>> total = math.exp(2.0) + math.exp(1.0) + math.exp(0.1)
-    >>> total
-    11.212508845465344
-    >>> math.exp(2.0) / total
-    0.6590011388859679
-    >>> round(math.exp(1.0) / total, 3)
-    0.242
-    >>> round(math.exp(0.1) / total, 3)
-    0.099
-    >>> exit()
-    ```
-
-    Every power is positive, and dividing by their sum makes the three
-    numbers add up to 1: 0.659, 0.242, 0.099.
-
-2. As a function with a temperature `T`: each score is divided by `T`
-   first. New file `scripts/softmax.py`. Type, save.
-
-    ```python
-    import math
-
-
-    def softmax(scores, T):
-        e = []
-        for s in scores:
-            e.append(math.exp(s / T))
-        total = sum(e)
-        p = []
-        for x in e:
-            p.append(round(x / total, 3))
-        return p
-
-
-    scores = [2.0, 1.0, 0.1]          # warm, mild, cool
-    for T in [0.5, 1, 2]:
-        print(T, softmax(scores, T))
-    ```
-
-3. Run it.
-
-    ```text
-    $ python scripts/softmax.py
-    0.5 [0.864, 0.117, 0.019]
-    1 [0.659, 0.242, 0.099]
-    2 [0.502, 0.304, 0.194]
-    ```
-
-    A low temperature gives the top word more (0.864); a high one spreads
-    the probability (0.502). A chat model draws each word of its reply at a
-    temperature: the same prompt can get a different reply.
-
-**Check:** `1 [0.659, 0.242, 0.099]`, the numbers of step 1.
-
-!!! question "Task: very low and very high"
-    Change the list of temperatures to `[0.1, 10]`. What does the model
-    write at each?
-
-??? success "Answer"
-    ```text
-    $ python scripts/softmax.py
-    0.1 [1.0, 0.0, 0.0]
-    10 [0.366, 0.331, 0.303]
-    ```
-
-    At 0.1 the top word every time; at 10 nearly a third each, the scores
-    hardly matter. Put the list back to `[0.5, 1, 2]`.
-
----
-
-## Part 4 · A chat model, checked by running { #part-4 }
-
-<!-- 1:15 to 1:40 -->
-
-A chat model writes the likely text after the prompt, fluent whether it is right or not. Its answer about code is checked by running the code.
-
----
-
-### 8. Ask a chat model to explain a function { #explain }
-
-<!-- 1:15 · 10 min -->
-
-The prompt gives the model what it cannot know: the code itself and what you want back.
-
-1. Open a chat model in the browser. Copy the function `word_for` from
-   `scripts/weather.py` into this prompt, and send it.
-
-    ```text
-    I am learning Python. Explain line by line what this function does,
-    and say what it returns for -3.9, 0, 10 and 18.5:
-
-    def word_for(temp):
-        """The word for a mean temperature in °C."""
-        if temp < 0:
-            return "cold"
-        if temp < 10:
-            return "cool"
-        if temp < 15:
-            return "mild"
-        return "warm"
-    ```
-
-2. Read the reply. Your reply differs from your neighbour's: the model
-   draws its words. Look at what it says about 0 and 10, the values on a
-   border.
-
-3. Check its four answers by running them. Python finds `weather.py` in the
-   terminal's folder, so start it in `scripts`.
-
-    ```text
-    $ cd scripts
-    $ python
-    ```
-
-    ```pycon
-    >>> import weather
-    >>> weather.word_for(-3.9)
-    'cold'
-    >>> weather.word_for(0)
-    'cool'
-    >>> weather.word_for(10)
-    'mild'
-    >>> weather.word_for(18.5)
-    'warm'
-    >>> exit()
-    ```
-
-    ```text
-    $ cd ..
-    ```
-
-    0 is not below 0, so it is `cool`; 10 is not below 10, so it is `mild`.
-
-**Check:** the reply's four answers against `cold`, `cool`, `mild`, `warm`.
-Where they differ, the run is right.
-
----
-
-### 9. Ask for a test, then run it { #test }
-
-<!-- 1:25 · 13 min (Task: 5 min, skip if late) -->
-
-A **test** states facts known without the code and checks them: `assert` stops the script with an `AssertionError` when its condition is false.
-
-1. In the same chat, send this prompt.
-
-    ```text
-    Write a test for word_for in a file test_weather.py: plain Python,
-    no pytest, `import weather` at the top, one assert per value, and
-    print("all tests passed") at the end. Test the borders 0, 10 and 15,
-    and one value inside each of the four ranges.
-    ```
-
-2. New file `scripts/test_weather.py`: paste the code of the reply, save.
-   It should look like this one; yours may test other values. If it has
-   no test of 0, add the line `assert weather.word_for(0) == "cool"`.
-
-    ```python
-    import weather
-
-    assert weather.word_for(-3.9) == "cold"
-    assert weather.word_for(0) == "cool"
-    assert weather.word_for(9.9) == "cool"
-    assert weather.word_for(10) == "mild"
-    assert weather.word_for(14.9) == "mild"
-    assert weather.word_for(15) == "warm"
-    assert weather.word_for(18.5) == "warm"
-    print("all tests passed")
-    ```
-
-3. Run it from the project folder.
-
-    ```text
-    $ python scripts/test_weather.py
-    all tests passed
-    ```
-
-    An `AssertionError` instead names the line that failed. Read that
-    value, find its word by the rule of section 2, and decide who is wrong:
-    the test or the function.
-
-4. A test must fail on a wrong function. In `weather.py`, change
-   `if temp < 0:` to `if temp <= 0:`, save, run the test again. The
-   traceback names the line that tests 0, line 4 in the file above.
-
-    ```text
-    $ python scripts/test_weather.py
-    Traceback (most recent call last):
-      File "/Users/smilte/weather-s11/scripts/test_weather.py", line 4, in <module>
-        assert weather.word_for(0) == "cool"
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    AssertionError
-    ```
-
-    The test caught the changed border. Put `<` back, save, run: `all tests
-    passed`.
-
-5. A test can be wrong too. The four measured hours of 21 July 2019 have
-   the mean 25.275, worked out by hand. Start Python in `scripts` again.
-
-    ```pycon
-    >>> import weather
-    >>> weather.mean([27.3, 25.6, 24.6, 23.6])
-    25.275000000000002
-    >>> weather.mean([27.3, 25.6, 24.6, 23.6]) == 25.275
-    False
-    >>> round(weather.mean([27.3, 25.6, 24.6, 23.6]), 3) == 25.275
-    True
-    >>> exit()
-    ```
-
-    The function is right; the decimals are not exact in binary, so `==`
-    fails. A test of a float compares the rounded value.
-
-6. Write down where the chat model was used. At the end of `README.md`, add
-   these lines with your tool and today's date, save.
-
-    ```text
-    ## Use of AI tools
-
-    scripts/test_weather.py was drafted with <the chat model> on
-    15 December 2026 and checked by running it, also against a word_for
-    with a changed border, which it caught.
-    ```
-
-**Check:** `all tests passed`, the `AssertionError` with `<=`, and the note
-at the end of the README.
-
-!!! question "Task: a question only the data can answer"
-    Ask the chat model: *How many hours of my weather log are below 0 °C?*
-    Then count them in Python: `weather.temps("../data/raw/weather.csv")` in
-    `scripts` gives every measured temperature.
-
-??? success "Answer"
-    The model has not seen the file: a number in its reply is a guess, or it
-    asks for the file. The data answer it:
-
-    ```pycon
-    >>> import weather
-    >>> temps = weather.temps("../data/raw/weather.csv")
-    >>> count = 0
-    >>> for t in temps:
-    ...     if t < 0:
-    ...         count = count + 1
-    ...
-    >>> count
-    22352
-    >>> len(temps)
-    87552
-    ```
-
-    22 352 of the 87 552 measured hours. A statement about your data is
-    computed from the data.
-
----
-
-### 10. Wrap up { #wrap-up }
-
-<!-- 1:38 · 2 min -->
-
-The lines of today, by what they do.
-
-| To | Type |
+| Call | What it does |
 |--|--|
-| cut a text into words | `text.split()` |
-| collect what follows each word | `follow[word].append(words[i + 1])`, as `group` does |
-| count and divide | `after.count(word) / len(after)` |
-| draw a word | `random.choice(a_list)`, after `random.seed(78)` |
-| join words into a text | `" ".join(sentence)` |
-| softmax | `math.exp(z / T)` for each score, divided by their sum |
-| test | `assert condition`, then run the file |
+| `urllib.request.urlopen(URL)`, then `.read().decode()` | the file at the address, as one text |
+| `text.split()` | the words of a text (here the names), cut at spaces and line ends |
+| `Counter()`, `c[key] += 1` | a dict that counts; a key not yet there counts 0 |
+| `c.most_common(5)`, `c.total()` | the five largest counts, largest first; the sum of all counts |
+| `zip(word, word[1:])` | each letter with the letter after it |
+| `d.setdefault(key, Counter())` | the value of `key`, made first if it is missing |
+| `d.get(key)` | the value of `key`, or `None` if it is missing |
+| `text[i - k:i]` | the k characters before position i |
+| `names[::10]` | every tenth element, from the first |
+| `random.seed(3)` | the same draws on every run and every laptop |
+| `random.choices(items, weights=w)[0]` | one item, drawn with the probability weight / sum of the weights |
+| `n ** (1 / T)` | the weight of a count n at temperature T: softmax of ln n / T |
+| `math.log(p)` | ln p, the natural logarithm |
+| `ax.plot(x, y, "o-", label=...)`, `ax.legend(frameon=False)` | a line through points; the labels of the lines, without a frame |
+| `ax.errorbar(x, y, yerr=errors, fmt="o-", capsize=3)`, `fig.savefig("name.svg")` | points with a bar of ± `errors` at each; the figure into a file |
 
 ---
 
-## Part 5 · Your project { #part-5 }
+## Part 3 · The problem { #part-3 }
 
-<!-- 1:40 to 2:00 -->
+### 8. Does a longer context always guess the next letter better? { #problem }
 
-The same steps on your own code: an explanation, a test you run, and a note in the README.
+<!-- 0:50 · 55 min: predict 5, solve 25, check 15, hand in 10 -->
 
----
+A model that sees the last k letters guesses the next one: the most likely
+letter of the row of its context. Count on nine of every ten names of
+`names.txt`, then guess every letter, and the end, of the other names, which
+the model never counted. The file of sections 3 to 5 (makemore, MIT licence;
+the names from the US Social Security Administration):
 
-### 11. A test for one function of your project { #project }
+```text
+https://raw.githubusercontent.com/karpathy/makemore/master/names.txt
+```
 
-<!-- 1:40 · 20 min -->
+Work in pairs, with any tools, an LLM too: what counts is the prediction, the checks and the answer in your own words.
 
-Nothing new: sections 8 and 9 with your file names. Skip it if your project has no code yet, or take a few lines of your notebook.
+1. **Predict**, before any code, on paper: the share of next letters of
+   the new names guessed right with k = 0, 1, 2, 4 and 7 letters of
+   context (with k = 0 the model guesses the most common symbol every
+   time). Sketch the curve, and give one reason for its shape.
+2. **Solve.** For k = 0 to 7: the share guessed right on the names counted
+   and on the new names, the second with its standard error
+   √(p(1 − p) / n), in one figure.
+3. **Check the machine's work.**
+    - By hand: in `emma olivia ava isabella sophia`, what comes after `a`,
+      and how often? Count on paper; your counting code on these five
+      names alone must give the same.
+    - Read off: n, the number of guesses on the new names (each name's
+      letters and its end); the y-axis, a share from 0 to 1; whether the
+      error bars are smaller than the steps between neighbouring k.
+    - Write down what your code does with a context it never saw; another
+      pair may have chosen otherwise.
+    - Against your prediction: where they differ, say which was wrong, and
+      why.
+4. **Hand in.** The figure, the best k with its share ± error, two
+   sentences in your own words, and one line: which LLM wrote which part,
+   and what you checked yourself.
 
-1. Open your project folder in VS Code (**File** > **Open Folder...**) and
-   pick one short function, or a few lines that compute one number.
+??? tip "Hint 1: the two sets of names"
+    `new = names[::10]` is every tenth name, from the first;
+    `[name for i, name in enumerate(names) if i % 10 != 0]` the others.
+    With k dots before each name and one after it, `"." * k + name + "."`,
+    the first letter has a context too, and the end is guessed like a
+    letter.
 
-2. Ask the chat model to explain it. Give it what it cannot know: what your
-   data are, the columns and their units, the mark for a missing value.
-   Paste your code, never your data's personal details, a password, or
-   someone else's unpublished results.
+??? tip "Hint 2: one guess"
+    At position `i` of a word, the context is `word[i - k:i]` and the
+    letter to guess `word[i]`. The guess is the top of the context's row,
+    `follow[context].most_common(1)[0][0]`. A context that is not in
+    `follow` has no row: count the guess as wrong, or use a shorter
+    context, and say which.
 
-3. Work out one answer by hand: a small input whose result you know, such
-   as the four hours of section 9 for a mean.
+??? tip "Hint 3: the error of a share"
+    A share p of n guesses right has the standard error √(p(1 − p) / n):
+    with p = 0.36 and n near 22 700, about 0.003.
 
-4. Ask it for a test in plain Python with that input, save it in your
-   `scripts` folder, and run it. Then change one detail of the function on
-   purpose: the test must fail. Put it back.
+??? note "One solution"
+    ```python title="context.py"
+    import urllib.request
+    from collections import Counter
+    import matplotlib.pyplot as plt
 
-5. Add the note of section 9, step 6, to your project's `README.md`: which
-   tool, the date, what for, how it was checked. If your project is a Git
-   repository, commit both files.
+    URL = "https://raw.githubusercontent.com/karpathy/makemore/master/names.txt"
+    with urllib.request.urlopen(URL) as response:
+        names = response.read().decode().split()
+    after_a = Counter(b for name in names[:5]
+                      for a, b in zip(name, name[1:] + ".") if a == "a")
+    print("after a in", names[:5], dict(after_a))
+    new = names[::10]                # every tenth name: kept out of the counts
+    seen = [name for i, name in enumerate(names) if i % 10 != 0]
+    print(len(seen), "names counted,", len(new), "new names")
+
+
+    def guesses(k, counted, tested):
+        """The share right of the top guesses after k letters, how many guesses,
+        and the share of the contexts never seen in the names counted."""
+        follow = {}
+        for name in counted:
+            word = "." * k + name + "."
+            for i in range(k, len(word)):
+                follow.setdefault(word[i - k:i], Counter())[word[i]] += 1
+        right = total = unseen = 0
+        for name in tested:
+            word = "." * k + name + "."
+            for i in range(k, len(word)):
+                row = follow.get(word[i - k:i])   # None: a context never seen
+                unseen += row is None
+                right += row is not None and row.most_common(1)[0][0] == word[i]
+                total += 1
+        return right / total, total, unseen / total
+
+
+    counted, shares, errors = [], [], []
+    print(" k  counted  new    error  never seen")
+    for k in range(8):
+        counted.append(guesses(k, seen, seen)[0])
+        p, n, unseen = guesses(k, seen, new)
+        shares.append(p)
+        errors.append((p * (1 - p) / n) ** 0.5)       # the standard error
+        print(f"{k:2}  {counted[-1]:.3f}    {p:.3f}  {errors[-1]:.3f}"
+              f"  {unseen:.3f}")
+    print("letters guessed in the new names: n =", n)
+
+    fig, ax = plt.subplots(figsize=(8, 4.5), layout="constrained")
+    ax.plot(range(8), counted, "o-", label="Names it counted")
+    ax.errorbar(range(8), shares, yerr=errors, fmt="o-", capsize=3,
+                label="New names")
+    ax.set_ylim(0, 0.6)
+    ax.set_xlabel("Letters of context, k")
+    ax.set_ylabel("Share of next letters guessed right")
+    ax.set_title("On new names the counting model is best with 4 letters")
+    ax.legend(frameon=False)
+    fig.savefig("context.svg")
+    ```
 
     ```text
-    $ git add scripts README.md
-    $ git commit -m "Test one function; note the use of a chat model"
+    $ python context.py
+    after a in ['emma', 'olivia', 'ava', 'isabella', 'sophia'] {'.': 5, 'v': 1, 'b': 1}
+    28829 names counted, 3204 new names
+     k  counted  new    error  never seen
+     0  0.148    0.149  0.002  0.000
+     1  0.228    0.227  0.003  0.000
+     2  0.304    0.299  0.003  0.000
+     3  0.374    0.349  0.003  0.006
+     4  0.447    0.362  0.003  0.041
+     5  0.489    0.327  0.003  0.105
+     6  0.499    0.283  0.003  0.155
+     7  0.501    0.261  0.003  0.177
+    letters guessed in the new names: n = 22717
     ```
 
-**Check:** a test that passes, fails on a changed function, and a README
-that says where a chat model was used.
+    ![The share of next letters guessed right against the letters of context, k = 0 to 7, with error bars smaller than the points: on the names counted it rises from 0.15 to 0.50 and levels off; on the new names it rises with it to 0.30 at k = 2, peaks at 0.36 at k = 4 and falls to 0.26 at k = 7](img/s11/context.svg)
+
+    By hand: after `a` come the end in all five names, `v` once (`ava`)
+    and `b` once (`isabella`): 5, 1 and 1 of 7, as the first line prints.
+
+    Handed in: *With 4 letters of context the counting model guesses
+    0.362 ± 0.003 of the next letters of names it never counted, more than
+    with 3 (0.349) or 5 (0.327). Beyond 4 it gets worse on new names while
+    it keeps improving on the names it counted: a long context mostly
+    repeats a counted name, and 10 to 18 % of the long contexts of new
+    names were never seen at all.*
+
+**With your own project data:** the same question on a sequence of your
+own field: the words of a text you wrote, a DNA sequence, the states in a
+device's log. Count on nine tenths, guess on the rest, and find the k where
+the guesses are best.
 
 ---
 
-## Optional, if the room goes fast { #optional }
+## Part 4 · Show and discuss { #part-4 }
+
+### 9. Three questions about the pairs' curves { #discuss }
+
+<!-- 1:45 · 15 min -->
+
+Two or three pairs show their figure and read their two sentences.
+
+**Ask the room:** two pairs agree up to k = 3 and differ from k = 5 on: one counted a context never seen as a wrong guess, the other used a shorter context instead. Which curve is right?
+
+??? note "Answer"
+    Both, each for its rule, which belongs next to the figure. From k = 5
+    on, 10 to 18 % of the contexts of the new names were never seen: with
+    a shorter context in their place the curve stops falling and stays
+    near its top; counted as wrong, it falls. Either way the longest
+    context is not the best one.
+
+**Ask the room:** why does the curve of the names counted level off near 0.50, not at 1?
+
+??? note "Answer"
+    The first letter of every name has the same context, the dots, so the
+    model guesses `a` for every name, and the next one or two letters
+    still fit thousands of names. Only once the context points to one
+    counted name can the model copy it.
+
+**Ask the room:** a chat LLM reads a prompt of thousands of tokens and uses all of it. Why does a long context help it, when it ruined the table?
+
+??? note "Answer"
+    A table has a row only for a context it has seen letter for letter. A
+    network computes the probabilities from learned vectors of the tokens,
+    so a context it never saw gets probabilities from similar ones. It
+    still writes what is likely after the prompt: a fact it needs has to
+    be in the prompt or in its training text.
+
+A language model turns the context into a probability for each next token; a longer context helps only as far as the model can carry what it learned from similar contexts, which a table of counts cannot and a large network can.
 
 ---
 
-### 12. The ten years as text { #ten-years }
+## Optional, if the room is fast { #optional }
 
-<!-- — · 10 min -->
-
-`months_by_year.txt` holds a sentence for each of the 120 months: the weather of single months, not of the ten-year means.
-
-1. In the first lines of `next_word.py`, read the other file.
-
-    ```python
-    text = open("data/processed/months_by_year.txt").read()
-    ```
-
-2. Run it. The two lists now hold 120 words each, left out here.
-
-    ```text
-    $ python scripts/next_word.py
-    720 ['in', 'january', 'it', 'was', 'cold', '.']
-    ...
-    cold 29 0.242
-    cool 40 0.333
-    mild 22 0.183
-    warm 29 0.242
-    in september it was cool .
-    in december it was mild .
-    in july it was cold .
-    in november it was cool .
-    in november it was cool .
-    ```
-
-    Lines of a Task left in `next_word.py` print theirs too. Ten Januaries:
-    nine cold, one cool (2018, 0.2 °C). July was warm in every year, and the
-    model still writes `in july it was cold .`
-
-**Check:** `cold 29 0.242`. Put `months.txt` back in the first lines.
-
----
-
-### 13. Months as vectors { #vectors }
+### 10. With five times as much text, does a longer context pay? { #plays }
 
 <!-- — · 15 min -->
 
-A month described by four numbers: how often each weather word came with it in the 120 sentences. Months used alike get similar lists, from the text alone.
+The plays of section 6 hold 1.1 million characters, five times the letters
+of `names.txt`. Count on the first nine tenths, guess every character of
+the last tenth.
 
-1. New file `scripts/vectors.py`. Type, save, run.
+Predict, solve, check the machine's work, hand in, as in section 8: the best k with its share ± error, against the best k of the names.
 
-    ```python
-    import math
+??? note "One solution"
+    ```python title="plays.py"
+    import urllib.request
+    from collections import Counter
 
-    counts = {}
-    for line in open("data/processed/months_by_year.txt").read().splitlines():
-        parts = line.split()
-        month = parts[1]
-        word = parts[4]
-        if month not in counts:
-            counts[month] = {"cold": 0, "cool": 0, "mild": 0, "warm": 0}
-        counts[month][word] = counts[month][word] + 1
-    print(counts["january"])
-    print(counts["july"])
+    URL = ("https://raw.githubusercontent.com/karpathy/char-rnn/master/data/"
+           "tinyshakespeare/input.txt")
+    with urllib.request.urlopen(URL) as response:
+        text = response.read().decode()
+    cut = len(text) * 9 // 10
+    seen, new = text[:cut], text[cut:]     # the last tenth is never counted
+    print(len(seen), "characters counted,", len(new), "new")
+
+    print(" k  rows     new    error  never seen")
+    for k in range(11):
+        follow = {}
+        for i in range(k, len(seen)):
+            follow.setdefault(seen[i - k:i], Counter())[seen[i]] += 1
+        best = {context: row.most_common(1)[0][0]
+                for context, row in follow.items()}
+        right = unseen = 0
+        for i in range(k, len(new)):
+            guess = best.get(new[i - k:i])     # None: a context never seen
+            unseen += guess is None
+            right += guess == new[i]
+        n = len(new) - k
+        p = right / n
+        error = (p * (1 - p) / n) ** 0.5
+        print(f"{k:2}  {len(follow):6}  {p:.3f}  {error:.3f}  {unseen / n:.3f}")
     ```
 
     ```text
-    $ python scripts/vectors.py
-    {'cold': 9, 'cool': 1, 'mild': 0, 'warm': 0}
-    {'cold': 0, 'cool': 0, 'mild': 0, 'warm': 10}
+    $ python plays.py
+    1003854 characters counted, 111540 new
+     k  rows     new    error  never seen
+     0       1  0.149  0.001  0.000
+     1      65  0.270  0.001  0.000
+     2    1380  0.381  0.001  0.002
+     3   11228  0.468  0.001  0.014
+     4   48539  0.512  0.001  0.042
+     5  133293  0.495  0.001  0.101
+     6  264623  0.444  0.001  0.208
+     7  413620  0.365  0.001  0.348
+     8  559503  0.282  0.001  0.497
+     9  684640  0.205  0.001  0.636
+    10  780165  0.141  0.001  0.749
     ```
 
-2. The **dot product** multiplies the numbers in the same places and adds
-   them up; divided by the lengths of the two lists it gives the
-   **cosine**: 1 for the same direction, 0 for nothing in common. Add these
-   lines, save, run.
-
-    ```python
-    def vector(month):
-        return list(counts[month].values())
-
-
-    def dot(a, b):
-        total = 0
-        for i in range(len(a)):
-            total = total + a[i] * b[i]
-        return total
-
-
-    def cosine(a, b):
-        return dot(a, b) / math.sqrt(dot(a, a) * dot(b, b))
-
-
-    january = vector("january")
-    for month in ["february", "march", "july", "december"]:
-        print(month, vector(month), round(cosine(january, vector(month)), 3))
-    ```
-
-    ```text
-    $ python scripts/vectors.py
-    ...
-    february [10, 0, 0, 0] 0.994
-    march [1, 9, 0, 0] 0.22
-    july [0, 0, 0, 10] 0.0
-    december [9, 1, 0, 0] 1.0
-    ```
-
-**Check:** January and December, 1.0; January and July, 0.0.
-
----
-
-### 14. The probabilities as a bar chart { #chart }
-
-<!-- — · 10 min -->
-
-The table of section 5 as a figure, with Matplotlib, which the environment `analysis` holds.
-
-1. Under `import random` in `next_word.py`, add
-   `import matplotlib.pyplot as plt`. At the end of the file, add these
-   lines, save, run.
-
-    ```python
-    names = ["cold", "cool", "mild", "warm"]
-    probs = []
-    for word in names:
-        probs.append(after.count(word) / len(after))
-    fig, ax = plt.subplots()
-    ax.bar(names, probs)
-    ax.set_ylabel("Probability after “was”")
-    ax.set_title("Cool comes after “was” 4 times in 12")
-    fig.savefig("results/next_word.png", dpi=150)
-    ```
-
-2. Open `results/next_word.png`: four bars, the tallest `cool` at 0.333.
-
-**Check:** the bars at 0.25, 0.333, 0.167 and 0.25.
+    The best k is 4 again, 0.512 ± 0.001. Five times the text does not
+    buy one more character: each character of context multiplies the
+    rows by two to three (48 539, 133 293, 264 623), and the share of
+    contexts never seen doubles or more with each step (0.042, 0.101,
+    0.208).
 
 ---
 
 ## Aims practised
 
-- ♻️ **Reproducibility:** `random.seed` makes every laptop draw the same
-  sentences; a chat cannot be run again, so its code goes into a file with
-  a test.
-- 📁 **Files:** today's text is written by a script from the raw log; the
-  README says where a chat model was used.
-- 🔧 **Tool-agnosticism:** a language model built from a dictionary and a
-  loop, the same counting as `group`; any chat model, checked the same way.
+- ♻️ **Reproducibility:** the texts come from their public addresses and
+  `random.seed` makes every laptop draw the same names; a chat's reply
+  cannot be drawn again, so the hand-in says which LLM wrote what.
+- 🔧 **Tool-agnosticism:** a language model built from a `Counter` and one
+  draw; any chat LLM is checked the same way, against counts computed from
+  the file.
+- 📁 **Files:** a statement about a file is computed from the file: the
+  counts after `q`, the share guessed right, the contexts never seen.

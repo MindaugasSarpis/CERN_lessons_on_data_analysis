@@ -23,13 +23,15 @@ Each question is answered by the end of the session.
   Loa CO₂ table, and others, each with its source and licence). Missing a
   week costs nothing; nothing has to be carried over from an earlier
   session.
-- **Seminar 5** is the first Python of the room: the interpreter, a Jupyter
-  notebook, IDLE and VS Code, functions, a class and a module, and the first
-  conda environment. It starts from an empty folder; the six hours are typed
-  as a list, then as a short `weather.csv`.
-- **Seminar 6** is Git: the room clones
+- **Seminar 5** is the first Python of the room and its first conda
+  environment: the interpreter, a script in VS Code, a list and a loop over
+  six typed hours; then scripts on Open-Meteo's forecast and NOAA's station
+  files.
+- **Seminar 6** is Git: the lecturer reads the history of a public data
+  repository, `datasets/global-temp`; the room clones
   [MindaugasSarpis/weather-project](https://github.com/MindaugasSarpis/weather-project)
-  (about 0.5 MB) and publishes it to their own GitHub. Seminar 12 uses Git
+  (about 0.5 MB), finds who changed its mean, takes the change back and
+  publishes it to their own GitHub. Seminar 12's optional section uses Git
   again; the other seminars do not need it.
 - **Weeks 8 to 12 share one conda environment, `analysis`.** Seminar 8
   creates it with one `conda create` line and adds pandas and Matplotlib;
@@ -71,9 +73,8 @@ weather-sNN/
 |  |- raw/              # files exactly as received, never edited
 |  |- processed/        # made from data/raw by commands and scripts
 |- scripts/             # one script per step
-|  |- rebuild.sh        # one command rebuilds everything (Seminar 4; tests from Seminar 12)
-|  |- test_weather.py   # checks of the results (Seminar 12)
-|- notebooks/           # Jupyter notebooks (Seminar 5)
+|  |- rebuild.sh        # one command rebuilds everything
+|  |- test_*.py         # checks of the results (pytest, Seminar 12)
 |- results/             # numbers and figures the scripts produce
 ```
 
