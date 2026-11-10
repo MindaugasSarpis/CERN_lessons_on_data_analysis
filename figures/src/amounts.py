@@ -7,8 +7,15 @@ import textwrap
 
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.colors import to_rgba
 
 import style
+
+
+def _paper(color, alpha=0.45):
+    """A bar as a paper draws it: its colour as a light fill, edged thinly
+    in the full colour (a flat saturated block reads as a cartoon)."""
+    return dict(facecolor=to_rgba(color, alpha), edgecolor=color, linewidth=0.9)
 
 # ---------------------------------------------------------------------------
 # Box office: 5 (fictional) films, opening-weekend gross ($M). Long titles are
@@ -26,30 +33,28 @@ GROSS = [82.4, 61.7, 47.9, 33.2, 21.5]  # already sorted desc
 def _boxoffice_horizontal():
     fig, ax = style.new_fig(7, 4.2)
     y = np.arange(len(FILMS))
-    ax.barh(y, GROSS, color=style.ACCENT, height=0.6, zorder=3)
+    ax.barh(y, GROSS, height=0.6, **_paper(style.ACCENT))
     ax.set_yticks(y)
     ax.set_yticklabels(FILMS)
     ax.invert_yaxis()
     ax.set_xlim(0, max(GROSS) * 1.18)
     ax.set_xlabel("Opening weekend gross ($M)")
     ax.set_title("Opening-Weekend Box Office")
-    ax.grid(axis="y", visible=False)
     for yi, v in zip(y, GROSS):
-        ax.text(v + 1.5, yi, f"${v:.0f}M", va="center", color=style.DIM, fontsize=9)
+        ax.text(v + 1.5, yi, f"${v:.0f}M", va="center", color=style.DIM, fontsize=10)
     style.save(fig, "viz_amounts_boxoffice_horizontal")
 
 
 def _boxoffice_rotated_bad():
     fig, ax = style.new_fig(7, 5.0)
     x = np.arange(len(FILMS))
-    ax.bar(x, GROSS, color=style.ACCENT, width=0.6, zorder=3)
+    ax.bar(x, GROSS, width=0.6, **_paper(style.ACCENT))
     ax.set_xticks(x)
     ax.set_xticklabels(FILMS, rotation=45, ha="right")
     for lbl in ax.get_xticklabels():
         lbl.set_color(style.BAD)  # accent the flaw: labels, not the data
     ax.set_ylabel("Opening weekend gross ($M)")
     ax.set_title("Opening-Weekend Box Office")
-    ax.grid(axis="x", visible=False)
     style.save(fig, "viz_amounts_boxoffice_rotated_bad")
 
 
@@ -58,30 +63,28 @@ def _boxoffice_wide():
     room under its bar, level, wrapped onto two lines."""
     fig, ax = style.new_fig(9.4, 3.3)
     x = np.arange(len(FILMS))
-    ax.bar(x, GROSS, color=style.ACCENT, width=0.5, zorder=3)
+    ax.bar(x, GROSS, width=0.5, **_paper(style.ACCENT))
     ax.set_xticks(x)
     ax.set_xticklabels([textwrap.fill(f, 14) for f in FILMS], fontsize=11)
     ax.set_ylim(0, max(GROSS) * 1.15)
     ax.set_ylabel("Opening weekend gross ($M)")
     ax.set_title("Opening-Weekend Box Office")
-    ax.grid(axis="x", visible=False)
     for xi, v in zip(x, GROSS):
-        ax.text(xi, v + 1.5, f"${v:.0f}M", ha="center", va="bottom", color=style.DIM, fontsize=9)
+        ax.text(xi, v + 1.5, f"${v:.0f}M", ha="center", va="bottom", color=style.DIM, fontsize=10)
     style.save(fig, "viz_amounts_boxoffice_wide")
 
 
 def _cleveland_dot_plot():
     fig, ax = style.new_fig(7, 4.2)
     y = np.arange(len(FILMS))
-    ax.hlines(y, 0, GROSS, color=style.GRID, linewidth=1.4, zorder=1)
-    ax.plot(GROSS, y, "o", ms=9, color=style.ACCENT, zorder=3)
+    ax.hlines(y, 0, GROSS, color=style.GRID, linewidth=0.8, zorder=1)
+    ax.plot(GROSS, y, "o", ms=5, color=style.ACCENT, zorder=3)
     ax.set_yticks(y)
     ax.set_yticklabels(FILMS)
     ax.invert_yaxis()
     ax.set_xlim(0, max(GROSS) * 1.18)
     ax.set_xlabel("Opening weekend gross ($M)")
     ax.set_title("Same Data, Cleveland Dot Plot")
-    ax.grid(axis="y", visible=False)
     style.save(fig, "viz_amounts_cleveland_dot_plot")
 
 
@@ -111,14 +114,13 @@ def _lifeexp_alpha_order_bad():
     values = values[order]
     fig, ax = style.new_fig(7, 6.6)
     y = np.arange(len(countries))
-    ax.barh(y, values, color=style.BAD, height=0.65, zorder=3)
+    ax.barh(y, values, height=0.65, **_paper(style.BAD))
     ax.set_yticks(y)
     ax.set_yticklabels(countries, fontsize=9)
     ax.invert_yaxis()
     ax.set_xlim(0, 86)
     ax.set_xlabel("Life expectancy (years)")
     ax.set_title(LIFE_TITLE)
-    ax.grid(axis="y", visible=False)
     style.save(fig, "viz_amounts_lifeexp_alpha_order_bad")
 
 
@@ -129,14 +131,13 @@ def _lifeexp_bars_bad():
     values = values[order]
     fig, ax = style.new_fig(7, 6.6)
     y = np.arange(len(countries))
-    ax.barh(y, values, color=style.BAD, height=0.65, zorder=3)
+    ax.barh(y, values, height=0.65, **_paper(style.BAD))
     ax.set_yticks(y)
     ax.set_yticklabels(countries, fontsize=9)
     ax.invert_yaxis()
     ax.set_xlim(0, 86)
     ax.set_xlabel("Life expectancy (years)")
     ax.set_title(LIFE_TITLE)
-    ax.grid(axis="y", visible=False)
     style.save(fig, "viz_amounts_lifeexp_bars_bad")
 
 
@@ -147,14 +148,13 @@ def _lifeexp_dot_plot():
     values = values[order]
     fig, ax = style.new_fig(7, 6.6)
     y = np.arange(len(countries))
-    ax.plot(values, y, "o", ms=6, color=style.ACCENT, zorder=3)
+    ax.plot(values, y, "o", ms=5, color=style.ACCENT, zorder=3)
     ax.set_yticks(y)
     ax.set_yticklabels(countries, fontsize=9)
     ax.invert_yaxis()
     ax.set_xlim(58, 86)  # honest truncation is fine for dots, not bars
     ax.set_xlabel("Life expectancy (years)")
     ax.set_title(LIFE_TITLE)
-    ax.grid(axis="y", visible=False)
     style.save(fig, "viz_amounts_lifeexp_dot_plot")
 
 
@@ -202,6 +202,7 @@ def _health_heatmap():
     ax.set_title("Life Expectancy by Country and Decade")
     ax.grid(False)
     cb = fig.colorbar(mesh, ax=ax, shrink=0.85, pad=0.02)
+    cb.solids.set_rasterized(False)
     cb.set_label("Life expectancy (years)", color=style.DIM)
     cb.outline.set_edgecolor(style.DIM)
     cb.ax.tick_params(colors=style.DIM)
@@ -231,17 +232,16 @@ def _income_bars(order, name, bad):
     values = [INCOME[i] for i in order]
     fig, ax = style.new_fig(5.1, 3.4)
     x = np.arange(len(groups))
-    ax.bar(x, values, color=style.ACCENT, width=0.65, zorder=3)
+    ax.bar(x, values, width=0.65, **_paper(style.ACCENT))
     ax.set_xticks(x, groups)
     if bad:
         for lbl in ax.get_xticklabels():
             lbl.set_color(style.BAD)   # the flaw is the order of the labels
     for xi, v in zip(x, values):
-        ax.text(xi, v + 1.5, f"{v}", ha="center", va="bottom", color=style.DIM, fontsize=9)
+        ax.text(xi, v + 1.5, f"{v}", ha="center", va="bottom", color=style.DIM, fontsize=10)
     ax.set_ylim(0, 88)
     ax.set_xlabel("age of the householder (years)")
     ax.set_ylabel("median income (thousand $)")
-    ax.grid(axis="x", visible=False)
     style.save(fig, name)
 
 
@@ -260,14 +260,13 @@ def _students_stacked_bars():
     bottom = np.zeros(len(YEARS))
     for programme, color in zip(ENROLMENT, style.CYCLE):
         vals = np.array(ENROLMENT[programme])
-        ax.bar(x, vals, bottom=bottom, label=programme, color=color,
-               width=0.55, edgecolor="#050507", linewidth=1.2, zorder=3)
+        ax.bar(x, vals, bottom=bottom, label=programme, width=0.55,
+               **_paper(color, 0.5))
         bottom += vals
     ax.set_xticks(x)
     ax.set_xticklabels(YEARS)
     ax.set_ylabel("Students enrolled")
     ax.set_title("Enrolment by Year and Programme")
-    ax.grid(axis="x", visible=False)
     h, l = ax.get_legend_handles_labels()   # legend in the order of the stack
     ax.legend(h[::-1], l[::-1], loc="upper left", bbox_to_anchor=(1.01, 1.0))
     style.save(fig, "viz_amounts_students_stacked_bars")
@@ -282,26 +281,24 @@ PASS_RATES = [58.2, 54.7, 51.9, 50.3, 49.1]
 def _truncated_bar_bad():
     fig, ax = style.new_fig(6.4, 4.2)
     x = np.arange(len(SCHOOLS))
-    ax.bar(x, PASS_RATES, color=style.BAD, width=0.6, zorder=3)
+    ax.bar(x, PASS_RATES, width=0.6, **_paper(style.BAD))
     ax.set_xticks(x)
     ax.set_xticklabels(SCHOOLS)
     ax.set_ylim(48, 60)
     ax.set_ylabel("Exam pass rate (%)")
     ax.set_title("Pass Rate by School")
-    ax.grid(axis="x", visible=False)
     style.save(fig, "viz_proportional_ink_truncated_bar_bad")
 
 
 def _truncated_bar_fixed():
     fig, ax = style.new_fig(6.4, 4.2)
     x = np.arange(len(SCHOOLS))
-    ax.bar(x, PASS_RATES, color=style.ACCENT, width=0.6, zorder=3)
+    ax.bar(x, PASS_RATES, width=0.6, **_paper(style.ACCENT))
     ax.set_xticks(x)
     ax.set_xticklabels(SCHOOLS)
     ax.set_ylim(0, 65)
     ax.set_ylabel("Exam pass rate (%)")
     ax.set_title("Pass Rate by School")
-    ax.grid(axis="x", visible=False)
     style.save(fig, "viz_proportional_ink_truncated_bar_fixed")
 
 
@@ -318,22 +315,22 @@ def _log_scale():
     x = np.arange(len(PAPERS))
     for ax, scale, label in ((ax1, "linear", "Linear scale — small counts vanish"),
                              (ax2, "log", "Log scale — every magnitude visible")):
-        ax.plot(x, CITATIONS, "o", ms=10, color=style.ACCENT, zorder=3)
+        ax.plot(x, CITATIONS, "o", ms=5, color=style.ACCENT, zorder=3)
         ax.set_yscale(scale)
         ax.set_xticks(x)
         ax.set_xticklabels(PAPERS)
         ax.set_xlim(-0.6, len(PAPERS) - 0.4)
         ax.set_title(label, fontsize=12)
-        ax.grid(axis="x", visible=False)
         for xi, c in zip(x, CITATIONS):
-            ax.annotate(f"{c:,}", xy=(xi, c), xytext=(0, 9), textcoords="offset points",
-                        ha="center", color=style.FG, fontsize=9)
+            ax.annotate(style.thousands(c), xy=(xi, c), xytext=(0, 6),
+                        textcoords="offset points", ha="center", color=style.FG, fontsize=10)
     ax1.set_ylim(0, 52000)
+    ax1.yaxis.set_major_formatter(style.ThousandsFormatter())  # 50 000, as the slide
     ax1.set_ylabel("Citations")
-    ax2.set_ylim(2, 120000)
+    ax2.set_ylim(2, 300000)   # room for the 46 000 above its dot, under the frame
     ax2.set_ylabel("Citations (log scale)")
 
-    fig.suptitle("Same Data, Linear and Logarithmic", color=style.FG, fontweight="bold")
+    fig.suptitle("Same Data, Linear and Logarithmic", color=style.FG)
     style.save(fig, "viz_proportional_ink_log_scale")
 
 

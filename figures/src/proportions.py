@@ -16,12 +16,25 @@ All data is synthetic/illustrative except the 1976 Bundestag seat counts,
 which are the real historical result.
 """
 import numpy as np
+from matplotlib.colors import to_rgba
 from matplotlib.patches import Patch, Rectangle
 
 import style
 
 BG = "#050507"     # course dark canvas — used as the stroke between fills
 INK = "#12161c"    # near-black — legible text set ON TOP of light CYCLE fills
+FILL = 0.5         # a wedge or segment: its colour at half strength, as a paper
+
+
+def _paper(color, alpha=FILL):
+    """A wedge, segment or bar as a paper draws it: its colour as a light
+    fill, edged thinly in the full colour."""
+    return dict(facecolor=to_rgba(color, alpha), edgecolor=color, linewidth=1.0)
+
+
+def _paper_wedges(wedges, colors):
+    for w, c in zip(wedges, colors):
+        w.set(**_paper(c))
 
 # ---------------------------------------------------------------------------
 # "Three ways, one story": one synthetic survey, shared across three charts.
@@ -48,10 +61,8 @@ def _pie_bad():
     colors = [TRIO_COLORS[l] for l in TRIO_LABELS]
     fig, ax = style.new_fig(6.2, 4.4)
     ax.axis("off")
-    wedges, _ = ax.pie(
-        vals, colors=colors, startangle=90, counterclock=False,
-        wedgeprops=dict(edgecolor=BG, linewidth=1.5),
-    )
+    wedges, _ = ax.pie(vals, colors=colors, startangle=90, counterclock=False)
+    _paper_wedges(wedges, colors)
     ax.legend(wedges, TRIO_LABELS, loc="center left", bbox_to_anchor=(1.0, 0.5))
     style.save(fig, "viz_proportions_pie_bad")
 
@@ -66,12 +77,11 @@ def _side_by_side_bars():
     # per-category hue would only be redundant ink.
     # horizontal, so that every name is written in full and level
     fig, ax = style.new_fig(7.2, 4.4)
-    bars = ax.barh(labels, sorted_vals, color=style.ACCENT, height=0.62)
+    bars = ax.barh(labels, sorted_vals, height=0.62, **_paper(style.ACCENT, 0.45))
     ax.invert_yaxis()
     ax.bar_label(bars, fmt="%d%%", padding=3, color=style.FG, fontsize=10)
     ax.set_xlabel("Share of respondents (%)")
     ax.set_xlim(0, max(sorted_vals) * 1.3)
-    ax.grid(axis="y", visible=False)  # keep only the vertical (x) gridlines
     style.save(fig, "viz_proportions_proportions_side_by_side_bars")
 
 
@@ -81,18 +91,16 @@ def _stacked_bar():
     fig, ax = style.new_fig(7.6, 2.7)
     left = 0.0
     for label, v in zip(TRIO_LABELS, vals):
-        ax.barh(0, v, left=left, height=0.6, color=TRIO_COLORS[label],
-                edgecolor=BG, linewidth=1.5)
+        ax.barh(0, v, left=left, height=0.6, **_paper(TRIO_COLORS[label]))
         if v >= 8:  # only label segments wide enough to hold text
             ax.text(left + v / 2, 0, f"{v}%", ha="center", va="center",
-                    color=INK, fontsize=10, fontweight="bold")
+                    color=style.FG, fontsize=10)
         left += v
     ax.set_xlim(0, 100)
     ax.set_ylim(-0.6, 0.6)
     ax.set_yticks([])
     ax.set_xlabel("Share of respondents (%)")
-    ax.grid(False)  # the single bar covers the whole axes — gridlines add nothing
-    handles = [Patch(facecolor=TRIO_COLORS[l], label=l) for l in TRIO_LABELS]
+    handles = [Patch(**_paper(TRIO_COLORS[l]), label=l) for l in TRIO_LABELS]
     ax.legend(handles=handles, loc="upper center", bbox_to_anchor=(0.5, -0.28),
               ncol=2)
     style.save(fig, "viz_proportions_proportions_stacked_bar")
@@ -112,11 +120,10 @@ def _bundestag_pie_good():
     wedges, _, autotexts = ax.pie(
         seats, colors=colors, startangle=90, counterclock=False,
         autopct="%1.0f%%", pctdistance=0.72,
-        wedgeprops=dict(edgecolor=BG, linewidth=1.5),
     )
+    _paper_wedges(wedges, colors)
     for t in autotexts:
-        t.set_color(INK)
-        t.set_fontweight("bold")
+        t.set_color(style.FG)
     ax.legend(wedges, [f"{l} ({s} seats)" for l, s in zip(labels, seats)],
               loc="center left", bbox_to_anchor=(0.98, 0.5))
     ax.set_title("1976 Bundestag — One Legislature, One Whole")
@@ -134,15 +141,12 @@ def _marketshare_pies_bad():
     fig, axes = style.plt.subplots(1, 3, figsize=(9.6, 3.9))
     for ax, (year, vals) in zip(axes, years.items()):
         ax.axis("off")
-        wedges = ax.pie(
-            vals, colors=colors, startangle=90, counterclock=False,
-            wedgeprops=dict(edgecolor=BG, linewidth=1.3),
-        )[0]
+        wedges = ax.pie(vals, colors=colors, startangle=90, counterclock=False)[0]
+        _paper_wedges(wedges, colors)
         ax.set_title(str(year), fontsize=13)
     fig.legend(wedges, companies, loc="lower center", ncol=4,
                bbox_to_anchor=(0.5, -0.04))
-    fig.suptitle("Market Share, 2021–2023 — Spot the Trend?", fontsize=13,
-                 fontweight="bold")
+    fig.suptitle("Market Share, 2021–2023 — Spot the Trend?", fontsize=13)
     style.save(fig, "viz_proportions_marketshare_pies_bad")
 
 

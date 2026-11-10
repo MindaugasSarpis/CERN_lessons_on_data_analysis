@@ -234,14 +234,15 @@ class: fill
   <img v-click src="/figures/viz_anatomy_stage4.svg" alt="">
   <img v-click src="/figures/viz_anatomy_stage5.svg" alt="">
   <img v-click src="/figures/viz_anatomy_stage6.svg" alt="">
+  <img v-click src="/figures/viz_anatomy_stage7.svg" alt="">
 </div>
 
-<div class="note-text mt-sm">One part per click: frame · axes with units · data · reference line · annotation · a title that states the finding</div>
+<div class="note-text mt-sm">frame → data → error bars → fit → reference line, annotation, legend, title → residuals → names</div>
 
 <!--
-**Do:** click through: frame, axes with units, the data, the mean as a reference line, the annotation, the title that states the finding.
-**Say:** an element that carries no information is left out.
-(~2 min)
+**Do:** click six times, naming what each click adds: the twelve monthly means, their error bars s/√10, the fitted cosine and its result, the mean of all hours with the annotation, legend and title, the pulls, the names of the parts.
+**Say:** each part answers a reader's question: what is measured, in which units, how sure, which model, and does it fit: every pull within ±2, χ²/ndf = 8.8/9.
+(~3 min)
 -->
 
 <style>
@@ -1341,7 +1342,7 @@ hideInToc: true
 | --- | --- |
 | 3D effects and shadows | the data |
 | background fills and gradients | axes with a label and a unit |
-| a box around the plot, a dense grid | a light grid, if values are read from it |
+| a heavy frame, a dense grid | a thin frame with ticks inside, as in a paper; a light grid, if values are read from it |
 | a legend for a single series | the labels the reader needs |
 
 </div>

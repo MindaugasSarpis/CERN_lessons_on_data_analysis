@@ -46,6 +46,13 @@ MPL_DEFAULT = {
 TEMP_LABEL = "temperature (°C)"
 
 
+def _paper_hist(ax, values, **kw):
+    """A histogram as a paper draws it: a light fill under a thin outline.
+    Only for the figures no slide shows the code of."""
+    ax.hist(values, histtype="stepfilled", color=style.ACCENT, alpha=0.3, lw=0, **kw)
+    ax.hist(values, histtype="step", color=style.ACCENT, lw=1.2, **kw)
+
+
 # ---------------------------------------------------------------------------
 # weather.py, as the lecture writes it
 # ---------------------------------------------------------------------------
@@ -132,9 +139,9 @@ def _figure_axes():
     ax.set_xticks(["01", "04", "07", "10"])
 
     mono = {"family": "DejaVu Sans Mono", "fontsize": 10.5}
-    fig.text(0.035, 0.925, "Figure", color=style.CYCLE[1], fontsize=13, fontweight="bold")
+    fig.text(0.035, 0.925, "Figure", color=style.CYCLE[1], fontsize=13)
     fig.text(0.175, 0.925, "fig", color=style.CYCLE[1], **mono)
-    fig.text(0.035, 0.855, "Axes", color=style.CYCLE[2], fontsize=13, fontweight="bold")
+    fig.text(0.035, 0.855, "Axes", color=style.CYCLE[2], fontsize=13)
     fig.text(0.145, 0.855, "ax", color=style.CYCLE[2], **mono)
 
     arrow = dict(arrowstyle="-", color=style.DIM, lw=1.0, shrinkA=2, shrinkB=3)
@@ -188,7 +195,7 @@ def _temp_binwidths():
               (41, (-0.025, 2.025), "0.05 °C per bin, 0 to 2 °C", style.BAD)]
     fig, axes = plt.subplots(1, 3, figsize=(10.4, 3.3))
     for ax, (bins, span, title, color) in zip(axes, panels):
-        ax.hist(values, bins=bins, range=span, color=style.ACCENT)
+        _paper_hist(ax, values, bins=bins, range=span)
         ax.set_title(title, fontsize=12, fontweight="normal", color=color)
         ax.set_xlabel(TEMP_LABEL)
         ax.xaxis.grid(False)
@@ -220,10 +227,10 @@ def _hours_view():
     ax.set_ylabel(TEMP_LABEL)
     ax.xaxis.grid(False)
     arrow = {"arrowstyle": "->", "color": style.CYCLE[1]}
-    ax.annotate(f"{values[cold]} °C, 7 Jan 2025", xy=(times[cold], values[cold]),
+    ax.annotate(f"{style.thousands(values[cold], 1)} °C, 7 Jan 2025", xy=(times[cold], values[cold]),
                 xytext=(-150, -2), textcoords="offset points", va="center",
                 color=style.CYCLE[1], arrowprops=arrow)
-    ax.annotate(f"{values[warm]} °C, 18 Jun 2018", xy=(times[warm], values[warm]),
+    ax.annotate(f"{style.thousands(values[warm], 1)} °C, 18 Jun 2018", xy=(times[warm], values[warm]),
                 xytext=(40, -4), textcoords="offset points", va="center",
                 color=style.CYCLE[1], arrowprops=arrow)
     ax.set_ylim(-22, 38)
@@ -251,8 +258,8 @@ def _temp_view():
 
     cold, warm = share(-1, (11, 12, 1, 2, 3)), share(11, range(4, 11))
     fig, ax = plt.subplots(figsize=(9, 3.8))
-    ax.hist(values, bins=50, range=(-17, 33), color=style.ACCENT)
-    ax.axvline(m, color=style.CYCLE[1], linewidth=1.6)
+    _paper_hist(ax, values, bins=50, range=(-17, 33))
+    ax.axvline(m, color=style.CYCLE[1], linewidth=1.5)
     top = 1.45 * count(-1)
     peak = dict(ha="center", va="bottom", color=style.FG, fontsize=11,
                 linespacing=1.3)
@@ -311,14 +318,17 @@ def _month_annotated():
     """The monthly means with the warmest month marked and a finding."""
     names, means = _means(group(PATH, 5, 7))
 
-    fig, ax = plt.subplots(figsize=(5.6, 3.6))
-    ax.plot(names, means, "o-", color="#56B4E9")
-    arrow = {"arrowstyle": "->", "color": "#D55E00"}
-    ax.annotate("July, 18.5 °C", xy=("07", means[6]), xytext=("09", 19.5),
-                color="#D55E00", arrowprops=arrow)
-    ax.set(xlabel="month", ylabel="mean temperature (°C)", ylim=(-6, 22))
-    ax.set_title("July is 22.4 °C warmer than January")
-    style.save(fig, "viz_handson_month_annotated")
+    # Drawn in its narrow box beside the code, the 11 pt annotation ran
+    # into the right edge of the frame: the default text size here is 10 pt.
+    with mpl.rc_context({"font.size": 10}):
+        fig, ax = plt.subplots(figsize=(5.6, 3.6))
+        ax.plot(names, means, "o-", color="#56B4E9")
+        arrow = {"arrowstyle": "->", "color": "#D55E00"}
+        ax.annotate("July, 18.5 °C", xy=("07", means[6]), xytext=("09", 19.5),
+                    color="#D55E00", arrowprops=arrow)
+        ax.set(xlabel="month", ylabel="mean temperature (°C)", ylim=(-6, 22))
+        ax.set_title("July is 22.4 °C warmer than January")
+        style.save(fig, "viz_handson_month_annotated")
 
 
 # ---------------------------------------------------------------------------

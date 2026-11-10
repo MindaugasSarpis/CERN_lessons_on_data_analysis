@@ -1,20 +1,33 @@
 """Course figure style — the ONLY styling entry point for figure code.
 
-Dark-transparent SVG figures for the dark slide theme, in one palette and one
-type with the slides:
+v3 (10 Nov 2026), after the lecturer on Lecture 7: "This one looks
+cartoonish, need a scientific one". Dark-transparent SVG figures for the dark
+slide theme, drawn as a physics paper or a good scientific talk draws them:
 
+- Type: STIX General, the Times-like face of the journals, bundled with
+  Matplotlib (regular, italic, bold, bold italic), and maths in STIX too
+  (mathtext "stix"), so a label and its formula are one type. STIX has no
+  thin space and no subscript digits: use() registers a copy that adds them
+  (U+2009, U+202F, U+2080-2089, made from its own space and digits), so
+  87 552 and d₀ come out in STIX. There is no fallback face: a glyph STIX
+  lacks makes Matplotlib warn "Glyph ... missing", a bug to fix in the
+  module. Space Mono stays for code-like labels (family=MONO), the slides'
+  code face.
 - Colours: the background, text, dim and accent are read from the slides'
   tokens (lectures/content/theme/styles/tokens.css), never copied.
-- Type: Space Grotesk at the slides' weights (400 text, 500 medium, 700
-  bold) and in math, Space Mono for code-like labels.
-  figures/fonts/SpaceGrotesk-Regular.ttf is the VARIABLE font, whose default
-  instance is Light (300): registered as it is, every label came out Light.
-  use() pins it at 400, 500 and 700, each under its own name.
+- The frame of a paper: all four spines, 0.8 pt, in the text colour; ticks
+  pointing in on all four sides, major 5 pt and minor 2.5 pt, minor ticks
+  shown; no grid; a frameless legend; titles in regular weight. save()
+  drops minor ticks on an axis of categories (bar names, fixed ticks),
+  where they mean nothing, and the tick marks of a side whose spine a
+  module hides (a deliberate "no box" figure keeps no stray ticks); a grid
+  a module draws goes behind the marks, the ticks otherwise over them.
+- Marks: lines 1.5 pt, markers 5 pt, error-bar caps 2 pt.
 - Sizes for a projector: an inch of figure is 90 px of the 980 px slide
   canvas (scripts/measure-figures.mjs), so an 11 pt tick label reads at the
-  size of a slide caption. Automatic ticks are counted as before, and save()
-  steps the labels of a crowded axis back towards the old 10 pt, so the
-  bigger type neither drops ticks nor makes them collide.
+  size of a slide caption, axis labels 12.5 pt. Automatic ticks are counted
+  as for 9.75 pt labels, and save() steps the labels of a crowded axis back
+  towards 10 pt, so the type neither drops ticks nor makes them collide.
 - The categorical cycle: Okabe-Ito brightened for near-black, the course cyan
   first. Each slot keeps its hue (the slides say "the orange line", "the pink
   line"); the steps are set so that neighbours stay apart for protan and
@@ -27,9 +40,7 @@ type with the slides:
   a PNG in the SVG, which blurs when the slide scales.
 """
 import hashlib
-import io
 import json
-import math
 import os
 import re
 import tempfile
@@ -38,10 +49,12 @@ from pathlib import Path
 
 import matplotlib as mpl
 import matplotlib.axis as maxis
+import matplotlib.category as mcategory
 import matplotlib.font_manager as fm
 import matplotlib.image as mimage
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
+from matplotlib.container import BarContainer
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "lectures" / "content" / "public" / "figures"
@@ -72,9 +85,9 @@ def _over(rgba: str, bg: str) -> str:
 
 _T = _tokens(TOKENS_FILE)
 BG = _T["bg"]          # the slide background: the canvas of an opaque figure
-FG = _T["fg"]          # text and strokes
+FG = _T["fg"]          # text, the frame and its ticks
 FG2 = _T["fg-2"]       # secondary text that must still read on a projector
-DIM = _T["dim"]        # ticks, captions, de-emphasised marks
+DIM = _T["dim"]        # captions, de-emphasised marks
 ACCENT = _T["accent"]  # course cyan, the first series colour
 GRID = _over(_T["hair-strong"], BG)  # hairline grid: the slides' strong hairline
 BAD = "#f47069"        # 'wrong' highlight (What's Wrong panels)
@@ -83,53 +96,16 @@ CYCLE = [ACCENT, "#f8b64f", "#6edb98", "#e88bc0", "#8a9cfc", "#f1e075", "#e67502
 TICK_PT = 11           # tick labels; save() steps a crowded axis down to TICK_MIN_PT
 TICK_MIN_PT = 10       # the old size: no figure gets smaller ticks than before
 TICK_COUNT_PT = 9.75   # automatic ticks are counted as for labels this size
-SANS = "Space Grotesk"
+SERIF = "STIXGeneral"  # the figures' text face, Times-like as in a journal
+SANS = SERIF           # v2's name for the text face, kept for the modules that use it
 MONO = "Space Mono"    # code-like labels: family=style.MONO, or family="monospace"
-THIN = "\u2009"        # thin space; Space Grotesk has no U+202F
-MINUS = "\u2212"       # the true minus sign
+THIN = " "        # thin space (the STIX copy of use() adds it)
+MINUS = "−"       # the true minus sign
 
-
-GREEK = [*range(0x391, 0x3AA), *range(0x3B1, 0x3CA), 0x3D1, 0x3D5, 0x3D6, 0x3F1, 0x3F5]
-DEJAVU = Path(mpl.get_data_path()) / "fonts" / "ttf"
-
-
-def _x_height(font) -> float:
-    from fontTools.pens.boundsPen import BoundsPen
-    glyphs = font.getGlyphSet()
-    pen = BoundsPen(glyphs)
-    glyphs[font.getBestCmap()[ord("x")]].draw(pen)
-    return pen.bounds[3]
-
-
-def _add_greek(font, donor_file: Path) -> None:
-    """Copy the Greek letters of a DejaVu face into font, scaled to its
-    x-height. Space Grotesk has none; borrowed whole, DejaVu's stood 12 %
-    taller than the text and the math fallback STIX Sans 12 % shorter."""
-    from fontTools.pens.recordingPen import DecomposingRecordingPen
-    from fontTools.pens.transformPen import TransformPen
-    from fontTools.pens.ttGlyphPen import TTGlyphPen
-    from fontTools.ttLib import TTFont
-    donor = TTFont(donor_file)
-    dglyphs, dcmap = donor.getGlyphSet(), donor.getBestCmap()
-    k = _x_height(font) / _x_height(donor)
-    have, glyf, hmtx = font.getBestCmap(), font["glyf"], font["hmtx"]
-    order = list(font.getGlyphOrder())
-    for cp in GREEK:
-        name = f"greek{cp:04X}"
-        if cp in have or cp not in dcmap or name in glyf:
-            continue
-        rec = DecomposingRecordingPen(dglyphs)
-        dglyphs[dcmap[cp]].draw(rec)
-        pen = TTGlyphPen(None)
-        rec.replay(TransformPen(pen, (k, 0, 0, k, 0, 0)))
-        glyf[name] = glyph = pen.glyph()
-        glyph.recalcBounds(glyf)
-        hmtx[name] = (round(dglyphs[dcmap[cp]].width * k), getattr(glyph, "xMin", 0))
-        order.append(name)
-        for table in font["cmap"].tables:
-            if table.isUnicode():
-                table.cmap[cp] = name
-    font.setGlyphOrder(order)
+STIX = Path(mpl.get_data_path()) / "fonts" / "ttf"
+STIX_FILES = ("STIXGeneral.ttf", "STIXGeneralItalic.ttf",
+              "STIXGeneralBol.ttf", "STIXGeneralBolIta.ttf")
+SPACES = {0x2009: 1 / 6, 0x202F: 1 / 6, 0x2006: 1 / 6, 0x200A: 1 / 10}  # em
 
 
 def _save_font(font, out: Path) -> Path:
@@ -140,62 +116,72 @@ def _save_font(font, out: Path) -> Path:
     return out
 
 
-def _pinned(var: Path, wght: int) -> Path:
-    """The variable font var pinned at weight wght, with Greek, cached in the
-    temp dir.
-
-    Each weight gets its own PostScript name (SpaceGrotesk-Bold, ...). The
-    SVG backend names a glyph outline by the PostScript name and character,
-    so weights that share a name share outlines: the static files in
-    fonts/git/ are all "SpaceGrotesk-Light", and a bold title drew every
-    letter already used by a 400 label at 400."""
-    data = var.read_bytes()
+def _stix_completed(src: Path, upright: Path | None = None) -> Path:
+    """A copy of the STIX face src with the thin spaces of SPACES and the
+    subscript digits U+2080-2089 (its own digits at 0.6, dropped 0.14 em),
+    cached in the temp dir. An italic face also takes every symbol it lacks
+    (the italics have no arrows, no ≈ ≤ ≥ √) from its upright face, upright
+    as a typesetter sets them. Same family and PostScript names: the glyphs
+    it shares with the bundled file are the same outlines."""
+    data = src.read_bytes() + (upright.read_bytes() if upright else b"")
     key = hashlib.sha1(data).hexdigest()[:10]
-    out = Path(tempfile.gettempdir()) / "cern-course-fonts" / f"{var.stem}-{wght}-{key}-v3.ttf"
-    if not out.exists():
-        from fontTools.ttLib import TTFont
-        from fontTools.varLib.instancer import instantiateVariableFont
-        font = instantiateVariableFont(TTFont(io.BytesIO(data)), {"wght": wght},
-                                       updateFontNames=True)
-        font["OS/2"].usWeightClass = wght
-        _add_greek(font, DEJAVU / ("DejaVuSans-Bold.ttf" if wght >= 600 else "DejaVuSans.ttf"))
-        _save_font(font, out)
-    return out
-
-
-def _sheared(src: Path, skew: float = 0.25) -> Path:
-    """An italic of the static font src, sheared by skew (about 14 degrees).
-    Space Grotesk has no italic; a browser draws the slides' <em> in Space
-    Grotesk by this same shear (Skia's synthetic italic). Math variables and
-    style="italic" text use it; its Greek, from src, is sheared alike."""
-    out = src.with_name(f"{src.stem}-italic.ttf")
-    if not out.exists():
-        from fontTools.ttLib import TTFont
-        font = TTFont(src)
-        glyf, hmtx = font["glyf"], font["hmtx"]
-        for name in font.getGlyphOrder():
-            g = glyf[name]
-            if g.isComposite():
-                for c in g.components:
-                    c.x = round(c.x + skew * c.y)
-            elif g.numberOfContours > 0:
-                g.coordinates.transform(((1, 0), (skew, 1)))
-                g.coordinates.toInt()
-            g.recalcBounds(glyf)
-            if hasattr(g, "xMin"):
-                hmtx[name] = (hmtx[name][0], g.xMin)
-        font["post"].italicAngle = -math.degrees(math.atan(skew))
-        font["OS/2"].fsSelection = (font["OS/2"].fsSelection | 0x01) & ~0x40  # italic, not regular
-        font["head"].macStyle |= 0x02
-        weight = font["name"].getDebugName(6).split("-")[-1]   # Regular, Medium, Bold
-        sub = "Italic" if weight == "Regular" else f"{weight} Italic"
-        names = {2: "Bold Italic" if weight == "Bold" else "Italic", 17: sub,
-                 4: f"Space Grotesk {sub}", 6: f"SpaceGrotesk-{sub.replace(' ', '')}"}
-        for rec in font["name"].names:
-            if rec.nameID in names:
-                rec.string = names[rec.nameID]
-        _save_font(font, out)
-    return out
+    out = Path(tempfile.gettempdir()) / "cern-course-fonts" / f"{src.stem}-{key}-v2.ttf"
+    if out.exists():
+        return out
+    from fontTools.pens.recordingPen import DecomposingRecordingPen
+    from fontTools.pens.transformPen import TransformPen
+    from fontTools.pens.ttGlyphPen import TTGlyphPen
+    from fontTools.ttLib import TTFont
+    from fontTools.ttLib.tables._g_l_y_f import Glyph
+    font = TTFont(src)
+    upm = font["head"].unitsPerEm
+    glyphs, cmap = font.getGlyphSet(), font.getBestCmap()
+    glyf, hmtx = font["glyf"], font["hmtx"]
+    order = list(font.getGlyphOrder())
+    added = {}
+    if upright:
+        donor = TTFont(upright)
+        dglyphs = donor.getGlyphSet()
+        for cp, dname in donor.getBestCmap().items():
+            if cp in cmap or not 0x2000 <= cp <= 0xFFFF:
+                continue
+            rec = DecomposingRecordingPen(dglyphs)
+            dglyphs[dname].draw(rec)
+            pen = TTGlyphPen(None)
+            rec.replay(pen)
+            name = f"up{cp:04X}"
+            glyf[name] = glyph = pen.glyph()
+            glyph.recalcBounds(glyf)
+            hmtx[name] = (dglyphs[dname].width, getattr(glyph, "xMin", 0))
+            added[cp] = name
+        cmap = {**cmap, **added}
+    for cp, em in SPACES.items():
+        if cp not in cmap:
+            name = f"space{cp:04X}"
+            glyf[name] = Glyph()
+            hmtx[name] = (round(em * upm), 0)
+            added[cp] = name
+    k, drop = 0.6, -0.14 * upm
+    for i in range(10):
+        cp = 0x2080 + i
+        if cp in cmap or ord(str(i)) not in cmap:
+            continue
+        name = f"sub{i}"
+        digit = cmap[ord(str(i))]
+        rec = DecomposingRecordingPen(glyphs)
+        glyphs[digit].draw(rec)
+        pen = TTGlyphPen(None)
+        rec.replay(TransformPen(pen, (k, 0, 0, k, 0, drop)))
+        glyf[name] = glyph = pen.glyph()
+        glyph.recalcBounds(glyf)
+        hmtx[name] = (round(glyphs[digit].width * k), getattr(glyph, "xMin", 0))
+        added[cp] = name
+    order.extend(added.values())
+    font.setGlyphOrder(order)
+    for table in font["cmap"].tables:
+        if table.isUnicode():
+            table.cmap.update(added)
+    return _save_font(font, out)
 
 
 if not hasattr(maxis.Axis, "_mpl_tick_label_size"):  # once, even if style is reloaded
@@ -215,19 +201,21 @@ _registered = False
 
 
 def _register_fonts() -> None:
-    """Space Grotesk at 400, 500 and 700, pinned from the variable font (the
-    fonts/git/ statics have the same outlines but one shared name), each
-    with its sheared italic, and Space Mono."""
+    """The completed STIX faces, put first so that "STIXGeneral" (text and
+    mathtext alike) finds them before the bundled files, and Space Mono."""
     global _registered
     if _registered:
         return
-    var = FONTS / "SpaceGrotesk-Regular.ttf"
-    for wght in (400, 500, 700):
-        upright = _pinned(var, wght)
-        fm.fontManager.addfont(str(upright))
-        fm.fontManager.addfont(str(_sheared(upright)))
+    regular, italic, bold, bolditalic = (STIX / name for name in STIX_FILES)
+    for src, upright in ((regular, None), (italic, regular), (bold, None), (bolditalic, bold)):
+        path = str(_stix_completed(src, upright))
+        fm.fontManager.addfont(path)
+        entry = next(e for e in fm.fontManager.ttflist if e.fname == path)
+        fm.fontManager.ttflist.remove(entry)
+        fm.fontManager.ttflist.insert(0, entry)
     for path in (FONTS / "git" / "SpaceMono-Regular.ttf", FONTS / "git" / "SpaceMono-Bold.ttf"):
         fm.fontManager.addfont(str(path))
+    fm.fontManager._findfont_cached.cache_clear()
     _registered = True
 
 
@@ -237,47 +225,48 @@ def use() -> None:
     mpl.rcParams.update({
         "figure.facecolor": "none", "axes.facecolor": "none",
         "savefig.facecolor": "none", "savefig.transparent": True,
-        # Type: the slides' faces; DejaVu fills any glyph still missing. Math
-        # is set in Space Grotesk too: digits and operators as in the text,
-        # variables and Greek in its sheared italic, other symbols (sqrt, ell,
-        # partial) from STIX Sans. ("cm" would copy the slides' KaTeX, whose
-        # hairlines thin out at figure sizes on a projector.)
-        "font.family": [SANS, "DejaVu Sans"],
+        # Type: STIX for text and maths, no fallback face (see the docstring).
+        "font.family": [SERIF],
         "font.monospace": [MONO, "DejaVu Sans Mono"],
         "font.size": 11,
-        "mathtext.fontset": "custom",
-        "mathtext.rm": SANS, "mathtext.sf": SANS, "mathtext.cal": SANS,
-        "mathtext.it": f"{SANS}:italic", "mathtext.bf": f"{SANS}:bold", "mathtext.tt": MONO,
-        "mathtext.fallback": "stixsans",
+        "mathtext.fontset": "stix",
         "axes.unicode_minus": True,
         "text.color": FG, "axes.labelcolor": FG, "axes.titlecolor": FG,
-        "axes.edgecolor": DIM, "xtick.color": DIM, "ytick.color": DIM,
-        # Sizes for a projector.
-        "axes.titlesize": 15, "axes.titleweight": "bold", "axes.titlepad": 8,
-        "figure.titlesize": 15, "figure.titleweight": "bold",
+        "axes.edgecolor": FG, "xtick.color": FG, "ytick.color": FG,
+        # Sizes for a projector; titles in regular weight, as in a paper.
+        "axes.titlesize": 14, "axes.titleweight": "normal", "axes.titlepad": 7,
+        "figure.titlesize": 14, "figure.titleweight": "normal",
         "axes.labelsize": 12.5, "axes.labelpad": 4,
         "xtick.labelsize": TICK_PT, "ytick.labelsize": TICK_PT,
-        "legend.fontsize": 11,
-        # Short outward ticks, a thin frame, a hairline grid behind the data.
-        "xtick.direction": "out", "ytick.direction": "out",
-        "xtick.major.size": 3, "ytick.major.size": 3,
-        "xtick.major.width": 0.8, "ytick.major.width": 0.8,
-        "xtick.minor.size": 2, "ytick.minor.size": 2,
-        "xtick.minor.width": 0.6, "ytick.minor.width": 0.6,
-        "xtick.major.pad": 3.5, "ytick.major.pad": 3.5,
+        "legend.fontsize": 11, "legend.title_fontsize": 11,
+        # The frame of a paper: four spines, ticks in on every side, minor
+        # ticks shown, no grid.
         "axes.linewidth": 0.8,
-        "axes.spines.top": False, "axes.spines.right": False,
-        "axes.grid": True, "grid.color": GRID, "grid.linewidth": 0.6,
-        "axes.axisbelow": True,
-        # Marks.
+        "axes.spines.top": True, "axes.spines.right": True,
+        "xtick.direction": "in", "ytick.direction": "in",
+        "xtick.top": True, "ytick.right": True,
+        "xtick.minor.visible": True, "ytick.minor.visible": True,
+        "xtick.major.size": 5, "ytick.major.size": 5,
+        "xtick.minor.size": 2.5, "ytick.minor.size": 2.5,
+        "xtick.major.width": 0.8, "ytick.major.width": 0.8,
+        "xtick.minor.width": 0.7, "ytick.minor.width": 0.7,
+        "xtick.major.pad": 5, "ytick.major.pad": 5,
+        "xtick.minor.pad": 5, "ytick.minor.pad": 5,
+        "axes.grid": False, "grid.color": GRID, "grid.linewidth": 0.6,
+        "axes.axisbelow": "line",   # ticks over a filled bar, as the frame is
+        # Marks: thin lines, small markers, short caps.
         "axes.prop_cycle": mpl.cycler(color=CYCLE),
-        "lines.linewidth": 2.4, "lines.markersize": 7,
-        "lines.solid_capstyle": "round",
+        "lines.linewidth": 1.5, "lines.markersize": 5,
+        "lines.markeredgewidth": 0.8,
+        "lines.solid_capstyle": "butt",
+        "errorbar.capsize": 2,
         "patch.linewidth": 0.8,
-        "legend.frameon": False,
+        "hatch.linewidth": 0.6,
+        "boxplot.flierprops.markersize": 4,
+        "legend.frameon": False, "legend.handlelength": 1.8,
+        "legend.borderaxespad": 0.6,
         # "path": embed text as vector outlines. SVGs load via <img>, which
-        # cannot see the page's webfonts — fonttype "none" silently fell back
-        # to the browser default sans. Outlines carry true Space Grotesk.
+        # cannot see the page's webfonts, and the outlines carry true STIX.
         "svg.fonttype": "path",
         "svg.hashsalt": "cern-course",  # deterministic element ids across runs
         "figure.constrained_layout.use": True,
@@ -340,6 +329,52 @@ def _bitmaps(fig) -> list:
     return [f"{n} x {what}" for what, n in found.items()]
 
 
+def _bar_axes(ax) -> set:
+    """The category axes of ax's bar charts: 'x' under vertical bars that
+    stand apart (a histogram's bars touch, and its axis is a scale)."""
+    found = set()
+    for c in ax.containers:
+        if not isinstance(c, BarContainer) or len(c.patches) < 2:
+            continue
+        horiz = c.orientation == "horizontal"
+        boxes = [p.get_bbox() for p in c.patches]
+        mids = sorted({round((b.y0 + b.y1 if horiz else b.x0 + b.x1) / 2, 9) for b in boxes})
+        width = max(abs(b.height if horiz else b.width) for b in boxes)
+        steps = [b - a for a, b in zip(mids, mids[1:]) if b > a]
+        if steps and width < 0.95 * min(steps):
+            found.add("y" if horiz else "x")
+    return found
+
+
+def _ticks_on_frame(fig) -> None:
+    """Minor ticks belong to a numeric scale: none on an axis of categories
+    (bar names, fixed tick positions) or on a polar axes, where the default
+    minor locator would only cut the space between two names. And no tick
+    mark where a module took the spine away: a tick stands on its frame."""
+    for ax in fig.axes:
+        if ax.name == "3d":
+            continue
+        bars = _bar_axes(ax) if ax.name == "rectilinear" else set()
+        for axis in (ax.xaxis, ax.yaxis):
+            if not isinstance(axis.get_minor_locator(), mticker.AutoMinorLocator):
+                continue
+            major = axis.get_major_locator()
+            if ax.name != "rectilinear" or axis.axis_name in bars or isinstance(
+                    major, (mticker.FixedLocator, mticker.IndexLocator, mcategory.StrCategoryLocator)):
+                axis.set_minor_locator(mticker.NullLocator())
+        if ax.name != "rectilinear" or "outline" in ax.spines:
+            continue  # a colour bar hides its four spines behind its outline
+        # The ticks stand over a filled bar (axes.axisbelow "line"), but a
+        # grid a module asks for goes behind every mark.
+        if any(line.get_visible() for axis in (ax.xaxis, ax.yaxis)
+               for line in axis.get_gridlines()):
+            ax.set_axisbelow(True)
+        for side, axis in (("top", "x"), ("bottom", "x"), ("left", "y"), ("right", "y")):
+            spine = ax.spines.get(side)
+            if spine is not None and not spine.get_visible():
+                ax.tick_params(axis=axis, which="both", **{side: False})
+
+
 def _crowded(axis, renderer) -> bool:
     """Do neighbouring drawn tick labels of axis overlap, or (along x) stand
     closer than 0.15 of their size? Rotated labels are not judged."""
@@ -400,6 +435,7 @@ def save(fig, name: str, *, opaque: bool = False, tight: bool = True) -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     if name in SIZES:
         fig.set_size_inches(*SIZES[name])
+    _ticks_on_frame(fig)
     _fit_ticks(fig, name)
     kw = {"format": "svg", "metadata": {"Date": None}}
     if tight:
@@ -407,10 +443,14 @@ def save(fig, name: str, *, opaque: bool = False, tight: bool = True) -> None:
         # The tight box counts an axis label by its middle only, so a label
         # wider than its axes (a narrow panel at the edge) was cut off. The
         # list replaces Matplotlib's default one, so it starts from it.
+        # A 3D Axes (axison False, _axis3don True) counts its labels
+        # too, z included: its z label was cut to a sliver.
         kw["bbox_extra_artists"] = fig.get_default_bbox_extra_artists() + [
-            axis.label for ax in fig.axes if ax.get_visible() and ax.axison
-            for axis in (ax.xaxis, ax.yaxis)
-            if axis.get_visible() and axis.label.get_visible() and axis.label.get_text().strip()]
+            axis.label for ax in fig.axes
+            if ax.get_visible() and (ax.axison or getattr(ax, "_axis3don", False))
+            for axis in (ax.xaxis, ax.yaxis, getattr(ax, "zaxis", None))
+            if axis is not None and axis.get_visible() and axis.label.get_visible()
+            and axis.label.get_text().strip()]
     if opaque:
         kw["transparent"] = False
         kw["facecolor"] = BG

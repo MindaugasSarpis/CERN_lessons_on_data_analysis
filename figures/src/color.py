@@ -6,7 +6,7 @@ used only for `load_dataset("iris")`.
 import numpy as np
 import seaborn as sns
 from matplotlib import pyplot as plt
-from matplotlib.colors import ListedColormap
+from matplotlib.colors import ListedColormap, to_rgba
 from matplotlib.patches import Rectangle
 
 import style
@@ -21,6 +21,18 @@ def _strip_axes(ax) -> None:
     ax.grid(False)
     for spine in ax.spines.values():
         spine.set_visible(False)
+
+
+def _frame_only(ax) -> None:
+    """A plot panel without numbers: the frame of the style, no ticks."""
+    ax.set_xticks([])
+    ax.set_yticks([])
+
+
+def _paper(color, alpha=0.45):
+    """A bar or swatch as a paper draws it: its colour as a light fill,
+    edged thinly in the full colour."""
+    return dict(facecolor=to_rgba(color, alpha), edgecolor=color, linewidth=0.9)
 
 
 # --- color_palette_* : the three kinds of palette, each its own swatch strip ---
@@ -130,7 +142,9 @@ def _popgrowth_highlight():
     fig, ax = plt.subplots(figsize=(12, 4))
     x = np.arange(len(states))
     colors = [style.ACCENT if s in _HIGHLIGHT else style.DIM for s in states]
-    ax.bar(x, values, color=colors, width=0.72, zorder=3)
+    # the three a little heavier than the grey context
+    fills = [to_rgba(c, 0.6 if s in _HIGHLIGHT else 0.3) for c, s in zip(colors, states)]
+    ax.bar(x, values, color=fills, edgecolor=colors, linewidth=0.9, width=0.72)
     ax.axhline(0, color=style.DIM, lw=0.8)
     ax.set_xticks(x)
     ax.set_xticklabels([_CODES[s] for s in states])
@@ -142,12 +156,11 @@ def _popgrowth_highlight():
             label.set_color(style.DIM)
     for i, s in enumerate(states):
         if s in _HIGHLIGHT:
-            ax.text(i, values[i] + 0.3, f"+{values[i]:.1f}", color=style.ACCENT, fontsize=9,
-                    ha="center", va="bottom", fontweight="bold")
+            ax.text(i, values[i] + 0.3, f"+{values[i]:.1f}", color=style.ACCENT, fontsize=10,
+                    ha="center", va="bottom")
+    ax.set_ylim(top=values.max() * 1.16)   # room for the +18.4 under the frame
     ax.set_ylabel("population growth 2010–2020 (%)")
     ax.set_title("The 30 most populous states of 2020: growth since 2010")
-    ax.xaxis.grid(False)
-    ax.yaxis.grid(True)
     style.save(fig, "viz_color_popgrowth_us_highlight")
 
 
@@ -197,20 +210,20 @@ def _red_green_cvd():
     fig, axes = plt.subplots(1, 2, figsize=(8.6, 4.1))
 
     ax = axes[0]
-    ax.scatter(xa, ya, s=26, color=red, label="Group A", alpha=0.85)
-    ax.scatter(xb, yb, s=26, color=green, label="Group B", alpha=0.85)
+    ax.scatter(xa, ya, s=18, color=red, label="Group A", alpha=0.85, linewidths=0)
+    ax.scatter(xb, yb, s=18, color=green, label="Group B", alpha=0.85, linewidths=0)
     ax.set_title("Normal vision", color=style.FG)
     ax.legend(loc="upper left")
 
     ax = axes[1]
-    ax.scatter(xa, ya, s=26, color=muddy, alpha=0.85)
-    ax.scatter(xb, yb, s=26, color=muddy, alpha=0.85)
+    ax.scatter(xa, ya, s=18, color=muddy, alpha=0.85, linewidths=0)
+    ax.scatter(xb, yb, s=18, color=muddy, alpha=0.85, linewidths=0)
     ax.set_title("Deuteranopia (simulated)", color=style.BAD)
-    ax.text(0.5, -0.06, "same colour — groups collapse", transform=ax.transAxes,
-             ha="center", color=style.BAD, fontsize=10)
+    ax.text(0.5, -0.04, "same colour — groups collapse", transform=ax.transAxes,
+             ha="center", va="top", color=style.BAD, fontsize=11)
 
     for ax in axes:
-        _strip_axes(ax)
+        _frame_only(ax)
     style.save(fig, "viz_pitfalls_of_color_use_red_green_cvd_sim")
 
 
@@ -264,37 +277,37 @@ def _common_aesthetics():
         _strip_axes(ax)
 
     ax = axes[0, 0]
-    ax.plot([0.15, 0.45, 0.8], [0.2, 0.55, 0.85], "o", color=style.ACCENT, ms=9)
-    ax.axhline(0.05, color=style.DIM, lw=1)
-    ax.axvline(0.05, color=style.DIM, lw=1)
-    ax.set_title("position", fontsize=11)
+    ax.plot([0.15, 0.45, 0.8], [0.2, 0.55, 0.85], "o", color=style.ACCENT, ms=6)
+    ax.axhline(0.05, color=style.DIM, lw=0.8)
+    ax.axvline(0.05, color=style.DIM, lw=0.8)
+    ax.set_title("position", fontsize=12)
 
     ax = axes[0, 1]
     for i, marker in enumerate(["o", "s", "^"]):
-        ax.plot(0.2 + i * 0.3, 0.5, marker=marker, color=style.ACCENT, ms=13, ls="none")
-    ax.set_title("shape", fontsize=11)
+        ax.plot(0.2 + i * 0.3, 0.5, marker=marker, color=style.ACCENT, ms=9, ls="none")
+    ax.set_title("shape", fontsize=12)
 
     ax = axes[0, 2]
-    for i, ms in enumerate([7, 13, 21]):
+    for i, ms in enumerate([4, 8, 14]):
         ax.plot(0.2 + i * 0.3, 0.5, "o", color=style.ACCENT, ms=ms)
-    ax.set_title("size", fontsize=11)
+    ax.set_title("size", fontsize=12)
 
     ax = axes[1, 0]
     for i, c in enumerate(style.CYCLE[:4]):
-        ax.add_patch(Rectangle((0.06 + i * 0.225, 0.3), 0.17, 0.4, color=c))
-    ax.set_title("colour", fontsize=11)
+        ax.add_patch(Rectangle((0.06 + i * 0.225, 0.3), 0.17, 0.4, **_paper(c, 0.65)))
+    ax.set_title("colour", fontsize=12)
 
     ax = axes[1, 1]
-    for i, lw in enumerate([1, 2.5, 4.5]):
+    for i, lw in enumerate([0.8, 1.8, 3.2]):
         yy = 0.22 + i * 0.3
         ax.plot([0.1, 0.9], [yy, yy], color=style.ACCENT, lw=lw)
-    ax.set_title("linewidth", fontsize=11)
+    ax.set_title("linewidth", fontsize=12)
 
     ax = axes[1, 2]
     for i, ls in enumerate(["-", "--", ":"]):
         yy = 0.22 + i * 0.3
-        ax.plot([0.1, 0.9], [yy, yy], color=style.ACCENT, lw=2, linestyle=ls)
-    ax.set_title("linetype", fontsize=11)
+        ax.plot([0.1, 0.9], [yy, yy], color=style.ACCENT, lw=1.5, linestyle=ls)
+    ax.set_title("linetype", fontsize=12)
 
     style.save(fig, "viz_aesthetic_mapping_common_aesthetics")
 
@@ -311,7 +324,9 @@ def _temp_normals_heatmap():
     ])
 
     fig, ax = plt.subplots(figsize=(7.8, 4.2))
-    im = ax.imshow(data, cmap="cividis", aspect="auto")
+    im = ax.pcolormesh(np.arange(13) - 0.5, np.arange(len(locations) + 1) - 0.5, data,
+                       cmap="cividis", edgecolors="face")
+    ax.invert_yaxis()   # the first location on top, as imshow put it
     ax.set_xticks(range(12))
     ax.set_xticklabels(MONTHS)
     ax.set_yticks(range(len(locations)))
@@ -321,8 +336,9 @@ def _temp_normals_heatmap():
     for spine in ax.spines.values():
         spine.set_visible(False)
     cb = fig.colorbar(im, ax=ax, fraction=0.04, pad=0.02)
+    cb.solids.set_rasterized(False)
     cb.set_label("Mean temperature (°C)", color=style.DIM)
-    cb.ax.tick_params(colors=style.DIM, labelsize=8)
+    cb.ax.tick_params(colors=style.DIM, labelsize=10)
     cb.outline.set_visible(False)
     ax.set_title("Monthly Temperature Normals")
     style.save(fig, "viz_aesthetic_mapping_temp_normals_heatmap")

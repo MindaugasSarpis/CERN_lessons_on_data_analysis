@@ -16,7 +16,7 @@ seaborn dataset to say something it doesn't.
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.colors import LinearSegmentedColormap
+from matplotlib.colors import LinearSegmentedColormap, to_rgba
 from matplotlib.patches import PathPatch
 from matplotlib.path import Path
 from mpl_toolkits.mplot3d import Axes3D  # noqa: F401  (registers 3D projection)
@@ -90,7 +90,7 @@ def _overplot_points():
     ax.annotate("solid points at this scale hide almost\nall structure — everything overlaps",
                 xy=(0, 0), xycoords="data", xytext=(0.97, 0.06),
                 textcoords="axes fraction", ha="right", va="bottom",
-                color=style.BAD, fontsize=9.5)
+                color=style.BAD, fontsize=10.5)
     style.save(fig, "viz_overlapping_points_nycflights_points")
 
 
@@ -103,8 +103,6 @@ def _overplot_hexbin():
     cb = fig.colorbar(hb, ax=ax, pad=0.02)
     _vector_colorbar(cb)
     cb.set_label("Flights per bin", color=style.FG)
-    cb.ax.yaxis.set_tick_params(color=style.DIM, labelcolor=style.DIM)
-    cb.outline.set_edgecolor(style.GRID)
     ax.set_xlim(-30, 150)
     ax.set_ylim(-60, 180)
     ax.set_xlabel("Departure delay (min)")
@@ -154,7 +152,6 @@ def _three_fixes():
     cb = fig.colorbar(hb, ax=ax, pad=0.03, fraction=0.06)
     _vector_colorbar(cb)
     cb.set_label("people per cell", color=style.FG)
-    cb.ax.yaxis.set_tick_params(color=style.DIM, labelcolor=style.DIM)
 
     for ax in axes:
         ax.set_xlim(-0.5, 10.5)
@@ -203,12 +200,14 @@ def _bar_3d_bad():
 def _bar_2d_fixed():
     products, values = _product_sales()
     fig, ax = style.new_fig(7, 4.4)
-    # One colour: the categories are already named on the axis.
-    bars = ax.bar(products, values, color=style.ACCENT, width=0.6)
+    # One colour: the categories are already named on the axis. A light fill
+    # with a thin edge in the full colour, as a paper draws bars.
+    bars = ax.bar(products, values, width=0.6, facecolor=to_rgba(style.ACCENT, 0.4),
+                  edgecolor=style.ACCENT, linewidth=1.0)
     for rect, v in zip(bars, values):
         ax.annotate(f"{v}", xy=(rect.get_x() + rect.get_width() / 2, v),
                     xytext=(0, 4), textcoords="offset points",
-                    ha="center", color=style.FG, fontsize=10)
+                    ha="center", color=style.FG, fontsize=11)
     ax.set_ylim(0, values.max() * 1.25)
     ax.set_ylabel("Units sold (thousands)")
     ax.set_title("Units sold per product in one quarter")
@@ -253,8 +252,8 @@ def _stocks_good_no_legend():
         ax.plot(t, y, color=color)
         ax.annotate(name, xy=(xmax, y[-1]), xytext=(6, 0),
                     textcoords="offset points", va="center",
-                    color=color, fontsize=11, fontweight="bold")
-    ax.set_xlim(t.min(), xmax + 5)
+                    color=color, fontsize=12)
+    ax.set_xlim(t.min(), xmax + 5.9)   # room for the longest name inside the frame
     ax.set_xlabel("Month")
     ax.set_ylabel("Index (base 100)")
     ax.set_title("Tech Stock Index — Labelled Directly")

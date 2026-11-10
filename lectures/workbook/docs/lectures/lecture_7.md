@@ -158,8 +158,10 @@ type the slide number and press Enter.
   bin widths on the first click and the conclusion on the second. Ask the
   question of slide 3 for a show of hands; slide 5 answers it, the counts
   written on the figure.
-- **Slide 10** (The Parts of a Figure) builds the histogram of the hours up
-  in five clicks.
+- **Slide 10** (The Parts of a Figure) builds a figure of the twelve monthly
+  means up in six clicks: the points, their error bars, the fitted cosine and
+  its result, the reference line with annotation, legend and title, the pull
+  panel, and the names of its seventeen parts.
 - **Slides 22, 41, 53, 72, 82, 84, 88 and 89 are interactive figures** that work
   offline: drag where the bar axis starts (22), the smoothing window (41),
   switch the palette of the day-and-hour grid (53), drag the bin width from

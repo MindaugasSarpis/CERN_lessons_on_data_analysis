@@ -267,7 +267,7 @@ FONTS = Path(__file__).resolve().parents[1] / "fonts" / "git"
 # Space Grotesk by family and weight: style.use() registers each weight under
 # its own name. The static files of fonts/git/ all say "SpaceGrotesk-Light",
 # so in one SVG their bold drew with the Medium outlines.
-SANS = FontProperties(family=style.SANS, weight="medium")
+SANS = FontProperties(family=style.SANS, weight="normal")
 BOLD = FontProperties(family=style.SANS, weight="bold")
 MONO = FontProperties(fname=FONTS / "SpaceMono-Regular.ttf")
 MONOB = FontProperties(fname=FONTS / "SpaceMono-Bold.ttf")

@@ -6,6 +6,7 @@ series where no bundled dataset applies.
 """
 import matplotlib.colors as mcolors
 import matplotlib.pyplot as plt
+import matplotlib.ticker as mticker
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -26,16 +27,16 @@ def _blue_jays_scatter():
     fig, ax = style.new_fig(6.8, 4.6)
     for sp in species:
         sub = df[df["species"] == sp]
-        ax.scatter(sub["bill_length_mm"], sub["bill_depth_mm"], s=30,
-                   color=colors[sp], alpha=0.75, edgecolor="none")
+        ax.scatter(sub["bill_length_mm"], sub["bill_depth_mm"], s=16,
+                   color=colors[sp], alpha=0.8, edgecolor="none")
     # Direct labels beside each cluster (offsets keep them off the points).
-    offsets = {"Adelie": (-6.5, 1.6), "Chinstrap": (3.2, 1.7), "Gentoo": (2.6, -1.7)}
+    offsets = {"Adelie": (-5.5, 1.6), "Chinstrap": (2.6, 2.7), "Gentoo": (2.6, -1.7)}
     for sp in species:
         sub = df[df["species"] == sp]
         cx, cy = sub["bill_length_mm"].mean(), sub["bill_depth_mm"].mean()
         dx, dy = offsets[sp]
-        ax.text(cx + dx, cy + dy, sp, color=colors[sp], fontsize=12,
-                fontweight="bold", ha="center", va="center")
+        ax.text(cx + dx, cy + dy, sp, color=colors[sp], fontsize=12.5,
+                ha="center", va="center")
     ax.set_xlabel("Bill length (mm)")
     ax.set_ylabel("Bill depth (mm)")
     ax.set_title("Bill Length vs. Bill Depth — colour = species")
@@ -46,12 +47,15 @@ def _blue_jays_bubble():
     df = sns.load_dataset("penguins").dropna(
         subset=["bill_length_mm", "bill_depth_mm", "body_mass_g"])
     scale = 420 / df["body_mass_g"].max()  # marker AREA proportional to mass
+    # open circles as a paper draws bubbles: a faint fill, a thin edge in the
+    # full colour, so the overlapping circles stay apart
+    face = mcolors.to_rgba(style.ACCENT, 0.16)
     fig, ax = style.new_fig(6.8, 4.6)
     ax.scatter(df["bill_length_mm"], df["bill_depth_mm"], s=df["body_mass_g"] * scale,
-               color=style.ACCENT, alpha=0.5, edgecolor=style.FG, linewidth=0.3)
+               facecolor=face, edgecolor=style.ACCENT, linewidth=0.8)
     for mass in (3000, 4500, 6000):
-        ax.scatter([], [], s=mass * scale, color=style.ACCENT, alpha=0.5,
-                   edgecolor=style.FG, linewidth=0.3, label=f"{mass:,} g")
+        ax.scatter([], [], s=mass * scale, facecolor=face,
+                   edgecolor=style.ACCENT, linewidth=0.8, label=f"{mass:,} g")
     ax.set_xlabel("Bill length (mm)")
     ax.set_ylabel("Bill depth (mm)")
     ax.set_title("+ Body Mass as Bubble Size")
@@ -85,7 +89,7 @@ def _co2_slopegraph():
     v2020 = np.array([7.4, 14.2, 1.7, 11.2, 7.7, 8.0, 2.0, 0.6])
     highlight_color = {"China": style.CYCLE[0], "USA": style.CYCLE[1], "Germany": style.CYCLE[2]}
 
-    min_gap = 0.045 * (max(v2000.max(), v2020.max()) - min(v2000.min(), v2020.min()))
+    min_gap = 0.052 * (max(v2000.max(), v2020.max()) - min(v2000.min(), v2020.min()))
     label_y0 = _declutter(v2000, min_gap)
     label_y1 = _declutter(v2020, min_gap)
 
@@ -96,21 +100,18 @@ def _co2_slopegraph():
         y0, y1 = v2000[i], v2020[i]
         hi = name in highlight_color
         color = highlight_color.get(name, style.DIM)
-        ax.plot([0, 1], [y0, y1], color=color, lw=2.4 if hi else 1.2,
-                alpha=1.0 if hi else 0.55, zorder=3 if hi else 2,
-                marker="o", ms=5.5 if hi else 4)
+        ax.plot([0, 1], [y0, y1], color=color, lw=1.8 if hi else 1.0,
+                alpha=1.0 if hi else 0.6, zorder=3 if hi else 2,
+                marker="o", ms=4.5 if hi else 3.5)
         label_color = color if hi else style.DIM
         ax.annotate(f"{name}  {y0:.1f}", xy=(0, y0), xytext=(-0.06, label_y0[i]),
-                    ha="right", va="center", fontsize=9, color=label_color)
+                    ha="right", va="center", fontsize=10.5, color=label_color)
         ax.annotate(f"{y1:.1f}  {name}", xy=(1, y1), xytext=(1.06, label_y1[i]),
-                    ha="left", va="center", fontsize=9, color=label_color)
+                    ha="left", va="center", fontsize=10.5, color=label_color)
     ax.set_xlim(-0.95, 1.95)
     ax.set_xticks([0, 1])
     ax.set_xticklabels(["2000", "2020"])
     ax.set_yticks([])
-    for side in ("left", "right", "top"):
-        ax.spines[side].set_visible(False)
-    ax.grid(False)
     ax.set_title("Per-capita CO$_2$ emissions [t / person] — 2000 vs. 2020 (approx.)")
     style.save(fig, "viz_associations_co2_slopegraph")
 
@@ -143,23 +144,20 @@ def _mtcars_corr_heatmap():
     ax.set_xticklabels([short[c] for c in cols], rotation=40, ha="right")
     ax.set_yticks(range(len(cols)))
     ax.set_yticklabels([short[c] for c in cols])
-    ax.grid(False)
-    for spine in ax.spines.values():
-        spine.set_visible(False)
+    # the frame stays; a named column needs no tick mark poking into its cell
+    ax.tick_params(which="both", length=0)
     for i in range(len(cols)):
         for j in range(len(cols)):
             v = corr.values[i, j]
             r, g, b, _ = cmap(norm(v))
             lum = 0.299 * r + 0.587 * g + 0.114 * b
             txt_color = "#0b0f14" if lum > 0.55 else style.FG
-            ax.text(j, i, f"{v:.2f}", ha="center", va="center",
-                    fontsize=8.5, color=txt_color)
+            ax.text(j, i, style.thousands(v, 2), ha="center", va="center",
+                    fontsize=10, color=txt_color)
     cbar = fig.colorbar(im, ax=ax, shrink=0.85, pad=0.03)
     # a colour bar of many colours is an image in matplotlib's SVG; keep it vector
     cbar.solids.set_rasterized(False)
     cbar.solids.set_edgecolor("face")
-    cbar.outline.set_visible(False)
-    cbar.ax.tick_params(colors=style.DIM, labelsize=8)
     ax.set_title("Correlation Matrix — mpg Dataset")
     style.save(fig, "viz_associations_mtcars_corr_heatmap")
 
@@ -171,6 +169,7 @@ def _mtcars_corr_heatmap():
 def _correlogram():
     varz = ["bill_length_mm", "bill_depth_mm", "flipper_length_mm"]
     labels = ["Bill length\n(mm)", "Bill depth\n(mm)", "Flipper length\n(mm)"]
+    step = [10, 2, 20]   # the tick step of each measurement, mm
     df = sns.load_dataset("penguins").dropna(subset=varz)
     n = len(varz)
     fig, axes = plt.subplots(n, n, figsize=(7.2, 6.8))
@@ -178,18 +177,22 @@ def _correlogram():
         for j in range(n):
             ax = axes[i, j]
             if i == j:
-                ax.hist(df[varz[i]], bins=16, color=style.ACCENT, alpha=0.85)
+                ax.hist(df[varz[i]], bins=16, histtype="stepfilled", linewidth=0.9,
+                        facecolor=mcolors.to_rgba(style.ACCENT, 0.35),
+                        edgecolor=style.ACCENT)
                 ax.set_yticks([])   # counts beside a label in mm would be misread
             else:
-                ax.scatter(df[varz[j]], df[varz[i]], s=10, color=style.ACCENT,
-                           alpha=0.5, edgecolor="none")
-            ax.tick_params(labelsize=7)
+                ax.scatter(df[varz[j]], df[varz[i]], s=8, color=style.ACCENT,
+                           alpha=0.55, edgecolor="none")
+                ax.yaxis.set_major_locator(mticker.MultipleLocator(step[i]))
+            ax.xaxis.set_major_locator(mticker.MultipleLocator(step[j]))
+            ax.tick_params(labelsize=9.5)
             if i == n - 1:
-                ax.set_xlabel(labels[j], fontsize=9)
+                ax.set_xlabel(labels[j], fontsize=11)
             else:
                 ax.set_xticklabels([])
             if j == 0:
-                ax.set_ylabel(labels[i], fontsize=9)
+                ax.set_ylabel(labels[i], fontsize=11)
             else:
                 ax.set_yticklabels([])
     fig.suptitle("Pair Plot — Three Penguin Measurements")
@@ -218,13 +221,15 @@ def _small_multiples_gapminder():
         for other in regions:
             if other != name:
                 ax.plot(years, curves[other], color=style.DIM, lw=0.9, alpha=0.3)
-        ax.plot(years, curves[name], color=style.ACCENT, lw=2.0)
-        ax.set_title(name, fontsize=10, loc="left")
+        ax.plot(years, curves[name], color=style.ACCENT, lw=1.8)
+        ax.set_title(name, fontsize=11.5, loc="left")
         ax.set_ylim(0, ymax)
+        ax.yaxis.set_major_locator(mticker.MultipleLocator(10000))
+        ax.yaxis.set_major_formatter(style.ThousandsFormatter())
     for ax in axes[-1, :]:
-        ax.set_xlabel("Year", fontsize=9)
+        ax.set_xlabel("Year", fontsize=11)
     for ax in axes[:, 0]:
-        ax.set_ylabel("GDP / capita ($)", fontsize=9)
+        ax.set_ylabel("GDP / capita ($)", fontsize=10.5)
     fig.suptitle("Small Multiples — Same Scale, Six Panels")
     style.save(fig, "viz_multi_panel_small_multiples_gapminder")
 

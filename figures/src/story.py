@@ -7,6 +7,7 @@ Fourteen figures for the "Telling a Story", "Balance Data & Context", and
 import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
+from matplotlib.colors import to_rgba
 from matplotlib.patches import Rectangle
 
 import style
@@ -25,7 +26,7 @@ def _annotated_vs_plain():
 
     fig, axes = plt.subplots(1, 2, figsize=(9.6, 4.2))
     for ax in axes:
-        ax.plot(x, y, color=style.ACCENT, lw=2.2)
+        ax.plot(x, y, color=style.ACCENT)
         ax.set_xlabel("week"); ax.set_ylabel("active users (k)")
         ax.set_xlim(0, 10)
     axes[0].set_title("Plain")
@@ -34,10 +35,10 @@ def _annotated_vs_plain():
     axes[1].annotate(
         "feature launched here",
         xy=(x[i], y[i]), xytext=(1.0, y.max() * 0.92),
-        color=style.FG, fontsize=10.5,
-        arrowprops=dict(arrowstyle="->", color=style.CYCLE[1], lw=1.6),
+        color=style.FG, fontsize=11,
+        arrowprops=dict(arrowstyle="->", color=style.CYCLE[1], lw=1.0, shrinkB=4),
     )
-    axes[1].scatter([x[i]], [y[i]], s=45, color=style.CYCLE[1], zorder=4)
+    axes[1].scatter([x[i]], [y[i]], s=25, color=style.CYCLE[1], edgecolor="none", zorder=4)
     style.save(fig, "viz_telling_a_story_annotated_vs_plain")
 
 
@@ -50,26 +51,27 @@ def _story_titles_captions():
     # opts out and lays itself out by hand.
     fig = plt.figure(figsize=(7.4, 4.6), layout="none")
     ax = fig.add_axes((0.12, 0.24, 0.84, 0.50))
-    ax.plot(years, sales, "o-", color=style.ACCENT, lw=2.2, ms=6)
+    ax.plot(years, sales, "o-", color=style.ACCENT)
     ax.set_xlabel("year"); ax.set_ylabel("sales ($M)")
 
-    fig.text(0.02, 0.925, "Sales doubled after 2022", fontsize=15,
-              fontweight="bold", color=style.FG, ha="left", va="center")
+    # The hierarchy by size and colour, as a journal sets it: no bold.
+    fig.text(0.02, 0.925, "Sales doubled after 2022", fontsize=16,
+              color=style.FG, ha="left", va="center")
     fig.text(0.02, 0.825, "Annual revenue, 2019–2025, all regions", fontsize=11,
               color=style.DIM, ha="left", va="center")
     fig.text(0.02, 0.05, "Source: finance dashboard, quarterly figures.",
-              fontsize=8.5, color=style.DIM, ha="left", va="center")
+              fontsize=10, color=style.DIM, ha="left", va="center")
 
     def zone(y0, y1, label, color):
         fig.add_artist(Rectangle(
             (0.01, y0), 0.98, y1 - y0, transform=fig.transFigure, clip_on=False,
-            fill=False, ls="--", lw=1.1, color=color))
-        fig.text(0.99, (y0 + y1) / 2, label, fontsize=9, color=color,
+            fill=False, ls="--", lw=0.8, color=color))
+        fig.text(0.975, (y0 + y1) / 2, label, fontsize=10, color=color,
                   ha="right", va="center", fontstyle="italic")
 
-    zone(0.86, 0.99, "TITLE", style.CYCLE[1])
-    zone(0.79, 0.86, "SUBTITLE", style.CYCLE[2])
-    zone(0.01, 0.09, "CAPTION", style.CYCLE[2])
+    zone(0.86, 0.99, "title", style.CYCLE[1])
+    zone(0.79, 0.86, "subtitle", style.CYCLE[2])
+    zone(0.01, 0.09, "caption", style.CYCLE[2])
     style.save(fig, "viz_telling_a_story_story_titles_captions")
 
 
@@ -79,7 +81,7 @@ def _title_as_finding():
 
     fig, axes = plt.subplots(1, 2, figsize=(9.6, 4.2))
     for ax, title in zip(axes, ["Sales 2019–2025", "Sales doubled after 2022"]):
-        ax.plot(years, sales, "o-", color=style.ACCENT, lw=2.2, ms=6)
+        ax.plot(years, sales, "o-", color=style.ACCENT)
         ax.set_xlabel("year"); ax.set_ylabel("sales ($M)")
         ax.set_title(title, fontsize=13.5)
     axes[1].axvspan(2022, 2025.3, color=style.CYCLE[1], alpha=0.12, lw=0)
@@ -116,10 +118,10 @@ def _gene_expression_good():
     wt, mut, idx = _gene_expression_data()
     fig, ax = plt.subplots(figsize=(5.2, 4.6))
     lims = (min(wt.min(), mut.min()) * 0.7, max(wt.max(), mut.max()) * 1.3)
-    ax.plot(lims, lims, "--", color=style.DIM, lw=1.3, zorder=1)
+    ax.plot(lims, lims, "--", color=style.DIM, lw=1.0, zorder=1)
     mask = np.zeros(wt.size, dtype=bool); mask[idx] = True
     ax.scatter(wt[~mask], mut[~mask], s=16, color=style.ACCENT, alpha=0.7, edgecolor="none", zorder=2)
-    ax.scatter(wt[mask], mut[mask], s=34, color=style.BAD, edgecolor=style.FG, linewidth=0.5,
+    ax.scatter(wt[mask], mut[mask], s=24, color=style.BAD, edgecolor="none",
                zorder=3, label="differentially expressed")
     ax.set_xscale("log"); ax.set_yscale("log")
     ax.set_xlim(lims); ax.set_ylim(lims)
@@ -135,7 +137,10 @@ def _grid_vs_no_grid():
 
     fig, (bad, good) = plt.subplots(1, 2, figsize=(9.6, 4.3))
 
-    bad.set_facecolor("#232a36")
+    # The background as a patch: savefig(transparent=True) clears an Axes
+    # facecolor, so set_facecolor never reached the SVG.
+    bad.add_patch(Rectangle((0, 0), 1, 1, transform=bad.transAxes,
+                            color="#232a36", lw=0, zorder=0))
     bad.scatter(x, y, s=22, color=style.ACCENT, edgecolor="none")
     bad.grid(True, which="major", color="#4a5568", linewidth=1.1)
     bad.minorticks_on()
@@ -146,9 +151,16 @@ def _grid_vs_no_grid():
     bad.set_title("Default: heavy grid, boxed axes")
     bad.set_xlabel("x"); bad.set_ylabel("y")
 
+    # The slide: "Right: no box, inner ticks, background or dense grid".
+    # The course style boxes every plot with inner ticks, so this panel
+    # takes them away: one axis line, ticks out, a light grid under the data.
     good.scatter(x, y, s=22, color=style.ACCENT, edgecolor="none")
     good.grid(True, axis="y", color=style.GRID, linewidth=0.6)
-    good.spines["left"].set_visible(False)
+    good.set_axisbelow(True)
+    for side in ("left", "top", "right"):
+        good.spines[side].set_visible(False)
+    good.minorticks_off()
+    good.tick_params(which="both", direction="out", length=3.5)
     good.set_title("Less ink, same data")
     good.set_xlabel("x"); good.set_ylabel("y")
 
@@ -195,10 +207,12 @@ def _titanic_rates():
 
 def _titanic_survival_bad():
     rates = _titanic_rates()
+    colors = [style.ACCENT, style.CYCLE[1]]
     fig, axes = plt.subplots(1, 3, figsize=(9.6, 3.6))
     for ax, cls in zip(axes, [1, 2, 3]):
         vals = rates.loc[cls, ["female", "male"]].to_numpy()
-        ax.bar(["F", "M"], vals, color=[style.ACCENT, style.CYCLE[1]], width=0.55)
+        ax.bar(["F", "M"], vals, width=0.55, facecolor=[to_rgba(c, 0.45) for c in colors],
+               edgecolor=colors, linewidth=0.9)
         ax.set_ylim(0, vals.max() * 1.15)  # each panel autoscaled to its own max
         ax.set_title(f"Class {cls}")
         ax.set_ylabel("survival rate" if cls == 1 else "")
@@ -207,10 +221,12 @@ def _titanic_survival_bad():
 
 def _titanic_survival_good():
     rates = _titanic_rates()
+    colors = [style.ACCENT, style.CYCLE[1]]
     fig, axes = plt.subplots(1, 3, figsize=(9.6, 3.6))
     for ax, cls in zip(axes, [1, 2, 3]):
         vals = rates.loc[cls, ["female", "male"]].to_numpy()
-        ax.bar(["F", "M"], vals, color=[style.ACCENT, style.CYCLE[1]], width=0.55)
+        ax.bar(["F", "M"], vals, width=0.55, facecolor=[to_rgba(c, 0.45) for c in colors],
+               edgecolor=colors, linewidth=0.9)
         ax.set_ylim(0, 1)  # shared scale across all panels
         ax.set_title(f"Class {cls}")
         ax.set_ylabel("survival rate" if cls == 1 else "")
@@ -229,12 +245,10 @@ def _error_bars():
 
     fig, ax = plt.subplots(figsize=(4.2, 3.3))
     y = np.arange(len(groups))
-    ax.errorbar(means[order], y, xerr=se[order], fmt="o", ms=7,
-                color=style.ACCENT, ecolor=style.DIM, elinewidth=1.6, capsize=4)
+    ax.errorbar(means[order], y, xerr=se[order], fmt="o",
+                color=style.ACCENT, elinewidth=1.2)
     ax.set_yticks(y, [groups[i] for i in order])
     ax.set_xlabel("mean response ± SE")
-    ax.grid(True, axis="x", color=style.GRID, linewidth=0.6)
-    ax.grid(False, axis="y")
     style.save(fig, "viz_uncertainty_error_bars")
 
 
@@ -261,8 +275,8 @@ def _ci_band():
 
     fig, ax = plt.subplots(figsize=(4.2, 3.3))
     ax.scatter(x, y, s=18, color=style.DIM, alpha=0.6, edgecolor="none", zorder=2)
-    ax.fill_between(xs, lo, hi, color=style.ACCENT, alpha=0.22, lw=0, zorder=1)
-    ax.plot(xs, fit, color=style.ACCENT, lw=2.2, zorder=3)
+    ax.fill_between(xs, lo, hi, color=style.ACCENT, alpha=0.3, lw=0, zorder=1)
+    ax.plot(xs, fit, color=style.ACCENT, zorder=3)
     ax.set_xlabel("x"); ax.set_ylabel("y")
     style.save(fig, "viz_uncertainty_ci_band")
 
@@ -304,9 +318,9 @@ def _hop_demo():
     for _ in range(28):
         idx = RNG.integers(0, n, n)
         b, a = np.polyfit(x[idx], y[idx], 1)
-        ax.plot(xs, a + b * xs, color=style.ACCENT, lw=1.0, alpha=0.18, zorder=1)
+        ax.plot(xs, a + b * xs, color=style.ACCENT, lw=1.0, alpha=0.25, zorder=1)
     b, a = np.polyfit(x, y, 1)
-    ax.plot(xs, a + b * xs, color=style.CYCLE[1], lw=2.6, zorder=3)
+    ax.plot(xs, a + b * xs, color=style.CYCLE[1], lw=1.8, zorder=3)
     ax.scatter(x, y, s=16, color=style.DIM, alpha=0.6, edgecolor="none", zorder=2)
     ax.set_xlabel("x"); ax.set_ylabel("y")
     style.save(fig, "viz_uncertainty_hop_demo")

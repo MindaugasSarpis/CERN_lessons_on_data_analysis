@@ -294,8 +294,9 @@ def _corner():
                 continue
             ax.grid(False)
             if i == j:
-                ax.hist(cols[i], bins=CORNER_BINS, range=CORNER[i][3],
-                        histtype="stepfilled", color=style.ACCENT)
+                for kind, kw in (("stepfilled", dict(alpha=0.3, lw=0)), ("step", dict(lw=1.2))):
+                    ax.hist(cols[i], bins=CORNER_BINS, range=CORNER[i][3],
+                            histtype=kind, color=style.ACCENT, **kw)
                 ax.set_yticks([])
                 ax.spines["left"].set_visible(False)
             else:

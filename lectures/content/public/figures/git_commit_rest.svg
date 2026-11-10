@@ -211,238 +211,300 @@ z
     <path d="M 43.9488 64.08 
 L 43.9488 70.5312 
 L 50.4 70.5312 
-" clip-path="url(#pbda93ce1ef)" style="fill: none; stroke: #8b97a6; stroke-width: 1.7; stroke-linecap: round"/>
+" clip-path="url(#pbda93ce1ef)" style="fill: none; stroke: #8b97a6; stroke-width: 1.7"/>
    </g>
    <g id="line2d_2">
     <path d="M 43.9488 123.12 
 L 43.9488 129.5712 
 L 50.4 129.5712 
-" clip-path="url(#pbda93ce1ef)" style="fill: none; stroke: #8b97a6; stroke-width: 1.7; stroke-linecap: round"/>
+" clip-path="url(#pbda93ce1ef)" style="fill: none; stroke: #8b97a6; stroke-width: 1.7"/>
    </g>
    <g id="line2d_3">
     <path d="M 43.9488 182.16 
 L 43.9488 188.6112 
 L 50.4 188.6112 
-" clip-path="url(#pbda93ce1ef)" style="fill: none; stroke: #8b97a6; stroke-width: 1.7; stroke-linecap: round"/>
+" clip-path="url(#pbda93ce1ef)" style="fill: none; stroke: #8b97a6; stroke-width: 1.7"/>
    </g>
    <g id="line2d_4">
     <path d="M 43.9488 241.2 
 L 43.9488 247.6512 
 L 50.4 247.6512 
-" clip-path="url(#pbda93ce1ef)" style="fill: none; stroke: #8b97a6; stroke-width: 1.7; stroke-linecap: round"/>
+" clip-path="url(#pbda93ce1ef)" style="fill: none; stroke: #8b97a6; stroke-width: 1.7"/>
    </g>
    <g id="line2d_5">
     <path d="M 43.9488 300.24 
 L 43.9488 306.6912 
 L 50.4 306.6912 
-" clip-path="url(#pbda93ce1ef)" style="fill: none; stroke: #8b97a6; stroke-width: 1.7; stroke-linecap: round"/>
+" clip-path="url(#pbda93ce1ef)" style="fill: none; stroke: #8b97a6; stroke-width: 1.7"/>
    </g>
    <g id="text_1">
     <!-- S T A G I N G   A R E A -->
     <g style="fill: #8b97a6" transform="translate(17.28 34.56) scale(0.1872 -0.1872)">
      <defs>
-      <path id="SpaceGrotesk-Bold-16" d="M 1978 -90 
-Q 1459 -90 1062 96 
-Q 666 282 442 627 
-Q 218 973 218 1459 
-L 218 1638 
-L 1050 1638 
-L 1050 1459 
-Q 1050 1056 1299 854 
-Q 1549 653 1978 653 
-Q 2413 653 2627 825 
-Q 2842 998 2842 1267 
-Q 2842 1453 2736 1568 
-Q 2630 1683 2428 1756 
-Q 2227 1830 1939 1894 
-L 1792 1926 
-Q 1331 2029 1001 2185 
-Q 672 2342 496 2598 
-Q 320 2854 320 3264 
-Q 320 3674 515 3965 
-Q 710 4256 1065 4413 
-Q 1421 4570 1901 4570 
-Q 2381 4570 2755 4406 
-Q 3130 4243 3344 3920 
-Q 3558 3597 3558 3110 
-L 3558 2918 
-L 2726 2918 
-L 2726 3110 
-Q 2726 3366 2627 3523 
-Q 2528 3680 2342 3753 
-Q 2157 3827 1901 3827 
-Q 1517 3827 1334 3683 
-Q 1152 3539 1152 3290 
-Q 1152 3123 1238 3008 
-Q 1325 2893 1497 2816 
-Q 1670 2739 1939 2682 
-L 2086 2650 
-Q 2566 2547 2921 2387 
-Q 3277 2227 3475 1964 
-Q 3674 1702 3674 1293 
-Q 3674 883 3466 572 
-Q 3258 262 2877 86 
-Q 2496 -90 1978 -90 
+      <path id="STIXGeneral-Bold-36" d="M 3098 3034 
+L 2918 3034 
+Q 2752 3578 2470 3866 
+Q 2125 4224 1683 4224 
+Q 1357 4224 1168 4048 
+Q 979 3872 979 3590 
+Q 979 3360 1113 3213 
+Q 1248 3066 1638 2861 
+Q 1754 2797 2077 2633 
+Q 2400 2470 2586 2368 
+Q 2899 2195 3091 1897 
+Q 3283 1600 3283 1242 
+Q 3283 634 2844 256 
+Q 2406 -122 1696 -122 
+Q 1306 -122 864 32 
+Q 666 96 602 96 
+Q 525 96 480 48 
+Q 435 0 410 -122 
+L 224 -122 
+L 224 1466 
+L 410 1466 
+Q 557 851 794 550 
+Q 1158 90 1715 90 
+Q 2086 90 2304 285 
+Q 2522 480 2522 813 
+Q 2522 1120 2157 1376 
+Q 1997 1491 1376 1792 
+Q 806 2067 544 2368 
+Q 282 2669 282 3136 
+Q 282 3744 656 4083 
+Q 1030 4422 1683 4422 
+Q 2035 4422 2432 4275 
+Q 2624 4211 2701 4211 
+Q 2790 4211 2832 4256 
+Q 2874 4301 2906 4429 
+L 3098 4429 
+L 3098 3034 
 z
 " transform="scale(0.015625)"/>
-      <path id="SpaceGrotesk-Bold-38f" transform="scale(0.015625)"/>
-      <path id="SpaceGrotesk-Bold-17" d="M 1459 0 
-L 1459 3712 
-L 154 3712 
-L 154 4480 
-L 3610 4480 
-L 3610 3712 
-L 2304 3712 
-L 2304 0 
-L 1459 0 
+      <path id="STIXGeneral-Bold-6b1" transform="scale(0.015625)"/>
+      <path id="STIXGeneral-Bold-37" d="M 4070 3040 
+L 3885 3040 
+Q 3802 3610 3523 3856 
+Q 3245 4102 2656 4122 
+L 2656 749 
+Q 2656 384 2761 288 
+Q 2867 192 3283 160 
+L 3283 0 
+L 998 0 
+L 998 160 
+Q 1408 192 1513 291 
+Q 1619 390 1619 749 
+L 1619 4122 
+Q 1024 4102 745 3856 
+Q 467 3610 384 3040 
+L 198 3040 
+L 218 4326 
+L 4058 4326 
+L 4070 3040 
 z
 " transform="scale(0.015625)"/>
-      <path id="SpaceGrotesk-Bold-4" d="M 115 0 
-L 1293 4480 
-L 2765 4480 
-L 3942 0 
-L 3072 0 
-L 2829 986 
-L 1229 986 
-L 986 0 
-L 115 0 
+      <path id="STIXGeneral-Bold-24" d="M 4410 0 
+L 2349 0 
+L 2349 160 
+L 2554 179 
+Q 2714 192 2781 240 
+Q 2848 288 2848 390 
+Q 2848 576 2554 1261 
+L 1114 1261 
+L 1030 1043 
+Q 832 531 832 422 
+Q 832 301 950 240 
+Q 1069 179 1350 160 
+L 1350 0 
+L 58 0 
+L 58 160 
+Q 282 198 397 339 
+Q 512 480 691 928 
+L 2106 4416 
+L 2285 4416 
+L 3706 1075 
+Q 3949 499 4080 329 
+Q 4211 160 4410 160 
+L 4410 0 
 z
-M 1427 1766 
-L 2630 1766 
-L 2086 3949 
-L 1971 3949 
-L 1427 1766 
-z
-" transform="scale(0.015625)"/>
-      <path id="SpaceGrotesk-Bold-a" d="M 1971 -90 
-Q 1510 -90 1136 118 
-Q 762 326 541 726 
-Q 320 1126 320 1702 
-L 320 2778 
-Q 320 3642 806 4106 
-Q 1293 4570 2125 4570 
-Q 2950 4570 3401 4131 
-Q 3853 3693 3853 2944 
-L 3853 2918 
-L 3021 2918 
-L 3021 2970 
-Q 3021 3206 2921 3398 
-Q 2822 3590 2624 3702 
-Q 2426 3814 2125 3814 
-Q 1677 3814 1421 3539 
-Q 1165 3264 1165 2790 
-L 1165 1690 
-Q 1165 1222 1421 937 
-Q 1677 653 2138 653 
-Q 2598 653 2809 896 
-Q 3021 1139 3021 1510 
-L 3021 1574 
-L 1958 1574 
-L 1958 2291 
-L 3853 2291 
-L 3853 0 
-L 3072 0 
-L 3072 429 
-L 2957 429 
-Q 2912 320 2813 198 
-Q 2714 77 2515 -6 
-Q 2317 -90 1971 -90 
+M 2458 1510 
+L 1811 3066 
+L 1210 1510 
+L 2458 1510 
 z
 " transform="scale(0.015625)"/>
-      <path id="SpaceGrotesk-Bold-c" d="M 422 0 
-L 422 4480 
-L 1267 4480 
-L 1267 0 
-L 422 0 
+      <path id="STIXGeneral-Bold-2a" d="M 4832 1837 
+L 4832 1677 
+Q 4493 1638 4387 1500 
+Q 4282 1363 4282 1037 
+L 4282 282 
+Q 3968 96 3488 -13 
+Q 3008 -122 2509 -122 
+Q 1523 -122 880 492 
+Q 237 1107 237 2118 
+Q 237 3085 873 3753 
+Q 1510 4422 2464 4422 
+Q 2912 4422 3456 4198 
+Q 3661 4109 3750 4109 
+Q 3840 4109 3901 4169 
+Q 3962 4230 4032 4403 
+L 4205 4403 
+L 4205 2899 
+L 4045 2899 
+Q 3859 3302 3740 3491 
+Q 3622 3680 3430 3853 
+Q 3027 4211 2547 4211 
+Q 1984 4211 1677 3680 
+Q 1370 3149 1370 2163 
+Q 1370 1158 1677 646 
+Q 1850 358 2080 224 
+Q 2310 90 2669 90 
+Q 3283 90 3283 634 
+L 3283 1203 
+Q 3283 1459 3158 1555 
+Q 3034 1651 2630 1677 
+L 2630 1837 
+L 4832 1837 
 z
 " transform="scale(0.015625)"/>
-      <path id="SpaceGrotesk-Bold-11" d="M 422 0 
-L 422 4480 
-L 2029 4480 
-L 2918 576 
-L 3034 576 
-L 3034 4480 
-L 3866 4480 
-L 3866 0 
-L 2259 0 
-L 1370 3904 
-L 1254 3904 
-L 1254 0 
-L 422 0 
+      <path id="STIXGeneral-Bold-2c" d="M 2368 0 
+L 128 0 
+L 128 160 
+Q 493 192 608 288 
+Q 723 384 723 678 
+L 723 3686 
+Q 723 3949 601 4045 
+Q 480 4141 128 4166 
+L 128 4326 
+L 2368 4326 
+L 2368 4166 
+Q 2010 4154 1885 4054 
+Q 1760 3955 1760 3686 
+L 1760 678 
+Q 1760 371 1878 278 
+Q 1997 186 2368 160 
+L 2368 0 
 z
 " transform="scale(0.015625)"/>
-      <path id="SpaceGrotesk-Bold-3" transform="scale(0.015625)"/>
-      <path id="SpaceGrotesk-Bold-15" d="M 422 0 
-L 422 4480 
-L 2368 4480 
-Q 2790 4480 3104 4333 
-Q 3418 4186 3590 3917 
-Q 3763 3648 3763 3283 
-L 3763 3206 
-Q 3763 2803 3571 2553 
-Q 3379 2304 3098 2189 
-L 3098 2074 
-Q 3354 2061 3494 1897 
-Q 3635 1734 3635 1466 
-L 3635 0 
-L 2790 0 
-L 2790 1344 
-Q 2790 1498 2710 1594 
-Q 2630 1690 2445 1690 
-L 1267 1690 
-L 1267 0 
-L 422 0 
-z
-M 1267 2458 
-L 2278 2458 
-Q 2579 2458 2748 2621 
-Q 2918 2784 2918 3053 
-L 2918 3117 
-Q 2918 3386 2752 3549 
-Q 2586 3712 2278 3712 
-L 1267 3712 
-L 1267 2458 
+      <path id="STIXGeneral-Bold-31" d="M 4486 4326 
+L 4486 4166 
+Q 4166 4115 4076 4022 
+Q 3987 3930 3987 3635 
+L 3987 -115 
+L 3808 -115 
+L 947 3373 
+L 947 838 
+Q 947 467 1062 336 
+Q 1178 205 1549 160 
+L 1549 0 
+L 102 0 
+L 102 160 
+Q 454 205 560 304 
+Q 666 403 666 698 
+L 666 3706 
+Q 333 4166 122 4166 
+L 122 4326 
+L 1472 4326 
+L 3706 1574 
+L 3706 3488 
+Q 3706 3872 3590 4003 
+Q 3475 4134 3117 4166 
+L 3117 4326 
+L 4486 4326 
 z
 " transform="scale(0.015625)"/>
-      <path id="SpaceGrotesk-Bold-8" d="M 422 0 
-L 422 4480 
-L 3302 4480 
-L 3302 3712 
-L 1267 3712 
-L 1267 2643 
-L 3123 2643 
-L 3123 1875 
-L 1267 1875 
-L 1267 768 
-L 3341 768 
-L 3341 0 
-L 422 0 
+      <path id="STIXGeneral-Bold-3" transform="scale(0.015625)"/>
+      <path id="STIXGeneral-Bold-35" d="M 4582 0 
+L 3270 0 
+L 1946 2003 
+L 1766 2003 
+L 1766 749 
+Q 1766 403 1859 307 
+Q 1952 211 2330 160 
+L 2330 0 
+L 166 0 
+L 166 160 
+Q 544 205 637 301 
+Q 730 397 730 768 
+L 730 3526 
+Q 730 3904 624 4022 
+Q 518 4141 166 4166 
+L 166 4326 
+L 2138 4326 
+Q 4032 4326 4032 3226 
+Q 4032 2739 3744 2470 
+Q 3475 2227 3027 2106 
+L 4301 301 
+Q 4397 160 4582 160 
+L 4582 0 
+z
+M 1766 3821 
+L 1766 2208 
+Q 2426 2214 2682 2406 
+Q 2938 2598 2938 3162 
+Q 2938 3667 2746 3888 
+Q 2554 4109 2106 4109 
+Q 1920 4109 1843 4045 
+Q 1766 3981 1766 3821 
+z
+" transform="scale(0.015625)"/>
+      <path id="STIXGeneral-Bold-28" d="M 4102 1331 
+L 3846 0 
+L 102 0 
+L 102 160 
+Q 448 198 557 294 
+Q 666 390 666 646 
+L 666 3712 
+Q 666 3955 550 4051 
+Q 435 4147 102 4166 
+L 102 4326 
+L 3795 4326 
+L 3795 3040 
+L 3635 3040 
+Q 3526 3680 3216 3894 
+Q 2906 4109 2118 4109 
+Q 1875 4109 1788 4032 
+Q 1702 3955 1702 3763 
+L 1702 2323 
+Q 2221 2330 2451 2531 
+Q 2682 2733 2739 3277 
+L 2906 3277 
+L 2906 1114 
+L 2739 1114 
+Q 2694 1677 2464 1891 
+Q 2234 2106 1702 2106 
+L 1702 557 
+Q 1702 352 1814 275 
+Q 1926 198 2234 198 
+Q 2982 198 3398 544 
+Q 3558 672 3667 838 
+Q 3776 1005 3923 1331 
+L 4102 1331 
 z
 " transform="scale(0.015625)"/>
      </defs>
-     <use xlink:href="#SpaceGrotesk-Bold-16"/>
-     <use xlink:href="#SpaceGrotesk-Bold-38f" transform="translate(60.59375 0)"/>
-     <use xlink:href="#SpaceGrotesk-Bold-17" transform="translate(79 0)"/>
-     <use xlink:href="#SpaceGrotesk-Bold-38f" transform="translate(137.796875 0)"/>
-     <use xlink:href="#SpaceGrotesk-Bold-4" transform="translate(156.203125 0)"/>
-     <use xlink:href="#SpaceGrotesk-Bold-38f" transform="translate(219.609375 0)"/>
-     <use xlink:href="#SpaceGrotesk-Bold-a" transform="translate(238.015625 0)"/>
-     <use xlink:href="#SpaceGrotesk-Bold-38f" transform="translate(304.21875 0)"/>
-     <use xlink:href="#SpaceGrotesk-Bold-c" transform="translate(322.625 0)"/>
-     <use xlink:href="#SpaceGrotesk-Bold-38f" transform="translate(349.03125 0)"/>
-     <use xlink:href="#SpaceGrotesk-Bold-11" transform="translate(367.4375 0)"/>
-     <use xlink:href="#SpaceGrotesk-Bold-38f" transform="translate(434.4375 0)"/>
-     <use xlink:href="#SpaceGrotesk-Bold-a" transform="translate(452.84375 0)"/>
-     <use xlink:href="#SpaceGrotesk-Bold-3" transform="translate(519.046875 0)"/>
-     <use xlink:href="#SpaceGrotesk-Bold-3" transform="translate(544.453125 0)"/>
-     <use xlink:href="#SpaceGrotesk-Bold-3" transform="translate(569.859375 0)"/>
-     <use xlink:href="#SpaceGrotesk-Bold-4" transform="translate(594.0625 0)"/>
-     <use xlink:href="#SpaceGrotesk-Bold-38f" transform="translate(657.46875 0)"/>
-     <use xlink:href="#SpaceGrotesk-Bold-15" transform="translate(675.875 0)"/>
-     <use xlink:href="#SpaceGrotesk-Bold-38f" transform="translate(739.078125 0)"/>
-     <use xlink:href="#SpaceGrotesk-Bold-8" transform="translate(757.484375 0)"/>
-     <use xlink:href="#SpaceGrotesk-Bold-38f" transform="translate(812.890625 0)"/>
-     <use xlink:href="#SpaceGrotesk-Bold-4" transform="translate(831.296875 0)"/>
+     <use xlink:href="#STIXGeneral-Bold-36"/>
+     <use xlink:href="#STIXGeneral-Bold-6b1" transform="translate(55.59375 0)"/>
+     <use xlink:href="#STIXGeneral-Bold-37" transform="translate(72.296875 0)"/>
+     <use xlink:href="#STIXGeneral-Bold-6b1" transform="translate(139 0)"/>
+     <use xlink:href="#STIXGeneral-Bold-24" transform="translate(155.703125 0)"/>
+     <use xlink:href="#STIXGeneral-Bold-6b1" transform="translate(227.90625 0)"/>
+     <use xlink:href="#STIXGeneral-Bold-2a" transform="translate(244.609375 0)"/>
+     <use xlink:href="#STIXGeneral-Bold-6b1" transform="translate(322.40625 0)"/>
+     <use xlink:href="#STIXGeneral-Bold-2c" transform="translate(339.109375 0)"/>
+     <use xlink:href="#STIXGeneral-Bold-6b1" transform="translate(378.015625 0)"/>
+     <use xlink:href="#STIXGeneral-Bold-31" transform="translate(394.71875 0)"/>
+     <use xlink:href="#STIXGeneral-Bold-6b1" transform="translate(466.921875 0)"/>
+     <use xlink:href="#STIXGeneral-Bold-2a" transform="translate(483.625 0)"/>
+     <use xlink:href="#STIXGeneral-Bold-3" transform="translate(561.421875 0)"/>
+     <use xlink:href="#STIXGeneral-Bold-3" transform="translate(586.421875 0)"/>
+     <use xlink:href="#STIXGeneral-Bold-3" transform="translate(611.421875 0)"/>
+     <use xlink:href="#STIXGeneral-Bold-24" transform="translate(636.421875 0)"/>
+     <use xlink:href="#STIXGeneral-Bold-6b1" transform="translate(708.625 0)"/>
+     <use xlink:href="#STIXGeneral-Bold-35" transform="translate(725.328125 0)"/>
+     <use xlink:href="#STIXGeneral-Bold-6b1" transform="translate(797.53125 0)"/>
+     <use xlink:href="#STIXGeneral-Bold-28" transform="translate(814.234375 0)"/>
+     <use xlink:href="#STIXGeneral-Bold-6b1" transform="translate(880.9375 0)"/>
+     <use xlink:href="#STIXGeneral-Bold-24" transform="translate(897.640625 0)"/>
     </g>
    </g>
    <g id="text_2">
@@ -1272,336 +1334,374 @@ z
     <!-- one commit, 5 files -->
     <g style="fill: #c3ccd8" transform="translate(423.36 216.72) scale(0.1728 -0.1728)">
      <defs>
-      <path id="SpaceGrotesk-Medium-2c" d="M 1965 -90 
-Q 1491 -90 1123 105 
-Q 755 301 544 665 
-Q 333 1030 333 1530 
-L 333 1626 
-Q 333 2125 544 2486 
-Q 755 2848 1123 3046 
-Q 1491 3245 1965 3245 
-Q 2438 3245 2809 3046 
-Q 3181 2848 3392 2486 
-Q 3603 2125 3603 1626 
-L 3603 1530 
-Q 3603 1030 3392 665 
-Q 3181 301 2809 105 
-Q 2438 -90 1965 -90 
+      <path id="STIXGeneral-Regular-52" d="M 3008 1478 
+Q 3008 806 2608 371 
+Q 2208 -64 1568 -64 
+Q 979 -64 582 368 
+Q 186 800 186 1459 
+Q 186 2125 582 2534 
+Q 979 2944 1626 2944 
+Q 2221 2944 2614 2537 
+Q 3008 2131 3008 1478 
 z
-M 1965 499 
-Q 2400 499 2672 777 
-Q 2944 1056 2944 1549 
-L 2944 1606 
-Q 2944 2099 2675 2377 
-Q 2406 2656 1965 2656 
-Q 1536 2656 1264 2377 
-Q 992 2099 992 1606 
-L 992 1549 
-Q 992 1056 1264 777 
-Q 1536 499 1965 499 
+M 2432 1306 
+Q 2432 2035 2112 2445 
+Q 1856 2765 1504 2765 
+Q 1171 2765 966 2493 
+Q 762 2221 762 1747 
+Q 762 928 1101 435 
+Q 1318 115 1677 115 
+Q 2029 115 2230 432 
+Q 2432 749 2432 1306 
 z
 " transform="scale(0.015625)"/>
-      <path id="SpaceGrotesk-Medium-2b" d="M 486 0 
-L 486 3155 
-L 1133 3155 
-L 1133 2682 
-L 1235 2682 
-Q 1325 2874 1555 3040 
-Q 1786 3206 2240 3206 
-Q 2598 3206 2876 3046 
-Q 3155 2886 3315 2595 
-Q 3475 2304 3475 1894 
-L 3475 0 
-L 2816 0 
-L 2816 1843 
-Q 2816 2253 2611 2448 
-Q 2406 2643 2048 2643 
-Q 1638 2643 1392 2374 
-Q 1146 2106 1146 1594 
-L 1146 0 
-L 486 0 
+      <path id="STIXGeneral-Regular-51" d="M 3104 0 
+L 1773 0 
+L 1779 96 
+Q 2016 115 2096 233 
+Q 2176 352 2176 672 
+L 2176 1946 
+Q 2176 2592 1709 2592 
+Q 1549 2592 1408 2515 
+Q 1267 2438 1050 2227 
+L 1050 461 
+Q 1050 269 1136 192 
+Q 1222 115 1466 96 
+L 1466 0 
+L 115 0 
+L 115 96 
+Q 358 115 435 214 
+Q 512 314 512 602 
+L 512 2157 
+Q 512 2394 467 2483 
+Q 422 2573 288 2573 
+Q 160 2573 102 2547 
+L 102 2656 
+Q 550 2784 979 2944 
+L 1030 2925 
+L 1030 2426 
+L 1037 2426 
+Q 1491 2944 1958 2944 
+Q 2323 2944 2518 2688 
+Q 2714 2432 2714 1958 
+L 2714 544 
+Q 2714 288 2790 205 
+Q 2867 122 3104 96 
+L 3104 0 
 z
 " transform="scale(0.015625)"/>
-      <path id="SpaceGrotesk-Medium-22" d="M 1933 -90 
-Q 1453 -90 1094 112 
-Q 736 314 534 682 
-Q 333 1050 333 1536 
-L 333 1613 
-Q 333 2106 531 2474 
-Q 730 2842 1085 3043 
-Q 1440 3245 1907 3245 
-Q 2362 3245 2704 3043 
-Q 3046 2842 3238 2483 
-Q 3430 2125 3430 1645 
-L 3430 1395 
-L 1005 1395 
-Q 1018 979 1283 732 
-Q 1549 486 1946 486 
-Q 2317 486 2505 652 
-Q 2694 819 2797 1037 
-L 3341 755 
-Q 3251 576 3081 377 
-Q 2912 179 2637 44 
-Q 2362 -90 1933 -90 
+      <path id="STIXGeneral-Regular-48" d="M 2611 1050 
+L 2714 1005 
+Q 2330 -64 1376 -64 
+Q 813 -64 486 329 
+Q 160 723 160 1389 
+Q 160 2074 525 2509 
+Q 890 2944 1485 2944 
+Q 2061 2944 2374 2502 
+Q 2560 2246 2592 1773 
+L 621 1773 
+Q 646 1370 700 1158 
+Q 755 947 915 730 
+Q 1184 378 1626 378 
+Q 1939 378 2153 531 
+Q 2368 685 2611 1050 
 z
-M 1011 1901 
-L 2758 1901 
-Q 2733 2259 2502 2460 
-Q 2272 2662 1901 2662 
-Q 1530 2662 1296 2460 
-Q 1062 2259 1011 1901 
+M 634 1978 
+L 1939 1978 
+Q 1882 2381 1750 2547 
+Q 1619 2714 1312 2714 
+Q 1043 2714 864 2525 
+Q 685 2336 634 1978 
 z
 " transform="scale(0.015625)"/>
-      <path id="SpaceGrotesk-Medium-3" transform="scale(0.015625)"/>
-      <path id="SpaceGrotesk-Medium-20" d="M 1952 -90 
-Q 1498 -90 1130 102 
-Q 762 294 547 659 
-Q 333 1024 333 1536 
-L 333 1619 
-Q 333 2131 547 2492 
-Q 762 2854 1130 3049 
-Q 1498 3245 1952 3245 
-Q 2406 3245 2726 3078 
-Q 3046 2912 3241 2637 
-Q 3437 2362 3494 2029 
-L 2854 1894 
-Q 2822 2106 2720 2278 
-Q 2618 2451 2432 2553 
-Q 2246 2656 1965 2656 
-Q 1690 2656 1469 2531 
-Q 1248 2406 1120 2172 
-Q 992 1939 992 1606 
-L 992 1549 
-Q 992 1216 1120 979 
-Q 1248 742 1469 620 
-Q 1690 499 1965 499 
-Q 2381 499 2598 713 
-Q 2816 928 2874 1261 
-L 3514 1114 
-Q 3437 787 3241 512 
-Q 3046 237 2726 73 
-Q 2406 -90 1952 -90 
+      <path id="STIXGeneral-Regular-3" transform="scale(0.015625)"/>
+      <path id="STIXGeneral-Regular-46" d="M 2547 998 
+L 2637 941 
+Q 2362 403 2112 205 
+Q 1786 -64 1376 -64 
+Q 845 -64 502 336 
+Q 160 736 160 1357 
+Q 160 2170 698 2618 
+Q 1094 2944 1562 2944 
+Q 1965 2944 2256 2749 
+Q 2547 2554 2547 2285 
+Q 2547 2176 2457 2096 
+Q 2368 2016 2246 2016 
+Q 2022 2016 1939 2310 
+L 1901 2451 
+Q 1850 2630 1773 2694 
+Q 1696 2758 1523 2758 
+Q 1133 2758 893 2451 
+Q 653 2144 653 1645 
+Q 653 1094 928 745 
+Q 1203 397 1645 397 
+Q 1920 397 2118 528 
+Q 2317 659 2547 998 
 z
 " transform="scale(0.015625)"/>
-      <path id="SpaceGrotesk-Medium-2a" d="M 486 0 
-L 486 3155 
-L 1133 3155 
-L 1133 2784 
-L 1235 2784 
-Q 1325 2950 1523 3078 
-Q 1722 3206 2061 3206 
-Q 2413 3206 2627 3062 
-Q 2842 2918 2950 2694 
-L 3053 2694 
-Q 3162 2912 3370 3059 
-Q 3578 3206 3962 3206 
-Q 4269 3206 4505 3081 
-Q 4742 2957 4883 2710 
-Q 5024 2464 5024 2099 
-L 5024 0 
-L 4365 0 
-L 4365 2048 
-Q 4365 2336 4208 2493 
-Q 4051 2650 3763 2650 
-Q 3456 2650 3270 2451 
-Q 3085 2253 3085 1882 
-L 3085 0 
-L 2426 0 
-L 2426 2048 
-Q 2426 2336 2269 2493 
-Q 2112 2650 1824 2650 
-Q 1517 2650 1331 2451 
-Q 1146 2253 1146 1882 
-L 1146 0 
-L 486 0 
+      <path id="STIXGeneral-Regular-50" d="M 4960 0 
+L 3565 0 
+L 3565 96 
+Q 3834 122 3907 208 
+Q 3981 294 3981 576 
+L 3981 1894 
+Q 3981 2278 3869 2444 
+Q 3757 2611 3488 2611 
+Q 3264 2611 3107 2521 
+Q 2950 2432 2803 2221 
+L 2803 608 
+Q 2803 301 2896 201 
+Q 2989 102 3264 96 
+L 3264 0 
+L 1830 0 
+L 1830 96 
+Q 2112 115 2189 188 
+Q 2266 262 2266 550 
+L 2266 1901 
+Q 2266 2611 1850 2611 
+Q 1670 2611 1468 2531 
+Q 1267 2451 1171 2336 
+Q 1088 2240 1088 2227 
+L 1088 448 
+Q 1088 243 1177 176 
+Q 1267 109 1523 96 
+L 1523 0 
+L 102 0 
+L 102 96 
+Q 371 102 460 195 
+Q 550 288 550 563 
+L 550 2150 
+Q 550 2387 499 2480 
+Q 448 2573 326 2573 
+Q 230 2573 122 2547 
+L 122 2656 
+Q 557 2778 1011 2944 
+L 1062 2925 
+L 1062 2451 
+L 1075 2451 
+Q 1363 2752 1584 2848 
+Q 1805 2944 2054 2944 
+Q 2560 2944 2733 2406 
+Q 3232 2944 3776 2944 
+Q 4518 2944 4518 1792 
+L 4518 493 
+Q 4518 282 4582 202 
+Q 4646 122 4794 109 
+L 4960 96 
+L 4960 0 
 z
 " transform="scale(0.015625)"/>
-      <path id="SpaceGrotesk-Medium-26" d="M 486 0 
-L 486 3155 
-L 1146 3155 
-L 1146 0 
-L 486 0 
+      <path id="STIXGeneral-Regular-4c" d="M 1152 4045 
+Q 1152 3904 1056 3811 
+Q 960 3718 819 3718 
+Q 685 3718 592 3811 
+Q 499 3904 499 4045 
+Q 499 4179 595 4275 
+Q 691 4371 826 4371 
+Q 966 4371 1059 4275 
+Q 1152 4179 1152 4045 
 z
-M 819 3584 
-Q 627 3584 496 3709 
-Q 365 3834 365 4032 
-Q 365 4230 496 4355 
-Q 627 4480 819 4480 
-Q 1018 4480 1146 4355 
-Q 1274 4230 1274 4032 
-Q 1274 3834 1146 3709 
-Q 1018 3584 819 3584 
-z
-" transform="scale(0.015625)"/>
-      <path id="SpaceGrotesk-Medium-31" d="M 1670 0 
-Q 1382 0 1212 173 
-Q 1043 346 1043 634 
-L 1043 2598 
-L 173 2598 
-L 173 3155 
-L 1043 3155 
-L 1043 4198 
-L 1702 4198 
-L 1702 3155 
-L 2643 3155 
-L 2643 2598 
-L 1702 2598 
-L 1702 749 
-Q 1702 557 1882 557 
-L 2541 557 
-L 2541 0 
-L 1670 0 
+M 1619 0 
+L 102 0 
+L 102 96 
+Q 435 115 521 211 
+Q 608 307 608 666 
+L 608 2118 
+Q 608 2342 563 2432 
+Q 518 2522 397 2522 
+Q 243 2522 128 2490 
+L 128 2592 
+L 1120 2944 
+L 1146 2918 
+L 1146 672 
+Q 1146 314 1226 218 
+Q 1306 122 1619 96 
+L 1619 0 
 z
 " transform="scale(0.015625)"/>
-      <path id="SpaceGrotesk-Medium-55" d="M 493 -870 
-L 493 -493 
-L 710 -493 
-Q 973 -493 973 -230 
-L 973 -26 
-L 877 -26 
-Q 653 -26 505 108 
-Q 358 243 358 448 
-Q 358 672 505 809 
-Q 653 947 877 947 
-Q 1101 947 1245 803 
-Q 1389 659 1389 429 
-L 1389 -237 
-Q 1389 -870 755 -870 
-L 493 -870 
+      <path id="STIXGeneral-Regular-57" d="M 1702 493 
+L 1786 422 
+Q 1478 -64 1011 -64 
+Q 448 -64 448 749 
+L 448 2675 
+L 109 2675 
+Q 83 2694 83 2720 
+Q 83 2771 192 2842 
+Q 435 2982 813 3526 
+Q 826 3546 874 3606 
+Q 922 3667 941 3706 
+Q 986 3706 986 3622 
+L 986 2880 
+L 1632 2880 
+L 1632 2675 
+L 986 2675 
+L 986 845 
+Q 986 538 1062 403 
+Q 1139 269 1318 269 
+Q 1510 269 1702 493 
 z
 " transform="scale(0.015625)"/>
-      <path id="SpaceGrotesk-Medium-3d" d="M 1933 -90 
-Q 1427 -90 1056 96 
-Q 685 282 483 621 
-Q 282 960 282 1408 
-L 282 1478 
-L 966 1478 
-L 966 1414 
-Q 966 1005 1219 758 
-Q 1472 512 1926 512 
-Q 2394 512 2650 768 
-Q 2906 1024 2906 1459 
-L 2906 1517 
-Q 2906 1933 2653 2182 
-Q 2400 2432 2010 2432 
-Q 1792 2432 1648 2365 
-Q 1504 2298 1417 2202 
-Q 1331 2106 1274 2016 
-L 422 2016 
-L 422 4480 
-L 3424 4480 
-L 3424 3872 
-L 1094 3872 
-L 1094 2554 
-L 1197 2554 
-Q 1261 2662 1379 2761 
-Q 1498 2861 1690 2925 
-Q 1882 2989 2150 2989 
-Q 2547 2989 2870 2819 
-Q 3194 2650 3386 2320 
-Q 3578 1990 3578 1523 
-L 3578 1453 
-Q 3578 986 3379 640 
-Q 3181 294 2813 102 
-Q 2445 -90 1933 -90 
+      <path id="STIXGeneral-Regular-f" d="M 531 -902 
+L 467 -781 
+Q 998 -422 998 -96 
+Q 998 -13 909 -13 
+Q 883 -13 822 -25 
+Q 762 -38 723 -38 
+Q 352 -38 352 288 
+Q 352 454 457 553 
+Q 563 653 736 653 
+Q 954 653 1101 496 
+Q 1248 339 1248 96 
+Q 1248 -198 1053 -473 
+Q 858 -749 531 -902 
 z
 " transform="scale(0.015625)"/>
-      <path id="SpaceGrotesk-Medium-163" d="M 1056 0 
-L 1056 2598 
-L 173 2598 
-L 173 3155 
-L 1056 3155 
-L 1056 3846 
-Q 1056 4134 1229 4307 
-Q 1402 4480 1690 4480 
-L 2458 4480 
-L 2458 3923 
-L 1901 3923 
-Q 1715 3923 1715 3731 
-L 1715 3155 
-L 3130 3155 
-L 3130 2598 
-L 1715 2598 
-L 1715 0 
-L 1056 0 
-z
-M 3130 0 
-L 3130 3155 
-L 3789 3155 
-L 3789 0 
-L 3130 0 
-z
-M 3462 3565 
-Q 3270 3565 3139 3689 
-Q 3008 3814 3008 4013 
-Q 3008 4218 3139 4339 
-Q 3270 4461 3462 4461 
-Q 3654 4461 3785 4339 
-Q 3917 4218 3917 4013 
-Q 3917 3814 3785 3689 
-Q 3654 3565 3462 3565 
+      <path id="STIXGeneral-Regular-18" d="M 2803 4358 
+L 2573 3814 
+Q 2534 3731 2400 3731 
+L 1158 3731 
+L 902 3187 
+Q 1606 3053 1920 2896 
+Q 2234 2739 2502 2368 
+Q 2726 2061 2726 1555 
+Q 2726 1094 2576 780 
+Q 2426 467 2099 224 
+Q 1664 -90 1011 -90 
+Q 646 -90 422 19 
+Q 198 128 198 307 
+Q 198 550 486 550 
+Q 717 550 960 352 
+Q 1210 147 1414 147 
+Q 1747 147 2012 480 
+Q 2278 813 2278 1229 
+Q 2278 1843 1850 2189 
+Q 1293 2637 486 2637 
+Q 410 2637 410 2688 
+L 416 2720 
+L 1114 4237 
+L 2438 4237 
+Q 2547 4237 2608 4269 
+Q 2669 4301 2746 4403 
+L 2803 4358 
 z
 " transform="scale(0.015625)"/>
-      <path id="SpaceGrotesk-Medium-29" d="M 486 0 
-L 486 4480 
-L 1146 4480 
-L 1146 0 
-L 486 0 
+      <path id="STIXGeneral-Regular-8f6" d="M 3347 0 
+L 1939 0 
+L 1939 96 
+Q 2234 122 2304 211 
+Q 2374 301 2374 634 
+L 2374 2304 
+Q 2374 2547 2268 2608 
+Q 2163 2669 1715 2669 
+L 1178 2669 
+L 1178 576 
+Q 1178 307 1264 211 
+Q 1350 115 1613 96 
+L 1613 0 
+L 205 0 
+L 205 96 
+Q 474 102 557 204 
+Q 640 307 640 614 
+L 640 2669 
+L 211 2669 
+L 211 2880 
+L 646 2880 
+Q 704 3392 784 3622 
+Q 864 3853 1107 4070 
+Q 1459 4371 2048 4371 
+Q 2426 4371 2637 4256 
+Q 2848 4141 2848 3936 
+Q 2848 3674 2624 3674 
+Q 2534 3674 2444 3757 
+Q 2355 3840 2284 3942 
+Q 2214 4045 2099 4128 
+Q 1984 4211 1850 4211 
+Q 1562 4211 1370 4006 
+Q 1242 3878 1210 3705 
+Q 1178 3533 1178 3168 
+L 1178 2880 
+L 2163 2880 
+Q 2458 2880 2893 2950 
+L 2925 2925 
+Q 2912 2586 2912 2291 
+L 2912 634 
+Q 2912 333 3005 227 
+Q 3098 122 3347 96 
+L 3347 0 
 z
 " transform="scale(0.015625)"/>
-      <path id="SpaceGrotesk-Medium-30" d="M 1779 -90 
-Q 1178 -90 781 179 
-Q 384 448 294 992 
-L 909 1139 
-Q 960 877 1081 723 
-Q 1203 570 1385 506 
-Q 1568 442 1779 442 
-Q 2093 442 2262 563 
-Q 2432 685 2432 877 
-Q 2432 1069 2272 1158 
-Q 2112 1248 1798 1306 
-L 1581 1344 
-Q 1261 1402 998 1510 
-Q 736 1619 582 1811 
-Q 429 2003 429 2304 
-Q 429 2752 761 2998 
-Q 1094 3245 1645 3245 
-Q 2176 3245 2518 3005 
-Q 2861 2765 2963 2355 
-L 2349 2182 
-Q 2291 2470 2105 2588 
-Q 1920 2707 1645 2707 
-Q 1376 2707 1222 2608 
-Q 1069 2509 1069 2330 
-Q 1069 2138 1219 2048 
-Q 1370 1958 1626 1914 
-L 1850 1875 
-Q 2189 1818 2470 1715 
-Q 2752 1613 2915 1421 
-Q 3078 1229 3078 909 
-Q 3078 435 2726 172 
-Q 2374 -90 1779 -90 
+      <path id="STIXGeneral-Regular-4f" d="M 1645 0 
+L 134 0 
+L 134 96 
+Q 435 122 531 221 
+Q 627 320 627 589 
+L 627 3590 
+Q 627 3821 569 3910 
+Q 512 4000 358 4000 
+Q 224 4000 122 3987 
+L 122 4090 
+Q 730 4237 1133 4371 
+L 1165 4346 
+L 1165 557 
+Q 1165 288 1254 201 
+Q 1344 115 1645 96 
+L 1645 0 
+z
+" transform="scale(0.015625)"/>
+      <path id="STIXGeneral-Regular-56" d="M 998 1926 
+L 1664 1523 
+Q 1984 1331 2105 1164 
+Q 2227 998 2227 736 
+Q 2227 416 1961 176 
+Q 1696 -64 1331 -64 
+Q 1030 -64 864 -6 
+Q 691 51 570 51 
+Q 461 51 416 -26 
+L 333 -26 
+L 333 979 
+L 435 979 
+Q 538 512 730 294 
+Q 922 77 1248 77 
+Q 1485 77 1632 211 
+Q 1779 346 1779 550 
+Q 1779 845 1440 1030 
+L 1094 1222 
+Q 326 1651 326 2150 
+Q 326 2522 566 2730 
+Q 806 2938 1210 2938 
+Q 1491 2938 1638 2867 
+Q 1754 2816 1818 2816 
+Q 1862 2816 1920 2880 
+L 1990 2880 
+L 2022 2010 
+L 1926 2010 
+Q 1818 2445 1654 2621 
+Q 1491 2797 1203 2797 
+Q 986 2797 854 2688 
+Q 723 2579 723 2362 
+Q 723 2253 796 2128 
+Q 870 2003 998 1926 
 z
 " transform="scale(0.015625)"/>
      </defs>
-     <use xlink:href="#SpaceGrotesk-Medium-2c"/>
-     <use xlink:href="#SpaceGrotesk-Medium-2b" transform="translate(61.5 0)"/>
-     <use xlink:href="#SpaceGrotesk-Medium-22" transform="translate(123 0)"/>
-     <use xlink:href="#SpaceGrotesk-Medium-3" transform="translate(181.40625 0)"/>
-     <use xlink:href="#SpaceGrotesk-Medium-20" transform="translate(206.90625 0)"/>
-     <use xlink:href="#SpaceGrotesk-Medium-2c" transform="translate(266.109375 0)"/>
-     <use xlink:href="#SpaceGrotesk-Medium-2a" transform="translate(327.609375 0)"/>
-     <use xlink:href="#SpaceGrotesk-Medium-2a" transform="translate(413.3125 0)"/>
-     <use xlink:href="#SpaceGrotesk-Medium-26" transform="translate(499.015625 0)"/>
-     <use xlink:href="#SpaceGrotesk-Medium-31" transform="translate(524.609375 0)"/>
-     <use xlink:href="#SpaceGrotesk-Medium-55" transform="translate(570.40625 0)"/>
-     <use xlink:href="#SpaceGrotesk-Medium-3" transform="translate(594.609375 0)"/>
-     <use xlink:href="#SpaceGrotesk-Medium-3d" transform="translate(620.109375 0)"/>
-     <use xlink:href="#SpaceGrotesk-Medium-3" transform="translate(680.015625 0)"/>
-     <use xlink:href="#SpaceGrotesk-Medium-163" transform="translate(705.515625 0)"/>
-     <use xlink:href="#SpaceGrotesk-Medium-29" transform="translate(772.3125 0)"/>
-     <use xlink:href="#SpaceGrotesk-Medium-22" transform="translate(797.90625 0)"/>
-     <use xlink:href="#SpaceGrotesk-Medium-30" transform="translate(856.3125 0)"/>
+     <use xlink:href="#STIXGeneral-Regular-52"/>
+     <use xlink:href="#STIXGeneral-Regular-51" transform="translate(50 0)"/>
+     <use xlink:href="#STIXGeneral-Regular-48" transform="translate(100 0)"/>
+     <use xlink:href="#STIXGeneral-Regular-3" transform="translate(144.40625 0)"/>
+     <use xlink:href="#STIXGeneral-Regular-46" transform="translate(169.40625 0)"/>
+     <use xlink:href="#STIXGeneral-Regular-52" transform="translate(213.8125 0)"/>
+     <use xlink:href="#STIXGeneral-Regular-50" transform="translate(263.8125 0)"/>
+     <use xlink:href="#STIXGeneral-Regular-50" transform="translate(341.609375 0)"/>
+     <use xlink:href="#STIXGeneral-Regular-4c" transform="translate(419.40625 0)"/>
+     <use xlink:href="#STIXGeneral-Regular-57" transform="translate(447.203125 0)"/>
+     <use xlink:href="#STIXGeneral-Regular-f" transform="translate(475 0)"/>
+     <use xlink:href="#STIXGeneral-Regular-3" transform="translate(500 0)"/>
+     <use xlink:href="#STIXGeneral-Regular-18" transform="translate(525 0)"/>
+     <use xlink:href="#STIXGeneral-Regular-3" transform="translate(575 0)"/>
+     <use xlink:href="#STIXGeneral-Regular-8f6" transform="translate(600 0)"/>
+     <use xlink:href="#STIXGeneral-Regular-4f" transform="translate(655.796875 0)"/>
+     <use xlink:href="#STIXGeneral-Regular-48" transform="translate(683.59375 0)"/>
+     <use xlink:href="#STIXGeneral-Regular-56" transform="translate(728 0)"/>
     </g>
    </g>
    <g id="text_9">

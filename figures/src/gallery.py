@@ -383,9 +383,9 @@ def _to_scale(ax, w_in, h_in):
     ax.set(xlim=(xc - w_in / 2 * km_per_in, xc + w_in / 2 * km_per_in),
            ylim=(yc - h_in / 2 * km_per_in, yc + h_in / 2 * km_per_in))
     ax.axis("off")
-    ax.add_patch(Circle((0, 0), r_lhc, fill=False, ec=COLOUR["LHC"], lw=2.4))
+    ax.add_patch(Circle((0, 0), r_lhc, fill=False, ec=COLOUR["LHC"], lw=1.6))
     ax.add_patch(Circle(SPS_C, SIZE_M["SPS"] / 1000 / (2 * math.pi), fill=False,
-                        ec=COLOUR["SPS"], lw=2.0))
+                        ec=COLOUR["SPS"], lw=1.4))
     ax.add_patch(Circle(PS_C, SIZE_M["PS"] / 1000 / (2 * math.pi), fill=False,
                         ec=COLOUR["PS"], lw=1.0))
     ax.add_patch(Circle(PSB_C, SIZE_M["PSB"] / 1000 / (2 * math.pi), fill=False,
@@ -425,7 +425,7 @@ def _to_scale(ax, w_in, h_in):
 
 
 def _arrow(ax, a, b, colour=style.DIM):
-    ax.add_patch(FancyArrowPatch(a, b, arrowstyle="-|>", mutation_scale=11, lw=1.6,
+    ax.add_patch(FancyArrowPatch(a, b, arrowstyle="-|>", mutation_scale=10, lw=1.1,
                                  color=colour, shrinkA=0, shrinkB=0, zorder=3,
                                  joinstyle="miter"))
 
@@ -439,7 +439,7 @@ def _schematic(ax, w_in, h_in):
     cx, cy, R = 3.38, 1.98, 1.05
     apo = R * math.cos(math.pi / 8)
     ax.add_patch(RegularPolygon((cx, cy), 8, radius=R, orientation=math.pi / 8,
-                                fill=False, ec=COLOUR["LHC"], lw=3.2, joinstyle="miter",
+                                fill=False, ec=COLOUR["LHC"], lw=1.8, joinstyle="miter",
                                 zorder=2))
     point = {k: (cx + apo * math.cos(math.radians(t)), cy + apo * math.sin(math.radians(t)))
              for k, t in ((1, -90), (2, -135), (5, 90), (8, -45))}
@@ -453,7 +453,7 @@ def _schematic(ax, w_in, h_in):
     for a, b in (("Linac4", "PSB"), ("PSB", "PS"), ("PS", "SPS")):
         _arrow(ax, (x0, ys[a] - 0.16), (x0, ys[b] + 0.16))
     feet = {p: (point[p][0] + s * (point[p][1] - trunk), trunk) for p, s in ((2, -1), (8, 1))}
-    ax.plot([x0 + 0.16, feet[8][0]], [trunk, trunk], color=style.DIM, lw=1.6, zorder=3,
+    ax.plot([x0 + 0.16, feet[8][0]], [trunk, trunk], color=style.DIM, lw=1.1, zorder=3,
             solid_capstyle="butt")
     for p, s in ((2, -1), (8, 1)):
         px, py = point[p]
@@ -461,10 +461,10 @@ def _schematic(ax, w_in, h_in):
     for key, label, size, colour in MACHINES[:4]:
         y = ys[key]
         if key == "Linac4":
-            ax.plot([x0 - 0.14, x0 + 0.14], [y, y], color=colour, lw=7,
-                    solid_capstyle="round", zorder=5)
+            ax.plot([x0 - 0.14, x0 + 0.14], [y, y], color=colour, lw=4,
+                    solid_capstyle="butt", zorder=5)
         else:
-            ax.add_patch(Circle((x0, y), 0.13, facecolor=BG, edgecolor=colour, lw=2.4,
+            ax.add_patch(Circle((x0, y), 0.13, facecolor=BG, edgecolor=colour, lw=1.5,
                                 zorder=5))
         ty = y if key != "SPS" else y - 0.27
         t = ax.text(x0 + 0.27, ty, label, ha="left", va="center", fontsize=10.5, color=colour)

@@ -30,16 +30,16 @@ def _anscombes_quartet():
     for ax, (label, (x, y)) in zip(axes.flat, datasets.items()):
         m, b = np.polyfit(x, y, 1)
         r = np.corrcoef(x, y)[0, 1]
-        ax.scatter(x, y, s=42, color=style.ACCENT, zorder=3, edgecolor="none")
-        ax.plot(xs_line, m * xs_line + b, color=style.CYCLE[1], lw=1.6, zorder=2)
+        ax.scatter(x, y, s=20, color=style.ACCENT, zorder=3, edgecolor="none")
+        ax.plot(xs_line, m * xs_line + b, color=style.CYCLE[1], lw=1.2, zorder=2)
         ax.set_title(f"Dataset {label}")
-        ax.text(0.04, 0.92, f"r = {r:.2f}   y = {b:.2f} + {m:.2f}x",
-                transform=ax.transAxes, fontsize=8.5, color=style.DIM, va="top")
+        ax.text(0.04, 0.93, f"$r$ = {r:.2f}   $y$ = {b:.2f} + {m:.2f}$x$",
+                transform=ax.transAxes, fontsize=10, color=style.FG2, va="top")
         ax.set_xlim(2, 20)
         ax.set_ylim(2, 16)
     for ax in axes:
-        ax.set_xlabel("x")
-    axes[0].set_ylabel("y")
+        ax.set_xlabel("$x$")
+    axes[0].set_ylabel("$y$")
     style.save(fig, "viz_distributions_i_anscombes_quartet")
 
 
@@ -50,10 +50,12 @@ def _anscombes_quartet():
 def _titanic_density():
     age = sns.load_dataset("titanic")["age"].dropna().to_numpy()
     fig, ax = style.new_fig(7.2, 4.4)
-    ax.hist(age, bins=np.arange(0, 82, 4), density=True, color=style.ACCENT,
-            alpha=0.35, edgecolor=style.ACCENT, linewidth=1.0)
+    # as a paper draws a histogram: a light fill under one step outline
+    ax.hist(age, bins=np.arange(0, 82, 4), density=True, histtype="stepfilled",
+            facecolor=mcolors.to_rgba(style.ACCENT, 0.3), edgecolor=style.ACCENT,
+            linewidth=1.0)
     xs = np.linspace(0, 80, 300)
-    ax.plot(xs, gaussian_kde(age)(xs), color=style.ACCENT, lw=2.2)
+    ax.plot(xs, gaussian_kde(age)(xs), color=style.CYCLE[1], lw=1.8)
     ax.set_xlim(0, 80)
     ax.set_xlabel("Age (years)")
     ax.set_ylabel("Density")
@@ -75,7 +77,8 @@ def _titanic_hist_binwidth():
     fig, axes = plt.subplots(1, 3, figsize=(10.4, 3.6), sharey=False)
     for ax, (width, title, bad) in zip(axes, panels):
         edges = np.arange(0, age.max() + width, width)
-        ax.hist(age, bins=edges, color=style.ACCENT, alpha=0.85, edgecolor="none")
+        ax.hist(age, bins=edges, histtype="stepfilled", linewidth=0.9,
+                facecolor=mcolors.to_rgba(style.ACCENT, 0.35), edgecolor=style.ACCENT)
         ax.set_title(title, fontsize=12, color=style.BAD if bad else style.FG)
         ax.set_xlabel("Age (years)")
         ax.set_xlim(0, 80)
@@ -90,17 +93,17 @@ def _titanic_hist_binwidth():
 def _titanic_ecdf():
     age = sns.load_dataset("titanic")["age"].dropna().to_numpy()
     fig, ax = style.new_fig(7.2, 4.4)
-    ax.ecdf(age, color=style.ACCENT, lw=2.2)
+    ax.ecdf(age, color=style.ACCENT, lw=1.6)
     q1, med, q3 = np.percentile(age, [25, 50, 75])
     ax.axhline(0.5, color=style.DIM, lw=0.8, ls=":", zorder=1)
-    ax.axvline(med, color=style.CYCLE[1], lw=1.2, ls="--", zorder=1)
+    ax.axvline(med, color=style.CYCLE[1], lw=1.0, ls="--", zorder=1)
     ax.annotate(f"median ≈ {med:.0f} yr", xy=(med, 0.5), xytext=(med + 4, 0.36),
-                color=style.CYCLE[1], fontsize=10,
-                arrowprops=dict(arrowstyle="->", color=style.CYCLE[1], lw=1))
+                color=style.CYCLE[1], fontsize=11,
+                arrowprops=dict(arrowstyle="->", color=style.CYCLE[1], lw=0.8))
     for q, lbl in [(q1, "Q1"), (q3, "Q3")]:
         y = 0.25 if q == q1 else 0.75
-        ax.plot(q, y, "o", ms=6, color=style.CYCLE[1], zorder=3)
-        ax.annotate(lbl, xy=(q, y), xytext=(q - 3, y + 0.06), color=style.DIM, fontsize=9, ha="right")
+        ax.plot(q, y, "o", ms=5, color=style.CYCLE[1], zorder=3)
+        ax.annotate(lbl, xy=(q, y), xytext=(q - 3, y + 0.06), color=style.FG2, fontsize=11, ha="right")
     ax.set_xlim(0, 80)
     ax.set_ylim(0, 1.02)
     ax.set_xlabel("Age (years)")
@@ -318,12 +321,16 @@ def _weather_boxplot():
     data = _weather_by_season()
     fig, ax = style.new_fig(4.8, 3.8)
     bx = ax.boxplot([data[g] for g in SEASON_ORDER], positions=range(3), widths=0.5,
-                    patch_artist=True, medianprops=dict(color=style.FG, lw=1.6),
-                    whiskerprops=dict(color=style.DIM), capprops=dict(color=style.DIM),
+                    patch_artist=True, medianprops=dict(color=style.FG, lw=1.5),
                     flierprops=dict(marker="o", ms=2, markerfacecolor=style.DIM,
                                     markeredgecolor="none", alpha=0.5))
-    for g, box in zip(SEASON_ORDER, bx["boxes"]):
-        box.set_facecolor(SEASON_COLOR[g]); box.set_alpha(0.55); box.set_edgecolor(SEASON_COLOR[g])
+    # each box a light fill with a thin edge, its whiskers and caps in its colour
+    for i, g in enumerate(SEASON_ORDER):
+        color = SEASON_COLOR[g]
+        box = bx["boxes"][i]
+        box.set_facecolor(mcolors.to_rgba(color, 0.35)); box.set_edgecolor(color); box.set_linewidth(1.0)
+        for line in bx["whiskers"][2 * i:2 * i + 2] + bx["caps"][2 * i:2 * i + 2]:
+            line.set_color(color); line.set_linewidth(1.0)
     _weather_axes(ax)
     ax.set_title("Boxplot")
     style.save(fig, "viz_distributions_ii_weather_boxplot")
@@ -335,7 +342,11 @@ def _weather_violin():
     parts = ax.violinplot([data[g] for g in SEASON_ORDER], positions=range(3), widths=0.8,
                           showmedians=True, showextrema=False, points=200)
     for g, body in zip(SEASON_ORDER, parts["bodies"]):
-        body.set_facecolor(SEASON_COLOR[g]); body.set_edgecolor(SEASON_COLOR[g]); body.set_alpha(0.6)
+        # a light fill with a thin edge in the full colour (alpha None: the
+        # body's own 0.3 would fade the edge too)
+        body.set_alpha(None)
+        body.set_facecolor(mcolors.to_rgba(SEASON_COLOR[g], 0.35))
+        body.set_edgecolor(SEASON_COLOR[g]); body.set_linewidth(1.0)
     parts["cmedians"].set_color(style.FG)
     _weather_axes(ax)
     ax.set_title("Violin")

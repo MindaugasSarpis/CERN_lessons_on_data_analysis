@@ -61,8 +61,8 @@ def _polar_vs_cartesian():
     ax2 = fig.add_subplot(1, 2, 2, projection="polar")
     ax2.plot(theta, r, color=style.CYCLE[1])
     ax2.set_title("on a circle: 360° meets 0°", color=style.FG)
-    ax2.tick_params(colors=style.DIM, labelsize=8)
-    ax2.grid(color=style.GRID)
+    ax2.tick_params(colors=style.DIM, labelsize=10)
+    ax2.grid(color=style.GRID)  # a polar plot is read off its circles and rays
     style.save(fig, "viz_coordinates_axes_polar_vs_cartesian")
 
 
@@ -78,14 +78,13 @@ def _sqrt_scale():
                              (ax2, "sqrt", "square-root — every count visible")):
         # Dots, not bars: a non-linear axis has no honest bar base.
         ax.errorbar(cats, counts, yerr=np.sqrt(counts), fmt="o", ms=5,
-                    color=style.ACCENT, ecolor=style.FG, elinewidth=1.4,
-                    capsize=3, zorder=3)
+                    color=style.ACCENT, ecolor=style.FG, elinewidth=1.0,
+                    capsize=2, zorder=3)
         ax.set_ylim(0, (counts + np.sqrt(counts)).max() * 1.06)
         if scale == "sqrt":
             ax.set_yscale("function", functions=(np.sqrt, np.square))
             ax.set_yticks([0, 1, 5, 10, 20, 30, 50])
-        ax.set_title(label, fontsize=10, color=style.DIM)
-        ax.tick_params(axis="x", rotation=45, labelsize=8)
+        ax.set_title(label, fontsize=12)
         ax.set_ylabel("events")
     style.save(fig, "viz_coordinates_axes_sqrt_scale")
 
@@ -114,7 +113,7 @@ def _legend_samples_bad():
 def _legend_samples_good():
     fig, ax = style.new_fig(5.1, 3.4)
     for (name, v), c in zip(GDP.items(), (style.CYCLE[1], style.ACCENT)):
-        ax.plot(YEARS_GDP, v, color=c, lw=2)
+        ax.plot(YEARS_GDP, v, color=c, lw=1.6)
         ax.text(YEARS_GDP[-1] + 0.12, v[-1] + (0.35 if name == "China" else -0.35),
                 name, color=c, va="center", fontsize=11)
     ax.set_xticks(YEARS_GDP)

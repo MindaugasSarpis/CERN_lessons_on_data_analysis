@@ -604,15 +604,17 @@ def _d0_hist2d():
     ax.grid(False)
 
     inside = (pt >= PT_RANGE[0]) & (pt < PT_RANGE[1])
-    top.hist(m[inside], bins=M_BINS, range=M_RANGE, histtype="stepfilled",
-             color=style.ACCENT)
+    for kind, kw in (("stepfilled", dict(alpha=0.3, lw=0)), ("step", dict(lw=1.2))):
+        top.hist(m[inside], bins=M_BINS, range=M_RANGE, histtype=kind,
+                 color=style.ACCENT, **kw)
     top.tick_params(labelbottom=False)
     top.set_ylabel("per MeV/$c^2$")
     top.xaxis.grid(False)
 
     in_mass = (m >= M_RANGE[0]) & (m < M_RANGE[1])
-    right.hist(pt[in_mass], bins=PT_BINS, range=PT_RANGE, histtype="stepfilled",
-               color=style.ACCENT, orientation="horizontal")
+    for kind, kw in (("stepfilled", dict(alpha=0.3, lw=0)), ("step", dict(lw=1.2))):
+        right.hist(pt[in_mass], bins=PT_BINS, range=PT_RANGE, histtype=kind,
+                   color=style.ACCENT, orientation="horizontal", **kw)
     right.tick_params(labelleft=False)
     right.set_xlabel("per 100 MeV/$c$")
     right.yaxis.grid(False)

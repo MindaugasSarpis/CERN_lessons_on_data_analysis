@@ -177,7 +177,7 @@ def _spaghetti_bad():
     fig, ax = plt.subplots(figsize=(6, 4))
     for k, (year, (doy, dm)) in enumerate(data.items()):
         ax.plot(doy, dm, lw=0.8, color=plt.cm.rainbow(k / 9), label=year)
-    ax.legend(ncol=2, fontsize=7, loc="lower center")
+    ax.legend(ncol=2, fontsize=9.5, loc="lower center")
     ax.set_xlabel("day of the year")
     ax.set_ylabel("daily mean (°C)")
     ax.set_title("Daily Means, 2016–2025", color=style.BAD)
