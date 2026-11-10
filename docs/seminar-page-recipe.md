@@ -18,8 +18,11 @@ need the run sheet in the seminar, it clutters the text" (the run sheet
 table at the top of every page was removed). Seminar 5 (18 Oct) is the
 model for the HSF look.
 Extended on 10 November 2026, the day of Seminar 7: every page builds up
-very gradually from an empty folder and hands out no file (rules 2 and 7);
-Seminar 7 is the model for that.
+very gradually from an empty folder and hands out no file (rules 2 and 7).
+Changed the same evening, after Seminar 7 was taught (rule 7 and the
+layout): a page is a showcase of complete, real examples run by the
+lecturer, then a problem the students solve in pairs, LLMs included. Spec:
+`docs/superpowers/specs/2026-11-10-seminars-showcase-then-problem-design.md`.
 
 ## Rules
 
@@ -40,11 +43,11 @@ Seminar 7 is the model for that.
    to resources. This in my opinion will be much cleaner. Already having
    data makes it look very complicated."). Section 1 makes a new, empty
    folder and, when the seminar needs packages, a conda environment typed
-   with `conda create`. The data starts as a list typed into the script,
-   moves to a small CSV file the students type from the page, and only
-   then, if the session needs a real file, comes from an openly available
-   data set at its public address, late in the page, with its source and
-   licence in one line. No `weather-sNN.zip`, no ready-made project, module
+   with `conda create`. Data is typed from the page (a list, a small CSV
+   file) or fetched by the code itself from an openly available data set
+   at its public address, with its source and licence in one line (the
+   Open-Meteo archive for Vilnius's real weather, CC BY 4.0, NOAA's Mauna
+   Loa CO₂, NASA GISTEMP, CERN Open Data, Rdatasets, Our World in Data). No `weather-sNN.zip`, no ready-made project, module
    or script, nothing added to the course's resources. The pages of
    Seminars 8 to 12 still start from `weather-sNN.zip` (the rule before
    10 Nov 2026: release `seminar-files` of
@@ -94,78 +97,164 @@ Seminar 7 is the model for that.
    hidden clock and minutes (an HTML comment, for planning only: the
    lecturer does not want times on the page) and one sentence of purpose:
    `<!-- 0:20 · 10 min -->`, a blank line, `A commit is one saved state: id, author, date, message.`
-5. **Few boxes.** A section ends with one **Check:** line in bold (not a
-   box). Each part ends with one `!!! question "Task: …"` and its
-   `??? note "Answer"`. A warning box only for the one slip that stops the
+5. **Few boxes.** A setup section ends with one **Check:** line in bold
+   (not a box); a showcase example ends with **Notice:** and **Ask the
+   room:** and its folded `??? note "Answer"`; the problem of Part 3 takes
+   the place of the Tasks of earlier pages. A warning box only for the one slip that stops the
    room (a pager, a missing install), at most one per section. No "what to
    skip" boxes, no "Tell the room" paragraphs, no "How to use this page".
 6. **Real outputs.** Every output was printed by a real run (zsh,
    Git Bash, Python of the course). Ids, dates and timings that differ
    per laptop are marked once: "Your ids differ".
-7. **A very gradual build-up, one new thing per section** (lecturer,
-   10 Nov 2026: "For the seminar, I would like a very gradual build up of a
-   "mini project" with first one sript, a list, and plotting it on the
-   screen, then saving it, then adding gradually axes, annotations, then
-   handing out the list to a csv file and importing it, then making a
-   python function to draw from different csv files, eventually passing
-   parameters from the cli"). The page starts with one script and a few
-   values typed from the page. Each section adds one thing to the same
-   script and shows the whole change, the run and what comes back. The
-   order of growth: a list in the script; the result on the screen; the
-   result saved to a file; labels, then annotations; the list in a small
-   CSV file the students type; a function that reads different files;
-   parameters from the command line; last, and only if a real file is
-   needed, an openly available data set.
+7. **A showcase, then a problem** (lecturer, 10 Nov 2026, evening, after
+   Seminar 7: "The seminar we just went to write our own plotting script
+   bit by bit, I ran out of steam a bit and also forgot how to manage axes
+   in matplotlib. It would be a good idea for this and all seminars to have
+   a bit of a showcase with real examples, libraries and so on and then
+   hand over to the students a problem they try to solve). They will all
+   use claude and other LLMs so should be not just plain programming but
+   more focus on ideas, intuition."). Four parts:
+   - **Part 1 · Set up** (≤ 15 min): the new, empty folder; the conda
+     environment and the week's package. Here, and only here, steps stay
+     small and gradual (a tool's first contact in Seminars 1, 3 and 4).
+   - **Part 2 · Showcase** (35–45 min): three to five complete examples the
+     lecturer copies from the page and runs. Each is one script of at most
+     about 25 lines that runs as it stands in the empty folder (data typed,
+     or fetched from an open data set's public address), made with the
+     week's real library, and shows one idea of the lecture. On the page:
+     a heading that says what it shows, one line with the idea, the code,
+     its real output (printed lines, or the figure as an SVG in
+     `seminars/img/sNN/`), **Notice:** one line, **Ask the room:** one
+     question about intuition with its answer folded. Where the idea has a
+     common mistake, one example shows it next to its fix. The part ends
+     with a **library card**: a table of the ten to fifteen calls the
+     examples used, one line each, so nobody has to remember them.
+   - **Part 3 · The problem** (45–55 min): one real question the week's idea
+     answers, on an open data set at its public address (source and
+     licence named), in pairs, with any tools, LLMs included (the page says
+     so). Always four steps: **Predict** (a guess and one reason, before
+     any code); **Solve**; **Check the machine's work** (two or three checks
+     an LLM cannot do for you: a number by hand on five rows, the unit,
+     axis, error bar or sample size read off the result, the answer against
+     the prediction); **Hand in** (one figure or one number with its
+     uncertainty and two sentences in your own words). Two or three folded
+     hints (`??? tip "Hint 1"`), then a folded worked solution with its
+     real output (`??? note "One solution"`). A variant for a student with
+     project data: the same question on their own file.
+   - **Part 4 · Show and discuss** (≈ 15 min): two or three pairs show their
+     answer; two or three questions for the room with folded answers; the
+     idea in one sentence.
    [Seminar 7](../lectures/workbook/docs/seminars/seminar_07.md) is the
-   worked example (10 Nov 2026).
+   worked example (rebuilt 10–11 Nov 2026).
 
 ## Layout
 
 ```text
 # Seminar NN · Topic
 
-**Paired lecture:** NN Title · **Format:** follow-along, in class
+**Paired lecture:** NN Title · **Format:** a showcase, then a problem, in class
 
 <!-- ~120 min: the length pnpm timing:check reads -->
 
-**Today's goal:** one sentence: what every student has at the end.
+**Today's question:** one real question, answered in Part 3.
 
 One sentence: where the typing happens.
 
-**If time runs short:** one sentence.
+**If time runs short:** one sentence (which showcase example to leave out).
 
-??? info "Before the session"   (room, you, keys: three short bullets)
-
----
-
-## Part 1 · Name { #part-1 }
-
-**0:00 to 0:20** · at most one sentence.
+??? info "Before the session"   (room, you, the data's addresses: short bullets)
 
 ---
 
-### 1. Title that says what is done { #anchor }
+## Part 1 · Set up { #part-1 }
+
+### 1. Make the folder and the environment { #start }
 
 <!-- 0:00 · 10 min -->
-
-One sentence of purpose.
 
 1. One line of instruction.
 
     ```text
-    the line typed
-    ```
-
-    ```text
+    $ the line typed
     its output
     ```
 
-2. ...
-
 **Check:** the result the room should have.
 
-!!! question "Task: …"            (once per part, after its last section)
+---
+
+## Part 2 · Showcase { #part-2 }
+
+One sentence: the lecturer runs these, the room watches.
+
+### 2. What the example shows { #anchor }
+
+<!-- 0:15 · 8 min -->
+
+The idea in one line.
+
+```python
+complete script, ≤ ~25 lines, runs as it stands
+```
+
+```text
+its printed output
+```
+
+![What the figure shows](img/sNN/name.svg)
+
+**Notice:** one line.
+
+**Ask the room:** one question.
+
 ??? note "Answer"
+    Two or three lines.
+
+### 6. Library card { #card }
+
+| Call | What it does |
+|--|--|
+| `ax.set_xlim(0, 12)` | the range of the x axis |
+
+---
+
+## Part 3 · The problem { #part-3 }
+
+### 7. The question { #problem }
+
+<!-- 0:55 · 50 min -->
+
+The question, the data's address, its source and licence. Work in pairs;
+any tools, an LLM too.
+
+1. **Predict.** …
+2. **Solve.** …
+3. **Check the machine's work.** …
+4. **Hand in.** …
+
+??? tip "Hint 1"
+??? tip "Hint 2"
+??? note "One solution"   (code, real output, figure)
+
+**With your own project data:** the same question on your file.
+
+---
+
+## Part 4 · Show and discuss { #part-4 }
+
+### 8. Two or three answers { #discuss }
+
+<!-- 1:45 · 15 min -->
+
+**Ask the room:** … ??? note "Answer"
+
+The idea in one sentence.
+
+---
+
+## Optional, if the room is fast { #optional }
+
+## Aims practised
 ```
 
 - The comment `<!-- ~120 min ... -->` under the header line must stay:
@@ -176,6 +265,9 @@ One sentence of purpose.
   every `{ #anchor }` that another page links to.
 - End with `## Aims practised` (three bullets). No "Stretch goals" or
   "If students ask for more" lists: an extra is an optional section.
+- A showcase figure is the SVG the example's own code saved, copied to
+  `lectures/workbook/docs/seminars/img/sNN/` (vector, as on the slides);
+  the code on the page and the code that made the figure are the same.
 
 - When a step differs by system, put each variant in a tab, inside the
   numbered step and indented with it:

@@ -1355,3 +1355,27 @@ slide, which imported that module: "why is this still here?"
   from a zip; each is reworked before it is taught.
 - Lecture 7's slide "Plot Every Hour" reads `weather.csv` in its own code,
   and Minard's map shows English place names.
+
+## 2026-11-10 · Lecture 7 and Seminar 7 delivered: the lecturer's notes
+
+**The lecturer, after both:** "Lecture was ok, maybe could have been a bit
+more textbook content, a few more examples of misleading or bad plots and
+then good ones. Also where we introduce error bars and things some people
+see it for the first time. Need an explainer slide of what they are. The
+seminar we just went to write our own plotting script bit by bit, I ran out
+of steam a bit and also forgot how to manage axes in matplotlib. It would be
+a good idea for this and all seminars to have a bit of a showcase with real
+examples, libraries and so on and then hand over to the students a problem
+they try to solve). They will all use claude and other LLMs so should be
+not just plain programming but more focus on ideas, intuition."
+
+**What to change:**
+
+- Lecture 7: an explainer where error bars, the fit and the pulls first
+  appear (slide 10, the D⁰ mass peak); more misleading-then-honest pairs;
+  a little more textbook content between them.
+- Every seminar: a showcase of complete examples the lecturer runs from the
+  page, with a library card of the calls used, then one problem the
+  students solve in pairs with any tools, LLMs included (predict, solve,
+  check, hand in), then show and discuss. Spec
+  `docs/superpowers/specs/2026-11-10-seminars-showcase-then-problem-design.md`.
