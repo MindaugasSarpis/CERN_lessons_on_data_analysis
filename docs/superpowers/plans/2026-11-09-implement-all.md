@@ -103,4 +103,11 @@ While drafts are mid-rework on `main`, a batch ships from a worktree of
       and not 723 × 407.
 - [ ] Open: John Snow's cholera map (not drawn); Lecture 3's bulb and
       transistor photos at a higher resolution; `preloadImages` off for phones;
-      the zips `weather-s08`…`s12` (need the lecturer's go-ahead to upload).
+      the zips `weather-s08`…`s12` (need the lecturer's go-ahead to upload);
+      Lecture 7's `viz_gallery_nightingale` and `viz_gallery_cern` (Classics
+      and Maps): `scripts/measure-figures.mjs` on 10 Nov gives their boxes as
+      9.41 × 3.09 and 9.41 × 3.33 in, `figures/src/sizes.json` holds
+      9.41 × 3.56 for both: drawn 15 % and 7 % too tall for their box, they
+      show smaller, with a margin at each side. Not redrawn on 10 Nov (the
+      lecture was hours away and only slide 10 was asked for): re-measure,
+      redraw the family `gallery` and look at both figures before pushing.
