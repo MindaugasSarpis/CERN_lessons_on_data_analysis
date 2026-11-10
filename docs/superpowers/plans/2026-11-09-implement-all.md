@@ -115,6 +115,22 @@ While drafts are mid-rework on `main`, a batch ships from a worktree of
       (`anatomy.py` checks the name of the title); the dashed frame that
       names the Figure runs outside the buttons; `class: fill` stays on the
       slide so that `scripts/measure-figures.mjs` still measures the stages.
+- [x] Lecture 7, slide 10 full screen: the deploy of 10 November. The push
+      of `f74ea2a` (the mass peak inside the slide's padding) passed qa and
+      build; its GitHub Pages deployment stayed in `syncing_files` for
+      10 minutes and timed out, so that version was never live. `066ef99`
+      (full screen) was deployed by run 42809854887 at 13:56:43 EET. At
+      13:56:21 the failed run of `f74ea2a` was started again (attempt 2);
+      its deploy job would have put the older build over the new one.
+      Decision: that job was cancelled at 13:57:42, and the seven live
+      stage files were compared with `066ef99` after it: equal. Until
+      14:07 a browser that had loaded slide 10 in the ten minutes before
+      the deploy showed the old figure files in the new layout (the
+      lecturer's screenshot of 13:58: the monthly means of `6ab9c2e`,
+      694 × 290 pt, cut at both sides by `object-fit: cover`); a reload
+      that skips the cache (Cmd+Shift+R) shows the new files. Decision: no
+      further push during the lecture, because a deploy replaces the deck's
+      hashed files under an open tab.
 - [ ] Open: John Snow's cholera map (not drawn); Lecture 3's bulb and
       transistor photos at a higher resolution; `preloadImages` off for phones;
       the zips `weather-s08`…`s12` (need the lecturer's go-ahead to upload);
@@ -125,3 +141,11 @@ While drafts are mid-rework on `main`, a batch ships from a worktree of
       show smaller, with a margin at each side. Not redrawn on 10 Nov (the
       lecture was hours away and only slide 10 was asked for): re-measure,
       redraw the family `gallery` and look at both figures before pushing.
+- [ ] Open: a figure in `public/figures/` keeps its URL when its content
+      changes, and GitHub Pages lets a browser keep a file for 10 minutes
+      (`max-age=600`): after a deploy that changes a slide's layout
+      together with its figure, a browser that loaded the slide shortly
+      before shows the old figure in the new layout (10 Nov, 13:58, above).
+      A remedy: a content hash in the figure's URL at build time
+      (`viz_x.svg?v=<hash>`), written by `scripts/gen-entries.mjs` or a
+      Vite plugin.
