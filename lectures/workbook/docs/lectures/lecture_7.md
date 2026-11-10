@@ -158,10 +158,12 @@ type the slide number and press Enter.
   bin widths on the first click and the conclusion on the second. Ask the
   question of slide 3 for a show of hands; slide 5 answers it, the counts
   written on the figure.
-- **Slide 10** (The Parts of a Figure) builds a figure of the twelve monthly
-  means up in six clicks: the points, their error bars, the fitted cosine and
-  its result, the reference line with annotation, legend and title, the pull
-  panel, and the names of its seventeen parts.
+- **Slide 10** (The Parts of a Figure) builds a figure of the D⁰ mass peak (the
+  first 1500 rows of the LHCb file `D0_KPi.csv`, counted in bins of 3 MeV/c²)
+  up in six clicks: the points, their error bars √n, the fitted Gaussian on a
+  straight line with its two components and its result, the known D⁰ mass with
+  annotation, legend and title, the pull panel, and the names of its nineteen
+  parts. The slide has no heading: the figure is 16:9 and fills it.
 - **Slides 22, 41, 53, 72, 82, 84, 88 and 89 are interactive figures** that work
   offline: drag where the bar axis starts (22), the smoothing window (41),
   switch the palette of the day-and-hour grid (53), drag the bin width from

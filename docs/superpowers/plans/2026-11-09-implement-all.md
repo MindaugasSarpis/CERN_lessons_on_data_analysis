@@ -88,6 +88,19 @@ While drafts are mid-rework on `main`, a batch ships from a worktree of
 - [x] Lecture 7, Classics and Maps (slides 85–90): Nightingale, Minard,
       Rosling's bubble chart, Maunga Whau, CERN to scale and as a schematic.
 - [x] Every slide self-contained: no visible "of Lecture N" (decks 4–12).
+- [x] Lecture 7, "The Parts of a Figure" reworked on 10 November (the lecturer:
+      "Rework, more expressed error bars, more complicated curve, 16:9 ratio",
+      then "legend with no frame"). Decisions: the figure is the D⁰ mass peak
+      of `D0_KPi.csv` in place of the weather log's monthly means (their error
+      bars are 0.3 °C on a range of 30, and their only structure is one
+      cosine); the first 1500 rows, so that a bar is 10 % of its count at the
+      top of the peak (with every row it is 1.3 %, shorter than the marker);
+      30 bins of 3 MeV/c² (with 2 MeV a bin centre lies on the known mass);
+      the fit is a Gaussian on a straight line, drawn as the sum, the straight
+      line and the filled area between them; the legend has no frame and the
+      fit result is plain text without its box; the slide has no visible
+      heading (`title:` in the frontmatter), so the 16:9 figure is 839 × 472 px
+      and not 723 × 407.
 - [ ] Open: John Snow's cholera map (not drawn); Lecture 3's bulb and
       transistor photos at a higher resolution; `preloadImages` off for phones;
       the zips `weather-s08`…`s12` (need the lecturer's go-ahead to upload).
