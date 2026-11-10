@@ -513,6 +513,28 @@ hideInToc: true
 class: fill
 ---
 
+# z as a Height over Every **Evening**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+📐 $z = w_1 x_1 + w_2 x_2 + b$ is a plane · above the height 0 the neuron says frost · the plane crosses 0 in a straight line · $w = (-1, 0)$, $b = 3.8$: 3490 of 3646 right · $w = (-1, 4)$, $b = 0.6$: 3494
+
+</div>
+
+<Explain3D name="neuron-plane" class="fig-fill mt-sm" />
+
+<!--
+**Do:** let it turn once. Press *from the side*: z falls with the temperature and passes 0 at 3.8 °C. Press *w = (−1, 4)*: the plane tilts, and the line where it crosses 0 turns. Press *from above*: the picture of the slide before. Double-click resets the view.
+**Say:** the evenings lie at the height 0, frost in cyan. The white stem is 8 December 2025: z = 1.2, then 1.4, above 0 both times.
+**Ask:** what would bend the line? Nothing in one neuron: a plane and a level always meet in a straight line.
+(~1.5 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
 # One Neuron Computes **AND** and **OR**
 
 <div class="fig-fill grid-2 mt-sm gap-md">

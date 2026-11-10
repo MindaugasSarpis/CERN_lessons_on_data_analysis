@@ -1231,6 +1231,28 @@ class: fill
 
 ---
 hideInToc: true
+class: fill
+---
+
+# The Hours Counted in Cells, as **Columns**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+🏙️ The same 87 552 hours in cells of 2 °C × 5 % · a column's height: the hours of its cell · the tallest: 1691 hours at −2 to 0 °C and 81 to 85 % · the ridge slants from cold and humid to warm and dry
+
+</div>
+
+<Explain3D name="hours-columns" class="fig-fill mt-sm" />
+
+<!--
+**Do:** let it turn once. Press *along the humidity*: two groups of tall columns, near 0 °C and near 12 °C, the two peaks of the histogram of the temperature. Press *from above*: the picture of the slide before, with heights as colours on a plain scale.
+**Say:** a histogram of two columns of the file at once. Every hour stands in exactly one column.
+**Ask:** what do all the columns add up to? 87 552.
+(~1.5 min)
+-->
+
+---
+hideInToc: true
 ---
 
 # Covariance: Do Two Columns Move **Together**?

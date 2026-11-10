@@ -62,6 +62,8 @@ function headmatter(title, firstSrc, minutes) {
     'colorSchema: dark',
     'addons:',
     '  - slidev-addon-python-runner',
+    // the 3D explainers (<Explain3D name="…" />), pinned to a tag of the toolkit in package.json
+    '  - slidev-addon-explain3d',
     // No `defaults: preload: false` here (the combined 500-slide authoring
     // deck needs it; these per-deck builds don't): it stops Slidev from
     // pre-rendering prev/next (and, after 3s, all) slides, so every FIRST

@@ -74,8 +74,8 @@ the code is plain Python on lists.
 
 ## The lecture, part by part
 
-The main path is slides 1–65. **Plan to skip the slides of the second
-table** to fit the two-hour slot; slides 66–79 (For the Curious) and
+The main path is slides 1–66. **Plan to skip the slides of the second
+table** to fit the two-hour slot; slides 67–80 (For the Curious) and
 80–88 (the self-check quizzes) take no lecture time. To jump, type the
 slide number and press Enter.
 
@@ -83,44 +83,49 @@ slide number and press Enter.
 |--|--|
 | 1–4 | The question: 8 December in ten years, then the 3646 evenings as two overlapping clouds |
 | 5–9 | Inputs, label and output; the list; the baseline never frost; the best threshold, 3.8 °C |
-| 11–17 | The neuron, one evening through it, in Python, its line (live), AND and OR |
-| 18, 20–22, 24–27 | Rosenblatt's rule, one update, AND by hand, the rule live, separable or not, the rule on the evenings and what it does not give |
-| 28–40 | No slope in a count, frost by counting, the sigmoid, the probability, the likelihood and the cross-entropy, the gradient checked and one step |
-| 42 | One update for three models |
-| 44–46, 48–52 | Train and test, five passes, tonight with a probability, the ± of an accuracy, four rules, seen and unseen evenings |
-| 54–58 | A model as an object: the class `Perceptron`, live |
-| 59–65 | XOR, the answers, the recap |
+| 11–18 | The neuron, one evening through it, in Python, its line (live), z as a plane over the evenings (turned by hand), AND and OR |
+| 19, 21–23, 25–28 | Rosenblatt's rule, one update, AND by hand, the rule live, separable or not, the rule on the evenings and what it does not give |
+| 29–41 | No slope in a count, frost by counting, the sigmoid, the probability, the likelihood and the cross-entropy, the gradient checked and one step |
+| 43 | One update for three models |
+| 45–47, 49–53 | Train and test, five passes, tonight with a probability, the ± of an accuracy, four rules, seen and unseen evenings |
+| 55–59 | A model as an object: the class `Perceptron`, live |
+| 60–66 | XOR, the answers, the recap |
 
 | Skip | Slides |
 |--|--|
 | Score a threshold on ten evenings, live | 10 |
-| Why not try every line | 19 |
-| The ten updates of AND as lines | 23 |
-| The mean slope over four evenings; the loss as a bowl | 41, 43 |
-| Rosenblatt's loop with one change | 47 |
-| Missed frosts and false alarms | 53 |
+| Why not try every line | 20 |
+| The ten updates of AND as lines | 24 |
+| The mean slope over four evenings; the loss as a bowl | 42, 44 |
+| Rosenblatt's loop with one change | 48 |
+| Missed frosts and false alarms | 54 |
 
-- **Do not cut** slides 3 and 64: the question and its answer. Slide 3
+- **Do not cut** slides 3 and 65: the question and its answer. Slide 3
   asks for a show of hands before its click.
-- **Do not cut** slides 21–22 (one update and AND by hand: do the steps on
+- **Do not cut** slides 22–23 (one update and AND by hand: do the steps on
   the board with the room), 33–34 (the likelihood and the loss), 38–40
   (the slope, its check and one step) or 55–57 (the class): Seminar 10
   builds the same class, `Perceptron`, with the same lines.
+- **Slide 17 is a figure in three dimensions** that works offline: z as a
+  plane over the evenings. It turns by itself; drag to turn and tilt it; the
+  buttons at its left switch between w = (−1, 0) and w = (−1, 4) and glide
+  to two views (from the side, from above); a double-click goes back to the
+  opening view. The audience window follows the presenter's.
 - **Slide 16 is an interactive figure** that works offline: the neuron on
   all 3646 evenings. It opens on "below 3.8 °C" (3490 right) with 8 December
   2025 pushed through z; press never frost (66.3 %) and reset, tilt the
   line with the keys (w₂ PageUp ×4, b PageDown ×3 and ↓ ×2: 3494 right),
   tap an evening to push it through z. Use it on the projected window, not
   in the presenter view.
-- **Seven slides run Python in the browser**: 10, 14, 24, 36, 39, 49 and
-  57. The first ▶ downloads the Python runtime, so run one block before
-  the lecture. Slides 24 and 57 show the output beside the code. On slide
-  49 type this evening's 18:00 temperature and humidity, from any weather
+- **Seven slides run Python in the browser**: 10, 14, 25, 37, 40, 50 and
+  58. The first ▶ downloads the Python runtime, so run one block before
+  the lecture. Slides 25 and 58 show the output beside the code. On slide
+  50 type this evening's 18:00 temperature and humidity, from any weather
   service, and run: the neuron's probability of frost for tonight.
 - **Clicks:** slide 3 holds the answer back for one click; slide 13 builds
-  the sum one step per click; slides 15, 19, 21, 32, 38 and 40 add one line
-  of numbers per click; slide 47
-  highlights the code in steps; slide 56 builds the class one method per
+  the sum one step per click; slides 15, 20, 22, 33, 39 and 41 add one line
+  of numbers per click; slide 48
+  highlights the code in steps; slide 57 builds the class one method per
   click.
 - **Every figure fills its slide** and is drawn from the weather log by
   `figures/src/perceptron.py`, which also prints every number the slides
@@ -138,7 +143,7 @@ scripts/serve-local.mjs 8123`, then open
 ## Check yourself
 
 No quiz interrupts the lecture. The deck closes with a self-check section,
-slides 80–88: eight quiz slides for students to try afterwards. The same
+slides 81–89: eight quiz slides for students to try afterwards. The same
 questions, with their answers:
 
 1. A neuron with a step has w₁ = 2, w₂ = −3 and b = 1. What are z and the
@@ -200,11 +205,11 @@ the deck before the rebuild can be read with
 |--|--|--|
 | The goal quote; Learning Objectives | Parked | Preambles leave every lecture (9 Nov 2026); the deck opens on its question |
 | A Classification Problem; Classify by a Threshold or by a Line | Replaced by slides 3–4 and 8–9 | The question is the room's own: the evenings of the weather log |
-| The fit and the classification side by side | Parked; its last row is slide 42 | The likelihood steps are on slides 33–34 |
+| The fit and the classification side by side | Parked; its last row is slide 43 | The likelihood steps are on slides 34–35 |
 | AND, epochs 3 to 6 | Parked | One pass by hand and the ten updates as lines carry the run |
 | The convergence theorem and its proof; the normal vector and the distance; what w and b do; the derivative of the sigmoid; the gradient in three parts; where the sigmoid comes from | Moved to For the Curious | A derivation on the main path ends in a number; proofs and long derivations wait until after the recap |
-| Training in NumPy, Reading the Loop, The Training Loop | Parked; replaced by slide 47 | No library calls on a lecture slide: the same loop in plain Python |
-| The learning rate; inputs on different scales; standardising | Parked; the scale of the inputs is slide 78 | The humidity as a fraction keeps the inputs on similar scales without standardising |
+| Training in NumPy, Reading the Loop, The Training Loop | Parked; replaced by slide 48 | No library calls on a lecture slide: the same loop in plain Python |
+| The learning rate; inputs on different scales; standardising | Parked; the scale of the inputs is slide 79 | The humidity as a fraction keeps the inputs on similar scales without standardising |
 | Two lines separate XOR; a network of three neurons; the hidden layer; what is missing; what a modern network keeps | Parked, for Lecture 11 | Two layers are the opening of Lecture 11, From Neurons to Language Models |
 | The quiz on the distance from the line | Parked | The distance is in For the Curious |
 
@@ -212,7 +217,7 @@ the deck before the rebuild can be read with
 
 - **F. Rosenblatt**, *The Perceptron: A Probabilistic Model for Information
   Storage and Organization in the Brain*, Psychological Review 65,
-  386–408 (1958): the rule of slides 20–22.
+  386–408 (1958): the rule of slides 21–23.
 - **M. Minsky and S. Papert**, *Perceptrons*, MIT Press (1969): what one
   layer of such units cannot compute.
 - **M. Nielsen**, *Neural Networks and Deep Learning*, free online
