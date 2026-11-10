@@ -87,9 +87,9 @@ The lecture teaches each tool once, where it is first needed, with numbers.
 
 ## The lecture, part by part
 
-The lecture is slides 1–81 and estimates about 123 min, so in the two-hour
+The lecture is slides 1–82 and estimates about 123 min, so in the two-hour
 slot **plan to skip the slides of the second table** (about 10 min).
-Slides 82–92 are the optional section For the Curious, and slides 93–101 the
+Slides 83–93 are the optional section For the Curious, and slides 94–102 the
 self-check quizzes; neither takes lecture time. To jump, type the slide
 number and press Enter.
 
@@ -100,10 +100,10 @@ number and press Enter.
 | 16–26 | σ = 0.70 °C; the Gaussian bell; the Gaussian of one year; the likelihood of ten; the logarithm; minimum χ²; χ² of a flat line year by year; two guessed lines; a line from the room, dragged live |
 | 27–34 | The derivatives for a line; the normal equations; the formulas; the table of ten years; the sums pushed through; the best line; the same in Python, live |
 | 37–40, 42–44 | χ² around its minimum; Δχ² = 1; σ_a; the value for 2026; −0.56 ± 0.77 °C per decade; what the ± means |
-| 46–50, 52–55 | No closed form for the cycle; the update rule; three steps by hand; a step too large; the step size, live; the rule for a line; descent on ten years, live; its path |
-| 56–61 | The daily means; the cosine and its three parameters; two days pushed through; the descent from the starting values; the fitted cycle |
-| 62–63, 65–68, 70–75 | Residuals of the line; what χ² should be; when it is not a test; residuals of the cycle; neighbouring days alike; too few and too many parameters; how many; reading residuals; a sensor shift |
-| 76–81 | The same line by every method; reporting a fit; a checklist; the answer; the recap |
+| 46–50, 52–56 | No closed form for the cycle; the update rule; three steps by hand; a step too large; the step size, live; the rule for a line; descent on ten years, live; its path; S(a, b) as a valley, turned by hand |
+| 57–62 | The daily means; the cosine and its three parameters; two days pushed through; the descent from the starting values; the fitted cycle |
+| 63–64, 66–69, 71–76 | Residuals of the line; what χ² should be; when it is not a test; residuals of the cycle; neighbouring days alike; too few and too many parameters; how many; reading residuals; a sensor shift |
+| 77–82 | The same line by every method; reporting a fit; a checklist; the answer; the recap |
 
 | Skip | Slides |
 |--|--|
@@ -111,17 +111,17 @@ number and press Enter.
 | The intercept and its ± | 41 |
 | The ± with more years | 45 |
 | Each step multiplies the gap by 1 − 8η | 51 |
-| The pulls of the line | 64 |
-| The same trend from 3648 days | 69 |
+| The pulls of the line | 65 |
+| The same trend from 3648 days | 70 |
 
-- **Do not cut** slides 3 and 80: the opening question and its answer,
+- **Do not cut** slides 3 and 81: the opening question and its answer,
   −0.56 ± 0.77 °C per decade, with the same fan of lines.
 - **Do not cut** slides 12–14, the derivative: the only place the course
   teaches it, and the base of every later slope, χ² minimum and descent
   step. Lecture 10 uses the same update rule for the perceptron.
-- **Do not cut** slides 78–79, reporting a fit and the checklist: the two
+- **Do not cut** slides 79–80, reporting a fit and the checklist: the two
   slides a student needs for the project.
-- **Slides 9, 13, 53 and 59** push numbers through one click at a time:
+- **Slides 9, 13, 53 and 60** push numbers through one click at a time:
   the misses, their squares and S; the nudge and the rule; one descent step
   for the line; the summer day of the cycle. **Slides 20, 22, 32, 40 and
   42** step a formula one click at a time, the symbols first, then the
@@ -135,6 +135,11 @@ number and press Enter.
   aloud (23), r (36), ∝ (39), N^−3/2 (45), contour lines and a logarithmic
   axis (55), the root mean square (59), ⟨χ²⟩ (65), sd (67), √n for a count
   (90).
+- **Slide 56 is a figure in three dimensions** that works offline: S(a, b)
+  as a valley with the path of the 500 steps. It turns by itself; drag to
+  turn and tilt it; the buttons at its left glide to three views (along the
+  valley, across it, from above); a double-click goes back to the opening
+  view. The audience window follows the presenter's.
 - **Slide 26 is an interactive figure** that works offline: drag the line or
   its ends and χ² follows, term by term; tap a year to push its numbers
   through; take a line from the room to beat the flat line's 9.08, then press
@@ -149,7 +154,7 @@ number and press Enter.
   `python figures/src/fitting.py` from `weather.csv`; the ten yearly means
   are shown with three decimals so that the sums and the slope come out the
   same by hand.
-- **Slides 82–92** (For the Curious) are for time left at the end or for
+- **Slides 83–93** (For the Curious) are for time left at the end or for
   students afterwards; the pendulum and the LHCb file appear only there.
 
 Before the session, start the local copy of the slides: `node
@@ -159,7 +164,7 @@ scripts/serve-local.mjs 8123`, then open
 ## Check yourself
 
 No quiz interrupts the lecture. The deck closes with a self-check section,
-slides 93–101: eight quiz slides for students to try afterwards. The same
+slides 94–102: eight quiz slides for students to try afterwards. The same
 questions, with their answers:
 
 1. Which value of μ makes the sum of squared misses Σ(y − μ)² smallest for
@@ -214,20 +219,20 @@ slides are parked in `lectures/content/parked/09_Parameter_Estimation_and_Fittin
 | Two Derivatives Set to Zero; The Normal Equations; Slope and Intercept in Closed Form; The Pendulum: Five Sums; Slope and Intercept | Rebuilt as slides 25–29 | Equal σ, so five plain sums; the ten years in a table |
 | The Fitted Line; The Same in NumPy | Slides 30–31 | The best line of the ten years; plain Python in place of NumPy |
 | The Rule Δχ² = 1; χ² Around Its Minimum | Slides 35–36 | The slope of the ten years |
-| The Slope Is a Sum over the Data; Two Uncertainties and a Covariance; The Covariance Matrix; Why Slope and Intercept Are Correlated | Moved to For the Curious, slides 80–82 | Derivations and the covariance leave the main path |
-| The Uncertainty of g; the pendulum's fit | For the Curious, slide 86 | The pendulum appears only there |
-| The Same in Matrix Form; `np.linalg.lstsq` and `np.polyfit` | Slide 82; the calls moved to Seminar 9 | No library on a lecture slide |
+| The Slope Is a Sum over the Data; Two Uncertainties and a Covariance; The Covariance Matrix; Why Slope and Intercept Are Correlated | Moved to For the Curious, slides 81–83 | Derivations and the covariance leave the main path |
+| The Uncertainty of g; the pendulum's fit | For the Curious, slide 87 | The pendulum appears only there |
+| The Same in Matrix Form; `np.linalg.lstsq` and `np.polyfit` | Slide 83; the calls moved to Seminar 9 | No library on a lecture slide |
 | No Closed Form; The Gradient; The Update Rule; Gradient Descent by Hand; A Learning Rate That Is Too Large; Descent Paths | Rebuilt as slides 44–52 | The four hours by hand, then the line of the ten years |
 | Gradient Descent in NumPy | Slide 51, plain Python | No library on a lecture slide |
-| Why the Descent Is Slow, and the Remedy | For the Curious, slide 84 | Newton and Levenberg–Marquardt |
+| Why the Descent Is Slow, and the Remedy | For the Curious, slide 85 | Newton and Levenberg–Marquardt |
 | `curve_fit`: the Call; `absolute_sigma`; Closed Formulas, `polyfit` and `curve_fit` Agree | Removed; `curve_fit` is in Seminar 9's optional part | Library calls belong to the seminar |
-| The D⁰ Peak (data, counts, model, the fit in code, the fit and its pulls, what the result says) | For the Curious, slides 87–89; the starting values parked | The CERN example is kept for the curious |
-| The Fit in Code; The Fit and Its Pulls; What the Result Says | Redone on the yearly cycle, slides 54–58 | The design's curve: a cosine with three parameters |
-| What χ² Should Be; The χ² Distribution and the p-value; Reading χ²/ndf; Residuals and Pulls | Slides 60–63; the distribution in For the Curious, slide 85 | On the line of the ten years |
-| A Model with Too Few Terms; Too Few Terms: the Pulls | Slide 67 on the cycle; the D⁰ version in For the Curious, slide 89 | The weather log first |
-| A Model with Too Many Terms; Three Pendulum Models and Their Pulls | Slides 68–69 | Polynomials through the ten yearly means |
-| Starting Values; Errors That Are Not Gaussian (small counts, an outlier); What χ² Cannot See; The Number to Report | Parked | The outlier and the systematic shift are on slides 71–72 with weather numbers |
-| Reporting a Fit | Kept, slide 75 | With two sentences on the weather log |
+| The D⁰ Peak (data, counts, model, the fit in code, the fit and its pulls, what the result says) | For the Curious, slides 88–90; the starting values parked | The CERN example is kept for the curious |
+| The Fit in Code; The Fit and Its Pulls; What the Result Says | Redone on the yearly cycle, slides 54–59 | The design's curve: a cosine with three parameters |
+| What χ² Should Be; The χ² Distribution and the p-value; Reading χ²/ndf; Residuals and Pulls | Slides 61–64; the distribution in For the Curious, slide 86 | On the line of the ten years |
+| A Model with Too Few Terms; Too Few Terms: the Pulls | Slide 68 on the cycle; the D⁰ version in For the Curious, slide 90 | The weather log first |
+| A Model with Too Many Terms; Three Pendulum Models and Their Pulls | Slides 69–70 | Polynomials through the ten yearly means |
+| Starting Values; Errors That Are Not Gaussian (small counts, an outlier); What χ² Cannot See; The Number to Report | Parked | The outlier and the systematic shift are on slides 72–73 with weather numbers |
+| Reporting a Fit | Kept, slide 76 | With two sentences on the weather log |
 
 ## Further reading
 

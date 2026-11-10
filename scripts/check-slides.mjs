@@ -16,6 +16,10 @@
  * row to mount before measuring, and fails a slide whose code has a line
  * wider than its editor (cut off at the right edge on the projector).
  *
+ * 3D explainers (`<Explain3D>`, slidev-addon-explain3d): the check waits for
+ * each to load and draw, and fails a slide whose explainer is not drawn live
+ * as SVG (still loading after 8 s, or fallen back to its still picture).
+ *
  * Flake guard: offenders and unrendered slides are re-measured once on a
  * fresh page before the gate fails — near-tolerance one-offs under parallel
  * load (the ~10px flake) clear themselves; only reproducible overflow fails.
@@ -169,6 +173,12 @@ async function runShard(shard, { shots = SHOTS, collect = { offenders, skipped }
         c.querySelector('.monaco-editor .view-line') && c.querySelector(':scope > .border-t')
         && c.querySelector('.slidev-monaco-container-inner').getBoundingClientRect().height > 20);
       for (let t = 0; t < 80 && !ready(); t++) await new Promise((r) => setTimeout(r, 100));
+      // A 3D explainer (slidev-addon-explain3d) loads its scene as a lazy
+      // chunk, then draws: wait until none is still loading and each live one
+      // has its paths, so the screenshot shows it and the check below is fair.
+      const drawn = () => [...pg.querySelectorAll('section.x3d')].every((x) => x.dataset.state === 'fallback'
+        || (x.dataset.state === 'live' && x.querySelectorAll('g.x3d-items path').length > 10));
+      for (let t = 0; t < 80 && !drawn(); t++) await new Promise((r) => setTimeout(r, 100));
     }, n).catch(() => {});
     const m = await page.evaluate((n) => {
       const pg = document.querySelector(`.slidev-page[data-slidev-no="${n}"]`);
@@ -187,7 +197,11 @@ async function runShard(shard, { shots = SHOTS, collect = { offenders, skipped }
           cx = Math.max(cx, Math.round((s.getBoundingClientRect().right - right) / scale));
         }
       }
-      return { oy: el.scrollHeight - el.clientHeight, ox: el.scrollWidth - el.clientWidth, cx,
+      // 3D explainers that are not drawn live: still loading after 8 s, or
+      // fallen back to their still picture (the scene failed to load or draw).
+      const x3d = [...el.querySelectorAll('section.x3d')].filter((x) => x.dataset.state !== 'live'
+        || x.querySelectorAll('g.x3d-items path').length <= 10 || x.querySelector('canvas, image')).length;
+      return { oy: el.scrollHeight - el.clientHeight, ox: el.scrollWidth - el.clientWidth, cx, x3d,
                title: (h ? h.textContent : '').trim().slice(0, 60) };
     }, n);
     if (shots) {
@@ -214,10 +228,11 @@ async function runShard(shard, { shots = SHOTS, collect = { offenders, skipped }
     // the offender list, never hide real overflow.
     if (!m) { collect.skipped.push(n); continue; } // slide never settled — do NOT count as "fits"
     measured++;
-    if (m.oy > TOL || m.ox > TOL || m.cx > 0) {
+    if (m.oy > TOL || m.ox > TOL || m.cx > 0 || m.x3d > 0) {
       collect.offenders.push({ n, ...m });
       const code = m.cx > 0 ? `, runner code ${m.cx}px wider than its editor` : '';
-      console.log(`  ✗ slide ${n}: overflow y=${m.oy}px x=${m.ox}px${code}  — "${m.title}"`);
+      const x3d = m.x3d > 0 ? `, ${m.x3d} 3D explainer(s) not drawn live` : '';
+      console.log(`  ✗ slide ${n}: overflow y=${m.oy}px x=${m.ox}px${code}${x3d}  — "${m.title}"`);
     }
   }
   await page.close();
@@ -259,7 +274,7 @@ if (skipped.length) {
   console.log(`⚠️  ${skipped.length} slide(s) failed to render and were NOT checked: ${skipped.join(', ')}`);
 }
 if (offenders.length) {
-  console.log(`❌ ${offenders.length} slide(s) overflow the frame (tolerance ${TOL}px) or clip runner code.`);
+  console.log(`❌ ${offenders.length} slide(s) overflow the frame (tolerance ${TOL}px), clip runner code or do not draw a 3D explainer.`);
   console.log('   Offending slides: ' + offenders.map((o) => o.n).join(', '));
 }
 if (offenders.length === 0 && skipped.length === 0) {

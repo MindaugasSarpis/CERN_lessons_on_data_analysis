@@ -71,9 +71,9 @@ The answer is written as the README writes it: 7.16 ± 0.22 °C.
 
 ## The lecture, part by part
 
-The lecture is slides 1–70 and estimates about 117 min, so in the two-hour
+The lecture is slides 1–71 and estimates about 117 min, so in the two-hour
 slot **plan to skip the slides of the second table** (about 12 min).
-Slides 71–79 are the optional section For the Curious and slides 80–88 the
+Slides 72–80 are the optional section For the Curious and slides 81–89 the
 self-check quizzes; neither takes lecture time. To jump, type the slide
 number and press Enter.
 
@@ -84,10 +84,10 @@ number and press Enter.
 | 13–22, 24 | Describing a distribution: the histogram and its bins, the two halves of the year, Σ, the mean, the deviations, variance and standard deviation, the four hours in Python, s of the log, the median, percentiles |
 | 25–29, 31–33 | Probability by counting: P(frost), the share settling, frost in each month, conditional probability, frost given the hour before, independence, one day live |
 | 34–35, 37–40 | The Gaussian: the curve, its areas, the hours against it, the check in numbers, means of random hours |
-| 41–48 | Correlation: the scatter of temperature and humidity, covariance, r, r live, pairs of columns, random and neighbouring pairs, r and a curve |
-| 49–58 | The standard error: the variance of a sum, a factor squared, the variance of a mean, the check, the mean of N random hours live, an error bar, what ± means, how it shrinks with N, 0.030 |
-| 59–64, 66 | Not independent: hours in a row, r against the time between hours, the ten yearly means, 0.22, one year's own ±, which ± belongs to 7.16 |
-| 67–70 | The answer in five steps, the README, a checklist, the recap |
+| 41–49 | Correlation: the scatter of temperature and humidity, the same hours as columns (turned by hand), covariance, r, r live, pairs of columns, random and neighbouring pairs, r and a curve |
+| 50–59 | The standard error: the variance of a sum, a factor squared, the variance of a mean, the check, the mean of N random hours live, an error bar, what ± means, how it shrinks with N, 0.030 |
+| 60–65, 67 | Not independent: hours in a row, r against the time between hours, the ten yearly means, 0.22, one year's own ±, which ± belongs to 7.16 |
+| 68–71 | The answer in five steps, the README, a checklist, the recap |
 
 | Skip | Slides |
 |--|--|
@@ -97,28 +97,33 @@ number and press Enter.
 | The median in Python | 23 |
 | Frost at 03:00 and at 14:00 in March | 30 |
 | The Gaussian in Python | 36 |
-| Writing a result with its ± | 65 |
+| Writing a result with its ± | 66 |
 
 - **Do not cut** slide 3 (the question, with the counts of the show of
-  hands on the board) or slide 66, which answers it with the four numbers
+  hands on the board) or slide 67, which answers it with the four numbers
   of the opening.
-- **Do not cut** slides 50–58 and 60–63: the one derivation of the lecture,
+- **Do not cut** slides 51–59 and 61–64: the one derivation of the lecture,
   s/√N, and the reason it fails for the hours. The seminar computes the
   same 0.030 and 0.22 with pandas.
-- **Slides 5, 6, 10, 15, 31, 32, 39 and 66** show the question or the
+- **Slides 5, 6, 10, 15, 31, 32, 39 and 67** show the question or the
   numbers first and the result on a click; ask the room before clicking.
-  **Slides 17, 19, 43, 44, 58 and 63** step a formula one click at a time:
+  **Slides 17, 19, 44, 45, 59 and 64** step a formula one click at a time:
   the symbols first, then the numbers of the log in their place (in the
   accent colour), then the result: the mean and the standard deviation of
   the four hours, their covariance and r, the standard error of 7.16 (s and
   N, √87 552 = 295.9, 0.030, then the condition) and of the ten years.
-  **Slide 52** builds the variance of a mean in three clicks, one line of
+  **Slide 53** builds the variance of a mean in three clicks, one line of
   the derivation each.
-- **Slide 54 is an interactive figure** that works offline: pick N = 1, 4,
+- **Slide 43 is a figure in three dimensions** that works offline: the
+  hours as columns over temperature and humidity. It turns by itself; drag
+  to turn and tilt it; the buttons at its left glide to three views (along
+  the humidity, along the temperature, from above); a double-click goes back
+  to the opening view. The audience window follows the presenter's.
+- **Slide 55 is an interactive figure** that works offline: pick N = 1, 4,
   16, 100 or 1000 hours per mean and read the spread of the 1000 means
   beside s/√N; at 100 and 1000 press "zoom in". Use it on the projected
   window, not in the presenter view.
-- **Slides 20, 23, 33, 36, 45 and 57** run plain Python in the browser,
+- **Slides 20, 23, 33, 36, 46 and 58** run plain Python in the browser,
   each pushing a list of the log through the slide's expression. The first
   run downloads the Python runtime and needs internet in the room, so press
   one ▶ before the lecture. The notes of each say what to change and run
@@ -126,23 +131,23 @@ number and press Enter.
 - **Every figure fills its slide** and is drawn from `weather.csv` by
   `figures/src/probability.py`, which also prints every number the slides
   state: `python figures/src/probability.py`.
-- **Slide 55** explains an error bar for a room that sees one for the first
+- **Slide 56** explains an error bar for a room that sees one for the first
   time: one mean of 100 random hours, 6.94 °C, with three bars, ± one
   standard error (6.06 to 7.83), ± two and ± s, and says that a figure has
-  to name its ±. **Slide 56** shows 50 intervals of ± one standard error;
+  to name its ±. **Slide 57** shows 50 intervals of ± one standard error;
   28 of them hold the mean, against 67 % of 2000. The note says why 50 is
   not enough to show 68 %.
 - **New notions get a line where they first appear**: what a histogram's
   bar counts (14), a percentile read off the sorted hours (24), a
   logarithmic axis (27 and 61), a density (35), an area as a share of the
   values (37), z (39), the colour scale of tens (42).
-- **Slides 71–79** (For the Curious) are for time left at the end or for
+- **Slides 72–80** (For the Curious) are for time left at the end or for
   students afterwards.
 
 ## Check yourself
 
 No quiz interrupts the lecture. The deck closes with a self-check section,
-slides 80–88: eight quiz slides for students to try afterwards. The same
+slides 81–89: eight quiz slides for students to try afterwards. The same
 questions, with their answers:
 
 1. A file holds four temperatures, 10.0, 12.0, −999 and 14.0 °C, where

@@ -1835,6 +1835,28 @@ class: fill
 -->
 
 ---
+hideInToc: true
+class: fill
+---
+
+# The Valley of S(a, b), **Turning**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🏔️ The same map with S as the height · start (0, 7): S = 4.71 · lowest point (−0.56, 7.41): S = 4.20 · across the valley 103 times steeper than along it
+
+</div>
+
+<Explain3D name="line-fit-valley" class="fig-fill mt-sm" />
+
+<!--
+**Do:** let it turn once. Press *across it*: a steep U. Press *along the valley*: the floor falls gently towards the lowest point. Press *from above*: the map of the slide before. Double-click resets the view.
+**Say:** the first steps zigzag between the steep walls; the rest creep along the floor. The surface is cut off at S = 5.4, so its rim is one of the contours.
+**Ask:** with a larger η, in which direction do the steps grow first? Across the valley: the steep direction sets the largest η.
+(~1.5 min)
+-->
+
+---
 layout: section
 hideInToc: true
 ---

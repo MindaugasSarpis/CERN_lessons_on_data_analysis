@@ -564,7 +564,7 @@ class: fill
 
 <div class="card card-success card-glass pad-compact mt-sm">
 
-🏋️ The 2-2-1 network with sigmoids, nine weights drawn at random, 2000 steps on the four points: loss 0.696 → 0.003. The hidden neurons it found: $h_1$ = 0.03, 0.98, 0.98, 1.00, an OR; $h_2$ = 0.00, 0.05, 0.05, 0.94, an AND.
+🏋️ The 2-2-1 network with sigmoids, nine weights drawn at random, 2000 steps on the four points: loss 0.696 → 0.003. The hidden neurons it found: $h_1$ = 0.03, 0.98, 0.98, 1.00, an OR; $h_2$ = 0.00, 0.05, 0.05, 0.93, an AND.
 
 </div>
 
@@ -574,6 +574,28 @@ class: fill
 **Say:** the step of the evening, for nine weights and four points at a time, 2000 times. Nobody told it about OR and AND: it found the hand-set solution by itself, with larger weights.
 **If asked:** the step size was η = 2, on the mean loss of the four points; from step 205 on, all four outputs are on the right side of 0.5.
 (~2 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# The Trained Network over Every **Input**
+
+<div class="card card-success card-glass pad-compact mt-sm">
+
+⛰️ $\hat{y}$ for every $(x_1, x_2)$, not only the four points: a ridge · $h_1$ and $h_2$: one slope each · $\hat{y} = \sigma(12.97\,h_1 - 13.76\,h_2 - 6.08)$: 1.00 at (0, 1) and (1, 0), 0.00 at (0, 0) and (1, 1)
+
+</div>
+
+<Explain3D name="xor-ridge" class="fig-fill mt-sm" />
+
+<!--
+**Do:** let it turn once. Press *h₁, hidden*: one slope, high on three corners, an OR. Press *h₂, hidden*: one slope, high only at (1, 1), an AND. Press *ŷ, the output*: the first slope minus the second. Press *along the ridge* for its profile.
+**Say:** one neuron gives one slope, and no single slope is high at two opposite corners and low at the other two. Two slopes, subtracted, give a ridge.
+**If asked:** the heights at the corners are the numbers of the slide before: 0.03, 0.98, 0.98, 1.00 and 0.00, 0.05, 0.05, 0.93.
+(~1.5 min)
 -->
 
 ---
