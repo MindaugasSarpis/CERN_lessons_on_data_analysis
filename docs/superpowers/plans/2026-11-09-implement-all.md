@@ -131,6 +131,52 @@ While drafts are mid-rework on `main`, a batch ships from a worktree of
       that skips the cache (Cmd+Shift+R) shows the new files. Decision: no
       further push during the lecture, because a deploy replaces the deck's
       hashed files under an open tab.
+- [x] Lecture 7, slide 69 "Plot Every Hour: `ax.plot`", 10 November (the
+      lecturer, with a screenshot of the slide: "why is this still here?",
+      after "Has to be self contained" the evening before): read as the
+      dependence on `import weather` and `weather.temps`, a helper file
+      that is on no slide. The slide's code now reads
+      `data/raw/weather.csv` itself (every line after the header, the
+      second column as a number, the hours of −999 left out: 87 552
+      values); slide 70 names its list in a comment; the notes of slides 3
+      and 67–69 no longer name `weather.py`, `scripts/figures.py` or
+      Lecture 5. Set aside: a first plot from a short typed list (the new
+      Seminar 7 starts that way). Commit `1c53580`.
+- [x] Lecture 7, slide 87, Minard's map with English names, 10 November
+      (the lecturer: "names should be in english"): Kaunas and Vilnius as
+      today, the other towns as in English histories of 1812 (Smorgon,
+      Molodechno, Glubokoe, Studienka, Polotsk, Vitebsk, Orsha, Mogilev,
+      Dorogobuzh, Vyazma, Gzhatsk (Gagarin since 1968), Mozhaysk, Moscow,
+      Tarutino, Maloyaroslavets); the data file keeps Minard's spelling.
+      Commit `1c53580`, pushed 14:28, live 14:43:30 EET. The first attempt
+      of the deploy job hung (in progress for more than 4 minutes; 30 s is
+      normal); it was cancelled, and `gh run rerun <id> --failed` deployed
+      the same artifact in 30 s.
+- [x] Seminar 7 rewritten as a gradual build-up, 10 November (the lecturer,
+      less than an hour before the lecture: "a very gradual build up of a
+      "mini project" with first one sript, a list, and plotting it on the
+      screen, then saving it, …"; and "very gradual and without downloading
+      files (prioritize this approach in all of the seminars for future
+      reference) …"). One script, `plot.py`, in a new, empty folder, 26
+      sections in 7 parts: twelve monthly means typed as a list; on the
+      screen; saved as PNG and SVG; labels and a title; a line at the mean
+      and an arrow; the list in a typed CSV file; `read_csv` and `draw` on
+      a second typed file; `sys.argv`; last, one public file of 5 kB (R's
+      `nottem` in the Rdatasets collection, fetched with `curl -O`). Every
+      Python stage and every output was run (Python 3.14.10, Matplotlib
+      3.11.2, the Agg backend). The rule for all seminars is in CLAUDE.md,
+      `docs/authoring.md`, `docs/seminar-page-recipe.md` (rules 2 and 7)
+      and the memory `seminars-gradual-no-downloads`.
+- [x] The Seminar 7 page pushed minutes before the lecture, 10 November:
+      the seminar follows the lecture, so the page has to be live before
+      the lecturer is free again. The decision above ("no further push
+      during the lecture") assumed that every deploy replaces a deck's
+      hashed files. The build logs of the two runs before this one
+      (`066ef99`, `1c53580`) list the same hashed file names for every
+      deck whose slides did not change (decks 1 to 6 and the report page:
+      no name differs; Lecture 7, which changed: 312 of 640), so a push
+      that changes only the workbook leaves an open deck as it is. A push
+      that changes a deck still waits for the end of the lecture.
 - [ ] Open: John Snow's cholera map (not drawn); Lecture 3's bulb and
       transistor photos at a higher resolution; `preloadImages` off for phones;
       the zips `weather-s08`…`s12` (need the lecturer's go-ahead to upload);
@@ -149,3 +195,18 @@ While drafts are mid-rework on `main`, a batch ships from a worktree of
       A remedy: a content hash in the figure's URL at build time
       (`viz_x.svg?v=<hash>`), written by `scripts/gen-entries.mjs` or a
       Vite plugin.
+- [ ] Open, Seminar 7: the conda lines of sections 1 and 2 and the window
+      of `plt.show()` with `matplotlib-base` on macOS and Windows were not
+      run on this machine (no conda, no display); on the Nottingham figure
+      the legend lies over the peak of 1921; the licence line names R's
+      licence, because the data's own is stated nowhere definitive;
+      `misc/weather_repo/starts/s07/` and `weather-s07.zip` are no longer
+      used by the page and were left as they are.
+- [ ] Open: Seminars 8–12 still start from `weather-sNN.zip`. Each needs
+      the rework of Seminar 7 before it is taught (Seminar 8: 17 Nov 2026);
+      the zips `weather-s08` … `weather-s12` are then not uploaded.
+- [ ] Open: Lecture 7's slides "The Time of Each Hour: `weather.hours`" and
+      "The Temperatures of Each Year: `weather.group`", in For the Curious,
+      and the code after them still call the module `weather.py`
+      (`weather.hours`, `weather.group`, `weather.mean`). The lecturer's
+      "has to be self contained" (slide 69) may apply there too.

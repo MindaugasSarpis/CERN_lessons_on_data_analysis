@@ -4,119 +4,106 @@
 
 <!-- ~120 min: the length pnpm timing:check reads -->
 
-**Today's question:** What do ten years of weather look like?
+**Today's question:** How do twelve numbers become a figure, and how does the same script draw another file?
 
-**Today's goal:** every student makes today's conda environment, adds Matplotlib to it, adds a function
-`group` to the module `weather.py`, and writes one script,
-`scripts/figures.py`, that draws five figures of `weather.csv` into
-`results/`: ten years day by day, the year's cycle, the day's cycle, the
-yearly means and a histogram; then deletes the figures and draws them all
-again with one line.
+**Today's goal:** every student builds one script, `plot.py`, one step at a
+time, in a new, empty folder: it draws a list on the screen, saves the
+figure, labels and annotates it, reads its values from a CSV file typed in
+class, and at the end takes the file and the labels from the command line.
 
 Everything is typed in VS Code: the script in the editor, the commands in
-its terminal (zsh on macOS, Git Bash on Windows; the lines are the same
-in both). Each figure opens in VS Code from the Explorer. In the blocks, a
-line that starts with `$` is typed in the terminal, a line that starts with
-`>>>` is typed at Python's prompt, and every other line is what comes back;
-`...` stands for lines left out.
+its terminal (zsh on macOS, Git Bash on Windows; the lines are the same in
+both). In the blocks, a line that starts with `$` is typed in the terminal,
+without the `$`; every other line is what comes back; `...` stands for lines
+left out. In a script, the new lines are marked.
 
-**If time runs short:** skip the Tasks of Parts 2 to 4, but keep
-section 11, which draws every figure again with one line; sections 13 to
-15 are optional.
+**If time runs short:** leave out Part 7 (the open data set) first, then the
+Tasks; Parts 1 to 6 are the session.
 
 ??? info "Before the session"
     - **Room:** Miniforge and VS Code with its Python extension on every
-      laptop (the [Setup](../setup.md) page), internet for the download
-      (0.6 MB) and for conda: Python about 25 MB on a Mac and 37 MB on
-      Windows, Matplotlib with what it needs about 55 MB more on a Mac and
-      160 MB on Windows, less when conda has them already. Nothing from
-      earlier seminars is needed.
+      laptop (the [Setup](../setup.md) page), internet for conda: Python
+      about 25 MB on a Mac and 37 MB on Windows, Matplotlib with what it
+      needs about 55 MB more on a Mac and 160 MB on Windows, less when conda
+      has them already. Nothing from earlier seminars is needed.
+    - **No file is handed out.** The data is typed from this page; the
+      course stores no data file for today. Part 7 downloads one public
+      file of 5 kB.
     - **Missing a tool?** VS Code: [Setup, step 1](../setup.md#vscode);
       `conda` (Miniforge): [Setup, steps 2–4](../setup.md#shell); the Python
       extension: [Setup, step 7](../setup.md#extensions).
-    - **You:** if you made `s07` before, remove it (`conda env remove -n
-      s07`) to make it with the room.
+    - **A laptop that already has `s07` or `weather-s07`:** remove the
+      environment (`conda env remove -n s07`) and rename the old folder, to
+      start empty with the room.
+    - **The numbers:** the twelve values are the mean temperature of each
+      month at the course's weather station, 2016 to 2025, in °C; the ten
+      values of section 17 are the means of its years. The mean of the
+      twelve values is 7.125 (of all hours 7.16: the months differ in
+      length).
     - **Keys** are written for Windows, macOS in brackets. Paths are shown
       for a Mac (`/Users/smilte/...`); Git Bash shows `/c/Users/smilte/...`.
 
 ---
 
-## Part 1 · Matplotlib in the environment { #part-1 }
+## Part 1 · One script, one list, one figure on the screen { #part-1 }
 
-<!-- 0:00 to 0:35 -->
+<!-- 0:00 to 0:31 -->
 
-Matplotlib draws figures from Python. It goes into the project's environment, then a first figure shows how its pieces fit.
-
-Further reading: [Matplotlib, Quick start guide](https://matplotlib.org/stable/users/explain/quick_start.html).
+A folder, an environment with Matplotlib, and a script of ten lines that draws twelve numbers.
 
 ---
 
-### 1. Get today's folder { #start }
+### 1. A new folder and an environment { #start }
 
-<!-- 0:00 · 10 min -->
+<!-- 0:00 · 8 min -->
 
-Today's folder holds the data, the module `weather.py` and `environment.yml`, the list from which conda makes today's environment: Python alone.
+An environment is a folder with its own Python and its own packages; today's is named `s07`.
 
-1. On the [Releases page](https://github.com/MindaugasSarpis/weather-project/releases),
-   under **Assets**, click `weather-s07.zip`. Open VS Code, then the
-   terminal (**View** > **Terminal**), and unzip it into the home folder.
+1. In VS Code, **View** > **Terminal**. Make the folder and go into it.
 
     ```text
-    $ unzip ~/Downloads/weather-s07.zip -d ~
-    Archive:  /Users/smilte/Downloads/weather-s07.zip
-       creating: /Users/smilte/weather-s07/
-    ...
-      inflating: /Users/smilte/weather-s07/scripts/weather.py
+    $ mkdir ~/weather-s07
     $ cd ~/weather-s07
-    $ ls
-    README.md  data  environment.yml  results  scripts
+    $ pwd
+    /Users/smilte/weather-s07
     ```
 
-    Safari unpacks a zip by itself: then `mv ~/Downloads/weather-s07 ~`
-    instead.
+2. **File** > **Open Folder...** > `weather-s07` (in your home folder) >
+   **Open**, then **View** > **Terminal**. The Explorer on the left is empty.
 
-2. **File** > **Open Folder...** > `weather-s07` > **Open**. The window
-   reloads: open the terminal again (**View** > **Terminal**); it starts in
-   the folder.
-3. The list for today's environment.
+3. Make the environment, with Python in it. At `Proceed ([y]/n)?` press `Enter`.
 
     ```text
-    $ cat environment.yml
-    name: s07
-    channels:
-      - conda-forge
-    dependencies:
-      - python=3.14
-    ```
-
-4. Make the environment from it, then switch it on: the prompt starts
-   with `(s07)`.
-
-    ```text
-    $ conda env create -n s07 -f environment.yml
-    Channels:
-     - conda-forge
+    $ conda create -n s07 python=3.14
+    ...
+      added / updated specs:
+        - python=3.14
+    ...
+    Proceed ([y]/n)?
     ...
     #     $ conda activate s07
-    $ conda activate s07
     ```
 
     `conda: command not found`: install Miniforge as on the
     [Setup page, steps 2–4](../setup.md#shell), then open a new terminal.
 
-5. VS Code too: `Ctrl+Shift+P` (macOS `Cmd+Shift+P`), `Python: Select
-   Interpreter`, pick the entry with `envs/s07` in its path. The Status
-   Bar shows `s07`.
+4. Switch it on, and ask which Python answers.
 
-**Check:** `(s07)` at the start of the prompt, `s07` in the Status Bar.
+    ```text
+    $ conda activate s07
+    $ python --version
+    Python 3.14.8
+    ```
+
+**Check:** `(s07)` at the start of the prompt, and a Python `3.14` (the last digit may be higher).
 
 ---
 
 ### 2. Install Matplotlib, write it down { #install }
 
-<!-- 0:10 · 10 min -->
+<!-- 0:08 · 6 min -->
 
-A new package goes into the active environment, never into `base`, and into the file that lists it, or the next laptop cannot run the script.
+Matplotlib is the Python library that draws figures. A new package goes into the active environment, and into the file that lists it.
 
 1. Matplotlib is not in it yet.
 
@@ -127,7 +114,7 @@ A new package goes into the active environment, never into `base`, and into the 
     ModuleNotFoundError: No module named 'matplotlib'
     ```
 
-2. Install it, with its version.
+2. Install it, with its version. At `Proceed ([y]/n)?` press `Enter`.
 
     ```text
     $ conda install matplotlib-base=3.11
@@ -142,24 +129,24 @@ A new package goes into the active environment, never into `base`, and into the 
     Proceed ([y]/n)?
     ```
 
-    `matplotlib-base` is Matplotlib without a window library of several
-    hundred MB; the scripts write their figures to files.
+    `matplotlib-base` is Matplotlib without an extra window library of
+    several hundred MB.
 
-3. At `Proceed ([y]/n)?` press `Enter`. Then ask for the version.
+3. Ask for the version.
 
     ```text
     $ python -c "import matplotlib; print(matplotlib.__version__)"
     3.11.2
     ```
 
-4. Export the list again.
+4. Write the environment into a file.
 
     ```text
     $ conda env export --from-history -f environment.yml
     ```
 
-5. Open `environment.yml`, delete its last line, `prefix: ...` (a folder on
-   this laptop), save: Matplotlib is the new last line.
+5. Click `environment.yml` in the Explorer, delete its last line,
+   `prefix: ...` (a folder on this laptop), save (`Ctrl+S`, macOS `Cmd+S`).
 
     ```text
     name: s07
@@ -173,880 +160,1123 @@ A new package goes into the active environment, never into `base`, and into the 
 **Check:** `3.11.2` (the last digit may be higher), and `- matplotlib-base=3.11` at the end of
 `environment.yml`.
 
-!!! warning "`ModuleNotFoundError: No module named 'matplotlib'`"
-    The prompt says `(base)`: `conda activate s07`, then again. VS Code's
-    Status Bar must show `s07` too (section 1, step 5).
-
 ---
 
-### 3. A first figure { #first }
+### 3. One script with one list { #list }
 
-<!-- 0:20 · 15 min (Task: 5 min, skip if late) -->
+<!-- 0:14 · 5 min -->
 
-A **Figure** is the whole image; an **Axes** is one plot area in it, with its two axes; `ax.plot` draws a line on the Axes; `fig.savefig` writes the image to a file.
+A list is values in square brackets, in order. These twelve are the mean temperature of each month, January to December, in °C.
 
-1. Four numbers first. New file `scripts/first_figure.py`, the first four
-   hours of the log. Type, save.
+1. In the Explorer, right-click > **New File...**, type `plot.py`, `Enter`.
+   Type the four lines and save (`Ctrl+S`, macOS `Cmd+S`).
 
     ```python
-    import matplotlib.pyplot as plt
-
-    hours = [0, 1, 2, 3]
-    temps = [-4.4, -4.8, -5.5, -6.0]
-    fig, ax = plt.subplots()
-    print(type(fig), type(ax))
-    ax.plot(hours, temps)
-    fig.savefig("results/first.png")
+    temps = [-3.9, -2.4, 1.2, 6.4, 12.2, 17.2,
+             18.5, 16.1, 13.0, 6.9, 2.6, -2.3]
+    print(temps)
+    print(len(temps))
     ```
-
-    `plt.subplots()` makes a Figure with one Axes and hands back both.
-    `fig.savefig` writes a file, where `plt.show()` would open a window.
 
 2. Run it.
 
     ```text
-    $ python scripts/first_figure.py
-    <class 'matplotlib.figure.Figure'> <class 'matplotlib.axes._axes.Axes'>
+    $ python plot.py
+    [-3.9, -2.4, 1.2, 6.4, 12.2, 17.2, 18.5, 16.1, 13.0, 6.9, 2.6, -2.3]
+    12
+    ```
+
+    `len` counts the values of a list. Inside the brackets a list may go on
+    in the next line.
+
+3. Tell VS Code which Python to use: `Ctrl+Shift+P` (macOS `Cmd+Shift+P`),
+   `Python: Select Interpreter`, pick the entry with `envs/s07` in its path.
+   The Status Bar shows `s07`.
+
+**Check:** the second line says `12`.
+
+---
+
+### 4. Plot the list on the screen { #screen }
+
+<!-- 0:19 · 6 min -->
+
+Four lines draw a list: get Matplotlib, make a figure, draw the line, show the window.
+
+1. Replace the two `print` lines. The script is now:
+
+    ```python hl_lines="1 6 7 8"
+    import matplotlib.pyplot as plt
+
+    temps = [-3.9, -2.4, 1.2, 6.4, 12.2, 17.2,
+             18.5, 16.1, 13.0, 6.9, 2.6, -2.3]
+
+    fig, ax = plt.subplots()
+    ax.plot(temps)
+    plt.show()
+    ```
+
+    - `import matplotlib.pyplot as plt`: Matplotlib's plotting part, under the short name `plt`.
+    - `fig, ax = plt.subplots()`: a figure `fig` (the whole picture) and its axes `ax` (the plot in it).
+    - `ax.plot(temps)`: the values as a line, at the positions 0, 1, ..., 11.
+    - `plt.show()`: opens the window; the script waits here until the window is closed.
+
+2. Save and run. A window opens.
+
+    ```text
+    $ python plot.py
     ```
 
     The first run on a laptop may print `Matplotlib is building the font
-    cache; this may take a moment.` before it: once, then never again.
+    cache; this may take a moment.`
 
-3. In the Explorer, click `results/first.png`: one line falling from −4.4
-   to −6.0 over the hours 0 to 3. Matplotlib chose the axis ranges from the
-   data.
+3. Close the window: the prompt comes back.
 
-4. Open `scripts/weather.py`, which came with the folder: a **module**, a
-   file of definitions that a script loads with `import weather`.
-   `MISSING` is the station's mark for an hour without a temperature,
-   `-999`; `read_lines(path)` gives the lines of a file without its
-   header, `temp_of(line)` the temperature of one line, `temps(path)`
-   every temperature that is not `MISSING`, and `mean(values)` the mean
-   of a list.
+**Check:** a window with one line that rises to 18.5 and falls again; the x-axis counts the positions, 0 to 11 (ticks at 0, 2, ..., 10).
 
-5. New file `scripts/figures.py`: every hour of the log, `-999` included.
-   Type, save.
+!!! warning "No window, or an error"
+    - `ModuleNotFoundError: No module named 'matplotlib'`: the prompt says
+      `(base)`. Type `conda activate s07`.
+    - `UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be
+      shown`: this Python cannot open a window. Go on: section 7 saves the
+      figure into a file that VS Code opens.
+    - No window and no new prompt: the window is open behind VS Code. Look
+      for a new icon in the Dock (macOS) or on the taskbar (Windows).
 
-    ```python
+---
+
+### 5. Month names on the x-axis { #months }
+
+<!-- 0:25 · 3 min -->
+
+`ax.plot(x, y)` takes two lists of the same length: where each value stands, and the value.
+
+1. Add the list `months` and give it to `ax.plot`.
+
+    ```python hl_lines="3 4 9"
     import matplotlib.pyplot as plt
 
-    import weather
-
-    PATH = "data/raw/weather.csv"
-
-    every = []
-    for line in weather.read_lines(PATH):
-        every.append(weather.temp_of(line))
-    print(len(every), min(every), max(every))
+    months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+              "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+    temps = [-3.9, -2.4, 1.2, 6.4, 12.2, 17.2,
+             18.5, 16.1, 13.0, 6.9, 2.6, -2.3]
 
     fig, ax = plt.subplots()
-    ax.plot(every)
-    fig.savefig("results/every_hour.png")
+    ax.plot(months, temps)
+    plt.show()
     ```
 
-    Given one list, `ax.plot` puts each value at its position: 0, 1, 2, …
-
-6. Run it.
+2. Save, run, look, close the window.
 
     ```text
-    $ python scripts/figures.py
-    87672 -999.0 32.4
+    $ python plot.py
     ```
 
-7. In the Explorer, click `results/every_hour.png`: a wavy band near 0,
-   and one line straight down to −999 at about hour 31 000.
+**Check:** the x-axis reads `Jan` to `Dec`; the highest point stands over `Jul`.
 
-**Check:** the drop to −999: the five days of July 2019 without a
-temperature.
+---
 
-!!! warning "`FileNotFoundError: ... 'data/raw/weather.csv'`"
-    The terminal is not in the project folder: `cd ~/weather-s07`, then
-    run again.
+### 6. A marker at every value { #markers }
 
-!!! question "Task: the humidity, drawn the same way"
-    In `figures.py`, append the third value of each line,
-    `float(line.split(",")[2])`, instead of `weather.temp_of(line)`. Run,
-    look at the figure. Is there a spike? Change it back.
+<!-- 0:28 · 3 min -->
+
+Only the twelve points are data; the line between them is drawn to guide the eye. `"o-"` means a circle at every value and a line between them.
+
+1. Add `"o-"` to `ax.plot`.
+
+    ```python hl_lines="2"
+    fig, ax = plt.subplots()
+    ax.plot(months, temps, "o-")
+    plt.show()
+    ```
+
+2. Save, run, look, close the window.
+
+**Check:** twelve circles, joined by a line.
+
+!!! question "Task: only the markers"
+    Change `"o-"` to `"o"`, run, look, and change it back.
 
 ??? success "Answer"
-    ```text
-    $ python scripts/figures.py
-    87672 34.0 100.0
-    ```
-
-    No spike: `humidity_pct` has no `-999`; its hours run from 34 to
-    100 %.
+    Twelve circles and no line: `o` is the marker, `-` the line.
 
 ---
 
-## Part 2 · Ten years, day by day { #part-2 }
+## Part 2 · Save the figure, label its axes { #part-2 }
 
-<!-- 0:35 to 1:05 -->
+<!-- 0:31 to 0:46 -->
 
-One missing value can hide everything else in a figure. A mean per day leaves the missing hours out and puts a date under each point.
-
----
-
-### 4. Group the hours by day: `group` { #group }
-
-<!-- 0:35 · 10 min -->
-
-A **dictionary of lists**: one key per day, and under it the list of that day's temperatures.
-
-1. At the end of `scripts/weather.py`, add a fifth function, save.
-
-    ```python
-    def group(path, start, stop):
-        """A list of temperatures for each key line[start:stop]."""
-        groups = {}
-        for line in read_lines(path):
-            temp = temp_of(line)
-            if temp == MISSING:
-                continue
-            key = line[start:stop]
-            if key not in groups:
-                groups[key] = []
-            groups[key].append(temp)
-        return groups
-    ```
-
-    `line[0:10]` is the date of a line, `2016-01-01`. The first time a key
-    turns up, `groups[key] = []` gives it an empty list; `append` adds each
-    temperature to the list of its key; `continue` skips the hours marked
-    `-999`.
-
-2. Try it at `>>>`. Python finds `weather.py` in the terminal's folder, so
-   start it in `scripts`; the data is then one folder up, `..`.
-
-    ```text
-    $ cd scripts
-    $ python
-    >>> import weather
-    >>> days = weather.group("../data/raw/weather.csv", 0, 10)
-    >>> len(days)
-    3648
-    >>> days["2016-01-01"][0:4]
-    [-4.4, -4.8, -5.5, -6.0]
-    >>> len(days["2016-01-01"])
-    24
-    >>> "2019-07-22" in days
-    False
-    >>> exit()
-    $ cd ..
-    ```
-
-    3653 days from 2016 to 2025, less the five days of July 2019 whose
-    hours are all `-999`. The first four values are the four hours of
-    `first_figure.py`.
-
-**Check:** `3648` keys, `False` for 22 July 2019, and the terminal back in
-`weather-s07` (`cd ..`).
+The figure goes into a file, then gets one label at a time.
 
 ---
 
-### 5. One mean per day, the date on the x-axis { #days }
+### 7. Save the figure: PNG, then SVG { #save }
 
-<!-- 0:45 · 10 min -->
+<!-- 0:31 · 7 min -->
 
-Each day gets one point, the mean of its hours, from `weather.group`. `datetime.fromisoformat` turns a text such as `2016-01-01` into a date; Matplotlib writes the years under an axis of dates.
+The window is gone when it is closed. `fig.savefig` writes the figure into a file; the ending of the name chooses the format.
 
-1. Replace `figures.py` with this. `datetime` comes with Python; the
-   first line takes its type of the same name.
+1. Add one line above `plt.show()`.
 
-    ```python
-    from datetime import datetime
-
-    import matplotlib.pyplot as plt
-
-    import weather
-
-    PATH = "data/raw/weather.csv"
-
-    days = weather.group(PATH, 0, 10)
-    dates = []
-    day_means = []
-    for day in days:
-        dates.append(datetime.fromisoformat(day))
-        day_means.append(weather.mean(days[day]))
-    print(len(dates), dates[0])
-
+    ```python hl_lines="3"
     fig, ax = plt.subplots()
-    ax.plot(dates, day_means)
-    fig.savefig("results/daily_temp.png")
+    ax.plot(months, temps, "o-")
+    fig.savefig("month_means.png", dpi=150)
+    plt.show()
     ```
 
-    A dictionary keeps its keys in the order they came in: the order of
-    the file, from 2016-01-01.
+    `dpi=150`: 150 pixels per inch; the figure of 6.4 × 4.8 inches becomes 960 × 720 pixels.
 
-2. Run it. `print` writes a date with its time, midnight.
+2. Save, run, close the window, list the folder.
 
     ```text
-    $ python scripts/figures.py
-    3648 2016-01-01 00:00:00
+    $ python plot.py
+    $ ls
+    environment.yml  month_means.png  plot.py
     ```
 
-3. Open `results/daily_temp.png`: the years 2016 to 2026 under the axis,
-   ten summers and ten winters, from about −13 to 27 °C.
+3. Click `month_means.png` in the Explorer: the figure opens in a tab.
 
-**Check:** no spike, and the years under the x-axis.
+4. Add a second line, with the ending `.svg`, and run again.
+
+    ```python hl_lines="2"
+    fig.savefig("month_means.png", dpi=150)
+    fig.savefig("month_means.svg")
+    plt.show()
+    ```
+
+    ```text
+    $ python plot.py
+    $ ls
+    environment.yml  month_means.png  month_means.svg  plot.py
+    ```
+
+    PNG stores pixels: zoomed in, the line turns into steps. SVG stores the
+    lines and the text themselves: sharp at every size, for a report or a
+    slide.
+
+The two lines stand above `plt.show()`: the script waits at `plt.show()`, so the files are written before the window opens.
+
+**Check:** `ls` shows `month_means.png` and `month_means.svg`; the PNG opens in VS Code.
 
 ---
 
-### 6. Size, label, a title that says the finding { #labels }
+### 8. The y label, with its unit { #ylabel }
 
-<!-- 0:55 · 10 min -->
+<!-- 0:38 · 3 min -->
 
-A figure needs a unit on its axis and a title that says what to see.
+A number on an axis needs to say what was measured, and in which unit.
 
-1. Replace the three lines from `fig, ax = ...` to `fig.savefig(...)`.
+1. Add one line under `ax.plot`.
 
-    ```python
-    fig, ax = plt.subplots(figsize=(10, 4))
-    ax.plot(dates, day_means, linewidth=0.6)
-    ax.set_ylabel("Daily mean temperature (°C)")
-    ax.set_title("The same cycle every year, from -13 °C to 27 °C")
-    fig.savefig("results/daily_temp.png", dpi=150)
-    ```
-
-    `figsize` is in inches, 10 wide and 4 high; `dpi=150` gives 1500 by
-    600 pixels. The thin line shows the days.
-
-2. Save, run, look.
-
-    ```text
-    $ python scripts/figures.py
-    3648 2016-01-01 00:00:00
-    ```
-
-**Check:** a wide figure, a y-axis label with °C, the title on top.
-
-!!! question "Task: 2025 alone"
-    Draw only the days of 2025 into `results/daily_2025.png`. Hint: a
-    second loop over `days` that keeps a day when `day[0:4]` is `"2025"`.
-
-??? success "Answer"
-    At the end of `figures.py`:
-
-    ```python
-    dates_2025 = []
-    means_2025 = []
-    for day in days:
-        if day[0:4] == "2025":
-            dates_2025.append(datetime.fromisoformat(day))
-            means_2025.append(weather.mean(days[day]))
-    print(len(dates_2025), f"{min(means_2025):.1f} {max(means_2025):.1f}")
-
-    fig, ax = plt.subplots(figsize=(10, 4))
-    ax.plot(dates_2025, means_2025)
-    ax.set_ylabel("Daily mean temperature (°C)")
-    fig.savefig("results/daily_2025.png", dpi=150)
-    ```
-
-    ```text
-    $ python scripts/figures.py
-    3648 2016-01-01 00:00:00
-    365 -13.0 24.0
-    ```
-
-    365 days, from −13.0 °C on 7 January to 24.0 °C on 29 July: the
-    weather moves the days up and down by several degrees around the
-    cycle.
-
----
-
-## Part 3 · The year's cycle and the day's cycle { #part-3 }
-
-<!-- 1:05 to 1:30 -->
-
-Ten years of hours averaged by month and by hour of the day: the two cycles, without the weather of single days.
-
----
-
-### 7. One point per month { #monthly }
-
-<!-- 1:05 · 10 min -->
-
-The same `group`, with the month as key, `line[5:7]`: twelve lists, a mean for each.
-
-1. At the end of `figures.py`, add these lines, save, run.
-
-    ```python
-    months = weather.group(PATH, 5, 7)
-    month_keys = []
-    month_means = []
-    for month in months:
-        month_keys.append(month)
-        month_means.append(weather.mean(months[month]))
-    print(month_keys)
-    print(f"{min(month_means):.1f} {max(month_means):.1f}")
-    ```
-
-    ```text
-    $ python scripts/figures.py
-    3648 2016-01-01 00:00:00
-    ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
-    -3.9 18.5
-    ```
-
-    The keys come in the order of the file, January first.
-    `f"{x:.1f}"` writes the number `x` with one decimal.
-
-2. Under them, the figure. A list of texts on the x-axis puts each text
-   under its point, in the order of the list.
-
-    ```python
+    ```python hl_lines="3"
     fig, ax = plt.subplots()
-    ax.plot(month_keys, month_means, "o-")
-    ax.set_xlabel("Month")
-    ax.set_ylabel("Mean temperature, 2016 to 2025 (°C)")
-    ax.set_title("July is 22.4 °C warmer than January")
-    fig.savefig("results/month_means.png", dpi=150)
-    ```
-
-    `"o-"` draws a point at each value and a line between neighbours: the
-    months follow each other round the year.
-
-3. Save, run, open `results/month_means.png`.
-
-**Check:** a hill with its top at `07`, 18.5 °C, and its bottom at `01`,
-−3.9 °C.
-
----
-
-### 8. The day's cycle: one mean per hour { #daily-cycle }
-
-<!-- 1:15 · 15 min -->
-
-The hour of the day is `line[11:13]`: 24 lists, each holding one hour of every day of ten years.
-
-1. At the end of `figures.py`, add these lines, save, run.
-
-    ```python
-    by_hour = weather.group(PATH, 11, 13)
-    hour_keys = []
-    hour_means = []
-    for hour in by_hour:
-        hour_keys.append(hour)
-        hour_means.append(weather.mean(by_hour[hour]))
-    print(f"{min(hour_means):.1f} {max(hour_means):.1f}")
-    ```
-
-    ```text
-    $ python scripts/figures.py
-    ...
-    -3.9 18.5
-    3.7 10.7
-    ```
-
-2. Under them, the figure. Save, run.
-
-    ```python
-    fig, ax = plt.subplots()
-    ax.plot(hour_keys, hour_means, "o-")
-    ax.set_xticks(["00", "03", "06", "09", "12", "15", "18", "21"])
-    ax.set_xlabel("Hour of the day")
-    ax.set_ylabel("Mean temperature, 2016 to 2025 (°C)")
-    ax.set_title("Coldest at 03:00, warmest at 15:00, 7 °C apart")
-    fig.savefig("results/day_cycle.png", dpi=150)
-    ```
-
-    `set_xticks` writes a label only under the keys it is given: every
-    third hour, so the 24 labels do not crowd.
-
-3. Open `results/day_cycle.png`: lowest at 03:00, 3.7 °C, highest at
-   15:00, 10.7 °C.
-
-**Check:** one curve with 24 points, its bottom at `03`, its top at `15`.
-
-!!! question "Task: does the day of the month matter?"
-    Draw the mean of each day of the month, `weather.group(PATH, 8, 10)`,
-    into `results/day_of_month.png`, as in steps 1 and 2, with
-    `ax.set_xticks(["01", "08", "15", "22", "29"])` and
-    `ax.set_ylim(-5, 20)`.
-
-??? success "Answer"
-    ```python
-    by_date = weather.group(PATH, 8, 10)
-    date_keys = []
-    date_means = []
-    for date in by_date:
-        date_keys.append(date)
-        date_means.append(weather.mean(by_date[date]))
-    print(len(date_keys), f"{min(date_means):.1f} {max(date_means):.1f}")
-
-    fig, ax = plt.subplots()
-    ax.plot(date_keys, date_means, "o-")
-    ax.set_xticks(["01", "08", "15", "22", "29"])
-    ax.set_ylim(-5, 20)
-    ax.set_xlabel("Day of the month")
-    ax.set_ylabel("Mean temperature, 2016 to 2025 (°C)")
-    fig.savefig("results/day_of_month.png", dpi=150)
-    ```
-
-    ```text
-    $ python scripts/figures.py
-    ...
-    3.7 10.7
-    31 6.8 8.3
-    ```
-
-    No: from the 1st to the 28th every mean lies between 6.8 and 7.4 °C,
-    a flat line; the date does not drive the weather. Only the 29th
-    (8.1 °C) and the 30th (8.3 °C) stand higher: cold February has no
-    30th, and a 29th only in 2016, 2020 and 2024, so these two days hold
-    fewer winter hours.
-
----
-
-## Part 4 · Is it getting warmer, as a figure { #part-4 }
-
-<!-- 1:30 to 2:00 -->
-
-The mean of each of the ten years, and the 87 552 hours behind them.
-
----
-
-### 9. Ten points, a reference line, a legend { #yearly }
-
-<!-- 1:30 · 10 min -->
-
-Points, not bars: the y-axis does not start at zero, and the eye compares the points with the line.
-
-1. At the end of `figures.py`, add these lines, save, run.
-
-    ```python
-    by_year = weather.group(PATH, 0, 4)
-    years = []
-    year_means = []
-    for year in by_year:
-        years.append(year)
-        year_means.append(weather.mean(by_year[year]))
-    temps = weather.temps(PATH)
-    all_mean = weather.mean(temps)
-    print(len(temps), f"{all_mean:.2f}")
-    ```
-
-    ```text
-    $ python scripts/figures.py
-    ...
-    3.7 10.7
-    87552 7.16
-    ```
-
-2. Under them, the figure. Save, run.
-
-    ```python
-    fig, ax = plt.subplots()
-    ax.plot(years, year_means, "o", label="mean of the year")
-    ax.axhline(all_mean, color="grey", linewidth=1, label="mean of all hours")
-    ax.set_ylim(5, 9)
-    ax.set_xlabel("Year")
+    ax.plot(months, temps, "o-")
     ax.set_ylabel("Mean temperature (°C)")
-    ax.set_title("Ten years around 7.16 °C, the last one the coldest")
-    ax.legend()
-    fig.savefig("results/year_means.png", dpi=150)
+    fig.savefig("month_means.png", dpi=150)
+    fig.savefig("month_means.svg")
+    plt.show()
     ```
 
-3. Open `results/year_means.png`. `"o"` draws points without a line:
-   ten separate years, nothing measured between them;
-   `axhline` the grey line at 7.16 °C; `label=` names each, and
-   `ax.legend()` lists the names in a box. `set_ylim(5, 9)` fixes the
-   y-axis from 5 to 9 °C, so the ten points spread over the height. Ten
-   years do not say whether it is getting warmer: the points scatter by
-   about 1 °C, and the last one is the coldest.
+    No `°` on your keyboard: copy it from this page.
 
-**Check:** ten points above and below the line, the last one, 2025, lowest.
+2. Save, run, look, close the window.
+
+**Check:** `Mean temperature (°C)` stands along the y-axis.
 
 ---
 
-### 10. A histogram of the hours { #histogram }
+### 9. The x label { #xlabel }
 
-<!-- 1:40 · 10 min -->
+<!-- 0:41 · 2 min -->
 
-`ax.hist` cuts a range into bins of equal width, counts the values in each bin and draws one bar per bin.
+The same for the other axis.
 
-1. At the end of `figures.py`, add these lines, save, run.
+1. Add one line above the y label.
+
+    ```python hl_lines="2"
+    ax.plot(months, temps, "o-")
+    ax.set_xlabel("Month")
+    ax.set_ylabel("Mean temperature (°C)")
+    ```
+
+2. Save, run, look, close the window.
+
+**Check:** `Month` stands under the x-axis.
+
+---
+
+### 10. A title that states the finding { #title }
+
+<!-- 0:43 · 3 min -->
+
+The axes already say what is plotted. The title says what the reader should see.
+
+1. Add one line under the y label.
+
+    ```python hl_lines="3"
+    ax.set_xlabel("Month")
+    ax.set_ylabel("Mean temperature (°C)")
+    ax.set_title("July is the warmest month, January the coldest")
+    fig.savefig("month_means.png", dpi=150)
+    ```
+
+2. Save, run, look, close the window. Click `month_means.png`: the file has the labels and the title too.
+
+**Check:** the title stands above the plot, in the window and in the PNG file.
+
+!!! question "Task: the limits of the y-axis"
+    Matplotlib chose a y-axis from about −5 to 20. Make it run from −10 to
+    25 with `ax.set_ylim`, look, and delete the line again.
+
+??? success "Answer"
+    Under the title line:
 
     ```python
+    ax.set_ylim(-10, 25)
+    ```
+
+    The same line with more empty space above and below it. Matplotlib's
+    own limits fit these values, so the line goes again.
+
+---
+
+## Part 3 · Annotate: a reference line and an arrow { #part-3 }
+
+<!-- 0:46 to 0:57 -->
+
+Two marks that guide the reader: the mean as a line, the warmest month with an arrow.
+
+---
+
+### 11. A line at the mean, with a legend { #mean }
+
+<!-- 0:46 · 5 min -->
+
+A reference line gives every point something to be compared with. The script computes the mean from the list.
+
+1. Add the four marked lines. The script is now:
+
+    ```python hl_lines="7 8 12 16"
+    import matplotlib.pyplot as plt
+
+    months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+              "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+    temps = [-3.9, -2.4, 1.2, 6.4, 12.2, 17.2,
+             18.5, 16.1, 13.0, 6.9, 2.6, -2.3]
+    mean = sum(temps) / len(temps)
+    print(mean)
+
     fig, ax = plt.subplots()
-    ax.hist(temps)
-    ax.set_xlabel("Hourly temperature (°C)")
-    ax.set_ylabel("Hours")
-    fig.savefig("results/temp_hist.png", dpi=150)
+    ax.plot(months, temps, "o-")
+    ax.axhline(mean, color="grey", label=f"mean: {mean:.1f}")
+    ax.set_xlabel("Month")
+    ax.set_ylabel("Mean temperature (°C)")
+    ax.set_title("July is the warmest month, January the coldest")
+    ax.legend(frameon=False, loc="upper left")
+    fig.savefig("month_means.png", dpi=150)
+    fig.savefig("month_means.svg")
+    plt.show()
     ```
 
-2. Open `results/temp_hist.png`: ten bars, a tall one near 0 °C and a
-   broad shoulder, too coarse to show the shape. By default
-   `hist` cuts the range from the smallest value, −16.3, to the largest,
-   32.4, into 10 bins of 4.87 °C.
+    - `sum(temps) / len(temps)`: the sum of the values divided by their number, the mean.
+    - `ax.axhline(mean, ...)`: a horizontal line across the plot, at the height `mean`.
+    - `label=f"mean: {mean:.1f}"`: the line's text in the legend; `{mean:.1f}` puts the value in, with one decimal.
+    - `ax.legend(frameon=False, loc="upper left")`: draws the legend, without a frame, in the upper left corner.
 
-3. Bins of 1 °C: 50 of them from −17 to 33. Replace the three lines from
-   `ax.hist(temps)` to `ax.set_ylabel("Hours")` with these four, save,
-   run.
+2. Save, run, look, close the window.
 
-    ```python
-    ax.hist(temps, bins=50, range=(-17, 33))
-    ax.set_xlabel("Hourly temperature (°C)")
-    ax.set_ylabel("Hours per 1 °C")
-    ax.set_title("Two peaks: Nov–Mar near -1 °C, Apr–Oct near 12 °C")
+    ```text
+    $ python plot.py
+    7.125
     ```
 
-    The y-label states the bin width: a count per bin means nothing
-    without it.
+**Check:** the terminal says `7.125`; a grey line crosses the plot, and the legend says `mean: 7.1`.
 
-4. Open the figure again. The tallest bar, −1 to 0 °C, holds 3848 hours,
-   nine in ten of them from November to March, near freezing. The second
-   peak is highest at 11 to 12 °C, 3032 hours, nearly all from April to
-   October, where spring, summer and autumn overlap. Between them, the bar of 7 to 8 °C, where the mean
-   7.16 lies, holds 2706: fewer hours are near the mean than near either
-   peak.
+---
 
-**Check:** two peaks, 50 bars of 1 °C from −17 to 33.
+### 12. An arrow to the warmest month { #annotate }
 
-!!! question "Task: other bin widths"
-    Draw the histogram with bins of 0.05 °C (`bins=1000`) and of 10 °C
-    (`bins=5`): change the `ax.hist` line, the y-label and the title, run,
-    look; then put both back for
-    section 11. What does each show, and what does it hide?
+<!-- 0:51 · 6 min -->
+
+An annotation is a text in the plot with an arrow to one point. The script finds the point itself.
+
+1. Add the six marked lines.
+
+    ```python hl_lines="9 10 15 16 17 18"
+    import matplotlib.pyplot as plt
+
+    months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+              "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+    temps = [-3.9, -2.4, 1.2, 6.4, 12.2, 17.2,
+             18.5, 16.1, 13.0, 6.9, 2.6, -2.3]
+    mean = sum(temps) / len(temps)
+    print(mean)
+    top = temps.index(max(temps))
+    print(top, months[top], temps[top])
+
+    fig, ax = plt.subplots()
+    ax.plot(months, temps, "o-")
+    ax.axhline(mean, color="grey", label=f"mean: {mean:.1f}")
+    ax.annotate(f"{months[top]}: {temps[top]}",
+                xy=(months[top], temps[top]),
+                xytext=(30, 0), textcoords="offset points",
+                arrowprops={"arrowstyle": "->"})
+    ax.set_xlabel("Month")
+    ax.set_ylabel("Mean temperature (°C)")
+    ax.set_title("July is the warmest month, January the coldest")
+    ax.legend(frameon=False, loc="upper left")
+    fig.savefig("month_means.png", dpi=150)
+    fig.savefig("month_means.svg")
+    plt.show()
+    ```
+
+    - `max(temps)`: the largest value; `temps.index(...)`: its position in the list, counted from 0.
+    - `ax.annotate(text, xy=...)`: the text, and the point `xy` the arrow points to.
+    - `xytext=(30, 0), textcoords="offset points"`: the text starts 30 points to the right of that point.
+    - `arrowprops={"arrowstyle": "->"}`: draw an arrow from the text to the point.
+
+2. Save, run, look, close the window.
+
+    ```text
+    $ python plot.py
+    7.125
+    6 Jul 18.5
+    ```
+
+**Check:** the terminal says `6 Jul 18.5`; in the figure, `Jul: 18.5` stands to the right of the highest point, with an arrow to it.
+
+!!! question "Task: the coldest month"
+    Add two lines that print the position, the name and the value of the
+    coldest month. Run, then delete them again.
 
 ??? success "Answer"
     ```python
-    ax.hist(temps, bins=1000, range=(-17, 33))
-    ax.set_ylabel("Hours per 0.05 °C")
-    ```
-
-    ```python
-    ax.hist(temps, bins=5, range=(-17, 33))
-    ax.set_ylabel("Hours per 10 °C")
-    ```
-
-    0.05 °C: a comb, thin bars with gaps between them; 523 of the 1000
-    bins are empty. The station writes tenths of a degree, so a bin of
-    0.05 °C between two tenths stays empty: the figure shows how the
-    values were written down, not the weather. 10 °C: five bars and one
-    hump; the two peaks are gone. 1 °C is narrow enough for the shape and
-    wide enough for smooth counts.
-
----
-
-### 11. Draw every figure again { #redraw }
-
-<!-- 1:50 · 5 min -->
-
-The script draws all five figures again in a few seconds, so the script, not the figures, is what is kept and described.
-
-1. Delete the figures, run the script, list what it made.
-
-    ```text
-    $ rm results/*.png
-    $ python scripts/figures.py
-    3648 2016-01-01 00:00:00
-    ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
-    -3.9 18.5
-    3.7 10.7
-    87552 7.16
-    $ ls -1 results
-    daily_temp.png
-    day_cycle.png
-    month_means.png
-    temp_hist.png
-    year_means.png
-    ```
-
-    `-1`: one name per line. `first.png` and `every_hour.png` do not come
-    back: `figures.py` no longer draws them. Lines of a Task left in
-    `figures.py` print and draw theirs too.
-
-2. In `README.md`, at the end of **How to rebuild**, add three lines and
-   save: how anyone draws the figures again.
-
-    ```text
-    Unlike `rebuild.sh`, the figures need Matplotlib, listed in
-    `environment.yml`: in that
-    environment, `python scripts/figures.py` draws five PNG files into
-    `results/`.
-    ```
-
-**Check:** five figures in `results` (one more for each Task left in
-`figures.py`), and the README says which line makes
-them.
-
----
-
-### 12. Wrap up { #wrap-up }
-
-<!-- 1:55 · 5 min -->
-
-The lines of today, by what they do.
-
-| To | Type |
-|--|--|
-| make the environment of a folder | `conda env create -n s07 -f environment.yml`, `conda activate s07` |
-| add a package | `conda install NAME=VERSION` |
-| write it down | `conda env export --from-history -f environment.yml`, delete `prefix:` |
-| group the hours by a part of the time | `weather.group(PATH, 5, 7)`: one list per month |
-| a text into a date | `datetime.fromisoformat("2016-01-01")` |
-| a figure | `fig, ax = plt.subplots()`, `ax.plot(x, y)`, `fig.savefig(PATH, dpi=150)` |
-| points, a line, a legend | `ax.plot(x, y, "o")`, `"o-"`, `ax.axhline(y)`, `label=...`, `ax.legend()` |
-| labels | `ax.set_xlabel`, `ax.set_ylabel` with the unit, `ax.set_title` with the finding |
-| a histogram | `ax.hist(values, bins=50, range=(-17, 33))` |
-
----
-
-## Optional, if the room goes fast { #optional }
-
----
-
-### 13. A heatmap of one year { #heatmap }
-
-<!-- — · 10 min -->
-
-Colour as the third axis: the 24 hours across, the 365 days of 2025 down.
-
-1. At the end of `figures.py`, add these lines, save, run.
-
-    ```python
-    grid = []
-    for day in days:
-        if day[0:4] == "2025":
-            grid.append(days[day])
-    print(len(grid), len(grid[0]))
-
-    fig, ax = plt.subplots(figsize=(6, 8))
-    im = ax.imshow(grid, aspect="auto")
-    fig.colorbar(im, ax=ax, label="Temperature (°C)")
-    ax.set_xlabel("Hour of the day")
-    ax.set_ylabel("Day of 2025")
-    ax.set_title("2025: warmest on summer afternoons")
-    fig.savefig("results/heatmap_2025.png", dpi=150)
+    low = temps.index(min(temps))
+    print(low, months[low], temps[low])
     ```
 
     ```text
-    $ python scripts/figures.py
+    0 Jan -3.9
+    ```
+
+---
+
+## Part 4 · The list moves to a CSV file { #part-4 }
+
+<!-- 0:57 to 1:11 -->
+
+Values in a script can only be changed by editing the script. In a file of their own, any program can read them.
+
+---
+
+### 13. Type the values into a CSV file { #csv }
+
+<!-- 0:57 · 6 min -->
+
+A CSV file is text: one row per line, the columns separated by commas, the names of the columns in the first line.
+
+1. In the Explorer, right-click > **New File...**, type `month_means.csv`,
+   `Enter`. Type the 13 lines, press `Enter` once after the last, and save
+   (`Ctrl+S`, macOS `Cmd+S`).
+
+    ```text
+    month,temp_c
+    Jan,-3.9
+    Feb,-2.4
+    Mar,1.2
+    Apr,6.4
+    May,12.2
+    Jun,17.2
+    Jul,18.5
+    Aug,16.1
+    Sep,13.0
+    Oct,6.9
+    Nov,2.6
+    Dec,-2.3
+    ```
+
+2. Look at the file in the terminal.
+
+    ```text
+    $ cat month_means.csv
+    month,temp_c
+    Jan,-3.9
     ...
-    365 24
+    Dec,-2.3
     ```
 
-    `grid` is a list of 365 lists of 24 temperatures; `imshow` draws one
-    coloured square per value, the first list at the top. `fig.colorbar`
-    draws the scale of the colours beside the plot.
-    `aspect="auto"` lets the squares stretch to fill the figure.
-
-**Check:** a yellow patch in the middle rows, between the hours 10 and 18.
-
----
-
-### 14. One style for all figures { #style }
-
-<!-- — · 5 min -->
-
-Settings in `plt.rcParams` hold for every figure the script draws after them.
-
-1. Under the `import` lines, add these lines, save, run.
-
-    ```python
-    plt.rcParams.update({
-        "savefig.bbox": "tight",
-        "axes.spines.top": False,
-        "axes.spines.right": False,
-    })
-    ```
-
-2. Open the figures: no frame line at the top and the right, and only a
-   narrow margin around the plot.
-
-**Check:** every figure changed, by three lines in one place.
-
----
-
-### 15. Advanced tasks { #advanced }
-
-<!-- — · 25 min -->
-
-Harder figures from the same script, for a room that is done early. Each answer is folded under its task; add the lines at the end of `figures.py`.
-
-!!! question "Advanced task: hours below 0 °C, per year"
-    Count the hours below 0 °C in each year and draw them as bars,
-    `ax.bar(years, counts)`. Which year had the most? Does it fit the
-    yearly means of section 9?
-
-??? success "Answer"
-    `by_year` and `years` come from section 9.
-
-    ```python
-    frost = []
-    for year in by_year:
-        count = 0
-        for temp in by_year[year]:
-            if temp < 0:
-                count = count + 1
-        frost.append(count)
-    print(frost)
-
-    fig, ax = plt.subplots()
-    ax.bar(years, frost)
-    ax.set_ylabel("Hours below 0 °C")
-    ax.set_title("2025 had the most hours below 0 °C, 2023 the fewest")
-    fig.savefig("results/frost_hours.png", dpi=150)
-    ```
+3. Count its lines.
 
     ```text
-    $ python scripts/figures.py
+    $ wc -l month_means.csv
+    13 month_means.csv
+    ```
+
+    `wc -l` counts the line ends: `12` if `Enter` was not pressed after the
+    last row, which reads the same. macOS puts spaces before the number.
+
+**Check:** `cat` shows the names of the two columns and twelve rows, with no empty line between them.
+
+---
+
+### 14. Read the CSV file in the script { #read }
+
+<!-- 1:03 · 8 min -->
+
+Seven lines build the same two lists from the file. The typed lists are deleted.
+
+1. Replace the four lines of `months` and `temps` by the seven marked lines. The rest stays.
+
+    ```python hl_lines="3 4 5 6 7 8 9"
+    import matplotlib.pyplot as plt
+
+    lines = open("month_means.csv").read().splitlines()
+    months = []
+    temps = []
+    for line in lines[1:]:
+        parts = line.split(",")
+        months.append(parts[0])
+        temps.append(float(parts[1]))
+    mean = sum(temps) / len(temps)
+    print(mean)
     ...
-    [2112, 2419, 1953, 2443, 2230, 2110, 2314, 1845, 2249, 2677]
     ```
 
-    2025, 2677 hours: also the coldest year, 5.98 °C. 2023, the warmest
-    year at 8.31 °C, had the fewest, 1845. Bars start at zero, so their
-    heights compare. The 120 missing hours of 2019 do not change its
-    count: no July hour of the log is below 0 °C, the coldest is 5.7 °C.
+    - `open("month_means.csv").read()`: the whole file as one text; `.splitlines()`: a list with one text per line.
+    - `lines[1:]`: every line after the first, which holds the names of the columns.
+    - `line.split(",")`: `"Jul,18.5"` becomes `["Jul", "18.5"]`.
+    - `float("18.5")`: the text becomes the number 18.5; `append` puts it at the end of the list.
 
-!!! question "Advanced task: humidity against temperature"
-    Plot every hour as a point, temperature across and humidity up
-    (`ax.scatter(x, y)`). First check `humidity_pct` for a missing mark,
-    and leave out the hours whose temperature is `-999`. 87 552 points
-    cover each other: what makes the dense part visible?
+2. Save, run, look, close the window.
 
-??? success "Answer"
-    `humidity_pct` runs from 34 to 100 (Task of Part 1): no mark. Tiny,
-    almost transparent points: `s=1` is their size, `alpha=0.05` their
-    opacity, so only places with many points look dark.
-
-    ```python
-    x = []
-    y = []
-    for line in weather.read_lines(PATH):
-        temp = weather.temp_of(line)
-        if temp != weather.MISSING:
-            x.append(temp)
-            y.append(float(line.split(",")[2]))
-
-    fig, ax = plt.subplots()
-    ax.scatter(x, y, s=1, alpha=0.05)
-    ax.set_xlabel("Temperature (°C)")
-    ax.set_ylabel("Humidity (%)")
-    ax.set_title("Humid when cold, drier when warm")
-    fig.savefig("results/humidity_vs_temp.png", dpi=150)
+    ```text
+    $ python plot.py
+    7.125
+    6 Jul 18.5
     ```
 
-    A falling cloud: of the 22 352 hours below 0 °C, 83 % are above 80 %
-    humidity; of the 1251 hours above 25 °C, 82 % lie between 45 and
-    65 %. The humidity is a whole number, so the points stand in rows.
+**Check:** the same two lines and the same figure as in section 12; the script holds no temperature any more.
 
-!!! question "Advanced task: mark the warmest and the coldest month"
-    On the figure of section 7, write the month and its mean next to the
-    highest and the lowest point, with an arrow:
-    `ax.annotate(text, xy=(x, y), xytext=(30, 0), textcoords="offset points", arrowprops={"arrowstyle": "->"})`.
-    `xy` is the point; `xytext` puts the text 30 points to the right of
-    it.
+!!! warning "`IndexError: list index out of range`"
+    ```text
+    Traceback (most recent call last):
+      File "/Users/smilte/weather-s07/plot.py", line 9, in <module>
+        temps.append(float(parts[1]))
+                           ~~~~~^^^
+    IndexError: list index out of range
+    ```
+
+    An empty line in `month_means.csv`, at its end or between the rows.
+    Delete it and save.
+
+!!! question "Task: the figure follows the file"
+    In `month_means.csv`, change July's `18.5` to `28.5`. Save, run, look.
+    Then change it back and run again.
 
 ??? success "Answer"
-    `month_means.index(value)` gives the position of a value in the list.
+    ```text
+    $ python plot.py
+    7.958333333333333
+    6 Jul 28.5
+    ```
 
-    ```python
-    warm = month_means.index(max(month_means))
-    cold = month_means.index(min(month_means))
-    fig, ax = plt.subplots()
-    ax.plot(month_keys, month_means, "o-")
-    for i in [warm, cold]:
-        text = f"{month_keys[i]}: {month_means[i]:.1f} °C"
-        ax.annotate(text, xy=(month_keys[i], month_means[i]),
+    The point, the arrow's text and the mean line have moved; the script
+    was not touched.
+
+---
+
+## Part 5 · One function, different files { #part-5 }
+
+<!-- 1:11 to 1:31 -->
+
+A function is a named piece of the script that runs when it is called, with the values given in the call.
+
+---
+
+### 15. The reading becomes a function { #read-function }
+
+<!-- 1:11 · 5 min -->
+
+The seven lines that read the file get a name, `read_csv`, and the file's name becomes its parameter `path`.
+
+1. Change the top of the script. The rest stays.
+
+    ```python hl_lines="4 5 6 7 8 9 10 11 12 13 16"
+    import matplotlib.pyplot as plt
+
+
+    def read_csv(path):
+        """The labels and the values of a CSV file with two columns."""
+        lines = open(path).read().splitlines()
+        labels = []
+        values = []
+        for line in lines[1:]:
+            parts = line.split(",")
+            labels.append(parts[0])
+            values.append(float(parts[1]))
+        return labels, values
+
+
+    months, temps = read_csv("month_means.csv")
+    mean = sum(temps) / len(temps)
+    print(mean)
+    ...
+    ```
+
+    - `def read_csv(path):`: the indented lines under it run when `read_csv(...)` is called; `path` is the text given in the call.
+    - The line in `"""` says what the function gives back.
+    - `labels`, `values`: inside the function the names are general, because the file need not hold months.
+    - `return labels, values`: hands the two lists back; `months, temps = ...` takes them.
+
+2. Save, run, look, close the window.
+
+    ```text
+    $ python plot.py
+    7.125
+    6 Jul 18.5
+    ```
+
+**Check:** the same two lines and the same figure.
+
+---
+
+### 16. The drawing becomes a function { #draw-function }
+
+<!-- 1:16 · 6 min -->
+
+Everything under `read_csv` moves into a second function, `draw(path, out)`: the file to read and the file to write.
+
+1. Select the lines from `months, temps = ...` to `fig.savefig(...)` and
+   press `Tab`: they move four spaces to the right. Then change them to the
+   lines below: `labels` and `values` for `months` and `temps`, one `print`,
+   `out` in `savefig`. The SVG line and `plt.show()` are deleted: the script
+   writes a file and stops.
+
+    ```python hl_lines="16 17 18 19 20 21 34 37"
+    import matplotlib.pyplot as plt
+
+
+    def read_csv(path):
+        """The labels and the values of a CSV file with two columns."""
+        lines = open(path).read().splitlines()
+        labels = []
+        values = []
+        for line in lines[1:]:
+            parts = line.split(",")
+            labels.append(parts[0])
+            values.append(float(parts[1]))
+        return labels, values
+
+
+    def draw(path, out):
+        """Draw the values of a CSV file into the file out."""
+        labels, values = read_csv(path)
+        mean = sum(values) / len(values)
+        top = values.index(max(values))
+        print(path, len(values), labels[top], values[top])
+
+        fig, ax = plt.subplots()
+        ax.plot(labels, values, "o-")
+        ax.axhline(mean, color="grey", label=f"mean: {mean:.1f}")
+        ax.annotate(f"{labels[top]}: {values[top]}",
+                    xy=(labels[top], values[top]),
                     xytext=(30, 0), textcoords="offset points",
                     arrowprops={"arrowstyle": "->"})
-    ax.set_xlabel("Month")
-    ax.set_ylabel("Mean temperature, 2016 to 2025 (°C)")
-    ax.set_title("July is 22.4 °C warmer than January")
-    fig.savefig("results/monthly_annotated.png", dpi=150)
+        ax.set_xlabel("Month")
+        ax.set_ylabel("Mean temperature (°C)")
+        ax.set_title("July is the warmest month, January the coldest")
+        ax.legend(frameon=False, loc="upper left")
+        fig.savefig(out, dpi=150)
+
+
+    draw("month_means.csv", "month_means.png")
     ```
 
-    `07: 18.5 °C` beside the top of the hill, `01: -3.9 °C` beside its
-    lowest point. A label on the figure saves the reader from reading the
-    value off the axis.
+2. Save and run. No window opens; the script prints one line: the file, the number of values, the largest one.
 
-!!! question "Advanced task: January and July"
-    Draw the day's cycle of January and of July as two lines in one
-    figure, `results/day_cycle_jan_jul.png`. Give each `ax.plot` a
-    `label="January"` (or `"July"`) and call `ax.legend()` before
-    `fig.savefig`: the legend lists the labels. Which day swings more?
-    Hint: `group` mixes all months; copy its loop into `figures.py`, write
-    `weather.` in front of `read_lines`, `temp_of` and `MISSING`, keep only
-    the lines whose `line[5:7]` is the month, and use `line[11:13]` as the
-    key.
+    ```text
+    $ python plot.py
+    month_means.csv 12 Jul 18.5
+    ```
 
-??? success "Answer"
-    A dictionary gives each month's name; the outer loop runs once per
-    month and draws one line.
+3. Click `month_means.png` in the Explorer.
+
+**Check:** one line in the terminal; `month_means.png` is the same figure as before.
+
+---
+
+### 17. A second file, the same function { #second-file }
+
+<!-- 1:22 · 4 min -->
+
+The function is worth its name when it is called twice. The second file holds the mean temperature of each year.
+
+1. In the Explorer, **New File...**, `year_means.csv`. Type the 11 lines,
+   press `Enter` once after the last, and save.
+
+    ```text
+    year,temp_c
+    2016,7.60
+    2017,6.51
+    2018,7.97
+    2019,7.27
+    2020,6.83
+    2021,7.25
+    2022,6.60
+    2023,8.31
+    2024,7.27
+    2025,5.98
+    ```
+
+2. Add a second call at the end of `plot.py`.
+
+    ```python hl_lines="2"
+    draw("month_means.csv", "month_means.png")
+    draw("year_means.csv", "year_means.png")
+    ```
+
+3. Save and run.
+
+    ```text
+    $ python plot.py
+    month_means.csv 12 Jul 18.5
+    year_means.csv 10 2023 8.31
+    ```
+
+4. Click `year_means.png`: ten points, the mean line, the arrow at 2023.
+
+**Check:** two lines in the terminal, two PNG files. The figure of the years says `Month` under its axis and has the title about July: both are wrong.
+
+---
+
+### 18. What differs becomes a parameter { #parameters }
+
+<!-- 1:26 · 5 min -->
+
+Whatever differs between two calls leaves the function and is given in the call: first the x label, then the title.
+
+1. The x label: three changes.
 
     ```python
-    names = {"01": "January", "07": "July"}
-    fig, ax = plt.subplots()
-    for month in names:
-        cycle = {}
-        for line in weather.read_lines(PATH):
-            temp = weather.temp_of(line)
-            if temp != weather.MISSING and line[5:7] == month:
-                hour = line[11:13]
-                if hour not in cycle:
-                    cycle[hour] = []
-                cycle[hour].append(temp)
-        means = []
-        for hour in cycle:
-            means.append(weather.mean(cycle[hour]))
-        print(names[month], f"{min(means):.1f} {max(means):.1f}")
-        ax.plot(hour_keys, means, "o-", label=names[month])
-    ax.set_xticks(["00", "03", "06", "09", "12", "15", "18", "21"])
-    ax.set_xlabel("Hour of the day")
-    ax.set_ylabel("Mean temperature, 2016 to 2025 (°C)")
-    ax.set_title("A July day swings 10 °C, a January day 4 °C")
-    ax.legend()
-    fig.savefig("results/day_cycle_jan_jul.png", dpi=150)
+    def draw(path, out, xlabel):
+    ```
+
+    ```python
+        ax.set_xlabel(xlabel)
+    ```
+
+    ```python
+    draw("month_means.csv", "month_means.png", "Month")
+    draw("year_means.csv", "year_means.png", "Year")
+    ```
+
+2. Save, run, click `year_means.png`: `Year` under the axis, still the title about July.
+
+    ```text
+    $ python plot.py
+    month_means.csv 12 Jul 18.5
+    year_means.csv 10 2023 8.31
+    ```
+
+3. The title, in the same three places.
+
+    ```python
+    def draw(path, out, xlabel, title):
+    ```
+
+    ```python
+        ax.set_title(title)
+    ```
+
+    ```python
+    draw("month_means.csv", "month_means.png", "Month",
+         "July is the warmest month, January the coldest")
+    draw("year_means.csv", "year_means.png", "Year",
+         "2023 was the warmest year, 2025 the coldest")
+    ```
+
+4. Save, run, click `year_means.png`.
+
+    ```text
+    $ python plot.py
+    month_means.csv 12 Jul 18.5
+    year_means.csv 10 2023 8.31
+    ```
+
+**Check:** `year_means.png` has `Year` under its axis and its own title; `month_means.png` has not changed.
+
+!!! question "Task: the yearly figure as SVG"
+    Add a third call that writes the figure of the years into
+    `year_means.svg`. What has to change in the function?
+
+??? success "Answer"
+    Nothing: the ending of `out` chooses the format.
+
+    ```python
+    draw("year_means.csv", "year_means.svg", "Year",
+         "2023 was the warmest year, 2025 the coldest")
     ```
 
     ```text
-    $ python scripts/figures.py
-    ...
-    January -5.9 -1.8
-    July 13.5 23.6
+    $ python plot.py
+    month_means.csv 12 Jul 18.5
+    year_means.csv 10 2023 8.31
+    year_means.csv 10 2023 8.31
     ```
 
-    July by far: about 10 °C between 03:00 and 15:00, January about 4 °C.
-    Both lines are lowest at 03:00 and highest at 15:00.
+---
 
-!!! question "Advanced task: PNG, SVG or PDF?"
-    Save the figure of section 6 also as `.svg` and `.pdf` (the format
-    follows the file name). Compare the three sizes, and open each:
-    which stays sharp when you zoom in?
+## Part 6 · Parameters from the command line { #part-6 }
 
-??? success "Answer"
-    Under `fig.savefig("results/daily_temp.png", dpi=150)` of section 6:
+<!-- 1:31 to 1:45 -->
 
-    ```python
-    fig.savefig("results/daily_temp.svg")
-    fig.savefig("results/daily_temp.pdf")
+The file and the labels move out of the script, into the line that runs it.
+
+---
+
+### 19. What the script receives: `sys.argv` { #argv }
+
+<!-- 1:31 · 4 min -->
+
+`sys.argv` is the list of the words typed after `python`: the script's name, then the arguments, each one a text.
+
+1. Add `import sys` as the first line and `print(sys.argv)` as the last.
+
+    ```python hl_lines="1"
+    import sys
+
+    import matplotlib.pyplot as plt
     ```
+
+    ```python hl_lines="5"
+    draw("month_means.csv", "month_means.png", "Month",
+         "July is the warmest month, January the coldest")
+    draw("year_means.csv", "year_means.png", "Year",
+         "2023 was the warmest year, 2025 the coldest")
+    print(sys.argv)
+    ```
+
+2. Save and run, three times: with no argument, with two, with four.
 
     ```text
-    $ python scripts/figures.py
-    ...
-    $ wc -c results/daily_temp.*
-     42249 results/daily_temp.pdf
-    128588 results/daily_temp.png
-     95191 results/daily_temp.svg
-    266028 total
+    $ python plot.py
+    month_means.csv 12 Jul 18.5
+    year_means.csv 10 2023 8.31
+    ['plot.py']
+    $ python plot.py month_means.csv month_means.png
+    month_means.csv 12 Jul 18.5
+    year_means.csv 10 2023 8.31
+    ['plot.py', 'month_means.csv', 'month_means.png']
+    $ python plot.py month_means.csv month_means.png Month "July is the warmest month, January the coldest"
+    month_means.csv 12 Jul 18.5
+    year_means.csv 10 2023 8.31
+    ['plot.py', 'month_means.csv', 'month_means.png', 'Month', 'July is the warmest month, January the coldest']
     ```
 
-    Your sizes may differ a little; macOS pads the numbers differently.
-    PNG is pixels: zoomed in, the line turns into steps. SVG and PDF
-    store the line itself and stay sharp at any size, for a report or a
-    poster; PNG is for a web page or a slide.
+    A space separates two arguments. Quotes keep a text with spaces
+    together as one argument.
+
+**Check:** the last run prints a list of five texts; the title is one of them.
+
+---
+
+### 20. The file, the output and the labels from the command line { #cli }
+
+<!-- 1:35 · 6 min -->
+
+`sys.argv[1]` is the first argument, `sys.argv[2]` the second, and so on. They go straight into `draw`.
+
+1. Replace the two calls and the `print` by one line.
+
+    ```python
+    draw(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
+    ```
+
+2. Save. Draw the months, then the years, with the same script.
+
+    ```text
+    $ python plot.py month_means.csv month_means.png Month "July is the warmest month, January the coldest"
+    month_means.csv 12 Jul 18.5
+    $ python plot.py year_means.csv year_means.png Year "2023 was the warmest year, 2025 the coldest"
+    year_means.csv 10 2023 8.31
+    ```
+
+    The `Up` key brings the last command back, to change a word in it.
+
+**Check:** both figures are drawn again; the script names no file, no label and no title.
+
+---
+
+### 21. A message when an argument is missing { #usage }
+
+<!-- 1:41 · 4 min -->
+
+A script that takes arguments says which ones, when they are missing.
+
+1. Run the script without arguments.
+
+    ```text
+    $ python plot.py
+    Traceback (most recent call last):
+      File "/Users/smilte/weather-s07/plot.py", line 39, in <module>
+        draw(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
+             ~~~~~~~~^^^
+    IndexError: list index out of range
+    ```
+
+    The list holds only `'plot.py'`: there is no `sys.argv[1]`.
+
+2. Add two lines above the call.
+
+    ```python hl_lines="1 2"
+    if len(sys.argv) != 5:
+        sys.exit("usage: python plot.py FILE OUT XLABEL TITLE")
+    draw(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
+    ```
+
+    - `len(sys.argv) != 5`: the script's name and four arguments make five; `!=` means "is not equal to".
+    - `sys.exit("...")`: prints the text and stops the script.
+
+3. Save and run without arguments.
+
+    ```text
+    $ python plot.py
+    usage: python plot.py FILE OUT XLABEL TITLE
+    ```
+
+**Check:** one line that says what to type, and no traceback.
+
+!!! question "Task: an SVG file without opening the script"
+    Write the figure of the months into `month_means.svg`, from the
+    command line.
+
+??? success "Answer"
+    ```text
+    $ python plot.py month_means.csv month_means.svg Month "July is the warmest month, January the coldest"
+    month_means.csv 12 Jul 18.5
+    ```
+
+---
+
+## Part 7 · An open data set { #part-7 }
+
+<!-- 1:45 to 1:58 -->
+
+The same script on a file that someone else wrote: 240 values, three columns, another unit.
+
+---
+
+### 22. Download one public file { #open-data }
+
+<!-- 1:45 · 4 min -->
+
+The file is the mean air temperature of each month at Nottingham Castle, 1920 to 1939, in °F: the data set `nottem`, distributed with R in its `datasets` package (source: O. D. Anderson, *Time Series Analysis and Forecasting*, 1976; R's licence: GPL-2 or GPL-3), as a CSV file in the public Rdatasets collection. The course keeps no copy of it.
+
+1. Download it into the folder. `curl` prints a small table of its progress.
+
+    ```text
+    $ curl -O https://vincentarelbundock.github.io/Rdatasets/csv/datasets/nottem.csv
+    ```
+
+    `curl -O` saves what is at the address into a file of the same name, `nottem.csv`.
+
+2. Look at its first lines, and count them all.
+
+    ```text
+    $ head -4 nottem.csv
+    rownames,time,value
+    1,1920,40.6
+    2,1920.08333333333,40.8
+    3,1920.16666666667,44.4
+    $ wc -l nottem.csv
+    241 nottem.csv
+    ```
+
+    Three columns: the number of the row, the time as a year with a
+    fraction (`1920.0833` is February 1920), the temperature.
+
+**Check:** `wc -l` says 241: the names of the columns and 240 months.
+
+---
+
+### 23. Read the last two columns { #last-columns }
+
+<!-- 1:49 · 4 min -->
+
+`read_csv` takes the first two columns. Here the label and the value are the last two.
+
+1. Run the script on the new file as it is.
+
+    ```text
+    $ python plot.py nottem.csv nottem.png Year "Nottingham, 1920 to 1939"
+    nottem.csv 240 240 1939.91666666667
+    ```
+
+    It has drawn the time against the number of the row: `nottem.png` is a straight line.
+
+2. In `read_csv`, count the columns from the end.
+
+    ```python hl_lines="2 9 10"
+    def read_csv(path):
+        """The labels and the values: the last two columns of a CSV file."""
+        lines = open(path).read().splitlines()
+        labels = []
+        values = []
+        for line in lines[1:]:
+            parts = line.split(",")
+            labels.append(parts[-2])
+            values.append(float(parts[-1]))
+        return labels, values
+    ```
+
+    `parts[-1]` is the last text of the list, `parts[-2]` the one before
+    it. In a file with two columns these are the same two as before.
+
+3. Save and run again. Click `nottem.png`.
+
+    ```text
+    $ python plot.py nottem.csv nottem.png Year "Nottingham, 1920 to 1939"
+    nottem.csv 240 1934.5 66.5
+    ```
+
+**Check:** the line ends in `1934.5 66.5` (July 1934, 66.5 °F); the figure shows twenty yearly waves. Under the x-axis the 240 labels lie on top of each other, and the y label says °C.
+
+---
+
+### 24. One tick label in every 24 { #ticks }
+
+<!-- 1:53 · 2 min -->
+
+240 labels do not fit under one axis; about ten do.
+
+1. Add two lines in `draw`, above `ax.set_xlabel`.
+
+    ```python hl_lines="1 2"
+        step = max(1, len(labels) // 10)
+        ax.set_xticks(labels[::step])
+        ax.set_xlabel(xlabel)
+    ```
+
+    - `len(labels) // 10`: division without the remainder: 240 gives 24, 12 gives 1; `max(1, ...)` keeps it at 1 or more.
+    - `labels[::step]`: every 24th label; `ax.set_xticks(...)` puts tick marks and labels only there.
+
+2. Save, run, click `nottem.png`.
+
+    ```text
+    $ python plot.py nottem.csv nottem.png Year "Nottingham, 1920 to 1939"
+    nottem.csv 240 1934.5 66.5
+    ```
+
+**Check:** the x-axis reads `1920`, `1922`, ..., `1938`.
+
+---
+
+### 25. The y label becomes the fifth argument { #ylabel-argument }
+
+<!-- 1:55 · 3 min -->
+
+The unit differs between the files, so the y label leaves the function too.
+
+1. Change five lines: `ylabel` in `def draw` and in `ax.set_ylabel`, and the last three lines. This is the whole script:
+
+    ```python hl_lines="18 35 41 42 43"
+    import sys
+
+    import matplotlib.pyplot as plt
+
+
+    def read_csv(path):
+        """The labels and the values: the last two columns of a CSV file."""
+        lines = open(path).read().splitlines()
+        labels = []
+        values = []
+        for line in lines[1:]:
+            parts = line.split(",")
+            labels.append(parts[-2])
+            values.append(float(parts[-1]))
+        return labels, values
+
+
+    def draw(path, out, xlabel, ylabel, title):
+        """Draw the values of a CSV file into the file out."""
+        labels, values = read_csv(path)
+        mean = sum(values) / len(values)
+        top = values.index(max(values))
+        print(path, len(values), labels[top], values[top])
+
+        fig, ax = plt.subplots()
+        ax.plot(labels, values, "o-")
+        ax.axhline(mean, color="grey", label=f"mean: {mean:.1f}")
+        ax.annotate(f"{labels[top]}: {values[top]}",
+                    xy=(labels[top], values[top]),
+                    xytext=(30, 0), textcoords="offset points",
+                    arrowprops={"arrowstyle": "->"})
+        step = max(1, len(labels) // 10)
+        ax.set_xticks(labels[::step])
+        ax.set_xlabel(xlabel)
+        ax.set_ylabel(ylabel)
+        ax.set_title(title)
+        ax.legend(frameon=False, loc="upper left")
+        fig.savefig(out, dpi=150)
+
+
+    if len(sys.argv) != 6:
+        sys.exit("usage: python plot.py FILE OUT XLABEL YLABEL TITLE")
+    draw(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5])
+    ```
+
+2. Save. Draw the three files.
+
+    ```text
+    $ python plot.py nottem.csv nottem.png Year "Mean temperature (°F)" "Nottingham, 1920 to 1939"
+    nottem.csv 240 1934.5 66.5
+    $ python plot.py month_means.csv month_means.png Month "Mean temperature (°C)" "July is the warmest month, January the coldest"
+    month_means.csv 12 Jul 18.5
+    $ python plot.py year_means.csv year_means.png Year "Mean temperature (°C)" "2023 was the warmest year, 2025 the coldest"
+    year_means.csv 10 2023 8.31
+    ```
+
+    If the `°` does not arrive in the figure, type `deg F` and `deg C`.
+
+3. Run it without arguments.
+
+    ```text
+    $ python plot.py
+    usage: python plot.py FILE OUT XLABEL YLABEL TITLE
+    ```
+
+**Check:** three PNG files from one script; `nottem.png` says °F on its y-axis, the other two °C.
+
+---
+
+### 26. Wrap up { #wrap-up }
+
+<!-- 1:58 · 2 min -->
+
+The script grew from four lines to 43, one step at a time.
+
+| To | Type |
+|---|---|
+| make and switch on an environment | `conda create -n s07 python=3.14`, `conda activate s07` |
+| write the environment down | `conda env export --from-history -f environment.yml` |
+| draw two lists | `fig, ax = plt.subplots()`, `ax.plot(x, y, "o-")` |
+| see the figure, save it | `plt.show()`, `fig.savefig("name.png", dpi=150)`, `fig.savefig("name.svg")` |
+| label it | `ax.set_xlabel(...)`, `ax.set_ylabel(...)`, `ax.set_title(...)` |
+| mark it | `ax.axhline(y, label=...)`, `ax.legend(frameon=False)`, `ax.annotate(text, xy=...)` |
+| read a CSV file | `open(path).read().splitlines()`, `line.split(",")`, `float(...)` |
+| reuse lines | `def draw(path, out, ...):` |
+| take arguments | `sys.argv`, `sys.exit("usage: ...")` |
+
+**Check:** the folder holds `plot.py`, `environment.yml`, two CSV files typed in class, one downloaded, and a figure of each.
 
 ---
 
 ## Aims practised
 
-- ♻️ **Reproducibility:** one script draws every figure from the raw data;
+- ♻️ **Reproducibility:** the figure comes from a script and a data file, never from clicks;
   `environment.yml` lists the package it needs, with its version.
-- 📁 **Files:** the figures in `results/` are drawn by the script;
-  the script is what is kept and described.
-- ⚙️ **Automation:** five figures in one run, again after every change;
-  one function, `group`, groups the hours by day, month, hour and year.
+- ⚙️ **Automation:** one function draws every file of this form; one line in
+  the terminal draws a figure again after the data changes.
+- 🔧 **Tool-agnosticism:** the values are a plain CSV file and the figure a
+  PNG or SVG file, which any program reads.

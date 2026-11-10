@@ -16,8 +16,11 @@ seminar asks one question about it and answers it by the end.
 - **Every seminar stands on its own.** Seminars 1 to 5 download nothing:
   the room types its data from the page, six hours of the station's log
   (the evening of 21 July 2019, when the temperature sensor failed) and,
-  where needed, the nine days of the spreadsheet export. From Seminar 6 on,
-  a seminar starts from its own folder, `weather-sNN.zip` on the
+  where needed, the nine days of the spreadsheet export. Seminar 7 types
+  its data too: twelve monthly means in one script, then in a small CSV
+  file; its last part downloads one public data set from its own address.
+  The other seminars from Seminar 6 on
+  start from their own folder, `weather-sNN.zip` on the
   [Releases page](https://github.com/MindaugasSarpis/weather-project/releases)
   of the project, which holds everything the session needs: the data, the
   finished files of earlier seminars, and the `environment.yml` of its
@@ -48,7 +51,7 @@ seminar asks one question about it and answers it by the end.
 
 ## How a page works
 
-Section 1 gets the day's folder. Each section is a few short steps (the
+Section 1 makes or gets the day's folder. Each section is a few short steps (the
 instruction, then the typed line and its output in one block), a **Check:** line, and each part
 ends with a **Task** for the room, its answer folded under it. The
 **▶ Steps** button (bottom right) shows the page one step at a time.
@@ -80,7 +83,7 @@ rebuild both with one command.
 |--|--|--|
 | What | One hands-on session per week on the weather project | One project of your own, developed across the semester |
 | Topic | Set by the page | **Entirely your choice**: field, data, and form (analysis, app, dashboard, educational piece) |
-| Continuity | Each seminar starts from what it types (Seminars 1 to 5) or from its own folder, `weather-sNN.zip` | Grows all term; the seminar skills are meant to be carried into it |
+| Continuity | Each seminar starts from what it types (Seminars 1 to 5 and 7) or from its own folder, `weather-sNN.zip` | Grows all term; the seminar skills are meant to be carried into it |
 | Assessed | No | Yes: repository, one-page report, short video, final presentation (see Lecture 1) |
 
 How much the two overlap is up to you: a seminar step can be repeated on

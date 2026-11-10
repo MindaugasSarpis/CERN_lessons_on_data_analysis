@@ -10,8 +10,9 @@ mean in the dip between them; Anscombe's quartet then shows that this is
 general: a few numbers cannot stand for the data. Then the decisions that
 hold for a figure made with any program, on a gallery of examples: which
 channel, which chart, which ink, colours and scale, which title. Then the
-code, briefly: the figures of the start made with Matplotlib from the
-plain lists `weather.py` reads (NumPy comes later), and two live blocks to
+code, briefly: the figures of the start made with Matplotlib from a
+plain list that the code on the slide reads from `weather.csv` (NumPy comes
+later), and two live blocks to
 change the bin width and the scale. It closes on figures of three to five
 variables of the weather log: a heatmap and a surface of ten years by day
 and hour, contour lines, ten years in 3D against ten panels, a 3D scatter,
@@ -134,8 +135,8 @@ type the slide number and press Enter.
 
 - **Do not cut** slides 3–5 (the question and the two figures that answer
   it) or slides 68–73, which draw the opening figures in code. The seminar
-  draws the same file with the same calls: `subplots`, `plot`, `hist`,
-  `savefig`, and the module `weather.py`, in a script `scripts/figures.py`.
+  uses the same calls, `subplots`, `plot` and `savefig`, on twelve monthly
+  means typed in class, in one script, `plot.py`.
 - **Do not cut** slide 93 (Every Choice in the Two Figures), the closing
   slide: both figures, with the choice behind each part of them.
 - **Do not cut** slides 21–22 (bars from zero), 32 (the boxplot and the
@@ -252,12 +253,15 @@ questions, with their answers:
 
 ## Paired seminar
 
-[Seminar 7 · Visualisation](../seminars/seminar_07.md) works on the weather
-project. Every student starts from today's folder, adds Matplotlib to its
-environment, adds the function `group` (slide 104) to the module
-`weather.py`, and writes one script, `scripts/figures.py`, that draws five
-figures of `weather.csv` into `results/` from lists: ten years day by day, the year's cycle, the day's cycle, the
-yearly means and a histogram, and draws them all again with one line.
+[Seminar 7 · Visualisation](../seminars/seminar_07.md) builds one script,
+`plot.py`, in a new, empty folder, one step at a time. Every student makes
+a conda environment with Matplotlib, types the twelve monthly mean
+temperatures of the weather station as a list, draws them on the screen,
+saves the figure as PNG and SVG, adds the axis labels, a title, a line at
+the mean and an arrow to the warmest month, moves the list into a CSV file
+typed in class, turns the reading and the drawing into functions that draw
+a second file, and at the end gives the file and the labels on the command
+line. No file is handed out; the last part downloads one public data set.
 
 ## Slides that left the deck
 
@@ -293,7 +297,7 @@ can be read with
 | Q–Q Plots | Removed | It needs the Normal distribution and quantiles, not taught before Lecture 8 |
 | Quantile Dot Plot | Removed | It needs probability, which Lecture 8 begins |
 | The Seminar Dataset | Removed | The histogram of `weather.csv` is made on slides 70–73 |
-| Practice Exercise | Removed | The room builds the same figures in the seminar |
+| Practice Exercise | Removed | The room builds a figure step by step in the seminar |
 | The Mental Model | Replaced by slide 68, in the code section | Matplotlib is introduced before it is used |
 | Scatter with a Fit | Replaced, now by slide 106 | The room has no fitting yet |
 | Histogram + Density Overlay | Replaced, now by slide 73 | It used SciPy |

@@ -17,6 +17,9 @@ tutorials I like", "just make the seminars look like hsf a bit", and "don't
 need the run sheet in the seminar, it clutters the text" (the run sheet
 table at the top of every page was removed). Seminar 5 (18 Oct) is the
 model for the HSF look.
+Extended on 10 November 2026, the day of Seminar 7: every page builds up
+very gradually from an empty folder and hands out no file (rules 2 and 7);
+Seminar 7 is the model for that.
 
 ## Rules
 
@@ -30,18 +33,28 @@ model for the HSF look.
    "look weird").
    **Every seminar is self-contained** (lecturer, 18 Oct 2026: "without
    carry over of files. Especially if someone skips a seminar, and it's
-   also easier for me"). From Seminar 6 on, section 1 is "Get today's
-   folder": download
-   `weather-sNN.zip` from the release `seminar-files` of
+   also easier for me"). **No seminar hands out files** (lecturer, 10 Nov 2026: "very
+   gradual and without downloading files (prioritize this approach in all
+   of the seminars for future reference) if we do need a file, let's
+   eventually use some openly available data set so we don't have to add it
+   to resources. This in my opinion will be much cleaner. Already having
+   data makes it look very complicated."). Section 1 makes a new, empty
+   folder and, when the seminar needs packages, a conda environment typed
+   with `conda create`. The data starts as a list typed into the script,
+   moves to a small CSV file the students type from the page, and only
+   then, if the session needs a real file, comes from an openly available
+   data set at its public address, late in the page, with its source and
+   licence in one line. No `weather-sNN.zip`, no ready-made project, module
+   or script, nothing added to the course's resources. The pages of
+   Seminars 8 to 12 still start from `weather-sNN.zip` (the rule before
+   10 Nov 2026: release `seminar-files` of
    [MindaugasSarpis/weather-project](https://github.com/MindaugasSarpis/weather-project/releases),
-   `unzip ~/Downloads/weather-sNN.zip -d ~`, `cd ~/weather-sNN`, and, when
-   the seminar needs packages, `conda env create -n sNN -f environment.yml`.
-   The zip holds everything: data, the finished files of earlier seminars,
-   the `environment.yml`. It is made by `misc/weather_repo/seminar_zips.py`
-   from `misc/weather_repo/starts/sNN/`. No file or environment comes from
-   an earlier session, no `git pull course main`, no pushes to the
-   student's GitHub outside the Git seminars (6 and 13). Seminar 6 still
-   clones the course repository, because cloning is its lesson.
+   made by `misc/weather_repo/seminar_zips.py` from
+   `misc/weather_repo/starts/sNN/`) until each is reworked, before it is
+   taught. No file or environment comes from an earlier session, no
+   `git pull course main`, no pushes to the student's GitHub outside the
+   Git seminars (6 and 13). Seminar 6 still clones the course repository,
+   because cloning is its lesson.
    **Seminars 1 to 5 download nothing** (lecturer, 20 Oct 2026: "it's best
    not to have prerequisite files needed (at least up until 5) it's better
    to define a small list or smth directly. Even a small csv file with a few
@@ -89,6 +102,22 @@ model for the HSF look.
 6. **Real outputs.** Every output was printed by a real run (zsh,
    Git Bash, Python of the course). Ids, dates and timings that differ
    per laptop are marked once: "Your ids differ".
+7. **A very gradual build-up, one new thing per section** (lecturer,
+   10 Nov 2026: "For the seminar, I would like a very gradual build up of a
+   "mini project" with first one sript, a list, and plotting it on the
+   screen, then saving it, then adding gradually axes, annotations, then
+   handing out the list to a csv file and importing it, then making a
+   python function to draw from different csv files, eventually passing
+   parameters from the cli"). The page starts with one script and a few
+   values typed from the page. Each section adds one thing to the same
+   script and shows the whole change, the run and what comes back. The
+   order of growth: a list in the script; the result on the screen; the
+   result saved to a file; labels, then annotations; the list in a small
+   CSV file the students type; a function that reads different files;
+   parameters from the command line; last, and only if a real file is
+   needed, an openly available data set.
+   [Seminar 7](../lectures/workbook/docs/seminars/seminar_07.md) is the
+   worked example (10 Nov 2026).
 
 ## Layout
 

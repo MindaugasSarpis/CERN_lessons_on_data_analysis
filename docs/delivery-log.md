@@ -1323,3 +1323,35 @@ out as written. It judged the page gradual but long for a beginner room.
   where it first appears; the version Check allows a later last digit; the
   docstring of `group` is one line; the figure files are named as in the
   lecture, `month_means.png` and `year_means.png`.
+
+## 2026-11-10 · The day of Lecture 7: Seminar 7 rebuilt from an empty folder, with no handed-out files
+
+**What happened:** less than an hour before the lecture the lecturer asked
+for another Seminar 7: "For the seminar, I would like a very gradual build
+up of a "mini project" with first one sript, a list, and plotting it on the
+screen, then saving it, then adding gradually axes, annotations, then
+handing out the list to a csv file and importing it, then making a python
+function to draw from different csv files, eventually passing parameters
+from the cli". And for every seminar: "very gradual and without downloading
+files (prioritize this approach in all of the seminars for future
+reference) if we do need a file, let's eventually use some openly available
+data set so we don't have to add it to resources. This in my opinion will
+be much cleaner. Already having data makes it look very complicated." The
+page of the night before began by unzipping `weather-s07.zip`, a project
+with 87 672 rows and a module. The same day, about the lecture's first code
+slide, which imported that module: "why is this still here?"
+
+**Changed in response:**
+
+- Seminar 7 is one script, `plot.py`, in a new, empty folder: twelve
+  monthly means typed as a list, drawn on the screen, saved, labelled and
+  annotated; the list typed into `month_means.csv` and read back; the
+  reading and the drawing as functions that also draw a second typed file,
+  `year_means.csv`; the file and the labels from the command line; last,
+  one public file (R's `nottem`, 240 monthly means at Nottingham, fetched
+  with `curl`).
+- The rule for every seminar is in CLAUDE.md, `docs/authoring.md` and
+  `docs/seminar-page-recipe.md` (rules 2 and 7). Seminars 8–12 still start
+  from a zip; each is reworked before it is taught.
+- Lecture 7's slide "Plot Every Hour" reads `weather.csv` in its own code,
+  and Minard's map shows English place names.

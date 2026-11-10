@@ -11,7 +11,7 @@ hands-on **seminar** briefs.
 | | Page |
 |--|--|
 | Lecture | [07 Data Visualisation](lectures/lecture_7.md): ten years of hourly temperatures drawn with Matplotlib from lists, a histogram whose bin width decides what it shows, which chart for which question, axes, colour and a title that states the finding |
-| Seminar | [Seminar 7 · Visualisation](seminars/seminar_07.md): add Matplotlib to the environment and write one script that draws five figures of the weather log into `results/`, and draws them all again with one line |
+| Seminar | [Seminar 7 · Visualisation](seminars/seminar_07.md): build one script, `plot.py`, step by step in an empty folder: twelve monthly mean temperatures as a list, drawn on the screen, saved, labelled and annotated; then the values in a CSV file typed in class, a function that draws different files, and the file and the labels given on the command line |
 
 ## Setup
 
