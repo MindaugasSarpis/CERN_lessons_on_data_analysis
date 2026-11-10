@@ -97,7 +97,7 @@ Every number on the slides is computed by `figures/src/language.py`; run
 
 ## The lecture, part by part
 
-The lecture is slides 1–69 and estimates about 126 min (the speaker notes add
+The lecture is slides 1–69 and estimates about 127 min (the speaker notes add
 up to about 130), so in the two-hour slot **plan to skip the slides of the
 second table** (about 16 min). Slides 70–74 are the optional section For
 the Curious, and slides 75–83 the self-check quizzes; neither takes lecture

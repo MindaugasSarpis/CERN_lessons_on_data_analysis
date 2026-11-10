@@ -87,7 +87,7 @@ The lecture teaches each tool once, where it is first needed, with numbers.
 
 ## The lecture, part by part
 
-The lecture is slides 1–82 and estimates about 123 min, so in the two-hour
+The lecture is slides 1–82 and estimates about 124 min, so in the two-hour
 slot **plan to skip the slides of the second table** (about 10 min).
 Slides 83–93 are the optional section For the Curious, and slides 94–102 the
 self-check quizzes; neither takes lecture time. To jump, type the slide

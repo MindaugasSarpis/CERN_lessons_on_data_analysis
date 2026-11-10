@@ -71,7 +71,7 @@ The answer is written as the README writes it: 7.16 ± 0.22 °C.
 
 ## The lecture, part by part
 
-The lecture is slides 1–71 and estimates about 117 min, so in the two-hour
+The lecture is slides 1–71 and estimates about 119 min, so in the two-hour
 slot **plan to skip the slides of the second table** (about 12 min).
 Slides 72–80 are the optional section For the Curious and slides 81–89 the
 self-check quizzes; neither takes lecture time. To jump, type the slide

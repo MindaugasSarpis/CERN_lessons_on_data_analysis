@@ -1379,3 +1379,21 @@ not just plain programming but more focus on ideas, intuition."
   students solve in pairs with any tools, LLMs included (predict, solve,
   check, hand in), then show and discuss. Spec
   `docs/superpowers/specs/2026-11-10-seminars-showcase-then-problem-design.md`.
+
+**Changed in response (10 November, evening):**
+
+- Every seminar page (1, 3–12, 14–16) is a showcase of complete examples
+  on open data, a library card, one problem in pairs with LLMs expected,
+  then show and discuss. Long records come from NOAA NCEI's GHCN-Daily file
+  of the Vilnius station; Open-Meteo only in short requests.
+- Lecture 7: explainers of the error bar (√n), the fitted curve (the
+  smallest χ²) and the pull right after "The Parts of a Figure"; Tufte's
+  lie factor; a section "Misleading Figures" with four bad-then-honest
+  pairs.
+- Lectures 8–12: an explainer where a figure or formula first shows a
+  notion; formulas stepped click by click with the numbers.
+- Four 3D explainers from the toolkit (Lectures 8–11), built in a separate
+  session.
+- The planned improvements: card text 16 px, code 14 px, a 0.25 s fade,
+  the interactive figures in the figures' typeface, figure URLs with a
+  content hash.
