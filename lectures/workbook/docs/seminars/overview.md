@@ -33,14 +33,15 @@ Each question is answered by the end of the session.
   (about 0.5 MB), finds who changed its mean, takes the change back and
   publishes it to their own GitHub. Seminar 12's optional section uses Git
   again; the other seminars do not need it.
-- **Weeks 8 to 12 share one conda environment, `analysis`.** Seminar 8
+- **Weeks 8 to 16 share one conda environment, `analysis`.** Seminar 8
   creates it with one `conda create` line and adds pandas and Matplotlib;
   each later seminar adds the package of the week (`conda install`, then
   the file is written again). Whoever missed a week creates it with the
   line on that week's page.
 - **One new tool per seminar from week 8:** pandas (8), NumPy (9), a class
-  of your own (10), a language model in plain Python and an LLM (11),
-  pytest (12). The lecture of the week gives the idea; the seminar shows
+  of your own beside scikit-learn (10), a language model in plain Python
+  and an LLM (11), pytest (12); in the optional weeks, the planning of an
+  analysis (14), timing and parallel work (15), scikit-learn's models (16). The lecture of the week gives the idea; the seminar shows
   the tool at work and then gives the room a problem to solve with it.
 - **Your project:** from week 8, the problem of each seminar can be asked
   of your own file instead.

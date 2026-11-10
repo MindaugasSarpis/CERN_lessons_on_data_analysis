@@ -49,13 +49,12 @@ lecturer, then a problem the students solve in pairs, LLMs included. Spec:
    at its public address, with its source and licence in one line (the
    Open-Meteo archive for Vilnius's real weather, CC BY 4.0, NOAA's Mauna
    Loa CO₂, NASA GISTEMP, CERN Open Data, Rdatasets, Our World in Data). No `weather-sNN.zip`, no ready-made project, module
-   or script, nothing added to the course's resources. The pages of
-   Seminars 9 to 12 still start from `weather-sNN.zip` (the rule before
-   10 Nov 2026: release `seminar-files` of
+   or script, nothing added to the course's resources. Since 10 Nov 2026
+   no page starts from `weather-sNN.zip` (the rule before that date:
+   release `seminar-files` of
    [MindaugasSarpis/weather-project](https://github.com/MindaugasSarpis/weather-project/releases),
    made by `misc/weather_repo/seminar_zips.py` from
-   `misc/weather_repo/starts/sNN/`) until each is reworked, before it is
-   taught. No file or environment comes from an earlier session, no
+   `misc/weather_repo/starts/sNN/`, now unused). No file or environment comes from an earlier session, no
    `git pull course main`, no pushes to the student's GitHub outside the
    Git seminars (6 and 13). Seminar 6 still clones the course repository,
    because cloning is its lesson.

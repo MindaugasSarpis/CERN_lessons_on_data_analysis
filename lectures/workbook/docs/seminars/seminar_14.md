@@ -1,810 +1,762 @@
 # Seminar 14 · Data Analysis
 
-**Paired lecture:** 14 Concepts of Data Analysis · **Format:** type-along tutorial, in class
+**Paired lecture:** 14 Concepts of Data Analysis · **Format:** a showcase, then a problem, in class
 
 <!-- ~120 min: the length pnpm timing:check reads -->
 
-**Today's goal:** Was October 2025 unusually warm? Every student works out
-by hand what the month's check computes, fixes a rule before looking,
-answers the question with it, sees how many "unusual" months chance alone
-gives, checks the answer under other choices, and records each step in a
-commit.
+**Today's question:** Are weekends in Vilnius warmer or colder than weekdays?
 
-Everything is typed in VS Code's terminal (zsh on macOS, Git Bash on
-Windows), in today's folder `weather-s14`, with the `s14` environment active.
-In the blocks, a line that starts with `$` is typed in the terminal, a line
-that starts with `>>>` or `...` is typed at Python's prompt, and every
-other line is what comes back.
+The lecturer runs Part 2 from this page; in Part 3 the room works in pairs.
+Everything is typed in VS Code: the scripts in the editor, the commands in its
+terminal (zsh on macOS, Git Bash on Windows; the same lines in both). A line
+that starts with `$` is typed without the `$`; `...` stands for lines left out.
 
-**If time runs short:** stop after section 10; Part 4 is the table
-of section 13 with four lines.
+**If time runs short:** leave out section 5 (the admissions at Berkeley); its calls are on the library card.
 
 ??? info "Before the session"
-    - **Room:** VS Code, Miniforge (`conda`), Git with a name and e-mail
-      set, and internet: section 1 downloads today's folder and makes its
-      environment. Nothing from an earlier seminar is needed.
+    - **Room:** Miniforge, Git with your name set, and VS Code with its
+      Python extension on every laptop (the [Setup](../setup.md) page);
+      internet for conda, if `analysis` has to be made, and for the data.
+      Nothing from earlier seminars is needed.
+    - **No file is handed out.** The scripts fetch their data from public
+      addresses:
+        - 10 000 muon pairs near the Z mass, recorded by CMS in 2011 (970 kB):
+          CERN Open Data Portal, record 5208, "Z to two muons from 2011",
+          CC0; selected for education, "not suitable for a full physics
+          analysis", as the record says;
+        - the applications to the six largest graduate departments of
+          UC Berkeley in 1973 (1 kB): R's `datasets` package (GPL-2 or
+          GPL-3, as R), as a CSV file of the Rdatasets collection; the
+          counts of Bickel, Hammel and O'Connell, *Science* 187 (1975) 398;
+        - in Part 3, the daily record of the Vilnius station,
+          `LH000026730.csv` (6.1 MB, 1881 to 24 August 2025), from
+          GHCN-Daily, NOAA NCEI, "for free and unrestricted use in research,
+          education, and other non-commercial activities" (WMO Resolution
+          40); cite Menne et al. 2012, *Global Historical Climatology
+          Network - Daily (GHCN-Daily)*, Version 3.35, NOAA NCDC,
+          [doi:10.7289/V5D21VHZ](https://doi.org/10.7289/V5D21VHZ), accessed
+          10 November 2026.
+    - **The world average of the Z mass**, 91.1880 ± 0.0020 GeV: Particle
+      Data Group, *Review of Particle Physics*, Phys. Rev. D 110 (2024)
+      030001.
+    - **The numbers** on this page come from runs on 10 November 2026. The
+      CMS and Berkeley files do not change; Part 3 uses complete past years
+      of the station file. Times printed by pytest and curl differ per
+      laptop.
     - **Missing a tool?** VS Code: [Setup, step 1](../setup.md#vscode);
-      `conda` and Git: [Setup, steps 2–4](../setup.md#shell); your name for
-      Git: [Setup, step 6](../setup.md#github).
-    - **You:** nothing to prepare. Today's folder is
-      [`weather-s14.zip`](https://github.com/MindaugasSarpis/weather-project/releases)
-      on the course repository's Releases page: the weather project with
-      today's three scripts, as a Git repository with one commit. The
-      numbers on this page come from `data/raw/weather.csv` and are the
-      same on every laptop. Ids of commits made today differ.
-    - **Keys** are written for Windows, macOS in brackets. Every line typed is
-      the same on both systems.
+      `conda` (Miniforge) and Git: [Setup, steps 2–4](../setup.md#shell);
+      your name for Git: [Setup, step 6](../setup.md#github).
+    - **Keys** are written for Windows, macOS in brackets. Paths are shown
+      for a Mac (`/Users/smilte/...`); Git Bash shows `/c/Users/smilte/...`.
 
 ---
 
-## Part 1 · The scripts and the reference { #part-1 }
+## Part 1 · Set up { #part-1 }
 
-<!-- 0:00 to 0:35 -->
+### 1. A new folder, and the environment `analysis` { #start }
 
-The question of today: was October 2025 unusually warm? First the course's script, then the same numbers by hand.
+<!-- 0:00 · 8 min -->
 
-Further reading: [The Turing Way, Research data management](https://book.the-turing-way.org/reproducible-research/rdm);
-[HSF Analysis Essentials](https://hsf-training.github.io/analysis-essentials/python/README.html).
+An environment is a folder with its own Python and its own packages; `analysis` serves weeks 8 to 16, and today needs pandas, Matplotlib and pytest in it.
 
----
-
-### 1. Today's folder and its environment { #pull }
-
-<!-- 0:00 · 10 min -->
-
-Today's folder holds the data, the three scripts of today and `environment.yml`; it is a Git repository with one commit.
-
-1. On the course repository's
-   [Releases page](https://github.com/MindaugasSarpis/weather-project/releases),
-   under **Assets**, click `weather-s14.zip`. In VS Code's terminal,
-   unpack it into the home folder and go in.
+1. In VS Code, **View** > **Terminal**. Make the folder and go into it.
 
     ```text
-    $ unzip ~/Downloads/weather-s14.zip -d ~
-    Archive:  /Users/smilte/Downloads/weather-s14.zip
-       creating: /Users/smilte/weather-s14/
-    ...
+    $ mkdir ~/weather-s14
     $ cd ~/weather-s14
-    $ ls scripts
-    chance_scan.py   clean_hill.py    month_check.py  scan_months.py
-    clean_export.py  column_stats.py  rebuild.sh
     ```
 
-    Safari unpacks a download by itself: then type
-    `mv ~/Downloads/weather-s14 ~` instead of `unzip`.
+2. **File** > **Open Folder...** > `weather-s14` (in your home folder) >
+   **Open**, then **View** > **Terminal**. The Explorer on the left is empty.
 
-    `month_check.py`, `scan_months.py` and `chance_scan.py` are today's.
-
-2. **File** > **Open Folder...** > `weather-s14`, then **View** >
-   **Terminal**. One commit, and nothing changed: `git status --short`
-   prints nothing.
+3. **If `analysis` is on this laptop** (Seminars 8 to 12): switch it on and
+   add pytest. conda says so when it is there already.
 
     ```text
-    $ git log --oneline
-    7a606c9 The starting folder of the seminar
-    $ git status --short
+    $ conda activate analysis
+    $ conda install pytest=9.2
     ```
 
-3. Make the conda environment `s14` from `environment.yml` (Python with
-   NumPy and pandas), then switch it on: the prompt starts with `(s14)`.
+4. **If it is not:** make it in one line, with today's packages. At
+   `Proceed ([y]/n)?` press `Enter`. Then switch it on.
 
     ```text
-    $ conda env create -n s14 -f environment.yml
+    $ conda create -n analysis python=3.14 pandas=3.1 matplotlib-base=3.11 pytest=9.2
     ...
-    #     $ conda activate s14
-    $ conda activate s14
+    Proceed ([y]/n)?
+    ...
+    $ conda activate analysis
     ```
 
     `conda: command not found`: install Miniforge as on the
     [Setup page, steps 2–4](../setup.md#shell), then open a new terminal.
 
-**Check:** `(s14)` in the prompt, and the three scripts of today in
-`scripts`.
+5. Ask for the versions.
+
+    ```text
+    $ python -c "import pandas, matplotlib, pytest; print(pandas.__version__, matplotlib.__version__, pytest.__version__)"
+    3.1.1 3.11.2 9.2.0
+    ```
+
+**Check:** `(analysis)` at the start of the prompt, and `3.1.1 3.11.2 9.2.0` (the last digits may be higher).
 
 ---
 
-### 2. Look at the other years only { #blind }
+### 2. Write the environment down { #install }
 
-<!-- 0:10 · 10 min -->
+<!-- 0:08 · 7 min -->
 
-`month_check.py` compares a month with the same month of the other years, and hides the month itself.
+`environment.yml` lists what the environment holds, so that another laptop can make the same one.
 
-1. Run it for October 2025.
+1. Write it into the folder.
 
     ```text
-    $ python scripts/month_check.py 2025 10
-    2016 to 2024: 6.84 6.62 10.17 7.37 3.43 6.11 5.86 7.80 9.11
-    reference  9 years  mean 7.03 °C  sd 1.95 °C
-    2025-10    hidden: run again with --unblind
+    $ conda env export --from-history -f environment.yml
     ```
 
-2. The first line holds the mean temperature of October in each of the nine
-   years: October 2018 was the warmest, 2020 the coldest. The second line
-   is their mean and their standard deviation (sd), the typical distance
-   of a value from the mean.
-3. Open `scripts/month_check.py` and find `if args.unblind:` near the end.
-   Without `--unblind` the value of October 2025 is never printed.
+2. Click `environment.yml` in the Explorer, delete its last line,
+   `prefix: ...` (a folder on this laptop), save (`Ctrl+S`, macOS `Cmd+S`).
+   Made today, it reads as below; an `analysis` from earlier weeks lists
+   more packages.
 
-**Check:** mean 7.03 °C, sd 1.95 °C, and no number for October 2025.
+    ```text
+    name: analysis
+    channels:
+      - conda-forge
+    dependencies:
+      - python=3.14
+      - pandas=3.1
+      - matplotlib-base=3.11
+      - pytest=9.2
+    ```
+
+3. Tell VS Code which Python to use: `Ctrl+Shift+P` (macOS `Cmd+Shift+P`),
+   `Python: Select Interpreter`, pick the entry with `envs/analysis` in its
+   path. The Status Bar shows `analysis`.
+
+**Check:** `- pytest=9.2` in `environment.yml`, and `analysis` in the Status Bar.
 
 ---
 
-### 3. The same numbers by hand { #by-hand }
+## Part 2 · Showcase { #part-2 }
 
-<!-- 0:20 · 15 min -->
+The lecturer runs four complete scripts on real data; the room watches or
+types along. For each: in the Explorer, right-click > **New File...**, the name
+above the code, paste, save, run it in the terminal. A window opens with the
+figure; close it and the prompt comes back. The figure is also saved as an SVG
+file in the folder.
 
-Hours become days, days become months, and the Octobers of the other years give the reference: four lines of pandas.
+### 3. The Z mass from 10 000 CMS events, against the world average { #z-mass }
 
-1. Start Python, read the log with −999 as missing, with `time` as the
-   index.
+<!-- 0:15 · 10 min -->
 
-    ```pycon
-    $ python
-    >>> import pandas as pd
-    >>> hours = pd.read_csv("data/raw/weather.csv", na_values=[-999], parse_dates=["time"], index_col="time")
-    >>> temp = hours["temp_c"]
-    >>> temp.head(3)
-    time
-    2016-01-01 00:00:00   -4.4
-    2016-01-01 01:00:00   -4.8
-    2016-01-01 02:00:00   -5.5
-    Name: temp_c, dtype: float64
-    ```
+A ± that counts only the statistics says nothing about the choices of the method: here, which window of masses is averaged.
 
-2. The mean of each day, then the mean of each month's days. `"D"` is a
-   day, `"MS"` a month labelled by its first day.
+```python title="zmass.py"
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
 
-    ```pycon
-    >>> days = temp.resample("D").mean()
-    >>> len(days)
-    3653
-    >>> months = days.resample("MS").mean()
-    >>> len(months)
-    120
-    >>> months.head(3).round(2)
-    time
-    2016-01-01   -2.80
-    2016-02-01   -1.97
-    2016-03-01    0.97
-    Freq: MS, Name: temp_c, dtype: float64
-    ```
+url = "https://opendata.cern.ch/record/5208/files/Zmumu.csv"
+z = pd.read_csv(url)
+# the mass of the muon pair from the two muons' pt, eta and phi (GeV)
+z["M"] = np.sqrt(2 * z["pt1"] * z["pt2"] * (np.cosh(z["eta1"] - z["eta2"])
+                                            - np.cos(z["phi1"] - z["phi2"])))
+print(len(z), "events")
+WORLD = 91.1880                       # Particle Data Group, ± 0.0020 GeV
+for low, high in [(70, 110), (80, 100), (86, 96)]:
+    m = z.loc[(z["M"] > low) & (z["M"] < high), "M"]
+    error = m.std() / len(m) ** 0.5   # the standard error of the mean
+    zscore = (m.mean() - WORLD) / error
+    print(f"{low}-{high} GeV: {len(m)} events, mean {m.mean():.2f} "
+          f"± {error:.2f}, {zscore:.0f} σ from {WORLD}")
 
-3. The Octobers, then those that are not 2025: a mask on the index.
+fig, ax = plt.subplots(figsize=(8, 4.5), layout="constrained")
+ax.hist(z["M"], bins=120, range=(60, 120), histtype="step", color="black")
+ax.axvline(WORLD, color="C3", label="world average, 91.19 GeV")
+ax.axvspan(80, 100, color="0.9", label="the window 80 to 100 GeV")
+ax.set_xlabel("Mass of the muon pair (GeV)")
+ax.set_ylabel("Events per 0.5 GeV")
+ax.set_title("CMS 2011, Z → μμ: the peak has a tail to lower masses")
+ax.legend(frameon=False)
+fig.savefig("zmass.svg")
+plt.show()
+```
 
-    ```pycon
-    >>> octobers = months[months.index.month == 10]
-    >>> len(octobers)
-    10
-    >>> ref = octobers[octobers.index.year != 2025]
-    >>> ref.round(2)
-    time
-    2016-10-01     6.84
-    2017-10-01     6.62
-    2018-10-01    10.17
-    2019-10-01     7.37
-    2020-10-01     3.43
-    2021-10-01     6.11
-    2022-10-01     5.86
-    2023-10-01     7.80
-    2024-10-01     9.11
-    Name: temp_c, dtype: float64
-    ```
+```text
+$ python zmass.py
+10000 events
+70-110 GeV: 9192 events, mean 89.61 ± 0.06, -27 σ from 91.188
+80-100 GeV: 8259 events, mean 90.35 ± 0.04, -23 σ from 91.188
+86-96 GeV: 7109 events, mean 90.82 ± 0.02, -15 σ from 91.188
+```
 
-4. `octobers` holds October 2025 too: printing it would unblind, so only
-   `ref` is printed. The mean and the sd of the nine. pandas' `std` divides by n − 1 = 8,
-   the usual sd of a sample; dividing by n = 9 gives a smaller number.
-   Then leave Python.
+![The mass of 10 000 CMS muon pairs from 60 to 120 GeV in bins of 0.5 GeV: a narrow peak of about 720 events per bin at 91 GeV, on the red line of the world average, with a longer tail to the left than to the right and about 40 events per bin near 60 GeV; the window from 80 to 100 GeV shaded grey](img/s14/zmass.svg)
 
-    ```pycon
-    >>> print(round(ref.mean(), 2), round(ref.std(), 2))
-    7.03 1.95
-    >>> print(round(ref.std(ddof=0), 2))
-    1.83
-    >>> exit()
-    ```
+**Notice:** the window moves the mean by 1.2 GeV, from 89.61 to 90.82, while its ± is 0.02 to 0.06 GeV.
 
-**Check:** the nine values, 7.03 and 1.95: the script's second line.
+**Ask the room:** CMS's events give a Z 0.8 GeV lighter than the world average, at 23 σ. Is the world average wrong?
 
-!!! question "Task: the rule as two numbers"
-    "Unusual" will mean more than 2 sd from the mean of the nine years. Before
-    anyone looks, work out above which October mean 2025 would be unusually
-    warm, and below which unusually cold.
-
-??? success "Answer"
-    ```text
-    $ python -c "print(7.03 + 2 * 1.95, 7.03 - 2 * 1.95)"
-    10.93 3.1300000000000003
-    ```
-
-    Above 10.93 °C warm, below 3.13 °C cold. Only 2018 (10.17) and 2020
-    (3.43) came near.
+??? note "Answer"
+    No. The ± says how well 8259 events fix the mean of the window, and
+    nothing else. The mean of a window is not the mass: the peak has a tail
+    to lower masses (a muon that radiates a photon loses energy, and some
+    pairs come from no Z at all), and the window decides how much of the
+    tail is averaged in. That is a systematic effect of the method, 1.2 GeV
+    across three reasonable windows. A result is value ± statistical ±
+    systematic; a mass needs a fit of the peak's shape.
 
 ---
 
-## Part 2 · Fix the rule, then look { #part-2 }
+### 4. Twenty groups drawn by lot from the same events { #lots }
 
-<!-- 0:35 to 1:05 -->
+<!-- 0:25 · 9 min -->
 
-A rule written after the result can be bent to fit it. A rule committed before cannot.
+Split one data set at random into 20 groups and test each against the rest: by chance alone, most splits have a group beyond 2 σ.
 
----
+```python title="lots.py"
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
 
-### 4. Write the rule down { #plan }
+z = pd.read_csv("https://opendata.cern.ch/record/5208/files/Zmumu.csv")
+z["M"] = np.sqrt(2 * z["pt1"] * z["pt2"] * (np.cosh(z["eta1"] - z["eta2"])
+                                            - np.cos(z["phi1"] - z["phi2"])))
+m = z.loc[(z["M"] > 80) & (z["M"] < 100), "M"].to_numpy()
+rng = np.random.default_rng(2026)
 
-<!-- 0:35 · 10 min -->
 
-The plan says what is compared, how, and what counts as unusual.
+def pulls(lot):
+    """Each group's mean minus the rest's, in units of its uncertainty."""
+    result = []
+    for g in range(20):
+        inside, rest = m[lot == g], m[lot != g]
+        error = np.sqrt(inside.var() / len(inside) + rest.var() / len(rest))
+        result.append((inside.mean() - rest.mean()) / error)
+    return np.array(result)
 
-1. **File** > **New File...**, type `analysis_plan.md`, press `Enter`.
-2. Write the plan and save. Put today's date in the second line.
 
-    ```text
-    # Plan: was October 2025 unusually warm?
+first = pulls(rng.integers(0, 20, len(m)))  # a number from 0 to 19 per event
+print("the 20 groups, in σ:", first.round(1))
+alarms = sum(np.any(abs(pulls(rng.integers(0, 20, len(m)))) > 2)
+             for lot in range(1000))
+print(f"lots with a group beyond 2 σ: {alarms} of 1000")
+print(f"1 - 0.9545 ** 20 = {1 - 0.9545 ** 20:.3f}")
 
-    Written on 2026-10-20, before the mean of October 2025 was looked at.
+fig, ax = plt.subplots(figsize=(8, 4), layout="constrained")
+ax.axhspan(-2, 2, color="0.92")
+ax.plot(range(1, 21), first, "o", color="black")
+ax.set_xticks(range(1, 21))
+ax.set_xlabel("Group, drawn by lot")
+ax.set_ylabel("Group minus the rest (σ)")
+ax.set_title(f"{len(m)} Z events in 20 random groups; grey: within ±2 σ")
+fig.savefig("lots.svg")
+plt.show()
+```
 
-    - Data: `data/raw/weather.csv`, the hours marked -999 left out.
-    - The mean of a month: the mean of its daily means.
-    - Reference: October of 2016 to 2024, nine values.
-    - z = (October 2025 - mean of the nine) / sd of the nine.
-    - Unusually warm: z above +2. Unusually cold: z below -2.
-    - Reported whatever comes out: the mean, z and the verdict.
-    ```
+```text
+$ python lots.py
+the 20 groups, in σ: [ 2.3 -0.4 -1.3  0.2 -0.7  0.   1.3 -0.6 -0.4  1.  -1.1 -1.  -1.7 -0.5
+  0.4 -0.4  1.2 -0.9  1.2  1.7]
+lots with a group beyond 2 σ: 593 of 1000
+1 - 0.9545 ** 20 = 0.606
+```
 
-    **z** is the distance from the mean, counted in sd.
+![Twenty groups of the same 8259 Z events, drawn by lot, each as one point: its mean minus the mean of the other groups, in σ; nineteen points lie in the grey band from −2 to +2 σ, group 1 above it at +2.3 σ](img/s14/lots.svg)
 
-**Check:** `analysis_plan.md` in the Explorer, saved.
+**Notice:** group 1 lies 2.3 σ above the rest, and only the random generator set its events apart; 593 of 1000 lots have such a group.
 
----
+**Ask the room:** a colleague finds that the events of one run of the detector give a Z mass 2.1 σ above the other runs. What do you ask first?
 
-### 5. Commit the rule { #commit-plan }
-
-<!-- 0:45 · 5 min -->
-
-The commit records when the rule was written.
-
-1. Stage the plan and commit it.
-
-    ```text
-    $ git add analysis_plan.md
-    $ git commit -m "Fix the rule before looking at October 2025"
-    [main 5917213] Fix the rule before looking at October 2025
-     1 file changed, 10 insertions(+)
-     create mode 100644 analysis_plan.md
-    ```
-
-    Your id differs.
-
-**Check:** `git status --short` prints nothing.
-
----
-
-### 6. Unblind: compute October 2025 { #unblind }
-
-<!-- 0:50 · 5 min -->
-
-Now, and only now, the value itself.
-
-1. Run the script with `--unblind`.
-
-    ```text
-    $ python scripts/month_check.py 2025 10 --unblind
-    2016 to 2024: 6.84 6.62 10.17 7.37 3.43 6.11 5.86 7.80 9.11
-    reference  9 years  mean 7.03 °C  sd 1.95 °C
-    2025-10    mean 6.12 °C  z -0.47
-    ```
-
-2. Apply the rule: −0.47 lies between −2 and +2. By hand:
-   (6.12 − 7.03) / 1.95 = −0.47.
-
-**Check:** z = −0.47. October 2025 was not unusually warm; it was a little
-cooler than the average October.
+??? note "Answer"
+    How many groups were looked at: runs, months, regions of the detector,
+    charges. One look has a 4.55 % chance of 2 σ; twenty looks have at
+    least one such result 61 % of the time (1 − 0.9545²⁰). Then: was this
+    grouping chosen before the data was looked at? A finding from a scan is
+    a question for new data, not a result.
 
 ---
 
-### 7. Write the result { #result }
+### 5. Admissions at Berkeley in 1973: lower for women overall, not within departments { #simpson }
 
-<!-- 0:55 · 10 min -->
+<!-- 0:34 · 8 min -->
 
-The answer goes into the README, in a commit after the plan.
+A third quantity that drives both columns can reverse a comparison when the groups are added together.
 
-1. In `README.md`, above `## How to rebuild`, add a section and save.
+```python title="berkeley.py"
+import pandas as pd
 
-    ```text
-    ## October 2025
+url = ("https://vincentarelbundock.github.io/Rdatasets/csv/datasets/"
+       "UCBAdmissions.csv")
+df = pd.read_csv(url)
+print(df.head(4))
 
-    Mean 6.12 °C. October 2016 to 2024: mean 7.03 °C, sd 1.95 °C.
-    z = -0.47: not unusual, by the rule in `analysis_plan.md`.
-    ```
+table = df.pivot_table(index=["Dept", "Gender"], columns="Admit",
+                       values="Freq", aggfunc="sum")
+table["applied"] = table["Admitted"] + table["Rejected"]
+whole = table.groupby("Gender")[["Admitted", "applied"]].sum()
+print("admitted, all six departments:")
+print((whole["Admitted"] / whole["applied"]).round(2))
+print("admitted, by department:")
+print((table["Admitted"] / table["applied"]).unstack().round(2))
+print("applied, by department:")
+print(table["applied"].unstack())
+```
 
-2. Commit every changed file at once.
+```text
+$ python berkeley.py
+   rownames     Admit  Gender Dept  Freq
+0         1  Admitted    Male    A   512
+1         2  Rejected    Male    A   313
+2         3  Admitted  Female    A    89
+3         4  Rejected  Female    A    19
+admitted, all six departments:
+Gender
+Female    0.30
+Male      0.45
+dtype: float64
+admitted, by department:
+Gender  Female  Male
+Dept                
+A         0.82  0.62
+B         0.68  0.63
+C         0.34  0.37
+D         0.35  0.33
+E         0.24  0.28
+F         0.07  0.06
+applied, by department:
+Gender  Female  Male
+Dept                
+A          108   825
+B           25   560
+C          593   325
+D          375   417
+E          393   191
+F          341   373
+```
 
-    ```text
-    $ git commit -am "October 2025: z = -0.47, not unusual"
-    [main c1a8b66] October 2025: z = -0.47, not unusual
-     1 file changed, 5 insertions(+)
-    ```
+**Notice:** most women applied to C to F, which admitted a third or less of everyone; most men to A and B, which admitted two thirds.
 
-3. The order in the history.
+**Ask the room:** to judge whether the departments treated women and men alike, which rates do you compare: the two of all departments, or the twelve by department?
 
-    ```text
-    $ git log --oneline -n 3
-    c1a8b66 October 2025: z = -0.47, not unusual
-    5917213 Fix the rule before looking at October 2025
-    7a606c9 The starting folder of the seminar
-    ```
-
-**Check:** the plan's commit stands below the result's commit.
-
-!!! question "Task: November 2025, the same way"
-    Check November 2025 with the same rule. Look at the reference first,
-    then unblind.
-
-??? success "Answer"
-    ```text
-    $ python scripts/month_check.py 2025 11
-    2016 to 2024: 2.87 3.23 3.01 5.03 2.88 3.74 1.55 0.69 2.43
-    reference  9 years  mean 2.83 °C  sd 1.24 °C
-    2025-11    hidden: run again with --unblind
-    $ python scripts/month_check.py 2025 11 --unblind
-    2016 to 2024: 2.87 3.23 3.01 5.03 2.88 3.74 1.55 0.69 2.43
-    reference  9 years  mean 2.83 °C  sd 1.24 °C
-    2025-11    mean 0.98 °C  z -1.49
-    ```
-
-    Colder than usual, not unusually cold: −1.49 is above −2.
-
----
-
-## Part 3 · Look elsewhere { #part-3 }
-
-<!-- 1:05 to 1:40 -->
-
-Someone else checks every month instead of one, and reports the most extreme.
-
----
-
-### 8. Check all 120 months { #scan }
-
-<!-- 1:05 · 10 min -->
-
-`scan_months.py` applies the rule to every month of 2016 to 2025, each against the same month of the other nine years.
-
-1. Run it. The first line counts the months beyond 2 sd; the others are
-   the five largest z, by size.
-
-    ```text
-    $ python scripts/scan_months.py
-    months checked 120   beyond 2 sd 11
-    2025-04  mean   3.14 °C  z -8.79
-    2019-07  mean  23.12 °C  z +3.94
-    2020-03  mean  -1.03 °C  z -3.22
-    2025-02  mean  -5.15 °C  z -3.15
-    2020-10  mean   3.43 °C  z -2.65
-    ```
-
-2. Read it as a headline: "April 2025, 8.79 sd below normal".
-
-**Check:** 11 of 120 months beyond 2 sd; April 2025 at −8.79.
+??? note "Answer"
+    The rates by department, where each decision was made: women were
+    admitted at a higher rate in four of the six. The 0.30 against 0.45 of
+    all departments mixes the departments' own rates with where each group
+    applied. Bickel, Hammel and O'Connell (1975) found no bias against
+    women in the decisions; the difference came from the choice of
+    department. Why those departments admitted so few is another question,
+    which these counts cannot answer.
 
 ---
 
-### 9. What chance alone gives { #chance }
+### 6. A test with a known answer, and a test that passes for the wrong reason { #known-answer }
 
-<!-- 1:15 · 10 min -->
+<!-- 0:42 · 10 min -->
 
-`chance_scan.py` draws 2000 decades of monthly means in which no month is unusual, and scans each as section 8 did.
+Code from anyone, an LLM included, is checked on input whose answer is worked out by hand; that input has to exercise every part of the formula.
 
-1. Run it. The numbers are drawn at random from a normal distribution
-   with a fixed seed, so every laptop prints the same.
+Asked for the mass formula of section 3, an LLM wrote this function: one letter differs.
 
-    ```text
-    $ python scripts/chance_scan.py
-    decades of pure chance  2000
-    months beyond 2 sd, on average  11.3 of 120
-    decades with at least one       100.0%
-    largest z of a decade, median    4.0
-    ```
+```python title="mass.py"
+import numpy as np
 
-2. Compare with section 8: 11 months beyond 2 sd is what a decade without
-   any unusual month gives.
-3. One month seldom crosses 2 sd by chance; of 120 months, about 11 do.
-   Searching many places for the most extreme one is the
-   **look-elsewhere effect**: the more places searched, the more extreme
-   the best find, by chance alone.
 
-**Check:** 11.3 by chance against 11 in the data.
+def pair_mass(pt1, eta1, phi1, pt2, eta2, phi2):
+    """The mass of two muons from their pt (GeV), eta and phi (radians)."""
+    return np.sqrt(2 * pt1 * pt2
+                   * (np.cos(eta1 - eta2) - np.cos(phi1 - phi2)))
+```
 
----
+Two tests, each a case worked out by hand. pytest runs every function whose name starts with `test_` in the files whose names start with `test_`.
 
-### 10. Why April 2025 scores −8.79 { #april }
+```python title="test_mass.py"
+import math
 
-<!-- 1:25 · 15 min -->
+from mass import pair_mass
 
-A z far beyond what chance gives, so look at its parts.
 
-1. April 2025 on its own.
+def test_back_to_back():
+    # 45.594 GeV each, at eta 0, opposite in phi: M = 2 × 45.594 GeV
+    assert math.isclose(pair_mass(45.594, 0, 0, 45.594, 0, math.pi), 91.188)
 
-    ```text
-    $ python scripts/month_check.py 2025 4 --unblind
-    2016 to 2024: 6.95 6.49 6.94 7.10 6.96 5.96 6.58 7.29 6.44
-    reference  9 years  mean 6.75 °C  sd 0.41 °C
-    2025-04    mean 3.14 °C  z -8.79
-    ```
 
-2. The nine Aprils lie within 1.3 °C of each other, so their sd is 0.41 °C.
-   Section 2 gave 1.95 °C for October. Nine values give a rough sd.
-3. Take the sd from all twelve months instead: each month minus the mean of
-   its own month, 108 values (`--pooled`).
+def test_one_forward_one_backward():
+    # 10 GeV each, at eta +1 and -1, opposite in phi: M = 2 × 10 × cosh(1)
+    expected = 2 * 10 * math.cosh(1)
+    assert math.isclose(pair_mass(10, 1, 0, 10, -1, math.pi), expected)
+```
 
-    ```text
-    $ python scripts/month_check.py 2025 4 --unblind --pooled
-    2016 to 2024: 6.95 6.49 6.94 7.10 6.96 5.96 6.58 7.29 6.44
-    reference  9 years  mean 6.75 °C  sd 1.61 °C
-    2025-04    mean 3.14 °C  z -2.24
-    ```
+```text
+$ python -m pytest -q
+.F                                                                       [100%]
+=================================== FAILURES ===================================
+________________________ test_one_forward_one_backward _________________________
+...
+E       assert False
+E        +  where False = <built-in function isclose>(np.float64(10.806046117362795), 30.861612696304874)
+...
+FAILED test_mass.py::test_one_forward_one_backward - assert False
+1 failed, 1 passed in 0.07s
+```
 
-4. The whole scan with that sd.
+In `mass.py`, change `np.cos(eta1 - eta2)` to `np.cosh(eta1 - eta2)`, save, run again.
 
-    ```text
-    $ python scripts/scan_months.py --pooled
-    months checked 120   beyond 2 sd 8
-    2019-07  mean  23.12 °C  z +3.12
-    2018-01  mean   0.15 °C  z +2.73
-    2025-12  mean  -5.86 °C  z -2.46
-    2023-06  mean  20.76 °C  z +2.37
-    2020-10  mean   3.43 °C  z -2.35
-    ```
+```text
+$ python -m pytest -q
+..                                                                       [100%]
+2 passed in 0.03s
+```
 
-**Check:** April 2025 falls from −8.79 to −2.24, one of eight months beyond
-2 sd. The −8.79 came from the small sd of nine Aprils.
+Your times differ.
 
-!!! question "Task: July 2019 and its missing days"
-    July 2019 now leads, at +3.12. It is also the month in which the sensor
-    was down for 5 days (the `-999` hours). Suppose those 5 days had been as
-    warm as an average July, 18.11 °C. What would the month's mean and z be?
-    The other 26 days have a mean of 23.12 °C.
+**Notice:** the first test passes with the wrong formula too: at η = 0, cos 0 and cosh 0 are both 1.
 
-??? success "Answer"
-    ```text
-    $ python -c "print(round((26 * 23.12 + 5 * 18.11) / 31, 2))"
-    22.31
-    $ python -c "print(round((22.31 - 18.11) / 1.61, 2))"
-    2.61
-    ```
+**Ask the room:** how do you find cases with a known answer for code you did not write?
 
-    Still beyond 2 sd. With average weather on the missing days z is 2.61,
-    not 3.12: the missing days are an uncertainty of their own, which no
-    number of other hours would shrink.
+??? note "Answer"
+    A case simple enough to work out by hand (two equal muons, back to
+    back), a published number (the Z peak near 91 GeV), or a second,
+    independent method. Then make each part of the formula count: here a
+    difference in η, so that cosh matters, and two different pt. A test
+    that never reaches the wrong line passes for the wrong reason.
 
 ---
 
-## Part 4 · Other choices { #part-4 }
+### 7. Library card: the calls of this page { #card }
 
-<!-- 1:40 to 2:15 -->
+<!-- 0:52 · 3 min -->
 
-The plan made three choices. Change each, and see whether the verdict moves.
+Every call of the examples and of the solution below, one line each.
 
----
-
-### 11. Another daily mean { #minmax }
-
-<!-- 1:40 · 5 min -->
-
-Many stations take a day's mean as (min + max) / 2, not as the mean of 24 hours.
-
-1. Run with `--minmax`.
-
-    ```text
-    $ python scripts/month_check.py 2025 10 --unblind --minmax
-    2016 to 2024: 6.83 6.60 10.13 7.31 3.34 6.00 5.85 7.75 9.08
-    reference  9 years  mean 6.99 °C  sd 1.96 °C
-    2025-10    mean 6.11 °C  z -0.45
-    ```
-
-**Check:** z = −0.45 against −0.47.
-
----
-
-### 12. Another reference, another sd { #reference }
-
-<!-- 1:45 · 10 min -->
-
-The reference years and the sd were choices too.
-
-1. Only the last five years as reference.
-
-    ```text
-    $ python scripts/month_check.py 2025 10 --unblind --first 2020
-    2020 to 2024: 3.43 6.11 5.86 7.80 9.11
-    reference  5 years  mean 6.46 °C  sd 2.15 °C
-    2025-10    mean 6.12 °C  z -0.16
-    ```
-
-2. The sd of all twelve months, as in section 10.
-
-    ```text
-    $ python scripts/month_check.py 2025 10 --unblind --pooled
-    2016 to 2024: 6.84 6.62 10.17 7.37 3.43 6.11 5.86 7.80 9.11
-    reference  9 years  mean 7.03 °C  sd 1.61 °C
-    2025-10    mean 6.12 °C  z -0.57
-    ```
-
-**Check:** z from −0.57 to −0.16. Each choice moves z, none moves it near
-±2.
-
----
-
-### 13. The table { #push }
-
-<!-- 1:55 · 15 min -->
-
-The checks belong next to the result.
-
-1. In `README.md`, under the line `z = -0.47: ...`, add a table and save.
-
-    ```text
-    | Choice | z |
-    |--|--|
-    | as planned | -0.47 |
-    | a day's mean is (min + max) / 2 | -0.45 |
-    | reference 2020 to 2024 only | -0.16 |
-    | sd of all twelve months | -0.57 |
-    ```
-
-2. Look at it: right-click `README.md` > **Open Preview**.
-3. Commit.
-
-    ```text
-    $ git commit -am "October 2025: the verdict under four choices"
-    [main 66b033c] October 2025: the verdict under four choices
-     1 file changed, 7 insertions(+)
-    ```
-
-**Check:** the preview of `README.md` shows the October 2025 section and
-its table.
-
-!!! question "Task: report the scan honestly"
-    Section 8 said "April 2025, 8.79 sd below normal". Write, in two lines
-    under the table, what an honest report of the scan would say instead.
-    Commit it.
-
-??? success "Answer"
-    For example:
-
-    ```text
-    A scan of all 120 months finds 11 beyond 2 sd; chance alone gives 11.3.
-    With the sd of all months, April 2025 is at -2.24, one of eight.
-    ```
-
-    ```text
-    $ git commit -am "Report the scan of all months"
-    ```
-
----
-
-### 14. Wrap up { #wrap-up }
-
-<!-- 2:10 · 5 min -->
-
-| To | Do |
+| Call | What it does |
 |--|--|
-| months from hours | `temp.resample("D").mean().resample("MS").mean()` |
-| keep the result from steering the rule | write the rule first, commit it, then unblind |
-| judge one number | compare it with its spread: z = (value − mean) / sd |
-| report a search | say how many places were searched and what chance gives there |
-| trust a verdict | change each choice of the method and see that it holds |
+| `pd.read_csv(url, usecols=[...], parse_dates=["DATE"])` | a CSV file from its address or disk; only these columns; dates as dates |
+| `np.sqrt(...)`, `np.cosh(...)`, `np.cos(...)` | element by element, over whole columns |
+| `z.loc[(z["M"] > 80) & (z["M"] < 100), "M"]` | the rows that meet both conditions, one column |
+| `m.std() / len(m) ** 0.5` | the standard error of a mean of independent values |
+| `(value - reference) / error` | the distance in σ |
+| `rng = np.random.default_rng(2026)`, `rng.integers(0, 20, n)` | a random generator with a fixed seed; n whole numbers from 0 to 19 |
+| `df.pivot_table(index=..., columns=..., values=..., aggfunc="sum")` | a table of sums (or `"mean"`, `"count"`) by two keys |
+| `table.groupby("Gender")[...].sum()`, `series.unstack()` | sums per group; the inner label as columns |
+| `df["DATE"].dt.day_of_week` | 0 for Monday to 6 for Sunday |
+| `df["DATE"].dt.to_period("W")` | the week, Monday to Sunday, of each date |
+| `df["DATE"].dt.year.between(1951, 2023)` | True for the years 1951 to 2023 |
+| `ax.hist(x, bins=120, range=(60, 120), histtype="step")` | a histogram drawn as an outline |
+| `ax.axvline(x)`, `ax.axvspan(a, b)`, `ax.axhspan(a, b)` | a vertical line; a vertical or a horizontal band |
+| `math.isclose(a, b)` | equal to about nine significant digits |
+| `python -m pytest -q` | runs every `test_` function of the `test_*.py` files, one dot per test passed |
 
 ---
 
-## Optional, if the room goes fast { #optional }
+## Part 3 · The problem { #part-3 }
 
----
+### 8. Are weekends in Vilnius warmer or colder than weekdays? { #problem }
 
-### 15. A neighbour checks the order { #review }
+<!-- 0:55 · 50 min: predict and plan 7, solve 23, check 10, hand in 10 -->
 
-<!-- — · 10 min -->
+At weekends fewer cars drive and fewer factories work. Forster and Solomon
+(PNAS, 2003) found a weekly cycle in the daily range of temperature at many
+stations in the United States, Mexico, Japan and China. Does the Vilnius
+station see one in its daily mean? The data: the station's daily record (GHCN-Daily, NOAA
+NCEI; terms and citation under "Before the session"), `TAVG` in tenths of °C.
+Download it once (6.1 MB) into the folder; the times in curl's last line
+differ per laptop.
 
-A reviewer can see from the history whether the rule came first.
+```text
+$ curl -O https://www.ncei.noaa.gov/data/global-historical-climatology-network-daily/access/LH000026730.csv
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 5976k  100 5976k    0     0  3602k      0  0:00:01  0:00:01 --:--:-- 3600k
+```
 
-1. Swap laptops with a neighbour. On theirs, list the last commits with
-   their times.
+Work in pairs, with any tools, an LLM too: the work is the plan, the checks and the answer in your own words.
+
+1. **Predict and plan**, before any code. In a new file `plan.md`, write
+   your guess (warmer, colder or the same, by how much, one reason) and the
+   rule you will follow: which years, which days count as the weekend, what
+   is compared with what, and which result counts as "a difference". Then
+   commit it: the commit records when the plan was written.
 
     ```text
-    $ git log --format="%h %ad %s" --date=format:"%H:%M" -n 4
-    66b033c 15:43 October 2025: the verdict under four choices
-    c1a8b66 15:43 October 2025: z = -0.47, not unusual
-    5917213 15:43 Fix the rule before looking at October 2025
-    7a606c9 09:00 The starting folder of the seminar
+    $ git init
+    ...
+    Initialized empty Git repository in /Users/smilte/weather-s14/.git/
+    $ git add plan.md
+    $ git commit -m "Plan: weekend against weekdays, before looking"
+    [master (root-commit) f71f705] Plan: weekend against weekdays, before looking
+    ...
     ```
 
-    Your ids and times differ, except the first commit's, which came in
-    the zip.
+    Your id differs, and the branch may be `main`. `Author identity
+    unknown`: set your name as on [Setup, step 6](../setup.md#github).
 
-2. Rerun their result.
+2. **Solve.** The difference between the weekend and Monday to Friday,
+   in °C, with its standard error, by the rule of your plan.
+3. **Check the machine's work.**
+    - The days: which weekday does your code give for 10 November 2026? (A
+      Tuesday.) What share of your days are weekend days? (2/7 = 0.286.)
+    - By hand: take the first complete week of your table, its five
+      weekdays and its two weekend days; the means and their difference on
+      paper must agree with your code's first difference.
+    - The unit and the n: is the mean near 6.5 °C, not 65? Does your ±
+      count weeks (about 3800) or days (about 26 000)? Which of the two are
+      closer to independent?
+    - Against the plan and the prediction: did the code do what the plan
+      says? Where the answer differs from your guess, write why.
+4. **Hand in** the difference with its ± and two sentences in your own
+   words: what it means and how sure it is.
+
+??? tip "Hint 1: the weekday and the week"
+    `df["DATE"].dt.day_of_week` gives 0 for Monday to 6 for Sunday, so the
+    weekend is `>= 5`. Python's `date.isoweekday()` counts 1 to 7 instead,
+    with Saturday 6 and Sunday 7: a mix of the two leaves out Saturdays
+    without an error. `df["DATE"].dt.to_period("W")` labels each day with
+    its Monday-to-Sunday week.
+
+??? tip "Hint 2: why compare within a week"
+    Over a year the mean of a calendar day goes from −5.9 °C in January to
+    18.7 °C in August, and a cold spell moves it by up to 10 °C in a few
+    days. The days of one week share both. Take for each week the
+    mean of its weekend minus the mean of its five weekdays: the season and
+    most of the weather cancel. The weeks are close to independent, so the
+    ± is the standard deviation of the weekly differences divided by √(the
+    number of weeks). Keep only weeks with all seven days measured.
+
+??? tip "Hint 3: which years"
+    Choose them in the plan, for a reason that has nothing to do with the
+    answer: for example 1951 to 2023, the whole years since the war, in
+    which 7 of 26 663 days have no `TAVG`; the record of 2025 ends on
+    24 August.
+
+??? note "One solution"
+    A plan, committed before anything was computed:
 
     ```text
-    $ python scripts/month_check.py 2025 10 --unblind
+    # Plan: are weekends in Vilnius warmer or colder than weekdays?
+
+    - Guess: the same, within 0.1 °C. Traffic changes, the air mass does not.
+    - Data: LH000026730.csv, TAVG / 10, the years 1951 to 2023.
+    - Weekend: Saturday and Sunday. Weekdays: Monday to Friday.
+    - For each week with all 7 days: weekend mean minus weekday mean.
+    - Answer: the mean of these differences ± std / sqrt(number of weeks).
+    - "A difference" if it lies more than 2 standard errors from 0.
     ```
 
-3. Answer three questions, out loud: Is the plan older than the result? Does
-   the rerun give the README's number? Does the README give the verdict the
-   plan's rule gives?
+    ```python title="weekend.py"
+    import pandas as pd
 
-**Check:** three times yes, or a note to the neighbour saying which not.
+    df = pd.read_csv("LH000026730.csv", usecols=["DATE", "TAVG"],
+                     parse_dates=["DATE"])
+    df["temp"] = df["TAVG"] / 10                     # the file holds tenths of °C
+    df = df[df["DATE"].dt.year.between(1951, 2023)].dropna()
+    df["week"] = df["DATE"].dt.to_period("W")        # Monday to Sunday
+    df["weekend"] = df["DATE"].dt.day_of_week >= 5   # 5 Saturday, 6 Sunday
+    print(df.head(7))
+    print(f"weekend days: {df['weekend'].mean():.4f} of all days")
+
+    table = df.pivot_table(index="week", columns="weekend", values="temp",
+                           aggfunc=["mean", "count"])
+    full = table[(table[("count", True)] == 2) & (table[("count", False)] == 5)]
+    diff = full[("mean", True)] - full[("mean", False)]
+    error = diff.std() / len(diff) ** 0.5
+    print(diff.head(3).round(2))
+    print(f"{len(diff)} complete weeks: weekend minus Monday to Friday")
+    print(f"{diff.mean():.3f} ± {error:.3f} °C, z = {diff.mean() / error:.1f}")
+
+    ends, days = df[df["weekend"]], df[~df["weekend"]]
+    error = (ends["temp"].var() / len(ends)
+             + days["temp"].var() / len(days)) ** 0.5
+    print(f"all days instead: {ends['temp'].mean() - days['temp'].mean():.3f}"
+          f" ± {error:.3f} °C")
+    ```
+
+    ```text
+    $ python weekend.py
+                DATE  TAVG  temp                   week  weekend
+    23790 1951-01-01 -76.0  -7.6  1951-01-01/1951-01-07    False
+    23791 1951-01-02 -64.0  -6.4  1951-01-01/1951-01-07    False
+    23792 1951-01-03 -10.0  -1.0  1951-01-01/1951-01-07    False
+    23793 1951-01-04 -26.0  -2.6  1951-01-01/1951-01-07    False
+    23794 1951-01-05  -7.0  -0.7  1951-01-01/1951-01-07    False
+    23795 1951-01-06   0.0   0.0  1951-01-01/1951-01-07     True
+    23796 1951-01-07 -10.0  -1.0  1951-01-01/1951-01-07     True
+    weekend days: 0.2857 of all days
+    week
+    1951-01-01/1951-01-07    3.16
+    1951-01-08/1951-01-14    3.63
+    1951-01-15/1951-01-21   -0.13
+    Freq: W-SUN, dtype: float64
+    3803 complete weeks: weekend minus Monday to Friday
+    -0.035 ± 0.056 °C, z = -0.6
+    all days instead: -0.033 ± 0.126 °C
+    ```
+
+    By hand, the first week: weekdays (−7.6 − 6.4 − 1.0 − 2.6 − 0.7) / 5 =
+    −3.66 °C, weekend (0.0 − 1.0) / 2 = −0.50 °C, difference 3.16 °C.
+
+    Over 3803 weeks of 1951–2023, weekends in Vilnius were 0.035 ± 0.056 °C
+    colder than Monday to Friday: 0.6 standard errors, no difference by the
+    rule of the plan. A weekend effect on the daily mean larger than about
+    0.15 °C would have shown.
+
+**With your own project data:** a quantity of your project that might depend
+on a grouping nobody chose for a reason (the weekday, the operator, the
+instrument, the batch). Write the comparison into a plan and commit it before
+computing it; then the difference with its standard error, and two sentences.
 
 ---
 
-### 16. A data management plan { #dmp }
+## Part 4 · Show and discuss { #part-4 }
+
+### 9. Three questions about the pairs' answers { #discuss }
+
+<!-- 1:45 · 15 min -->
+
+Two or three pairs show their number and read their two sentences.
+
+**Ask the room:** one pair also split the weeks by month. September weekends came out 0.77 °C colder than the weekdays, at 4.6 σ; April and May 0.6 °C warmer. Is that chance, from twelve looks?
+
+??? note "Answer"
+    Not chance: twelve looks give a result beyond 4.6 σ less than once in
+    10 000 tries. It is the method. A week runs from Monday to Sunday, so
+    the weekend is its last two days, 3.5 days after the middle of Monday
+    to Friday. In September each day is on average 0.19 °C colder than the
+    day before (14.7 °C on the 1st, 9.0 °C on the 30th): 3.5 × 0.19 =
+    0.7 °C. In spring the days warm, and the weekend comes out warmer. Subtract from each day the mean of its
+    calendar day over 1951–2023 first, and no month is beyond 2 σ; over
+    the whole year spring and autumn cancel, and the answer stays −0.035.
+
+    ```python title="months.py"
+    import pandas as pd
+    import matplotlib.pyplot as plt
+
+    df = pd.read_csv("LH000026730.csv", usecols=["DATE", "TAVG"],
+                     parse_dates=["DATE"])
+    df["temp"] = df["TAVG"] / 10
+    df = df[df["DATE"].dt.year.between(1951, 2023)].dropna()
+    df["week"] = df["DATE"].dt.to_period("W")
+    df["weekend"] = df["DATE"].dt.day_of_week >= 5
+    day = df["DATE"].dt.day_of_year              # 1 to 366, the calendar day
+    df["anomaly"] = df["temp"] - df.groupby(day)["temp"].transform("mean")
+
+
+    def weekend_minus_weekdays(part, column):
+        t = part.pivot_table(index="week", columns="weekend", values=column,
+                             aggfunc=["mean", "count"])
+        t = t[(t[("count", True)] == 2) & (t[("count", False)] == 5)]
+        d = t[("mean", True)] - t[("mean", False)]
+        return d.mean(), d.std() / len(d) ** 0.5
+
+
+    fig, ax = plt.subplots(figsize=(8, 4.5), layout="constrained")
+    LINES = [("temp", "temperature", -0.1),
+             ("anomaly", "minus the mean of its calendar day", 0.1)]
+    for column, label, shift in LINES:
+        year, error = weekend_minus_weekdays(df, column)
+        rows = [weekend_minus_weekdays(df[df["DATE"].dt.month == month], column)
+                for month in range(1, 13)]
+        print(f"{column}: year {year:.3f} ± {error:.3f}; months in σ:")
+        print(" ".join(f"{mean / err:+.1f}" for mean, err in rows))
+        ax.errorbar([month + shift for month in range(1, 13)],
+                    [mean for mean, err in rows], yerr=[err for mean, err in rows],
+                    fmt="o", capsize=2, label=label)
+    ax.axhline(0, color="grey", linewidth=0.8)
+    ax.set_xticks(range(1, 13))
+    ax.set_xlabel("Month")
+    ax.set_ylabel("Weekend minus Monday to Friday (°C)")
+    ax.set_title("Vilnius 1951–2023: the pattern of the months is the season")
+    ax.legend(frameon=False)
+    fig.savefig("months.svg")
+    plt.show()
+    ```
+
+    ```text
+    $ python months.py
+    temp: year -0.035 ± 0.056; months in σ:
+    -0.6 -0.1 +1.7 +2.9 +2.9 +1.5 +1.9 -2.7 -4.6 -3.5 -2.4 -0.8
+    anomaly: year -0.035 ± 0.055; months in σ:
+    -0.2 -0.9 -1.6 -0.8 +0.6 +0.2 +0.8 +0.3 -0.6 -0.2 +0.8 +0.3
+    ```
+
+    ![For each month of 1951–2023, the weekend minus Monday to Friday in °C with its error bar: from the temperature itself (blue) the weekends are 0.35 to 0.65 °C warmer in March to May and 0.4 to 0.77 °C colder in August to November; from each day minus the mean of its calendar day (orange) every month lies within 2 σ of zero, the farthest March at −0.32 °C](img/s14/months.svg)
+
+**Ask the room:** two pairs report the same difference, one with ± 0.126 °C and one with ± 0.056 °C. Where does each ± come from, and which one answers the question?
+
+??? note "Answer"
+    ± 0.126 comes from all weekend days against all weekdays, each set's
+    spread divided by √(its number of days): that spread holds the season
+    and every cold spell, which have nothing to do with the weekday, and it
+    treats neighbouring days as independent, which they are not. ± 0.056
+    compares days of the same week, which share the season and much of the
+    weather. Both differences are honest; the second can see an effect half
+    as large.
+
+**Ask the room:** nothing was found. Is −0.035 ± 0.056 °C worth reporting?
+
+??? note "Answer"
+    Yes. It answers the question the plan asked, and it sets a limit: a
+    weekend effect on the daily mean of Vilnius larger than about 0.15 °C
+    would have shown. If results within 2 σ stay in drawers, what gets
+    printed are the lucky groups of section 4.
+
+The answer is the comparison fixed in the plan before the data was opened, with its ±; a pattern found afterwards by cutting the data more ways is first a question about chance and about the method.
+
+---
+
+## Optional, if the room is fast { #optional }
+
+### 10. The daily range of temperature at weekends { #range }
 
 <!-- — · 15 min -->
 
-What the project's data is, where it lives, and what happens to it at the end.
+Forster and Solomon looked at the daily range, the highest minus the lowest
+temperature of the day, not at the mean. The Vilnius file has both every day
+from 1951 to 2009 (`TMAX` and `TMIN`, tenths of °C). Plan, predict, solve,
+check, hand in, as in section 8.
 
-1. The sizes of the raw files. macOS pads the numbers with a few more
-   spaces.
+??? note "One solution"
+    `weekend.py` with three lines changed: the columns, the range, the years.
 
-    ```text
-    $ wc -c data/raw/*
-        180 data/raw/daily_export.csv
-     234439 data/raw/hill_station.csv
-    2515215 data/raw/weather.csv
-    2749834 total
-    ```
+    ```python title="range.py"
+    import pandas as pd
 
-2. **File** > **New File...**, `DMP.md`. Write one line under each heading;
-   the first three:
+    df = pd.read_csv("LH000026730.csv", usecols=["DATE", "TMAX", "TMIN"],
+                     parse_dates=["DATE"])
+    df["range"] = (df["TMAX"] - df["TMIN"]) / 10    # tenths of °C in the file
+    df = df[df["DATE"].dt.year.between(1951, 2009)].dropna()
+    df["week"] = df["DATE"].dt.to_period("W")
+    df["weekend"] = df["DATE"].dt.day_of_week >= 5
+    print(f"mean daily range {df['range'].mean():.2f} °C")
 
-    ```text
-    # Data management plan
-
-    ## Data
-    weather.csv, 2 515 215 bytes; hill_station.csv, 234 439 bytes;
-    daily_export.csv, 180 bytes.
-
-    ## Documentation
-    README.md: source, columns, units, the -999 hours.
-
-    ## Storage and backup
-    Laptop, in a Git repository; a copy on an external disk.
-    ```
-
-3. The last three. Save.
-
-    ```text
-    ## Legal and ethical questions
-    No personal data. Data under CC0, from the station's operator.
-
-    ## Sharing and preservation
-    At the end: the repository to Zenodo, with a DOI.
-
-    ## Responsibilities
-    Your Name. No cost.
-    ```
-
-4. Commit.
-
-    ```text
-    $ git add DMP.md
-    $ git commit -m "Add a data management plan"
-    ```
-
-**Check:** `DMP.md` committed, six headings, a line under each.
-
----
-
-### 17. Advanced tasks { #advanced }
-
-<!-- — · 20 min -->
-
-Harder questions on the same data, for a room that is done early. Each answer is one way; others are fine.
-
-!!! question "Advanced task: is October 2025 unusually windy?"
-    Answer it blind, the way of section 3, for the column `wind_ms`: the
-    reference first, the rule (2 sd), then October 2025 itself.
-
-??? success "Answer"
-    At `>>>`, after the `read_csv` line of section 3:
-
-    ```pycon
-    >>> wind = hours["wind_ms"].resample("D").mean().resample("MS").mean()
-    >>> oct_wind = wind[wind.index.month == 10]
-    >>> wref = oct_wind[oct_wind.index.year != 2025]
-    >>> print(" ".join(f"{x:.2f}" for x in wref))
-    3.66 3.13 3.59 2.96 2.75 4.50 3.69 4.33 2.50
-    >>> print(round(wref.mean(), 2), round(wref.std(), 2))
-    3.46 0.68
-    ```
-
-    The rule: unusual above 3.46 + 2 × 0.68 = 4.82 m/s or below 2.10 m/s.
-    Only then:
-
-    ```pycon
-    >>> value = oct_wind[oct_wind.index.year == 2025].iloc[0]
-    >>> print(round(value, 2), round((value - wref.mean()) / wref.std(), 2))
-    4.41 1.4
-    ```
-
-    4.41 m/s, z = 1.4: windier than most Octobers, not unusual.
-
-!!! question "Advanced task: one month, by chance"
-    `chance_scan.py` counts the months beyond 2 sd in a whole decade. How
-    often is **one** given month, decided beforehand, beyond 2 sd by
-    chance alone? Many expect 5 %, the share of a normal distribution
-    beyond 2 sd. Change a copy of `chance_scan.py` to find out.
-
-??? success "Answer"
-    `scripts/chance_one.py`: the last year's October against the nine
-    before it, in each of 2000 decades:
-
-    ```python
-    import numpy as np
-
-    rng = np.random.default_rng(2026)
-    decades = 2000
-    hits = 0
-    for _ in range(decades):
-        months = rng.normal(0, 1, size=(10, 12))
-        ref = months[:9, 9]                 # October of the nine other years
-        z = (months[9, 9] - ref.mean()) / ref.std(ddof=1)
-        hits += abs(z) > 2
-    print(f"one month beyond 2 sd: {hits} of {decades} decades, {hits / decades:.1%}")
+    table = df.pivot_table(index="week", columns="weekend", values="range",
+                           aggfunc=["mean", "count"])
+    full = table[(table[("count", True)] == 2) & (table[("count", False)] == 5)]
+    diff = full[("mean", True)] - full[("mean", False)]
+    error = diff.std() / len(diff) ** 0.5
+    print(f"{len(diff)} complete weeks: weekend minus Monday to Friday")
+    print(f"{diff.mean():.3f} ± {error:.3f} °C, z = {diff.mean() / error:.1f}")
     ```
 
     ```text
-    $ python scripts/chance_one.py
-    one month beyond 2 sd: 191 of 2000 decades, 9.6%
+    $ python range.py
+    mean daily range 7.76 °C
+    3077 complete weeks: weekend minus Monday to Friday
+    -0.039 ± 0.054 °C, z = -0.7
     ```
 
-    Nearly 10 %, not 5 %: the mean and the sd of nine values are
-    themselves uncertain, so a z of 2 is easier to reach than with the true
-    mean and sd (the t distribution with 8 degrees of freedom). The rule
-    of section 4 calls one October in ten "unusual" by chance.
-
-!!! question "Advanced task: chance with the pooled sd"
-    Section 10 found 8 months beyond 2 sd with the sd of all twelve months.
-    What does chance alone give for that scan?
-
-??? success "Answer"
-    In a copy of `chance_scan.py`, the sd of each year's reference is the
-    pooled one: every value minus the mean of its month, squared, summed,
-    divided by 108 − 12.
-
-    ```python
-    import numpy as np
-
-    rng = np.random.default_rng(2026)
-    decades = 2000
-    counts = []
-    for _ in range(decades):
-        months = rng.normal(0, 1, size=(10, 12))
-        z = np.empty_like(months)
-        for y in range(10):
-            ref = np.delete(months, y, axis=0)            # the other nine years
-            dev = ref - ref.mean(axis=0)                  # each minus its month's mean
-            sd = np.sqrt((dev ** 2).sum() / (dev.size - 12))
-            z[y] = (months[y] - ref.mean(axis=0)) / sd
-        counts.append(np.sum(np.abs(z) > 2))
-    print(f"months beyond 2 sd, pooled sd, on average  {np.mean(counts):.1f} of 120")
-    ```
-
-    ```text
-    $ python scripts/chance_pooled.py
-    months beyond 2 sd, pooled sd, on average  7.3 of 120
-    ```
-
-    7.3 by chance, 8 in the data: with a better sd, the scan still finds
-    what chance gives. July 2019 at +3.12 is the only month a reviewer
-    might look at again, and its 5 missing days (the Task of section 10)
-    weaken it.
+    The daily range at weekends differed from Monday to Friday by
+    −0.039 ± 0.054 °C over 3077 weeks of 1951–2009: no difference this
+    record can see.
 
 ---
 
 ## Aims practised
 
-- ♻️ **Reproducibility:** the rule, the result and the checks are commits in
-  order, and any of them reruns with one line.
-- 🔧 **Tool-agnostic:** the same lines in zsh and Git Bash; the
-  reasoning (z, chance, choices) holds in any language.
-- 📁 **Files:** the plan is a file in the repository, so its date is the
-  date of its commit.
+- ♻️ **Reproducibility:** the plan is committed before the data is opened,
+  and the answer reruns from one script and one public file.
+- 🔧 **Tool-agnosticism:** the checks (a ± that counts the statistics
+  only, chance in many looks, a test with a known answer) hold whoever
+  wrote the code, a person or an LLM.
+- 📁 **Data & files:** three open data sets read from their public
+  addresses, each with its source and licence.

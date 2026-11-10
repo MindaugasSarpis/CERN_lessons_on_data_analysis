@@ -1,835 +1,765 @@
 # Seminar 15 · Computing
 
-**Paired lecture:** 15 Computing Infrastructure & HPC · **Format:** type-along tutorial, in class
+**Paired lecture:** 15 Computing Infrastructure & HPC · **Format:** a showcase, then a problem, in class
 
 <!-- ~120 min: the length pnpm timing:check reads -->
 
-**Today's goal:** How long does it take, and how to make it faster? Every student times the rebuild and one slow script,
-finds which part of it is slow, makes it 17 times faster on one core,
-compares that with more cores, runs it as a background job, and writes the
-times into the README.
+**Today's question:** How long would your laptop need to find the hottest day of every weather station in GHCN-Daily, and would more cores or a cluster make it faster?
 
-Everything is typed in the terminal of VS Code (zsh on macOS, Git Bash on
-Windows), in today's folder `weather-s15`, with its environment `s15` active.
-No cluster and no account is needed. In the blocks, a line that starts with
-`$` is typed in the terminal, and every other line is what comes back.
+The lecturer runs Part 2 from this page; in Part 3 the room works in pairs.
+Everything is typed in VS Code: the scripts in the editor, the commands in its
+terminal (zsh on macOS, Git Bash on Windows; the same lines in both). A line
+that starts with `$` is typed without the `$`; `...` stands for lines left out.
+No cluster and no account is needed.
 
-**If time runs short:** stop after section 8 and do section 11; Part 4 is
-optional on a laptop.
+**If time runs short:** leave out section 6 (the job in the background); its calls are on the library card.
 
 ??? info "Before the session"
-    - **Room:** VS Code and Miniforge (Seminar 4, or the Setup page), and
-      internet: today's folder is 0.6 MB, its environment about 45
-      packages. Nothing from an earlier seminar is needed.
+    - **Room:** Miniforge and VS Code with its Python extension on every
+      laptop (the [Setup](../setup.md) page); internet for conda, if
+      `analysis` has to be made, and for the data: 6.1 MB in Part 1, about
+      13 MB in Part 3. Nothing from earlier seminars is needed.
+    - **No file is handed out.** All data comes from GHCN-Daily, the daily
+      records of weather stations collected by NOAA NCEI: the file of the
+      Vilnius station, `LH000026730.csv` (6.1 MB, 1881 to 24 August 2025);
+      in Part 3 the list of all stations (11 MB) and two more station files
+      (40 kB and 1.2 MB). Terms: "for free and unrestricted use in research,
+      education, and other non-commercial activities" (WMO Resolution 40);
+      cite Menne et al. 2012, *Global Historical Climatology Network - Daily
+      (GHCN-Daily)*, Version 3.35, NOAA NCDC,
+      [doi:10.7289/V5D21VHZ](https://doi.org/10.7289/V5D21VHZ), accessed
+      10 November 2026.
+    - **The times** on this page were measured on 10 November 2026 on one
+      desktop computer (Linux, 8 cores of two threads each). A laptop's
+      times differ, often by a factor of two; on macOS and Windows every
+      worker of a pool starts a new Python, which costs more. The results
+      (dates, sums, counts) do not differ. NCEI rebuilds the archive every
+      day, so its size grows a little.
     - **Missing a tool?** VS Code: [Setup, step 1](../setup.md#vscode);
       `conda` (Miniforge): [Setup, steps 2–4](../setup.md#shell); the Python
       extension: [Setup, step 7](../setup.md#extensions).
-    - **You:** nothing to prepare. Every time on this page was measured on
-      one machine (Linux); times in the room differ, often by a factor of
-      two. On macOS and Windows each worker of Part 3 starts a fresh Python,
-      so the times with workers are higher there. The results of the scripts
-      do not differ.
-    - **Keys** are written for Windows, macOS in brackets. Every line typed is
-      the same on both systems.
+    - **Keys** are written for Windows, macOS in brackets. Paths are shown
+      for a Mac (`/Users/smilte/...`); Git Bash shows `/c/Users/smilte/...`.
 
 ---
 
-## Part 1 · How long does it take? { #part-1 }
+## Part 1 · Set up { #part-1 }
 
-<!-- 0:00 to 0:25 -->
+### 1. A new folder, and the environment `analysis` { #start }
 
-Before making anything faster, measure it.
+<!-- 0:00 · 7 min -->
 
-Further reading: [Python's `time` module](https://docs.python.org/3/library/time.html).
+An environment is a folder with its own Python and its own packages; `analysis` serves weeks 8 to 16, and today needs pandas, which brings NumPy with it.
 
----
-
-### 1. Get today's folder { #pull }
-
-<!-- 0:00 · 10 min -->
-
-One zip holds everything: the weather data, the hill station's file, the scripts and tests that `run_all.py` runs, today's two scripts `warmest.py` and `warmest_job.sh`, and an `environment.yml`.
-
-1. On the [Releases page](https://github.com/MindaugasSarpis/weather-project/releases),
-   under **Assets**, click `weather-s15.zip`.
-2. In a terminal (VS Code: **View** > **Terminal**), unpack it into the
-   home folder and look inside.
+1. In VS Code, **View** > **Terminal**. Make the folder and go into it.
 
     ```text
-    $ unzip -q ~/Downloads/weather-s15.zip -d ~
+    $ mkdir ~/weather-s15
     $ cd ~/weather-s15
-    $ ls
-    README.md  data  environment.yml  run_all.py  scripts  tests
     ```
 
-    Safari unpacks a download by itself: then type
-    `mv ~/Downloads/weather-s15 ~` instead of `unzip`.
+2. **File** > **Open Folder...** > `weather-s15` (in your home folder) >
+   **Open**, then **View** > **Terminal**. The Explorer on the left is empty.
 
-3. **File** > **Open Folder...** > `weather-s15`. Then **View** >
-   **Terminal**: the new terminal starts in the folder.
-4. Make the environment of this seminar, `s15`, from the file: Python,
-   NumPy, pandas and pytest. It ends with the line that switches it on.
+3. **If `analysis` is on this laptop** (Seminars 8 to 14): switch it on.
 
     ```text
-    $ conda env create -n s15 -f environment.yml
-    Channels:
-     - conda-forge
+    $ conda activate analysis
+    ```
+
+4. **If it is not:** make it in one line. At `Proceed ([y]/n)?` press
+   `Enter`. Then switch it on.
+
+    ```text
+    $ conda create -n analysis python=3.14 pandas=3.1 matplotlib-base=3.11
     ...
-    #     $ conda activate s15
+    Proceed ([y]/n)?
+    ...
+    $ conda activate analysis
     ```
 
     `conda: command not found`: install Miniforge as on the
     [Setup page, steps 2–4](../setup.md#shell), then open a new terminal.
 
-5. Switch it on; the prompt starts with `(s15)`.
+5. Ask for the versions.
 
     ```text
-    $ conda activate s15
+    $ python -c "import pandas, numpy; print(pandas.__version__, numpy.__version__)"
+    3.1.1 2.5.4
     ```
 
-6. How many cores this computer has: `os.cpu_count()` asks the operating
-   system.
+**Check:** `(analysis)` at the start of the prompt, and `3.1.1 2.5.4` (the last digits may be higher).
+
+---
+
+### 2. The station file, the number of cores, the environment written down { #install }
+
+<!-- 0:07 · 8 min -->
+
+Part 2 reads one real file; Part 3 needs two numbers of this laptop: how fast it downloads, and how many cores it has.
+
+1. Download the daily record of the Vilnius station. Write down the
+   number under **Average Speed** (**Dload**): `3602k` is 3602 kilobytes
+   of 1024 bytes, 3.7 MB, a second.
+
+    ```text
+    $ curl -O https://www.ncei.noaa.gov/data/global-historical-climatology-network-daily/access/LH000026730.csv
+      % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                     Dload  Upload   Total   Spent    Left  Speed
+    100 5976k  100 5976k    0     0  3602k      0  0:00:01  0:00:01 --:--:-- 3600k
+    $ wc -c LH000026730.csv
+    6119696 LH000026730.csv
+    ```
+
+    Your speed differs. macOS pads the number of `wc` with spaces.
+
+2. Ask the operating system how many cores this computer has. Write it
+   down.
 
     ```text
     $ python -c "import os; print(os.cpu_count())"
-    128
+    16
     ```
 
-    This run was on a server. A laptop prints 4 to 16.
+    This computer has 8 cores of two threads each. A laptop prints 4 to 16.
 
-**Check:** `(s15)` in the prompt; the number of cores on the board for the room.
+3. Write the environment into a file, then click `environment.yml` in the
+   Explorer, delete its last line, `prefix: ...`, and save (`Ctrl+S`, macOS
+   `Cmd+S`).
+
+    ```text
+    $ conda env export --from-history -f environment.yml
+    ```
+
+4. Tell VS Code which Python to use: `Ctrl+Shift+P` (macOS `Cmd+Shift+P`),
+   `Python: Select Interpreter`, pick the entry with `envs/analysis` in its
+   path.
+
+**Check:** `LH000026730.csv` in the Explorer; the download speed and the number of cores on paper.
 
 ---
 
-### 2. Time the rebuild { #rebuild }
+## Part 2 · Showcase { #part-2 }
 
-<!-- 0:10 · 5 min -->
+The lecturer runs four complete scripts on the station file; the room watches
+or types along. For each: in the Explorer, right-click > **New File...**, the
+name above the code, paste, save, run it in the terminal. Every time printed
+here differs on your laptop.
 
-`time` in front of a command runs it and then prints how long it took.
+### 3. One sum, five times: a Python loop and NumPy { #noise }
 
-1. Time `run_all.py`, which rebuilds every result of the project;
-   `> /dev/null` throws its output away.
+<!-- 0:15 · 9 min -->
 
-    === "macOS"
+A time measured once includes whatever else the computer was doing; measure five times and keep the smallest.
 
-        ```text
-        $ time python run_all.py > /dev/null
-        python run_all.py > /dev/null  0.63s user 0.08s system 100% cpu 0.709 total
-        ```
+```python title="sums.py"
+import time
 
-    === "Windows"
+import pandas as pd
 
-        ```text
-        $ time python run_all.py > /dev/null
+df = pd.read_csv("LH000026730.csv", usecols=["TAVG"])
+temps = (df["TAVG"].dropna() / 10).to_numpy()    # a NumPy array, in °C
+values = temps.tolist()                          # the same, as a Python list
+print(len(values), "daily means")
 
-        real    0m0.662s
-        user    0m0.544s
-        sys     0m0.119s
-        ```
+for run in range(5):
+    start = time.perf_counter()
+    total = 0.0
+    for v in values:                             # one addition at a time
+        total += v
+    loop = time.perf_counter() - start
+    start = time.perf_counter()
+    total_np = temps.sum()                       # one call for all of them
+    numpy = time.perf_counter() - start
+    print(f"loop {loop * 1000:6.3f} ms   numpy {numpy * 1000:6.3f} ms   "
+          f"{total!r}   {total_np!r}")
+```
 
-    zsh's `0.709 total` and Git Bash's `real` are the time on the clock;
-    `user` and `sys` the processor's. Your times differ.
+```text
+$ python sums.py
+50814 daily means
+loop  1.191 ms   numpy  0.018 ms   331225.5000000016   np.float64(331225.5)
+loop  1.169 ms   numpy  0.011 ms   331225.5000000016   np.float64(331225.5)
+loop  1.149 ms   numpy  0.007 ms   331225.5000000016   np.float64(331225.5)
+loop  1.169 ms   numpy  0.010 ms   331225.5000000016   np.float64(331225.5)
+loop  1.149 ms   numpy  0.007 ms   331225.5000000016   np.float64(331225.5)
+```
 
-**Check:** a time on the clock below one second.
+**Notice:** the smallest times, 1.149 ms and 0.007 ms, differ by a factor of about 160; the first NumPy run took more than twice as long as the smallest.
 
----
+**Ask the room:** the two sums differ in the last digits. Which one is right, and why do they differ?
 
-### 3. Time it five times, keep the smallest { #noise }
-
-<!-- 0:15 · 10 min -->
-
-Other programs take the processor now and then and only add time, so time five times and keep the smallest.
-
-1. The rebuild, five times: `for ... do ...; done` repeats what is between.
-
-    ```text
-    $ for i in 1 2 3 4 5; do time python run_all.py > /dev/null; done
-    python run_all.py > /dev/null  0.57s user 0.08s system 100% cpu 0.650 total
-    python run_all.py > /dev/null  0.62s user 0.08s system 100% cpu 0.701 total
-    python run_all.py > /dev/null  0.56s user 0.10s system 100% cpu 0.658 total
-    python run_all.py > /dev/null  0.62s user 0.08s system 100% cpu 0.702 total
-    python run_all.py > /dev/null  0.58s user 0.11s system 100% cpu 0.683 total
-    ```
-
-    This is zsh. Git Bash prints five blocks of `real`, `user` and `sys`;
-    its `real` lines read 0.678, 0.704, 0.744, 0.674 and 0.698 s.
-
-2. Keep the smallest of the five, about 0.65 s here: that is the time of
-   the rebuild. Write yours on the board.
-
-3. Python starting and stopping, doing nothing: the part of every run
-   that no script can avoid.
-
-    === "macOS"
-
-        ```text
-        $ time python -c "pass"
-        python -c "pass"  0.02s user 0.00s system 99% cpu 0.022 total
-        ```
-
-    === "Windows"
-
-        ```text
-        $ time python -c "pass"
-
-        real    0m0.020s
-        user    0m0.020s
-        sys     0m0.000s
-        ```
-
-4. Python importing pandas, and nothing else.
-
-    === "macOS"
-
-        ```text
-        $ time python -c "import pandas"
-        python -c "import pandas"  0.20s user 0.05s system 99% cpu 0.247 total
-        ```
-
-    === "Windows"
-
-        ```text
-        $ time python -c "import pandas"
-
-        real    0m0.236s
-        user    0m0.200s
-        sys     0m0.036s
-        ```
-
-**Check:** Python starts in 0.02 s; `import pandas` alone takes about
-0.24 s.
-
-!!! question "Task: the slowest stage of the rebuild"
-    `run_all.py` runs five stages (its list `STAGES`). Time each of them.
-    Which stage takes most of the 0.65 s, and why?
-
-??? success "Answer"
-    ```text
-    $ time python scripts/clean_hill.py > /dev/null
-    python scripts/clean_hill.py > /dev/null  0.26s user 0.04s system 99% cpu 0.305 total
-    $ time python -m pytest -q > /dev/null
-    python -m pytest -q > /dev/null  0.16s user 0.02s system 99% cpu 0.185 total
-    ```
-
-    These are the zsh lines; Git Bash gives `real 0m0.304s` and
-    `real 0m0.181s`. The other three take 0.01 s (`clean_export.py`),
-    0.04 s (`drop_missing.py`) and 0.11 s (`column_stats.py`).
-    `clean_hill.py` is the slowest at 0.30 s, and about 0.24 s of it is
-    `import pandas`: the hill station's 8740 rows take almost nothing.
+??? note "Answer"
+    The file holds whole tenths of a degree, so the exact sum is
+    331 225.5. Neither 0.1 nor most other tenths can be stored exactly in
+    binary, and every addition rounds. The loop adds 50 814 numbers one
+    after another and its rounding errors pile up; NumPy adds in pairs,
+    then pairs of pairs, and rounds less. Both are right to 15 significant
+    digits; a result should never depend on the last ones.
 
 ---
 
-## Part 2 · Where the time goes { #part-2 }
+### 4. Where the time of one run goes { #parts }
 
-<!-- 0:25 to 1:00 -->
+<!-- 0:24 · 9 min -->
 
-One script that is slow enough to be worth making faster.
+Time each part before making any part faster: a part that takes a share p of the run, made infinitely fast, saves at most that share (Amdahl's law).
 
-Further reading: [`numpy.cumsum`](https://numpy.org/doc/stable/reference/generated/numpy.cumsum.html).
+```python title="parts.py"
+import time
 
----
+start = time.perf_counter()
+from pathlib import Path
+import numpy as np
+import pandas as pd
+imported = time.perf_counter()
 
-### 4. The warmest 30 days of each year { #warmest }
+df = pd.read_csv("LH000026730.csv")
+read = time.perf_counter()
+mean = df["TAVG"].mean() / 10                   # the file holds tenths of °C
+computed = time.perf_counter()
+print(f"mean of {df['TAVG'].count()} days: {mean:.2f} °C")
+print(f"import {imported - start:.3f} s   read {read - imported:.3f} s   "
+      f"compute {computed - read:.4f} s")
+size = Path("LH000026730.csv").stat().st_size
+print(f"file {size / 1e6:.1f} MB, "
+      f"in memory {df.memory_usage(deep=True).sum() / 1e6:.1f} MB")
 
-<!-- 0:25 · 10 min -->
+numbers = df[["TMAX", "TMIN", "TAVG", "PRCP"]].to_numpy()
+np.save("numbers.npy", numbers)                 # the bytes as in memory
+start = time.perf_counter()
+numbers = np.load("numbers.npy")
+loaded = time.perf_counter()
+print(f"numbers.npy {numbers.nbytes / 1e6:.1f} MB, "
+      f"load {loaded - start:.4f} s")
+```
 
-`warmest.py` finds, for each year, the 720 hours in a row with the highest mean temperature.
+```text
+$ python parts.py
+mean of 50814 days: 6.52 °C
+import 0.154 s   read 0.071 s   compute 0.0004 s
+file 6.1 MB, in memory 24.3 MB
+numbers.npy 1.6 MB, load 0.0005 s
+```
 
-1. Run it. The last line gives the seconds spent reading and on the
-   windows.
+**Notice:** turning 6.1 MB of text into numbers takes 0.071 s, loading the four number columns from a binary file 0.0005 s; importing pandas takes longer than both.
 
-    ```text
-    $ python scripts/warmest.py
-    2016  from 2016-07-15  19.59 °C
-    2017  from 2017-06-07  17.52 °C
-    2018  from 2018-06-12  19.47 °C
-    2019  from 2019-06-29  22.36 °C
-    2020  from 2020-05-25  18.75 °C
-    2021  from 2021-07-09  20.27 °C
-    2022  from 2022-06-28  19.69 °C
-    2023  from 2023-06-11  21.81 °C
-    2024  from 2024-07-29  18.10 °C
-    2025  from 2025-07-08  19.89 °C
-    read 0.70 s  windows 0.66 s  total 1.36 s
-    ```
+**Ask the room:** the read is replaced by the binary load. How much faster does the whole run get?
 
-2. Open `scripts/warmest.py` and find `def means_loop`. For each of about
-   8 000 windows of a year it adds up 720 values: 5.8 million additions a
-   year.
-3. Find `def read_year`. It reads the whole file, all ten years, to keep the
-   rows of one year. It is called once per year.
+??? note "Answer"
+    The run took 0.154 + 0.071 + 0.0004 = 0.225 s; with the load it takes
+    0.154 + 0.0005 + 0.0004 = 0.155 s: 1.45 times faster, not 140 times. The
+    read was p = 0.071 / 0.225 = 32 % of the run, so even an instant read
+    gives at most 1 / (1 − 0.32) = 1.46. The import is now the slow part,
+    and it does not grow with the data: for one file there is nothing left
+    worth an hour's work.
 
-**Check:** the last line; reading and windows take about half each.
-
----
-
-### 5. The windows in NumPy { #numpy }
-
-<!-- 0:35 · 10 min -->
-
-`means_numpy` gets all windows of a year from one cumulative sum, in three lines.
-
-1. Find `def means_numpy` in the script and read its three lines. The
-   cumulative sum `c` holds at each place the sum of all values up to it,
-   so the sum of a window is one subtraction: `c[end] - c[start]`.
-2. Run with it. `--method numpy` picks the function.
-
-    ```text
-    $ python scripts/warmest.py --method numpy
-    2016  from 2016-07-15  19.59 °C
-    ...
-    2025  from 2025-07-08  19.89 °C
-    read 0.73 s  windows 0.00 s  total 0.74 s
-    ```
-
-    The ten years are the same as in section 4; the page leaves out eight.
-
-3. The windows now take 0.00 s, and the total only halved: the reading is
-   still there. Making one part infinitely fast saves at most that part's
-   share of the time: this limit is called **Amdahl's law**.
-
-**Check:** the same ten dates, total 0.74 s.
+    In memory the table takes 24.3 MB, four times the file: every text field
+    (the station's name, the flags) is a Python object of its own.
 
 ---
 
-### 6. Read the file once { #once }
+### 5. One to eight worker processes on the same years: resampling and summing { #pool }
 
-<!-- 0:45 · 15 min -->
+<!-- 0:33 · 10 min -->
 
-`read_all` reads the file once and sorts the rows by year.
+One Python process runs on one core; `multiprocessing.Pool` starts more processes and hands each one item at a time. Starting them has a price.
 
-1. Find `def read_all` in the script: one dictionary with a year as key,
-   filled in one pass over the file.
-2. Read once, with the slow windows.
+The job: for each of the 142 years, draw its days again at random 2000 times and see how far the year's mean moves (a bootstrap). The years do not depend on each other.
 
-    ```text
-    $ python scripts/warmest.py --read once
-    2016  from 2016-07-15  19.59 °C
-    ...
-    read 0.09 s  windows 0.65 s  total 0.74 s
-    ```
+```python title="pool.py"
+import random
+import statistics
+import time
+from multiprocessing import Pool
 
-3. Both changes.
+import pandas as pd
 
-    ```text
-    $ python scripts/warmest.py --read once --method numpy
-    2016  from 2016-07-15  19.59 °C
-    ...
-    read 0.08 s  windows 0.00 s  total 0.08 s
-    ```
 
-**Check:** the same ten dates in 0.08 s instead of 1.36 s: 17 times faster.
+def resampled_spread(temps):
+    """How far a year's mean moves when its days are drawn again."""
+    rng = random.Random(0)
+    means = [statistics.fmean(rng.choices(temps, k=len(temps)))
+             for _ in range(2000)]
+    return statistics.stdev(means)
 
-!!! question "Task: predict, then measure"
-    Before running it: what total do you expect for `--read once --method
-    running`? The running sum (optional section 13) takes about 0.01 s for
-    the windows. Then run it.
 
-??? success "Answer"
-    Reading 0.08 s plus windows 0.01 s: about 0.09 s.
+def timed(job, items, workers):
+    start = time.perf_counter()
+    with Pool(workers) as pool:                  # start the worker processes
+        results = pool.map(job, items)           # one item at a time to each
+    return time.perf_counter() - start
 
-    ```text
-    $ python scripts/warmest.py --read once --method running
-    ...
-    read 0.08 s  windows 0.01 s  total 0.09 s
-    ```
 
----
+if __name__ == "__main__":       # the workers import this file: not for them
+    df = pd.read_csv("LH000026730.csv", usecols=["DATE", "TAVG"]).dropna()
+    by_year = df.groupby(df["DATE"].str[:4])["TAVG"]
+    years = [(group / 10).tolist() for _, group in by_year]
+    print(len(years), "years")
+    for workers in [1, 2, 4, 8]:
+        seconds = timed(resampled_spread, years, workers)
+        print(f"resampling, {workers} workers: {seconds:.2f} s")
+    start = time.perf_counter()
+    sums = [sum(temps) for temps in years]
+    print(f"sums, no pool: {(time.perf_counter() - start) * 1000:.1f} ms")
+    print(f"sums, 4 workers: {timed(sum, years, 4) * 1000:.1f} ms")
+```
 
-## Part 3 · More cores { #part-3 }
+```text
+$ python pool.py
+142 years
+resampling, 1 workers: 4.62 s
+resampling, 2 workers: 2.35 s
+resampling, 4 workers: 1.23 s
+resampling, 8 workers: 0.77 s
+sums, no pool: 0.2 ms
+sums, 4 workers: 12.6 ms
+```
 
-<!-- 1:00 to 1:25 -->
+**Notice:** 8 workers make the resampling 6.0 times faster; 4 workers make the sums 60 times slower.
 
-The ten years are independent, so ten processes could do one year each.
+**Ask the room:** from the times for 1 and 2 workers, predict 8 workers with T(N) = T<sub>s</sub> + T<sub>p</sub> / N. Why is the measured time longer?
 
-Further reading: [Python's `multiprocessing`](https://docs.python.org/3/library/multiprocessing.html).
+??? note "Answer"
+    T(1) − T(2) = T<sub>p</sub> / 2, so T<sub>p</sub> = 2 × (4.62 − 2.35)
+    = 4.54 s and T<sub>s</sub> = 4.62 − 4.54 = 0.08 s. Predicted: 0.08 +
+    4.54 / 8 = 0.65 s; measured 0.77 s. The law is the best case: the
+    eight workers share the cores with everything else the computer runs,
+    and the last worker to finish sets the time. The sums take 0.2 ms of
+    work; starting four Pythons and sending them the years costs 12 ms.
+    A job is worth splitting when its work is much longer than that price.
 
----
-
-### 7. Several years at a time { #workers }
-
-<!-- 1:00 · 15 min -->
-
-`--workers N` starts N Python processes and hands each a year, then the next, until all ten are done.
-
-1. Two workers, with the slow version. The last line now gives only the
-   total.
-
-    ```text
-    $ python scripts/warmest.py --workers 2
-    2016  from 2016-07-15  19.59 °C
-    ...
-    workers 2  total 0.92 s
-    ```
-
-2. Four and eight; `| tail -n 1` keeps only the last line.
-
-    ```text
-    $ python scripts/warmest.py --workers 4 | tail -n 1
-    workers 4  total 0.54 s
-    $ python scripts/warmest.py --workers 8 | tail -n 1
-    workers 8  total 0.41 s
-    ```
-
-3. Write the four times on the board: 1.36, 0.92, 0.54, 0.41. Twice the
-   workers is never twice as fast: starting the workers and handing out the
-   years cost time, and eight workers need two rounds for ten years.
-
-**Check:** a table of four times, falling more slowly than the number of
-workers rises.
+!!! warning "`RuntimeError: An attempt has been made to start a new process...`"
+    The lines that start the pool stand outside `if __name__ == "__main__":`.
+    On macOS and Windows each worker imports the script, and would start a
+    pool of its own.
 
 ---
 
-### 8. Cores or a better method { #compare }
+### 6. A job in the background, and why its log stays empty { #background }
 
-<!-- 1:15 · 10 min -->
+<!-- 0:43 · 9 min -->
 
-One year per worker, all at once.
+`&` at the end of a line runs it in the background and gives the prompt back; `>` sends what it prints into a file, the log.
 
-1. Ten workers.
+```python title="job.py"
+import random
+import statistics
+import time
 
-    ```text
-    $ python scripts/warmest.py --workers 10 | tail -n 1
-    workers 10  total 0.28 s
-    ```
+import pandas as pd
 
-2. Compare with section 6: ten cores give 0.28 s; one core with a better
-   method gives 0.08 s.
+df = pd.read_csv("LH000026730.csv", usecols=["DATE", "TAVG"]).dropna()
+df["year"] = df["DATE"].str[:4].astype(int)
+start = time.perf_counter()
+for year, group in df.groupby("year"):
+    temps = (group["TAVG"] / 10).tolist()
+    rng = random.Random(0)
+    means = [statistics.fmean(rng.choices(temps, k=len(temps)))
+             for _ in range(2000)]                   # the work of pool.py
+    if year % 10 == 0:
+        print(f"{year} done after {time.perf_counter() - start:.1f} s")
+print("all years done")
+```
 
-**Check:** the better method on one core beats ten cores. Change the method
-first, then add cores.
-
-!!! question "Task: a laptop with fewer cores"
-    On a laptop with as many cores as your number from section 1, which
-    `--workers` would you use? Try your number and half of it, five times
-    each, and keep the smallest.
-
-??? success "Answer"
-    More workers than cores do not help: they share the same cores. More
-    than ten do not help either: there are ten years to hand out. So the
-    best number is the smaller of your cores and ten; the five timings show
-    whether half of it is nearly as fast.
-
----
-
-## Part 4 · A job that runs without you { #part-4 }
-
-<!-- 1:25 to 2:00 -->
-
-A long job runs while you do something else, on a laptop or on a cluster.
-
-Further reading: [Slurm quick start](https://slurm.schedmd.com/quickstart.html).
-
----
-
-### 9. A job script for a cluster { #slurm }
-
-<!-- 1:25 · 10 min -->
-
-Slurm, the queue of most clusters, reads what a job needs from the first lines of its script.
-
-1. The first lines of the job script: each `#SBATCH` line asks for one
-   thing.
+1. Start it in the background, and read the log at once. `[1]` is the
+   job's number in this terminal, then its process id; yours differs.
 
     ```text
-    $ head -n 6 scripts/warmest_job.sh
-    #!/bin/bash
-    #SBATCH --job-name=warmest        # the name shown in the queue
-    #SBATCH --output=logs/%x_%j.log   # the log: %x is the name, %j the job number
-    #SBATCH --time=00:05:00           # the job is stopped after 5 minutes
-    #SBATCH --cpus-per-task=4         # four cores, all on one node
-    #SBATCH --mem=1G                  # memory for the whole job
+    $ python job.py > job.log &
+    [1] 1143749
+    $ cat job.log
     ```
 
-2. Open the script and read the rest: it activates `s15` and runs
-   `warmest.py` with as many workers as Slurm gave cores.
-3. For bash the `#SBATCH` lines are comments, so the script runs on the
-   laptop too. Give it the two numbers Slurm would set.
+    The log is empty, while the job has been at work for seconds.
 
-    ```text
-    $ SLURM_JOB_ID=1 SLURM_CPUS_PER_TASK=4 bash scripts/warmest_job.sh
-    start on gluon, job 1
-    2016  from 2016-07-15  19.59 °C
-    ...
-    2025  from 2025-07-08  19.89 °C
-    workers 4  total 0.53 s
-    done
-    ```
-
-    `gluon` is the name of the computer that ran it; yours differs.
-
-4. On a cluster, from the project folder, it is submitted, watched and
-   cancelled with these lines; there is no Slurm on the laptop, so they
-   are not typed today.
-
-    | Line | Does |
-    |--|--|
-    | `sbatch scripts/warmest_job.sh` | submits it, prints the job number |
-    | `squeue --me` | your jobs: `PD` waiting, `R` running |
-    | `scancel 4187263` | stops job 4187263 |
-
-**Check:** the room can say what each `#SBATCH` line asks for.
-
----
-
-### 10. A job in the background { #background }
-
-<!-- 1:35 · 10 min -->
-
-`&` at the end of a line runs it in the background, and the prompt comes back at once.
-
-1. A folder for logs, as in the job script; `-p` makes no error when it
-   is already there.
-
-    ```text
-    $ mkdir -p logs
-    ```
-
-2. Run `warmest.py` ten times in the background, its last line into the
-   log. `[1]` is the job's number in this terminal, then its process id;
-   yours differs.
-
-    ```text
-    $ for i in {1..10}; do python scripts/warmest.py | tail -n 1; done > logs/warmest.log &
-    [1] 2381891
-    ```
-
-3. The jobs of this terminal.
-
-    === "macOS"
-
-        ```text
-        $ jobs
-        [1]  + running    for i in {1..10}; do; python scripts/warmest.py | tail -n 1; done >
-        ```
-
-    === "Windows"
-
-        ```text
-        $ jobs
-        [1]+  Running                 for i in {1..10};
-        do
-            python scripts/warmest.py | tail -n 1;
-        done > logs/warmest.log &
-        ```
-
-4. While it runs, read the log: the lines written so far.
-
-    ```text
-    $ cat logs/warmest.log
-    read 0.64 s  windows 0.62 s  total 1.27 s
-    read 0.65 s  windows 0.62 s  total 1.27 s
-    read 0.66 s  windows 0.61 s  total 1.27 s
-    ```
-
-5. Wait for it to end.
+2. Wait for it to end, then read the log again.
 
     === "macOS"
 
         ```text
         $ wait
-        [1]  + done       for i in {1..10}; do; python scripts/warmest.py | tail -n 1; done >
+        [1]  + done       python job.py > job.log
         ```
 
     === "Windows"
 
         ```text
         $ wait
-        [1]+  Done                    for i in {1..10};
-        do
-            python scripts/warmest.py | tail -n 1;
-        done > logs/warmest.log
+        [1]+  Done                    python job.py > job.log
         ```
-
-6. Count the lines of the log; macOS pads the number with spaces.
 
     ```text
-    $ wc -l logs/warmest.log
-    10 logs/warmest.log
+    $ cat job.log
+    1890 done after 0.3 s
+    1900 done after 0.7 s
+    ...
+    2020 done after 4.7 s
+    all years done
     ```
 
-**Check:** ten lines in `logs/warmest.log`; the smallest total is the time
-of the script.
+3. The same with `-u`: Python then writes each line into the file at once.
+   Read the log a few seconds after the start.
 
-!!! question "Task: stop a job, and a job that outlives the terminal"
-    1. Start `python scripts/warmest.py > /dev/null &` and stop it before
-       it ends.
-    2. A job started with `&` ends when its terminal is closed. Start
-       `warmest.py --workers 4` so that it does not, with its output in
-       `logs/nohup.log`, and read the log's last line.
+    ```text
+    $ python -u job.py > job.log &
+    [1] 1143831
+    $ cat job.log
+    1890 done after 0.3 s
+    1900 done after 0.7 s
+    1910 done after 1.0 s
+    ...
+    ```
 
-??? success "Answer"
-    1. `kill %1` stops job 1. The shell then reports it:
+**Notice:** without `-u` the 15 lines waited in Python's buffer and reached the file only when the job ended.
 
-        === "macOS"
+**Ask the room:** a job on a cluster has run for three hours, and its log is empty. Is it stuck?
 
-            ```text
-            $ kill %1
-            [1]  + terminated  python scripts/warmest.py > /dev/null
-            ```
-
-        === "Windows"
-
-            ```text
-            $ kill %1
-            [1]   Terminated              python scripts/warmest.py > /dev/null
-            ```
-
-    2. `nohup` keeps the job running when the terminal closes; `2>&1` sends
-       the errors into the same log.
-
-        ```text
-        $ nohup python scripts/warmest.py --workers 4 > logs/nohup.log 2>&1 &
-        $ tail -n 1 logs/nohup.log
-        workers 4  total 0.51 s
-        ```
-
-        In Git Bash the log starts with the line `nohup: ignoring input`.
+??? note "Answer"
+    Not necessarily: what it printed may still be in the buffer. Run it with
+    `python -u`, or print with `print(..., flush=True)`, so that the log
+    shows how far the job has come, and its last line before a crash. A job
+    started with `&` ends when its terminal is closed; `nohup` keeps it
+    running: `nohup python -u job.py > job.log 2>&1 &` (`2>&1` sends the
+    error messages into the same log; in Git Bash the log then starts with
+    `nohup: ignoring input`).
 
 ---
 
-### 11. Write the times down { #push }
+### 7. Library card: the calls of this page { #card }
 
-<!-- 1:45 · 10 min -->
+<!-- 0:52 · 3 min -->
 
-A time without the machine and the method beside it means nothing.
+Every call and command of the examples and of the solution below, one line each.
 
-1. In `README.md`, above `## How to rebuild`, add a section with your own
-   times and save.
-
-    ```text
-    ## Timing
-
-    `scripts/warmest.py`, smallest of five runs, on one laptop:
-
-    | Run | Seconds |
-    |--|--|
-    | as handed out | 1.36 |
-    | `--method numpy` | 0.74 |
-    | `--read once` | 0.74 |
-    | `--read once --method numpy` | 0.08 |
-    | `--workers 4` | 0.54 |
-    ```
-
-2. Under the table, one line that says which laptop: its name, its
-   number of cores from section 1, and the system. Save.
-
-    ```text
-    Measured on a laptop with 8 cores, macOS 15.
-    ```
-
-3. Look at it: `Ctrl+Shift+V` (macOS `Cmd+Shift+V`) opens the README's
-   preview beside the text.
-
-**Check:** the **Timing** section in the README's preview, with your
-laptop's line under it.
-
----
-
-### 12. Wrap up { #wrap-up }
-
-<!-- 1:55 · 5 min -->
-
-| To | Type or do |
+| Call or command | What it does |
 |--|--|
-| time a command | `time COMMAND` |
-| trust a time | run it five times, keep the smallest |
-| find the slow part | time each part; the profiler of section 14 |
-| speed up | the slow part first: a better method, then more cores |
-| run without waiting | `COMMAND &`, `jobs`, `wait`, `kill %1`, `nohup`; on a cluster `sbatch` |
+| `time.perf_counter()` | a time in seconds, for differences: `end - start` |
+| `values.tolist()`, `df["TAVG"].to_numpy()` | a NumPy array as a Python list; a column as a NumPy array |
+| `np.save("a.npy", array)`, `np.load("a.npy")` | an array into a binary file, and back |
+| `df.memory_usage(deep=True).sum()` | bytes the table takes in memory, text included |
+| `Path(name).stat().st_size`, `Path(name).read_bytes()` | the size of a file; its bytes |
+| `gzip.compress(data)`, `gzip.decompress(packed)` | pack bytes as gzip does, and unpack them |
+| `with Pool(4) as pool:` | four worker processes, closed at the end of the block |
+| `pool.map(function, items)` | the function on every item, in the workers; the results in order |
+| `if __name__ == "__main__":` | lines for the script started by hand, not for the workers |
+| `os.cpu_count()` | the number of cores (threads) the system reports |
+| `python script.py > job.log &` | run in the background, the printed lines into `job.log` |
+| `python -u ...`, `print(..., flush=True)` | every line into the log at once |
+| `wait` | waits until the background jobs of this terminal have ended |
+| `nohup COMMAND > log 2>&1 &` | keeps running when the terminal closes; errors into the same log |
+| `curl -sI URL`, `curl -O URL` | only the headers of an address (its size among them); the file itself |
 
 ---
 
-## Optional, if the room goes fast { #optional }
+## Part 3 · The problem { #part-3 }
 
-Further reading: [The Python profilers](https://docs.python.org/3/library/profile.html);
-[Slurm job arrays](https://slurm.schedmd.com/job_array.html).
+### 8. How long for every station of GHCN-Daily, and with how many cores? { #problem }
 
----
+<!-- 0:55 · 50 min: predict 5, solve 25, check 10, hand in 10 -->
 
-### 13. A running sum { #running }
+GHCN-Daily holds the daily records of the weather stations of the world, one
+CSV file per station, as the Vilnius file of Part 2. NCEI also packs all of
+them into one archive. How long would your laptop need to find the hottest day
+of every station: download the archive, unpack it, read every file? How much
+would all your cores save, and would a cluster be faster? The addresses (NOAA
+NCEI; terms under "Before the session"):
 
-<!-- — · 10 min -->
+```text
+https://www.ncei.noaa.gov/data/global-historical-climatology-network-daily/archive/daily-summaries-latest.tar.gz
+https://www.ncei.noaa.gov/pub/data/ghcn/daily/ghcnd-stations.txt
+https://www.ncei.noaa.gov/data/global-historical-climatology-network-daily/access/ACW00011604.csv
+https://www.ncei.noaa.gov/data/global-historical-climatology-network-daily/access/LH000026603.csv
+```
 
-Moving the window by one hour adds one value and drops one: two operations instead of 720.
+The archive is about 8 GB: do not download it. `curl -sI` reads only its
+headers, its size among them. The station list has one line per station; the
+last two are the files of a station in Antigua with seven months of 1949
+(40 kB) and of Nida (1.2 MB).
 
-1. Find `def means_running` in the script.
-2. Run it.
+Work in pairs, with any tools, an LLM too: the work is the measurements, the estimate and the checks.
+
+1. **Predict**, before any measurement: the time for all stations on one
+   core, in minutes or hours, and which part will take longest: the
+   download, the unpacking or the reading. One reason for each.
+2. **Solve.** Measure what you need on the files you have, scale it up,
+   and give the time on one core and with all your cores, as a range.
+3. **Check the machine's work.**
+    - The hottest day of Vilnius: is it plausible? A value from the file
+      flagged as failing a quality check gives 198.0 °C (27 August 1911);
+      the hottest day that passed is 35.4 °C.
+    - The model: predict the time of the Nida file from the other two,
+      then measure it.
+    - The units: is curl's speed in bytes or in bits? A network sold as
+      100 Mbit/s moves at most 12.5 MB a second.
+    - The size of the whole: two different ways to estimate it; do they
+      agree within a factor of two?
+    - Against your prediction: which part did you misjudge, and why?
+4. **Hand in** the time on one core and with all cores, each as a range,
+   and two sentences: what limits it, and whether a cluster would help.
+
+??? tip "Hint 1: two files give the cost of a file and of a byte"
+    Reading a file costs a fixed part (opening it, starting the parser) and
+    a part that grows with its size: t = a + b × size. The 40 kB file of
+    Antigua is almost all a; the Vilnius file gives b. Time each five times
+    and keep the smallest, as in section 3.
+
+??? tip "Hint 2: the size of the whole"
+    The archive is packed with gzip: its size times how well a CSV file
+    packs is the size unpacked. `gzip.compress(data)` packs bytes as gzip
+    does; three files pack differently. Or: the number of stations times
+    the size of a typical file. Is Vilnius, with 145 years, typical?
+
+??? tip "Hint 3: what more cores do not speed up"
+    The download comes through one network connection, and gzip unpacks on
+    one core. Only the reading of the files splits over workers; section 5
+    measured how well.
+
+??? note "One solution"
+    The sizes, without downloading the archive, and the two station files:
 
     ```text
-    $ python scripts/warmest.py --method running
-    2016  from 2016-07-15  19.59 °C
+    $ curl -sI https://www.ncei.noaa.gov/data/global-historical-climatology-network-daily/archive/daily-summaries-latest.tar.gz | grep -i content-length
+    Content-Length: 8100138197
+    $ curl -O https://www.ncei.noaa.gov/pub/data/ghcn/daily/ghcnd-stations.txt
     ...
-    read 0.66 s  windows 0.01 s  total 0.67 s
-    ```
-
-**Check:** windows 0.01 s in plain Python: a better method needs no
-NumPy.
-
----
-
-### 14. A profiler { #profile }
-
-<!-- — · 10 min -->
-
-`cProfile` counts every call of every function and the time spent in it.
-
-1. Profile the slow version. `-s tottime` sorts by the time spent inside
-   each function; `sed -n '12,20p'` keeps the lines after the script's own
-   output.
-
-    ```text
-    $ python -m cProfile -s tottime scripts/warmest.py | sed -n '12,20p'
-             6519749 function calls (6517352 primitive calls) in 2.513 seconds
-
-       Ordered by: internal time
-
-       ncalls  tottime  percall  cumtime  percall filename:lineno(function)
-       876730    0.828    0.000    1.353    0.000 csv.py:173(__next__)
-           10    0.626    0.063    0.632    0.063 warmest.py:52(means_loop)
-           10    0.365    0.036    1.795    0.180 warmest.py:29(read_year)
-       876740    0.276    0.000    0.278    0.000 {built-in method builtins.next}
-    ```
-
-2. 876 730 rows were read: 10 × 87 673, the file ten times over. That is
-   what section 6 removed.
-3. The profiled run takes 2.5 s instead of 1.36 s: counting the calls costs
-   time too, most for the functions called most often.
-
-**Check:** `read_year`, called 10 times, holds most of the time.
-
----
-
-### 15. Advanced tasks { #advanced }
-
-<!-- — · 30 min -->
-
-Three harder tasks for whoever is done early; the answers are folded.
-
-!!! question "Advanced task: where does the fast version spend its time?"
-    Profile `--read once --method numpy` as in section 14. Which function
-    holds most of the 0.08 s now, and what would you change next?
-
-??? success "Answer"
-    ```text
-    $ python -m cProfile -s tottime scripts/warmest.py --read once --method numpy | sed -n '12,20p'
-             823050 function calls (820646 primitive calls) in 0.344 seconds
-
-       Ordered by: internal time
-
-       ncalls  tottime  percall  cumtime  percall filename:lineno(function)
-        87673    0.094    0.000    0.157    0.000 csv.py:173(__next__)
-            1    0.068    0.068    0.239    0.239 warmest.py:40(read_all)
-        87674    0.035    0.000    0.035    0.000 {built-in method builtins.next}
-       175345    0.015    0.000    0.015    0.000 csv.py:159(fieldnames)
-    ```
-
-    `read_all` holds 0.24 of the 0.34 s (the rest is starting Python and
-    importing NumPy), and most of it is `csv.DictReader` turning each of
-    the 87 673 lines into a dictionary. The windows do not appear any more.
-    The next change is the reading: the next task.
-
-!!! question "Advanced task: read the file faster"
-    Write `read_all_split`, which does what `read_all` does but cuts each
-    line with `line.split(",")` instead of `csv.DictReader`, and add
-    `split` to the choices of `--read`. Time it five times. Does it give
-    the same ten dates?
-
-??? success "Answer"
-    In `scripts/warmest.py`, after `read_all`:
-
-    ```python
-    def read_all_split():
-        """Read the whole file once, cut each line with split."""
-        data = {year: ([], []) for year in YEARS}
-        with open(PATH) as handle:
-            next(handle)                      # the header
-            for line in handle:
-                time_, temp = line.split(",")[:2]
-                if temp != "-999":
-                    times, temps = data[int(time_[:4])]
-                    times.append(time_)
-                    temps.append(float(temp))
-        return data
-    ```
-
-    In `main`, the choices and the branch that reads once:
-
-    ```python
-    parser.add_argument("--read", default="each", choices=["each", "once", "split"])
-    ```
-
-    ```python
-    if args.read in ("once", "split"):
-        data = read_all() if args.read == "once" else read_all_split()
-    ```
-
-    ```text
-    $ python scripts/warmest.py --read split --method numpy
-    2016  from 2016-07-15  19.59 °C
-    2017  from 2017-06-07  17.52 °C
-    2018  from 2018-06-12  19.47 °C
+    $ wc -l ghcnd-stations.txt
+    133041 ghcnd-stations.txt
+    $ curl -O https://www.ncei.noaa.gov/data/global-historical-climatology-network-daily/access/ACW00011604.csv
     ...
-    read 0.04 s  windows 0.00 s  total 0.04 s
+    $ curl -O https://www.ncei.noaa.gov/data/global-historical-climatology-network-daily/access/LH000026603.csv
+    ...
     ```
 
-    The same dates in 0.04 s against 0.08 s: half of the reading was
-    building dictionaries nobody needed. `time_` has a `_` so that it does
-    not hide the module `time` the script imports.
+    The hottest day of each file, five times, the smallest time; how well
+    each file packs, and how fast it unpacks:
 
-!!! question "Advanced task: one job per year on a cluster"
-    A **job array** runs the same script many times, each task with its
-    own number in `$SLURM_ARRAY_TASK_ID`. Give `warmest.py` an option
-    `--year` that does one year only, and write `scripts/warmest_array.sh`
-    with `#SBATCH --array=2016-2025`, one task per year. Try one task on
-    the laptop.
+    ```python title="measure.py"
+    import gzip
+    import sys
+    import time
+    from pathlib import Path
 
-??? success "Answer"
-    In `main` of `warmest.py`, after `--workers`, and use `years` instead
-    of `YEARS` in the two lines that build `jobs`:
+    import pandas as pd
 
-    ```python
-    parser.add_argument("--year", type=int, choices=YEARS)
-    args = parser.parse_args()
-    years = [args.year] if args.year else YEARS
-    ```
 
-    `scripts/warmest_array.sh`:
+    def hottest(path):
+        """Date and °C of the hottest day; values with a quality flag left out."""
+        df = pd.read_csv(path, low_memory=False)
+        flag = df["TMAX_ATTRIBUTES"].str.split(",").str[1]   # "" if it passed
+        good = df[df["TMAX"].notna() & (flag == "")]
+        row = good.loc[good["TMAX"].idxmax()]
+        return row["DATE"], float(row["TMAX"]) / 10
 
-    ```bash
-    #!/bin/bash
-    #SBATCH --job-name=warmest-year
-    #SBATCH --output=logs/%x_%a.log   # %a is the task number: the year
-    #SBATCH --time=00:02:00
-    #SBATCH --cpus-per-task=1
-    #SBATCH --mem=500M
-    #SBATCH --array=2016-2025         # ten tasks, one per year
 
-    set -e
-    eval "$(conda shell.bash hook)"
-    conda activate s15
-    python scripts/warmest.py --method numpy --year "$SLURM_ARRAY_TASK_ID"
+    for name in sys.argv[1:]:
+        data = Path(name).read_bytes()
+        times = []
+        for run in range(5):
+            start = time.perf_counter()
+            day, celsius = hottest(name)
+            times.append(time.perf_counter() - start)
+        packed = gzip.compress(data)
+        start = time.perf_counter()
+        gzip.decompress(packed)
+        unpack = len(data) / (time.perf_counter() - start) / 1e6
+        print(f"{name}: {len(data) / 1e6:.2f} MB, {min(times) * 1000:.1f} ms, "
+              f"packed 1/{len(data) / len(packed):.1f}, "
+              f"unpacks {unpack:.0f} MB/s, hottest {day} {celsius} °C")
     ```
 
     ```text
-    $ SLURM_ARRAY_TASK_ID=2019 bash scripts/warmest_array.sh
-    2019  from 2019-06-29  22.36 °C
-    read 0.08 s  windows 0.00 s  total 0.08 s
+    $ python measure.py LH000026730.csv ACW00011604.csv LH000026603.csv
+    LH000026730.csv: 6.12 MB, 38.2 ms, packed 1/11.6, unpacks 837 MB/s, hottest 1959-07-13 35.4 °C
+    ACW00011604.csv: 0.04 MB, 1.1 ms, packed 1/21.4, unpacks 908 MB/s, hottest 1949-04-25 30.6 °C
+    LH000026603.csv: 1.24 MB, 7.1 ms, packed 1/17.6, unpacks 778 MB/s, hottest 2014-07-29 32.8 °C
     ```
 
-    On a cluster `sbatch scripts/warmest_array.sh` queues ten tasks with
-    ten logs, `logs/warmest-year_2016.log` to `_2025.log`. Each task reads
-    the whole file for its one year, as `read_year` does: the reading is
-    done ten times, but on ten cores at once.
+    From Antigua and Vilnius: b = (38.2 − 1.1) ms / (6.12 − 0.04) MB =
+    6.1 ms per MB, a = 1.1 − 0.04 × 6.1 = 0.9 ms. For Nida that predicts
+    0.9 + 1.24 × 6.1 = 8.5 ms; measured 7.1 ms. The estimate:
+
+    ```python title="estimate.py"
+    # What this computer measured today; put in your own numbers.
+    ARCHIVE = 8.100e9    # bytes: curl -sI of the archive, Content-Length
+    STATIONS = 133_041   # wc -l ghcnd-stations.txt
+    SPEED = 3.7e6        # bytes a second: curl's Average Speed, 3602k
+    PER_FILE = 0.9e-3    # seconds: Antigua's 40 kB file, nearly all overhead
+    PER_BYTE = 6.1e-9    # seconds: (38.2 - 1.1) ms / (6.12 - 0.04) MB
+    UNPACK = 800e6       # bytes a second, gzip on one core
+    SPEED_UP = 6.0       # pool.py: 4.62 s with 1 worker, 0.77 s with 8
+
+    download = ARCHIVE / SPEED
+    for ratio in [11.6, 17.6, 21.4]:      # how well the three files packed
+        unpacked = ARCHIVE * ratio
+        unpack = unpacked / UNPACK
+        scan = STATIONS * PER_FILE + unpacked * PER_BYTE
+        print(f"packed 1/{ratio}: {unpacked / 1e9:.0f} GB unpacked")
+        print(f"  download {download / 60:.0f} min, unpack {unpack / 60:.0f} min, "
+              f"scan {scan / 60:.0f} min on 1 core, {scan / 60 / SPEED_UP:.0f} "
+              f"on 8 workers")
+        one = download + unpack + scan
+        eight = download + unpack + scan / SPEED_UP
+        print(f"  in all {one / 60:.0f} min, or {eight / 60:.0f} with 8 workers")
+    ```
+
+    ```text
+    $ python estimate.py
+    packed 1/11.6: 94 GB unpacked
+      download 36 min, unpack 2 min, scan 12 min on 1 core, 2 on 8 workers
+      in all 50 min, or 40 with 8 workers
+    packed 1/17.6: 143 GB unpacked
+      download 36 min, unpack 3 min, scan 16 min on 1 core, 3 on 8 workers
+      in all 56 min, or 42 with 8 workers
+    packed 1/21.4: 173 GB unpacked
+      download 36 min, unpack 4 min, scan 20 min on 1 core, 3 on 8 workers
+      in all 60 min, or 43 with 8 workers
+    ```
+
+    On this computer all stations take 50 to 60 minutes on one core and 40
+    to 43 minutes with eight workers. The download, 36 minutes at 3.7 MB a
+    second, is most of it and does not split; eight workers shorten only
+    the reading, from 12–20 to 2–3 minutes.
+
+**With your own project data:** how long would your analysis take on ten or
+a hundred times the data you have now? Time its parts on what you have, find
+what each part grows with, and say which part sets the limit.
+
+---
+
+## Part 4 · Show and discuss { #part-4 }
+
+### 9. Three questions about the pairs' estimates { #discuss }
+
+<!-- 1:45 · 15 min -->
+
+Two or three pairs show their numbers and read their two sentences.
+
+**Ask the room:** one pair estimates 13 hours, another about one hour, from the same measurements. Where can a factor of ten come from?
+
+??? note "Answer"
+    From the size of the whole. 133 041 stations × 6.1 MB, as if every
+    station were Vilnius, is 814 GB. Vilnius is one of the longest records:
+    NCEI's listing of the folder of station files gives the true sizes, and
+    fewer than 3000 files are larger.
+
+    ```python title="listing.py"
+    import re
+    import statistics
+    import urllib.request
+
+    URL = ("https://www.ncei.noaa.gov/data/"
+           "global-historical-climatology-network-daily/access/")
+    with urllib.request.urlopen(URL) as response:     # 20 MB of HTML
+        page = response.read().decode()
+    # each file is a table row: its name, the date it changed, its size in bytes
+    sizes = [int(size) for size in re.findall(
+        r'\.csv</a></td>\s*<td[^>]*>[^<]*</td>\s*<td[^>]*>(\d+)</td>', page)]
+    print(f"{len(sizes)} station files, {sum(sizes) / 1e9:.1f} GB")
+    print(f"mean {statistics.mean(sizes) / 1e6:.2f} MB, "
+          f"median {statistics.median(sizes) / 1e6:.2f} MB, "
+          f"largest {max(sizes) / 1e6:.1f} MB")
+    print(f"files larger than Vilnius: {sum(s > 6_119_696 for s in sizes)}")
+    ```
+
+    ```text
+    $ python listing.py
+    132895 station files, 147.5 GB
+    mean 1.11 MB, median 0.47 MB, largest 20.4 MB
+    files larger than Vilnius: 2952
+    ```
+
+    147.5 GB lies between the estimates from the three files (94 to
+    173 GB), close to the one from Nida (143 GB). The files change every
+    day, so the numbers grow a little.
+
+**Ask the room:** a laptop with twice the cores: twice as fast?
+
+??? note "Answer"
+    No. On this computer the reading on one core is 12 to 20 of the 50 to
+    60 minutes; the download and the unpacking, about 40 minutes, stay as
+    they are. Eight workers bring the whole from about 56 to 42 minutes,
+    a speed-up of 1.3, and no number of cores brings it below 39.
+
+**Ask the room:** would a cluster be faster?
+
+??? note "Answer"
+    For the reading, yes: a hundred cores read the files in seconds. But
+    the download sets the time: 8.1 GB over the same network take as long
+    as on the laptop. A cluster helps when the data is already near it, or
+    comes over a faster link; that is why the LHC sends jobs to the
+    computing centres that hold the data. The unpacked files, about
+    147 GB, may not fit on a laptop's disk at all: Python's `tarfile` can
+    read the archive file by file as it arrives, and then the download and
+    the reading overlap.
+
+Measure each part on a small sample, scale each by what it grows with, and the largest part that does not split sets the time, however many cores there are.
+
+---
+
+## Optional, if the room is fast { #optional }
+
+### 10. Is Vilnius a typical station? Twenty stations drawn at random { #sample }
+
+<!-- — · 15 min -->
+
+A random sample of the station list gives the size of a typical file, and its
+uncertainty, without the 20 MB listing. The script downloads 20 station files,
+about 26 MB.
+
+??? note "One solution"
+    ```python title="sample.py"
+    import random
+    import statistics
+    import time
+    import urllib.request
+
+    import pandas as pd
+
+    ACCESS = ("https://www.ncei.noaa.gov/data/"
+              "global-historical-climatology-network-daily/access/")
+    with open("ghcnd-stations.txt") as handle:
+        stations = [line[:11] for line in handle]
+    chosen = random.Random(2026).sample(stations, 20)
+    sizes, seconds = [], []
+    for station in chosen:
+        with urllib.request.urlopen(ACCESS + station + ".csv") as response:
+            data = response.read()
+        with open(station + ".csv", "wb") as out:
+            out.write(data)
+        start = time.perf_counter()
+        df = pd.read_csv(station + ".csv", low_memory=False)
+        if "TMAX" in df:
+            hottest = df["TMAX"].max()        # the work of the scan, flags aside
+        seconds.append(time.perf_counter() - start)
+        sizes.append(len(data))
+    mean = statistics.mean(sizes)
+    error = statistics.stdev(sizes) / len(sizes) ** 0.5
+    print(f"20 stations: mean {mean / 1e6:.2f} ± {error / 1e6:.2f} MB a file, "
+          f"{sum(sizes) / sum(seconds) / 1e6:.0f} MB/s")
+    print(f"all {len(stations)}: {len(stations) * mean / 1e9:.0f} "
+          f"± {len(stations) * error / 1e9:.0f} GB")
+    ```
+
+    ```text
+    $ python sample.py
+    20 stations: mean 1.31 ± 0.48 MB a file, 138 MB/s
+    all 133041: 174 ± 64 GB
+    ```
+
+    Twenty stations give 174 ± 64 GB; the listing gives 147.5 GB, within
+    the error. Thirteen of the twenty files are from the United States, as
+    are 78 570 of the 133 041 stations, and thirteen hold no `TMAX` at all,
+    only rain and snow.
 
 ---
 
 ## Aims practised
 
-- ⚙️ **Automation:** a job that runs ten times on its own and writes a
-  log; a job script a cluster runs without anyone at the keyboard.
-- ♻️ **Reproducibility:** the times are written down with the run that
-  gave them, and the ten dates are the same whichever way they are
-  computed.
-- 🔧 **Tool-agnostic:** the same lines in zsh and Git Bash; the
-  same Python on a laptop and on a cluster.
+- ⚙️ **Automation:** a job that runs in the background and writes its log
+  line by line; the same function run by one worker or eight.
+- ♻️ **Reproducibility:** every time is the smallest of five, written down
+  with the machine it ran on; the estimate is a script whose numbers can be
+  replaced by the next laptop's.
+- 📁 **Data & files:** the size of a file as text, packed, in memory and as
+  binary numbers, and what each costs to read.
